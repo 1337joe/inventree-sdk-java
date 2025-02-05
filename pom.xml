@@ -9,7 +9,6 @@
     <version>309-SNAPSHOT</version>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -26,6 +25,9 @@
         <jsr311-api-version>1.1.1</jsr311-api-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spotless.version>2.43.0</spotless.version>
+
+        <junit.version>5.11.3</junit.version>
+        <plugin-openapi-generator.version>7.10.0</plugin-openapi-generator.version>
     </properties>
 
     <dependencies>
@@ -76,26 +78,22 @@
             <artifactId>jakarta.ws.rs-api</artifactId>
             <version>${jakarta.ws.rs-api-version}</version>
         </dependency>
+
         <!-- test dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-runner</artifactId>
-            <version>${junit-platform-runner.version}</version>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.10.0</version>
+                <version>${plugin-openapi-generator.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -105,6 +103,8 @@
                             <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
                             <generatorName>java</generatorName>
                             <generateSupportingFiles>true</generateSupportingFiles>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
                             <configOptions>
                                 <apiPackage>com.w3asel.inventree.api</apiPackage>
                                 <modelPackage>com.w3asel.inventree.java</modelPackage>

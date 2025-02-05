@@ -1,8 +1,14 @@
 package com.w3asel.inventree;
 
+import com.w3asel.inventree.api.AuthApi;
 import com.w3asel.inventree.api.OrderApi;
+import com.w3asel.inventree.api.UserApi;
 import com.w3asel.inventree.client.ApiClient;
+import com.w3asel.inventree.client.ApiException;
 import com.w3asel.inventree.client.ServerConfiguration;
+import com.w3asel.inventree.java.SalesOrder;
+import com.w3asel.inventree.java.UserDetails;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -23,8 +29,7 @@ public class TestClient {
             System.err.printf("Unable to load %s", INVENTREE_PROPERTIES);
         }
 
-        OrderApi api = new OrderApi();
-        ApiClient client = api.getApiClient();
+        ApiClient client = new ApiClient();
         client.setUsername(properties.getProperty("username"));
         client.setPassword(properties.getProperty("password"));
         client.setLenientOnJson(true);
@@ -33,5 +38,20 @@ public class TestClient {
                         "",
                         Collections.EMPTY_MAP);
         client.setServers(Collections.singletonList(server));
+
+        UserApi userApi = new UserApi(client);
+//        userApi.userMeRetrieve();
+
+        OrderApi api = new OrderApi(client);
+
+        try {
+            SalesOrder result = api.orderSoRetrieve(11);
+            Assertions.fail("" + result.getReference());
+
+        } catch (ApiException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assertions.fail("" + api.getHostIndex());
     }
 }
