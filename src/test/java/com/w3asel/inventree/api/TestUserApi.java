@@ -1,14 +1,18 @@
 package com.w3asel.inventree.api;
 
-import com.w3asel.inventree.client.ApiException;
-import com.w3asel.inventree.java.*;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.ExtendedUser;
+import com.w3asel.inventree.model.Group;
+import com.w3asel.inventree.model.MeUser;
+import com.w3asel.inventree.model.Owner;
+import com.w3asel.inventree.model.PaginatedUserCreateList;
+import com.w3asel.inventree.model.Role;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TestUserApi extends TestApi {
 
@@ -39,7 +43,8 @@ public class TestUserApi extends TestApi {
 
     @Test
     public void userRetrieve_admin() throws ApiException {
-        ExtendedUser actual = api.userRetrieve("1"); // TODO why is this a string, regex only allows digits?
+        ExtendedUser actual = api.userRetrieve("1"); // TODO why is this a string, regex only allows
+                                                     // digits?
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(1, actual.getPk(), "Incorrect pk returned");
         Assertions.assertEquals("admin", actual.getUsername(), "Incorrect username returned");
@@ -54,7 +59,8 @@ public class TestUserApi extends TestApi {
 
     @Test
     public void userRetrieve_reader() throws ApiException {
-        ExtendedUser actual = api.userRetrieve("2"); // TODO why is this a string, regex only allows digits?
+        ExtendedUser actual = api.userRetrieve("2"); // TODO why is this a string, regex only allows
+                                                     // digits?
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(2, actual.getPk(), "Incorrect pk returned");
         Assertions.assertEquals("reader", actual.getUsername(), "Incorrect username returned");
@@ -62,9 +68,11 @@ public class TestUserApi extends TestApi {
         Assertions.assertEquals("Reader", actual.getLastName(), "Incorrect last name returned");
         Assertions.assertEquals("", actual.getEmail(), "Incorrect email returned");
         List<Group> groups = actual.getGroups();
-        List<String> actualGroupNames = groups.stream().map(Group::getName).collect(Collectors.toList());
+        List<String> actualGroupNames =
+                groups.stream().map(Group::getName).collect(Collectors.toList());
         List<String> expectedGroups = Arrays.asList("readers");
-        Assertions.assertIterableEquals(expectedGroups, actualGroupNames, "Incorrect group names returned");
+        Assertions.assertIterableEquals(expectedGroups, actualGroupNames,
+                "Incorrect group names returned");
         Assertions.assertFalse(actual.getIsStaff(), "Incorrect isStaff returned");
         Assertions.assertFalse(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
         Assertions.assertTrue(actual.getIsActive(), "Incorrect isActive returned");

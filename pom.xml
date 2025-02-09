@@ -4,9 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <name>InvenTree SDK (Java)</name>
+
     <groupId>com.w3asel</groupId>
-    <artifactId>inventree-java</artifactId>
+    <artifactId>inventree-sdk-java</artifactId>
+    <packaging>jar</packaging>
     <version>309-SNAPSHOT</version>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
 
     <properties>
         <java.version>1.8</java.version>
@@ -23,11 +33,11 @@
         <junit-platform-runner.version>1.10.0</junit-platform-runner.version>
         <jakarta.ws.rs-api-version>2.1.6</jakarta.ws.rs-api-version>
         <jsr311-api-version>1.1.1</jsr311-api-version>
+        <jsr305-version>3.0.2</jsr305-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spotless.version>2.43.0</spotless.version>
 
         <junit.version>5.11.3</junit.version>
-        <plugin-openapi-generator.version>7.10.0</plugin-openapi-generator.version>
+        <plugin-openapi-generator.version>7.11.0</plugin-openapi-generator.version>
     </properties>
 
     <dependencies>
@@ -35,7 +45,7 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-            <version>3.0.2</version>
+            <version>${jsr305-version}</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
@@ -100,15 +110,19 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <groupId>com.w3asel</groupId>
+                            <artifactId>inventree-sdk-java</artifactId>
+
                             <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
                             <generatorName>java</generatorName>
-                            <generateSupportingFiles>true</generateSupportingFiles>
-                            <generateApiTests>false</generateApiTests>
                             <generateModelTests>false</generateModelTests>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateApiTests>false</generateApiTests>
+                            <generateApiDocumentation>false</generateApiDocumentation>
                             <configOptions>
                                 <apiPackage>com.w3asel.inventree.api</apiPackage>
-                                <modelPackage>com.w3asel.inventree.java</modelPackage>
-                                <invokerPackage>com.w3asel.inventree.client</invokerPackage>
+                                <modelPackage>com.w3asel.inventree.model</modelPackage>
+                                <invokerPackage>com.w3asel.inventree.invoker</invokerPackage>
                             </configOptions>
                         </configuration>
                     </execution>

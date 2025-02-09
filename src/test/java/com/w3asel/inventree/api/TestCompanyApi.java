@@ -1,7 +1,7 @@
 package com.w3asel.inventree.api;
 
-import com.w3asel.inventree.client.ApiException;
-import com.w3asel.inventree.java.Company;
+import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.Company;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +23,6 @@ public class TestCompanyApi extends TestApi {
 
     @Test
     public void test() throws ApiException {
-//        Company actual = api.companyPartList("1");
+        // Company actual = api.companyPartList("1");
     }
 }

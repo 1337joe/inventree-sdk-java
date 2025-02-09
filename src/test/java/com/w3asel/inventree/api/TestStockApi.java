@@ -1,9 +1,8 @@
 package com.w3asel.inventree.api;
 
-import com.w3asel.inventree.client.ApiException;
-import com.w3asel.inventree.java.Build;
-import com.w3asel.inventree.java.PaginatedStockItemList;
-import com.w3asel.inventree.java.StockItem;
+import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.PaginatedStockItemList;
+import com.w3asel.inventree.model.StockItem;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,68 +17,11 @@ public class TestStockApi extends TestApi {
 
     @Test
     public void stockList() throws ApiException {
-        PaginatedStockItemList actual = api.stockList("1",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
+        PaginatedStockItemList actual = api.stockList("1", null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null);
         Assertions.assertNotNull(actual);
     }
 
