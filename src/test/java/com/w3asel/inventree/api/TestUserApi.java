@@ -1,11 +1,7 @@
 package com.w3asel.inventree.api;
 
-
 import com.w3asel.inventree.client.ApiException;
-import com.w3asel.inventree.java.ExtendedUser;
-import com.w3asel.inventree.java.Group;
-import com.w3asel.inventree.java.MeUser;
-import com.w3asel.inventree.java.UserDetails;
+import com.w3asel.inventree.java.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,36 +21,75 @@ public class TestUserApi extends TestApi {
 
     @Test
     public void userMeRetrieve_root() throws ApiException {
-        MeUser user = api.userMeRetrieve();
-        Assertions.assertNotNull(user);
-        Assertions.assertEquals("root", user.getUsername(), "Incorrect username returned");
-        Assertions.assertEquals("", user.getFirstName(), "Incorrect first name returned");
-        Assertions.assertEquals("", user.getLastName(), "Incorrect last name returned");
-        Assertions.assertTrue(user.getEmail().startsWith("root@"), "Incorrect email returned");
-        Assertions.assertEquals(9, user.getPk(), "Incorrect pk returned");
-        Assertions.assertEquals(0, user.getGroups().size(), "Incorrect groups returned");
+        MeUser actual = api.userMeRetrieve();
+        Assertions.assertNotNull(actual);
+        Assertions.assertEquals("root", actual.getUsername(), "Incorrect username returned");
+        Assertions.assertEquals("", actual.getFirstName(), "Incorrect first name returned");
+        Assertions.assertEquals("", actual.getLastName(), "Incorrect last name returned");
+        Assertions.assertTrue(actual.getEmail().startsWith("root@"), "Incorrect email returned");
+        Assertions.assertEquals(9, actual.getPk(), "Incorrect pk returned");
+        Assertions.assertEquals(0, actual.getGroups().size(), "Incorrect groups returned");
+    }
+
+    @Test
+    public void userRolesRetrieve_root() throws ApiException {
+        Role actual = api.userRolesRetrieve();
+        Assertions.assertNotNull(actual);
+    }
+
+    @Test
+    public void userRetrieve_admin() throws ApiException {
+        ExtendedUser actual = api.userRetrieve("1"); // TODO why is this a string, regex only allows digits?
+        Assertions.assertNotNull(actual);
+        Assertions.assertEquals(1, actual.getPk(), "Incorrect pk returned");
+        Assertions.assertEquals("admin", actual.getUsername(), "Incorrect username returned");
+        Assertions.assertEquals("", actual.getFirstName(), "Incorrect first name returned");
+        Assertions.assertEquals("", actual.getLastName(), "Incorrect last name returned");
+        Assertions.assertEquals("", actual.getEmail(), "Incorrect email returned");
+        Assertions.assertEquals(0, actual.getGroups().size(), "Incorrect group count returned");
+        Assertions.assertTrue(actual.getIsStaff(), "Incorrect isStaff returned");
+        Assertions.assertTrue(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
+        Assertions.assertTrue(actual.getIsActive(), "Incorrect isActive returned");
     }
 
     @Test
     public void userRetrieve_reader() throws ApiException {
-        ExtendedUser user = api.userRetrieve("2"); // TODO why is this a string, regex only allows digits?
-        Assertions.assertNotNull(user);
-        Assertions.assertEquals(2, user.getPk(), "Incorrect pk returned");
-        Assertions.assertEquals("reader", user.getUsername(), "Incorrect username returned");
-        Assertions.assertEquals("Ronald", user.getFirstName(), "Incorrect first name returned");
-        Assertions.assertEquals("Reader", user.getLastName(), "Incorrect last name returned");
-        Assertions.assertEquals("", user.getEmail(), "Incorrect email returned");
-        List<Group> groups = user.getGroups();
+        ExtendedUser actual = api.userRetrieve("2"); // TODO why is this a string, regex only allows digits?
+        Assertions.assertNotNull(actual);
+        Assertions.assertEquals(2, actual.getPk(), "Incorrect pk returned");
+        Assertions.assertEquals("reader", actual.getUsername(), "Incorrect username returned");
+        Assertions.assertEquals("Ronald", actual.getFirstName(), "Incorrect first name returned");
+        Assertions.assertEquals("Reader", actual.getLastName(), "Incorrect last name returned");
+        Assertions.assertEquals("", actual.getEmail(), "Incorrect email returned");
+        List<Group> groups = actual.getGroups();
         List<String> actualGroupNames = groups.stream().map(Group::getName).collect(Collectors.toList());
         List<String> expectedGroups = Arrays.asList("readers");
         Assertions.assertIterableEquals(expectedGroups, actualGroupNames, "Incorrect group names returned");
-        Assertions.assertFalse(user.getIsStaff(), "Incorrect isStaff returned");
-        Assertions.assertFalse(user.getIsSuperuser(), "Incorrect isSuperuser returned");
-        Assertions.assertTrue(user.getIsActive(), "Incorrect isActive returned");
+        Assertions.assertFalse(actual.getIsStaff(), "Incorrect isStaff returned");
+        Assertions.assertFalse(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
+        Assertions.assertTrue(actual.getIsActive(), "Incorrect isActive returned");
     }
 
-//    @Test
+    @Test
     public void userList_unfiltered() throws ApiException {
-        api.userList(null, null, null, null, null, null, null);
+        PaginatedUserCreateList actual = api.userList(null, null, null, null, null, null, null);
+        Assertions.assertNotNull(actual);
+    }
+
+    @Test
+    public void userGroupRetrieve_readers() throws ApiException {
+        Group actual = api.userGroupRetrieve("1"); // TODO string
+        Assertions.assertNotNull(actual);
+    }
+
+    @Test
+    public void userOwnerRetrieve_readersGroup() throws ApiException {
+        Owner actual = api.userOwnerRetrieve(1);
+        Assertions.assertNotNull(actual);
+    }
+
+    @Test
+    public void userTokenRetrieve() throws ApiException {
+        api.userTokenRetrieve();
     }
 }

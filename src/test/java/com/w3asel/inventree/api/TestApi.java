@@ -25,8 +25,8 @@ public abstract class TestApi {
         }
 
         apiClient = new ApiClient();
-        apiClient.setUsername(properties.getProperty("username"));
-        apiClient.setPassword(properties.getProperty("password"));
+        apiClient.setUsername(properties.getProperty("username", "root"));
+        apiClient.setPassword(properties.getProperty("password", "root"));
         apiClient.setLenientOnJson(true);
         ServerConfiguration server =
                 new ServerConfiguration(properties.getProperty("server_url", "http://localhost:8000"),

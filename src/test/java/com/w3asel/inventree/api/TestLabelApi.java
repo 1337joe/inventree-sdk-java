@@ -1,0 +1,22 @@
+package com.w3asel.inventree.api;
+
+import com.w3asel.inventree.client.ApiException;
+import com.w3asel.inventree.java.LabelTemplate;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class TestLabelApi extends TestApi {
+    private LabelApi api;
+
+    @BeforeEach
+    public void setup() {
+        api = new LabelApi(apiClient);
+    }
+
+    @Test
+    public void test() throws ApiException {
+        LabelTemplate actual = api.labelTemplateRetrieve(1);
+        Assertions.assertNotNull(actual);
+    }
+}
