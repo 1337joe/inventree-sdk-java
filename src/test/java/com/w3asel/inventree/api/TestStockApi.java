@@ -17,10 +17,12 @@ public class TestStockApi extends TestApi {
 
     @Test
     public void stockList() throws ApiException {
-        PaginatedStockItemList actual = api.stockList("1", null, null, null, null, null, null, null,
+        int limit = 5;
+        int offset = 0;
+        PaginatedStockItemList actual = api.stockList(null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, limit, null, null, null, null,
+                null, null, offset, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null);
         Assertions.assertNotNull(actual);
     }

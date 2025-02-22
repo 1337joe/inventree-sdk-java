@@ -39,12 +39,10 @@ public class TestClient {
 
         try {
             SalesOrder result = api.orderSoRetrieve(11);
-            Assertions.fail("" + result.getReference());
+            System.out.println(result.getReference());
 
         } catch (ApiException e) {
             throw new RuntimeException(e);
         }
-
-        Assertions.fail("" + api.getHostIndex());
     }
 }

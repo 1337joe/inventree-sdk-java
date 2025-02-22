@@ -142,6 +142,7 @@
                             <artifactId>inventree-sdk-java</artifactId>
 
                             <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
+                            <skipIfSpecIsUnchanged>true</skipIfSpecIsUnchanged>
                             <generatorName>java</generatorName>
                             <generateModelTests>false</generateModelTests>
                             <generateModelDocumentation>false</generateModelDocumentation>
@@ -151,7 +152,18 @@
                                 <apiPackage>com.w3asel.inventree.api</apiPackage>
                                 <modelPackage>com.w3asel.inventree.model</modelPackage>
                                 <invokerPackage>com.w3asel.inventree.invoker</invokerPackage>
+                                <dateLibrary>java8</dateLibrary>
                             </configOptions>
+                            <!-- TODO none of these work -->
+                            <nameMappings>
+                                <nameMapping>null=_null</nameMapping>
+                            </nameMappings>
+                            <parameterNameMappings>
+                                <parameterNameMapping>null=_null</parameterNameMapping>
+                            </parameterNameMappings>
+                            <reservedWordsMappings>
+                                <reservedWordsMapping>null=_null</reservedWordsMapping>
+                            </reservedWordsMappings>
                         </configuration>
                     </execution>
                 </executions>

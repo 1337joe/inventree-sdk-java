@@ -1,6 +1,5 @@
 package com.w3asel.inventree.api;
 
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ public class TestAuthApi extends TestApi {
     }
 
     @Test
-    public void authUserRetrieve_root() throws ApiException {
+    public void authUserRetrieve_admin() throws ApiException {
         UserDetails user = api.authUserRetrieve();
         Assertions.assertNotNull(user);
         Assertions.assertEquals("root", user.getUsername(), "Incorrect username returned");

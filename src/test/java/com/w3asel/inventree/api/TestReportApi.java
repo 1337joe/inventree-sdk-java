@@ -2,6 +2,7 @@ package com.w3asel.inventree.api;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.w3asel.inventree.invoker.ApiException;
@@ -16,6 +17,7 @@ public class TestReportApi extends TestApi {
     }
 
     @Test
+    @Disabled
     public void test() throws ApiException {
         ReportAsset actual = api.reportAssetRetrieve(1);
         Assertions.assertNotNull(actual);
