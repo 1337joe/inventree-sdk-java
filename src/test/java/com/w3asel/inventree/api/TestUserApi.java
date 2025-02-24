@@ -7,12 +7,12 @@ import com.w3asel.inventree.model.MeUser;
 import com.w3asel.inventree.model.Owner;
 import com.w3asel.inventree.model.PaginatedUserCreateList;
 import com.w3asel.inventree.model.Role;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TestUserApi extends TestApi {
 
@@ -24,15 +24,18 @@ public class TestUserApi extends TestApi {
     }
 
     @Test
-    public void userMeRetrieve_root() throws ApiException {
+    public void userMeRetrieve_admin() throws ApiException {
         MeUser actual = api.userMeRetrieve();
         Assertions.assertNotNull(actual);
-        Assertions.assertEquals("root", actual.getUsername(), "Incorrect username returned");
+        Assertions.assertEquals(1, actual.getPk(), "Incorrect pk returned");
+        Assertions.assertEquals("admin", actual.getUsername(), "Incorrect username returned");
         Assertions.assertEquals("", actual.getFirstName(), "Incorrect first name returned");
         Assertions.assertEquals("", actual.getLastName(), "Incorrect last name returned");
-        Assertions.assertTrue(actual.getEmail().startsWith("root@"), "Incorrect email returned");
-        Assertions.assertEquals(9, actual.getPk(), "Incorrect pk returned");
+        Assertions.assertEquals("", actual.getEmail(), "Incorrect email returned");
         Assertions.assertEquals(0, actual.getGroups().size(), "Incorrect groups returned");
+        Assertions.assertTrue(actual.getIsStaff(), "Incorrect isStaff returned");
+        Assertions.assertTrue(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
+        Assertions.assertTrue(actual.getIsActive(), "Incorrect isActive returned");
     }
 
     @Test

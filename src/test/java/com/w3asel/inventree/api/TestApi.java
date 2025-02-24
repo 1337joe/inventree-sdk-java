@@ -25,10 +25,9 @@ public abstract class TestApi {
 
     @BeforeAll
     public static void setUp() {
-        final InputStream is =
-                TestApi.class.getClassLoader().getResourceAsStream(INVENTREE_PROPERTIES);
         Properties properties = new Properties();
-        try {
+        try (InputStream is =
+                TestApi.class.getClassLoader().getResourceAsStream(INVENTREE_PROPERTIES)) {
             properties.load(is);
         } catch (final IOException e) {
             System.err.printf("Unable to load %s", INVENTREE_PROPERTIES);

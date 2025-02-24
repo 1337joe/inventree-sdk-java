@@ -20,7 +20,7 @@ public class TestAuthApi extends TestApi {
     public void authUserRetrieve_admin() throws ApiException {
         UserDetails user = api.authUserRetrieve();
         Assertions.assertNotNull(user);
-        Assertions.assertEquals("root", user.getUsername(), "Incorrect username returned");
+        Assertions.assertEquals("admin", user.getUsername(), "Incorrect username returned");
         Assertions.assertEquals("", user.getFirstName(), "Incorrect first name returned");
         Assertions.assertEquals("", user.getLastName(), "Incorrect last name returned");
         Assertions.assertTrue(user.getEmail().startsWith("root@"), "Incorrect email returned");
