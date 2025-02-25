@@ -5,12 +5,11 @@ import com.w3asel.inventree.invoker.ApiClient;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.invoker.ServerConfiguration;
 import com.w3asel.inventree.model.SalesOrder;
+import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Properties;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 public class TestClient {
     private static final String INVENTREE_PROPERTIES = "inventree.properties";

@@ -1,11 +1,14 @@
 package com.w3asel.inventree.api;
 
 import com.w3asel.inventree.invoker.ApiException;
-import com.w3asel.inventree.model.*;
+import com.w3asel.inventree.model.Address;
+import com.w3asel.inventree.model.Company;
+import com.w3asel.inventree.model.PaginatedCompanyList;
+import com.w3asel.inventree.model.PaginatedContactList;
+import com.w3asel.inventree.model.PaginatedSupplierPartList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -25,7 +28,8 @@ public class TestCompanyApi extends TestApi {
         Assertions.assertEquals(1, actual.getPk(), "Incorrect primary key");
         Assertions.assertEquals("DigiKey", actual.getName(), "Incorrect name");
         Assertions.assertEquals(2, actual.getAddressCount(), "Incorrect address count");
-        Assertions.assertEquals("04964 Cox View Suite 815, 94832, Wesleyport, Delaware, Bolivia", actual.getAddress(), "Incorrect address");
+        Assertions.assertEquals("04964 Cox View Suite 815, 94832, Wesleyport, Delaware, Bolivia",
+                actual.getAddress(), "Incorrect address");
         Address actualAddress = actual.getPrimaryAddress();
         Assertions.assertNotNull(actualAddress, "Primary address is null");
         Assertions.assertEquals(54, actualAddress.getPk(), "Incorrect primary address primary key");
@@ -41,7 +45,8 @@ public class TestCompanyApi extends TestApi {
     public void companyList_paginated() throws ApiException {
         int limit = 5;
         int offset = 0;
-        PaginatedCompanyList actual = api.companyList(null, null, null, null, limit, null, offset, null, null);
+        PaginatedCompanyList actual =
+                api.companyList(null, null, null, null, limit, null, offset, null, null);
         Assertions.assertEquals(36, actual.getCount());
         List<Company> actualList = actual.getResults();
         // TODO validate
@@ -61,7 +66,8 @@ public class TestCompanyApi extends TestApi {
         Assertions.assertEquals("Delaware", actual.getProvince(), "Incorrect province");
         Assertions.assertEquals("Bolivia", actual.getCountry(), "Incorrect country");
         Assertions.assertEquals("", actual.getShippingNotes(), "Incorrect shipping notes");
-        Assertions.assertEquals("", actual.getInternalShippingNotes(), "Incorrect internal shipping notes");
+        Assertions.assertEquals("", actual.getInternalShippingNotes(),
+                "Incorrect internal shipping notes");
         Assertions.assertEquals(new URI(""), actual.getLink(), "Incorrect link");
     }
 
@@ -73,7 +79,8 @@ public class TestCompanyApi extends TestApi {
 
     @Test
     public void companyPartList() throws ApiException {
-        PaginatedSupplierPartList actual = api.companyPartList(null, null, null, "1", null, 100, null, null, 0, null, null, null, null, null, null, null, null);
+        PaginatedSupplierPartList actual = api.companyPartList(null, null, null, "1", null, 100,
+                null, null, 0, null, null, null, null, null, null, null, null);
         // TODO validate
     }
 
@@ -81,7 +88,8 @@ public class TestCompanyApi extends TestApi {
     public void companyPartManufacturerList_paginated() throws ApiException {
         int limit = 5;
         int offset = 0;
-        api.companyPartManufacturerList(null, limit, null, null, offset, null, null, null, null, null, null);
+        api.companyPartManufacturerList(null, limit, null, null, offset, null, null, null, null,
+                null, null);
         // TODO validate
     }
 
@@ -89,7 +97,8 @@ public class TestCompanyApi extends TestApi {
     public void companyPartManufacturerParameterList_paginated() throws ApiException {
         int limit = 5;
         int offset = 0;
-        api.companyPartManufacturerParameterList(limit, null, null, null, offset, null, null, null, null, null);
+        api.companyPartManufacturerParameterList(limit, null, null, null, offset, null, null, null,
+                null, null);
         // TODO validate
     }
 

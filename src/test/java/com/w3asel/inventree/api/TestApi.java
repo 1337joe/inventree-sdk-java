@@ -3,18 +3,10 @@ package com.w3asel.inventree.api;
 import com.w3asel.inventree.invoker.ApiClient;
 import com.w3asel.inventree.invoker.ServerConfiguration;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.TemporalAccessor;
 import java.util.Collections;
 import java.util.Properties;
 
@@ -42,7 +34,8 @@ public abstract class TestApi {
                 Collections.emptyMap());
         apiClient.setServers(Collections.singletonList(server));
 
-//        apiClient.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
-        apiClient.setOffsetDateTimeFormat(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").withZone(ZoneOffset.UTC));
+        // apiClient.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm"));
+        apiClient.setOffsetDateTimeFormat(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").withZone(ZoneOffset.UTC));
     }
 }
