@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '314'
+  version: '317'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -58,19 +58,6 @@ paths:
     get:
       operationId: admin_config_list
       description: List view for all accessed configurations.
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
       tags:
       - admin
       security:
@@ -6022,8 +6009,8 @@ paths:
           * `salesordershipment` - Sales Order Shipment
           * `returnorder` - Return Order
           * `part` - Part
-          * `stockitem` - Stock Item
           * `stocklocation` - Stock Location
+          * `stockitem` - Stock Item
       - name: offset
         required: false
         in: query
@@ -15250,8 +15237,8 @@ paths:
           * `salesordershipment` - Sales Order Shipment
           * `returnorder` - Return Order
           * `part` - Part
-          * `stockitem` - Stock Item
           * `stocklocation` - Stock Location
+          * `stockitem` - Stock Item
       - name: offset
         required: false
         in: query
@@ -21398,9 +21385,14 @@ components:
           maxLength: 100
         token:
           type: string
+          description: |-
+            Provide a redacted version of the token.
+
+            The *raw* key value should never be displayed anywhere!
           readOnly: true
         active:
-          type: string
+          type: boolean
+          description: Test if this token is active.
           readOnly: true
         revoked:
           type: boolean
@@ -21534,14 +21526,14 @@ components:
           type: integer
           nullable: true
           title: Build Order
-        supplierpart:
-          type: integer
-          nullable: true
-          title: Supplier Part
         manufacturerpart:
           type: integer
           nullable: true
           title: Manufacturer Part
+        supplierpart:
+          type: integer
+          nullable: true
+          title: Supplier Part
         purchaseorder:
           type: integer
           nullable: true
@@ -21557,14 +21549,14 @@ components:
         part:
           type: integer
           nullable: true
-        stockitem:
-          type: integer
-          nullable: true
-          title: Stock Item
         stocklocation:
           type: integer
           nullable: true
           title: Stock Location
+        stockitem:
+          type: integer
+          nullable: true
+          title: Stock Item
       required:
       - barcode
     BarcodeGenerate:
@@ -21723,14 +21715,14 @@ components:
           type: integer
           nullable: true
           title: Build Order
-        supplierpart:
-          type: integer
-          nullable: true
-          title: Supplier Part
         manufacturerpart:
           type: integer
           nullable: true
           title: Manufacturer Part
+        supplierpart:
+          type: integer
+          nullable: true
+          title: Supplier Part
         purchaseorder:
           type: integer
           nullable: true
@@ -21746,14 +21738,14 @@ components:
         part:
           type: integer
           nullable: true
-        stockitem:
-          type: integer
-          nullable: true
-          title: Stock Item
         stocklocation:
           type: integer
           nullable: true
           title: Stock Location
+        stockitem:
+          type: integer
+          nullable: true
+          title: Stock Item
     BlankEnum:
       enum:
       - ''
@@ -21801,6 +21793,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          title: Assembly
         pricing_min:
           type: string
           format: decimal
@@ -21830,6 +21827,11 @@ components:
           format: date-time
           readOnly: true
           nullable: true
+        sub_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          title: Component
         substitutes:
           type: array
           items:
@@ -21876,6 +21878,7 @@ components:
       - external_stock
       - on_order
       - part
+      - part_detail
       - pk
       - pricing_max
       - pricing_max_total
@@ -21884,6 +21887,7 @@ components:
       - pricing_updated
       - quantity
       - sub_part
+      - sub_part_detail
       - substitutes
     BomItemSubstitute:
       type: object
@@ -21923,9 +21927,6 @@ components:
           type: integer
           readOnly: true
           title: ID
-        url:
-          type: string
-          readOnly: true
         title:
           type: string
           title: Description
@@ -21980,13 +21981,16 @@ components:
         project_code_label:
           type: string
           readOnly: true
+          nullable: true
         project_code_detail:
           allOf:
           - $ref: '#/components/schemas/ProjectCode'
           readOnly: true
+          nullable: true
         overdue:
           type: boolean
           readOnly: true
+          default: false
         reference:
           type: string
         sales_order:
@@ -22047,6 +22051,11 @@ components:
           title: Source Location
           description: Select location to take stock from for this build (leave blank
             to take from any stock location)
+        notes:
+          type: string
+          nullable: true
+          description: Markdown notes (optional)
+          maxLength: 50000
         link:
           type: string
           format: uri
@@ -22102,7 +22111,6 @@ components:
       - status
       - status_custom_key
       - status_text
-      - url
     BuildAllocation:
       type: object
       description: DRF serializer for allocation stock items against a build order.
@@ -22363,6 +22371,11 @@ components:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
           title: Part
+        build_detail:
+          allOf:
+          - $ref: '#/components/schemas/Build'
+          readOnly: true
+          title: Build
       required:
       - allocated
       - allocations
@@ -22373,6 +22386,7 @@ components:
       - bom_item
       - bom_item_detail
       - build
+      - build_detail
       - build_reference
       - consumable
       - external_stock
@@ -22412,7 +22426,7 @@ components:
           description: Location for completed build outputs
         status_custom_key:
           allOf:
-          - $ref: '#/components/schemas/StatusCustomKey2a7Enum'
+          - $ref: '#/components/schemas/StatusCustomKey229Enum'
           default: 10
           title: Status
         accept_incomplete_allocation:
@@ -22566,13 +22580,16 @@ components:
           readOnly: true
           title: Path
           description: Path
+        path:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
         starred:
           type: boolean
           description: Return True if the category is directly "starred" by the current
             user.
-          readOnly: true
-        url:
-          type: string
           readOnly: true
         structural:
           type: boolean
@@ -22580,6 +22597,7 @@ components:
             but may be assigned to child categories.
         icon:
           type: string
+          nullable: true
           description: Icon (optional)
           maxLength: 100
         parent_default_location:
@@ -22590,11 +22608,11 @@ components:
       - name
       - parent_default_location
       - part_count
+      - path
       - pathstring
       - pk
       - starred
       - subcategories
-      - url
     CategoryParameterTemplate:
       type: object
       description: Serializer for the PartCategoryParameterTemplate model.
@@ -22683,9 +22701,6 @@ components:
           type: integer
           readOnly: true
           title: ID
-        url:
-          type: string
-          readOnly: true
         name:
           type: string
           title: Company name
@@ -22709,6 +22724,9 @@ components:
         address:
           type: string
           readOnly: true
+          nullable: true
+          title: Return the string representation for the primary address. This property
+            exists for backwards compatibility.
         email:
           type: string
           format: email
@@ -22749,6 +22767,11 @@ components:
         is_supplier:
           type: boolean
           description: Do you purchase items from this company?
+        notes:
+          type: string
+          nullable: true
+          description: Markdown notes (optional)
+          maxLength: 50000
         parts_supplied:
           type: integer
           readOnly: true
@@ -22777,7 +22800,6 @@ components:
       - parts_supplied
       - pk
       - primary_address
-      - url
     CompanyBrief:
       type: object
       description: Serializer for Company object (limited detail).
@@ -23318,6 +23340,29 @@ components:
         * `vi` - vi
         * `zh-hans` - zh-hans
         * `zh-hant` - zh-hant
+    DefaultLocation:
+      type: object
+      description: |-
+        Brief serializer for a StockLocation object.
+
+        Defined here, rather than stock.serializers, to negotiate circular imports.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        name:
+          type: string
+          description: Name
+          maxLength: 100
+        pathstring:
+          type: string
+          title: Path
+          description: Path
+          maxLength: 250
+      required:
+      - name
+      - pk
     DuplicateOrder:
       type: object
       description: Serializer for specifying options when duplicating an order.
@@ -23631,9 +23676,11 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true
@@ -23660,8 +23707,14 @@ components:
         name:
           type: string
           maxLength: 150
+        permissions:
+          type: object
+          additionalProperties: {}
+          description: Return a list of permissions associated with the group.
+          readOnly: true
       required:
       - name
+      - permissions
       - pk
     Icon:
       type: object
@@ -23966,7 +24019,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType820Enum'
+          $ref: '#/components/schemas/ModelType28bEnum'
         template:
           type: string
           format: uri
@@ -24075,9 +24128,6 @@ components:
           type: string
           readOnly: true
           description: Unique hash of barcode data
-        url:
-          type: string
-          readOnly: true
         name:
           type: string
           description: Name
@@ -24099,6 +24149,12 @@ components:
           readOnly: true
           title: Path
           description: Path
+        path:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
         items:
           type: integer
           readOnly: true
@@ -24115,6 +24171,7 @@ components:
           readOnly: true
         custom_icon:
           type: string
+          nullable: true
           title: Icon
           description: Icon (optional)
           maxLength: 100
@@ -24144,10 +24201,10 @@ components:
       - level
       - location_type_detail
       - name
+      - path
       - pathstring
       - pk
       - sublocations
-      - url
     LocationBrief:
       type: object
       description: Provides a brief serializer for a StockLocation object.
@@ -24442,6 +24499,7 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         model_filters:
           type: object
           additionalProperties: {}
@@ -24449,6 +24507,7 @@ components:
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true
@@ -24517,8 +24576,19 @@ components:
           type: integer
           title: Base Part
           description: Select part
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+        pretty_name:
+          type: string
+          readOnly: true
         manufacturer:
           type: integer
+        manufacturer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
         description:
           type: string
           nullable: true
@@ -24551,8 +24621,11 @@ components:
       required:
       - MPN
       - manufacturer
+      - manufacturer_detail
       - part
+      - part_detail
       - pk
+      - pretty_name
     ManufacturerPartParameter:
       type: object
       description: Serializer for the ManufacturerPartParameter model.
@@ -24563,6 +24636,10 @@ components:
           title: ID
         manufacturer_part:
           type: integer
+        manufacturer_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/ManufacturerPart'
+          readOnly: true
         name:
           type: string
           description: Parameter name
@@ -24578,6 +24655,7 @@ components:
           maxLength: 64
       required:
       - manufacturer_part
+      - manufacturer_part_detail
       - name
       - pk
       - value
@@ -24629,7 +24707,7 @@ components:
       - last_name
       - pk
       - username
-    ModelType820Enum:
+    ModelType28bEnum:
       enum:
       - build
       - buildline
@@ -24638,8 +24716,8 @@ components:
       - salesordershipment
       - returnorder
       - part
-      - stockitem
       - stocklocation
+      - stockitem
       type: string
       description: |-
         * `build` - Build Order
@@ -24649,8 +24727,8 @@ components:
         * `salesordershipment` - Sales Order Shipment
         * `returnorder` - Return Order
         * `part` - Part
-        * `stockitem` - Stock Item
         * `stocklocation` - Stock Location
+        * `stockitem` - Stock Item
     NewsFeedEntry:
       type: object
       description: Serializer for the NewsFeedEntry model.
@@ -24811,6 +24889,7 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         model_filters:
           type: object
           additionalProperties: {}
@@ -24818,6 +24897,7 @@ components:
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true
@@ -26493,6 +26573,16 @@ components:
         category:
           type: integer
           nullable: true
+        category_detail:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          readOnly: true
+        category_path:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
         category_name:
           type: string
           readOnly: true
@@ -26515,6 +26605,10 @@ components:
           type: integer
           nullable: true
           description: Where is this item normally stored?
+        default_location_detail:
+          allOf:
+          - $ref: '#/components/schemas/DefaultLocation'
+          readOnly: true
         default_supplier:
           type: integer
           nullable: true
@@ -26574,6 +26668,16 @@ components:
           type: string
           description: Part name
           maxLength: 100
+        notes:
+          type: string
+          nullable: true
+          description: Markdown notes (optional)
+          maxLength: 50000
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartParameter'
+          readOnly: true
         pk:
           type: integer
           readOnly: true
@@ -26657,6 +26761,7 @@ components:
         category_default_location:
           type: integer
           readOnly: true
+          nullable: true
         in_stock:
           type: number
           format: double
@@ -26727,13 +26832,17 @@ components:
       - barcode_hash
       - building
       - category_default_location
+      - category_detail
       - category_name
+      - category_path
       - creation_date
+      - default_location_detail
       - external_stock
       - full_name
       - in_stock
       - name
       - ordering
+      - parameters
       - pk
       - pricing_max
       - pricing_min
@@ -26768,6 +26877,7 @@ components:
         category_default_location:
           type: integer
           readOnly: true
+          nullable: true
         default_location:
           type: integer
           nullable: true
@@ -26836,6 +26946,18 @@ components:
           nullable: true
           description: Units of measure for this part
           maxLength: 20
+        pricing_min:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
+        pricing_max:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
       required:
       - barcode_hash
       - category_default_location
@@ -26843,6 +26965,8 @@ components:
       - image
       - name
       - pk
+      - pricing_max
+      - pricing_min
       - thumbnail
     PartCopyBOM:
       type: object
@@ -26916,6 +27040,10 @@ components:
         part:
           type: integer
           description: Parent Part
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
         template:
           type: integer
           description: Parameter Template
@@ -26935,6 +27063,7 @@ components:
       required:
       - data
       - part
+      - part_detail
       - pk
       - template
       - template_detail
@@ -27634,6 +27763,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          title: Assembly
         pricing_min:
           type: string
           format: decimal
@@ -27663,6 +27797,11 @@ components:
           format: date-time
           readOnly: true
           nullable: true
+        sub_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          title: Component
         substitutes:
           type: array
           items:
@@ -27733,9 +27872,6 @@ components:
           type: integer
           readOnly: true
           title: ID
-        url:
-          type: string
-          readOnly: true
         title:
           type: string
           title: Description
@@ -27790,13 +27926,16 @@ components:
         project_code_label:
           type: string
           readOnly: true
+          nullable: true
         project_code_detail:
           allOf:
           - $ref: '#/components/schemas/ProjectCode'
           readOnly: true
+          nullable: true
         overdue:
           type: boolean
           readOnly: true
+          default: false
         reference:
           type: string
         sales_order:
@@ -27893,6 +28032,11 @@ components:
           type: integer
           readOnly: true
           title: Build Level
+        create_child_builds:
+          type: boolean
+          writeOnly: true
+          default: false
+          description: Automatically generate child build orders
     PatchedBuildItem:
       type: object
       description: Serializes a BuildItem object, which is an allocation of a stock
@@ -28039,6 +28183,11 @@ components:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
           title: Part
+        build_detail:
+          allOf:
+          - $ref: '#/components/schemas/Build'
+          readOnly: true
+          title: Build
     PatchedCategory:
       type: object
       description: Serializer for PartCategory.
@@ -28084,13 +28233,16 @@ components:
           readOnly: true
           title: Path
           description: Path
+        path:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
         starred:
           type: boolean
           description: Return True if the category is directly "starred" by the current
             user.
-          readOnly: true
-        url:
-          type: string
           readOnly: true
         structural:
           type: boolean
@@ -28098,6 +28250,7 @@ components:
             but may be assigned to child categories.
         icon:
           type: string
+          nullable: true
           description: Icon (optional)
           maxLength: 100
         parent_default_location:
@@ -28137,9 +28290,6 @@ components:
           type: integer
           readOnly: true
           title: ID
-        url:
-          type: string
-          readOnly: true
         name:
           type: string
           title: Company name
@@ -28163,6 +28313,9 @@ components:
         address:
           type: string
           readOnly: true
+          nullable: true
+          title: Return the string representation for the primary address. This property
+            exists for backwards compatibility.
         email:
           type: string
           format: email
@@ -28529,9 +28682,11 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true
@@ -28546,6 +28701,11 @@ components:
         name:
           type: string
           maxLength: 150
+        permissions:
+          type: object
+          additionalProperties: {}
+          description: Return a list of permissions associated with the group.
+          readOnly: true
     PatchedLabelTemplate:
       type: object
       description: Serializer class for label template model.
@@ -28563,7 +28723,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType820Enum'
+          $ref: '#/components/schemas/ModelType28bEnum'
         template:
           type: string
           format: uri
@@ -28610,9 +28770,6 @@ components:
           type: string
           readOnly: true
           description: Unique hash of barcode data
-        url:
-          type: string
-          readOnly: true
         name:
           type: string
           description: Name
@@ -28634,6 +28791,12 @@ components:
           readOnly: true
           title: Path
           description: Path
+        path:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
         items:
           type: integer
           readOnly: true
@@ -28650,6 +28813,7 @@ components:
           readOnly: true
         custom_icon:
           type: string
+          nullable: true
           title: Icon
           description: Icon (optional)
           maxLength: 100
@@ -28758,6 +28922,7 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         model_filters:
           type: object
           additionalProperties: {}
@@ -28765,6 +28930,7 @@ components:
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true
@@ -28790,6 +28956,9 @@ components:
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+        pretty_name:
+          type: string
           readOnly: true
         manufacturer:
           type: integer
@@ -28836,6 +29005,10 @@ components:
           title: ID
         manufacturer_part:
           type: integer
+        manufacturer_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/ManufacturerPart'
+          readOnly: true
         name:
           type: string
           description: Parameter name
@@ -28993,6 +29166,7 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         model_filters:
           type: object
           additionalProperties: {}
@@ -29000,6 +29174,7 @@ components:
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true
@@ -29029,6 +29204,16 @@ components:
         category:
           type: integer
           nullable: true
+        category_detail:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          readOnly: true
+        category_path:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
         category_name:
           type: string
           readOnly: true
@@ -29051,6 +29236,10 @@ components:
           type: integer
           nullable: true
           description: Where is this item normally stored?
+        default_location_detail:
+          allOf:
+          - $ref: '#/components/schemas/DefaultLocation'
+          readOnly: true
         default_supplier:
           type: integer
           nullable: true
@@ -29115,6 +29304,11 @@ components:
           nullable: true
           description: Markdown notes (optional)
           maxLength: 50000
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartParameter'
+          readOnly: true
         pk:
           type: integer
           readOnly: true
@@ -29198,6 +29392,7 @@ components:
         category_default_location:
           type: integer
           readOnly: true
+          nullable: true
         in_stock:
           type: number
           format: double
@@ -29237,6 +29432,27 @@ components:
           type: number
           format: double
           readOnly: true
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/DuplicatePart'
+          writeOnly: true
+          title: Duplicate Part
+          description: Copy initial data from another Part
+        initial_stock:
+          allOf:
+          - $ref: '#/components/schemas/InitialStock'
+          writeOnly: true
+          description: Create Part with initial stock quantity
+        initial_supplier:
+          allOf:
+          - $ref: '#/components/schemas/InitialSupplier'
+          writeOnly: true
+          title: Supplier Information
+          description: Add initial supplier information for this part
+        copy_category_parameters:
+          type: boolean
+          default: true
+          description: Copy parameter templates from selected part category
         tags:
           type: array
           items:
@@ -29281,6 +29497,10 @@ components:
         part:
           type: integer
           description: Parent Part
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
         template:
           type: integer
           description: Parameter Template
@@ -29715,6 +29935,7 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         model_filters:
           type: object
           additionalProperties: {}
@@ -29722,6 +29943,7 @@ components:
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true
@@ -29814,10 +30036,12 @@ components:
         project_code_label:
           type: string
           readOnly: true
+          nullable: true
         project_code_detail:
           allOf:
           - $ref: '#/components/schemas/ProjectCode'
           readOnly: true
+          nullable: true
         reference:
           type: string
         responsible:
@@ -29902,6 +30126,10 @@ components:
           type: integer
           nullable: true
           description: Company from which the items are being ordered
+        supplier_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
         supplier_reference:
           type: string
           description: Supplier order reference code
@@ -29962,6 +30190,10 @@ components:
         order:
           type: integer
           description: Purchase Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/PurchaseOrder'
+          readOnly: true
         price:
           type: string
           format: decimal
@@ -30010,8 +30242,20 @@ components:
         order:
           type: integer
           description: Purchase Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/PurchaseOrder'
+          readOnly: true
         overdue:
           type: boolean
+          readOnly: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+        supplier_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
         received:
           type: number
@@ -30131,7 +30375,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType820Enum'
+          $ref: '#/components/schemas/ModelType28bEnum'
         template:
           type: string
           format: uri
@@ -30210,10 +30454,12 @@ components:
         project_code_label:
           type: string
           readOnly: true
+          nullable: true
         project_code_detail:
           allOf:
           - $ref: '#/components/schemas/ProjectCode'
           readOnly: true
+          nullable: true
         reference:
           type: string
         responsible:
@@ -30294,6 +30540,10 @@ components:
           type: integer
           nullable: true
           description: Company from which items are being returned
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
         customer_reference:
           type: string
           description: Customer order reference code
@@ -30347,6 +30597,10 @@ components:
         order:
           type: integer
           description: Return Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/ReturnOrder'
+          readOnly: true
         price:
           type: string
           format: decimal
@@ -30379,6 +30633,10 @@ components:
         order:
           type: integer
           description: Return Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/ReturnOrder'
+          readOnly: true
         item:
           type: integer
           description: Select item to return from customer
@@ -30407,6 +30665,10 @@ components:
             * `40` - Replace
             * `50` - Refund
             * `60` - Reject
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
         price:
           type: string
           format: decimal
@@ -30491,10 +30753,12 @@ components:
         project_code_label:
           type: string
           readOnly: true
+          nullable: true
         project_code_detail:
           allOf:
           - $ref: '#/components/schemas/ProjectCode'
           readOnly: true
+          nullable: true
         reference:
           type: string
         responsible:
@@ -30567,6 +30831,10 @@ components:
           type: integer
           nullable: true
           description: Company to which the items are being sold
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
         customer_reference:
           type: string
           description: Customer order reference code
@@ -30648,6 +30916,18 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
+        location_detail:
+          allOf:
+          - $ref: '#/components/schemas/LocationBrief'
+          readOnly: true
         shipment_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrderShipment'
@@ -30681,6 +30961,10 @@ components:
         order:
           type: integer
           description: Sales Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
         price:
           type: string
           format: decimal
@@ -30714,6 +30998,10 @@ components:
           type: number
           format: double
           readOnly: true
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
         quantity:
           type: number
           format: double
@@ -30728,6 +31016,10 @@ components:
         order:
           type: integer
           description: Sales Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
         overdue:
           type: boolean
           readOnly: true
@@ -30735,6 +31027,10 @@ components:
           type: integer
           nullable: true
           description: Part
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
         sale_price:
           type: string
           format: decimal
@@ -31017,6 +31313,7 @@ components:
         purchase_order_reference:
           type: string
           readOnly: true
+          nullable: true
         sales_order:
           type: integer
           nullable: true
@@ -31024,6 +31321,7 @@ components:
         sales_order_reference:
           type: string
           readOnly: true
+          nullable: true
         status:
           allOf:
           - $ref: '#/components/schemas/Status2a7Enum'
@@ -31056,10 +31354,12 @@ components:
         SKU:
           type: string
           readOnly: true
+          nullable: true
           title: Supplier Part Number
         MPN:
           type: string
           readOnly: true
+          nullable: true
           title: Manufacturer Part Number
         barcode_hash:
           type: string
@@ -31099,6 +31399,11 @@ components:
           nullable: true
           description: 'Use pack size when adding: the quantity defined is the number
             of packs'
+        tests:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockItemTestResult'
+          readOnly: true
         allocated:
           type: number
           format: double
@@ -31113,6 +31418,12 @@ components:
         child_items:
           type: integer
           readOnly: true
+        location_path:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
         stale:
           type: boolean
           readOnly: true
@@ -31123,11 +31434,21 @@ components:
           type: array
           items:
             type: string
+        supplier_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
+          readOnly: true
+          title: Supplier Part
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
           title: Part
+        location_detail:
+          allOf:
+          - $ref: '#/components/schemas/LocationBrief'
+          readOnly: true
+          title: Location
     PatchedStockItemTestResult:
       type: object
       description: Serializer for the StockItemTestResult model.
@@ -31174,6 +31495,10 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        user_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
         date:
           type: string
           format: date-time
@@ -31183,6 +31508,10 @@ components:
           nullable: true
           title: Test template for this result
           description: Template
+        template_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartTestTemplate'
+          readOnly: true
     PatchedStockLocationType:
       type: object
       description: Serializer for StockLocationType model.
@@ -31228,6 +31557,7 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
         on_order:
           type: number
           format: double
@@ -31241,10 +31571,20 @@ components:
         active:
           type: boolean
           description: Is this supplier part active?
+        manufacturer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
+          title: Manufacturer
         manufacturer_part:
           type: integer
           nullable: true
           description: Select manufacturer part
+        manufacturer_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/ManufacturerPart'
+          readOnly: true
+          title: Manufacturer Part
         MPN:
           type: string
           readOnly: true
@@ -31279,6 +31619,14 @@ components:
           type: integer
           title: Base Part
           description: Select part
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          title: Part
+        pretty_name:
+          type: string
+          readOnly: true
         SKU:
           type: string
           description: Supplier stock keeping unit
@@ -31290,9 +31638,6 @@ components:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
           title: Supplier
-        url:
-          type: string
-          readOnly: true
         updated:
           type: string
           format: date-time
@@ -31317,6 +31662,10 @@ components:
           title: ID
         part:
           type: integer
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
+          readOnly: true
         quantity:
           type: number
           format: double
@@ -31338,6 +31687,10 @@ components:
             * `USD` - US Dollar
         supplier:
           type: integer
+          readOnly: true
+        supplier_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
         updated:
           type: string
@@ -31382,9 +31735,11 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true
@@ -31617,6 +31972,7 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         model_filters:
           type: object
           additionalProperties: {}
@@ -31624,6 +31980,7 @@ components:
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true
@@ -31770,10 +32127,12 @@ components:
         project_code_label:
           type: string
           readOnly: true
+          nullable: true
         project_code_detail:
           allOf:
           - $ref: '#/components/schemas/ProjectCode'
           readOnly: true
+          nullable: true
         reference:
           type: string
         responsible:
@@ -31824,6 +32183,11 @@ components:
           oneOf:
           - $ref: '#/components/schemas/PurchaseOrderStatusCustomKeyEnum'
           - $ref: '#/components/schemas/NullEnum'
+        notes:
+          type: string
+          nullable: true
+          description: Markdown notes (optional)
+          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -31853,6 +32217,10 @@ components:
           type: integer
           nullable: true
           description: Company from which the items are being ordered
+        supplier_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
         supplier_reference:
           type: string
           description: Supplier order reference code
@@ -31903,6 +32271,7 @@ components:
       - status_custom_key
       - status_text
       - supplier
+      - supplier_detail
       - supplier_name
       - total_price
     PurchaseOrderComplete:
@@ -31942,6 +32311,10 @@ components:
         order:
           type: integer
           description: Purchase Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/PurchaseOrder'
+          readOnly: true
         price:
           type: string
           format: decimal
@@ -31965,6 +32338,7 @@ components:
           maxLength: 200
       required:
       - order
+      - order_detail
       - pk
       - quantity
     PurchaseOrderLineItem:
@@ -31994,8 +32368,20 @@ components:
         order:
           type: integer
           description: Purchase Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/PurchaseOrder'
+          readOnly: true
         overdue:
           type: boolean
+          readOnly: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+        supplier_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
         received:
           type: number
@@ -32075,12 +32461,15 @@ components:
       - ipn
       - mpn
       - order
+      - order_detail
       - overdue
       - part
+      - part_detail
       - pk
       - quantity
       - received
       - sku
+      - supplier_part_detail
       - total_price
     PurchaseOrderLineItemReceive:
       type: object
@@ -32112,7 +32501,7 @@ components:
           description: Enter serial numbers for incoming stock items
         status:
           allOf:
-          - $ref: '#/components/schemas/Status2a7Enum'
+          - $ref: '#/components/schemas/Status229Enum'
           default: 10
         packaging:
           type: string
@@ -32305,7 +32694,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType820Enum'
+          $ref: '#/components/schemas/ModelType28bEnum'
         template:
           type: string
           format: uri
@@ -32391,10 +32780,12 @@ components:
         project_code_label:
           type: string
           readOnly: true
+          nullable: true
         project_code_detail:
           allOf:
           - $ref: '#/components/schemas/ProjectCode'
           readOnly: true
+          nullable: true
         reference:
           type: string
         responsible:
@@ -32443,6 +32834,11 @@ components:
           oneOf:
           - $ref: '#/components/schemas/ReturnOrderStatusCustomKeyEnum'
           - $ref: '#/components/schemas/NullEnum'
+        notes:
+          type: string
+          nullable: true
+          description: Markdown notes (optional)
+          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -32470,6 +32866,10 @@ components:
           type: integer
           nullable: true
           description: Company from which items are being returned
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
         customer_reference:
           type: string
           description: Customer order reference code
@@ -32500,6 +32900,7 @@ components:
       - completed_lines
       - contact_detail
       - created_by
+      - customer_detail
       - line_items
       - overdue
       - pk
@@ -32540,6 +32941,10 @@ components:
         order:
           type: integer
           description: Return Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/ReturnOrder'
+          readOnly: true
         price:
           type: string
           format: decimal
@@ -32563,6 +32968,7 @@ components:
           maxLength: 200
       required:
       - order
+      - order_detail
       - pk
       - quantity
     ReturnOrderLineItem:
@@ -32576,6 +32982,10 @@ components:
         order:
           type: integer
           description: Return Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/ReturnOrder'
+          readOnly: true
         item:
           type: integer
           description: Select item to return from customer
@@ -32604,6 +33014,10 @@ components:
             * `40` - Replace
             * `50` - Refund
             * `60` - Reject
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
         price:
           type: string
           format: decimal
@@ -32643,6 +33057,8 @@ components:
       - item
       - item_detail
       - order
+      - order_detail
+      - part_detail
       - pk
       - quantity
     ReturnOrderLineItemReceive:
@@ -32664,8 +33080,9 @@ components:
             * `70` - Lost
             * `75` - Quarantined
             * `85` - Returned
+            * `150` - Incoming goods inspection
           oneOf:
-          - $ref: '#/components/schemas/Status2a7Enum'
+          - $ref: '#/components/schemas/Status229Enum'
           - $ref: '#/components/schemas/BlankEnum'
       required:
       - item
@@ -32720,8 +33137,9 @@ components:
             * `70` - Lost
             * `75` - Quarantined
             * `85` - Returned
+            * `150` - Incoming goods inspection
           oneOf:
-          - $ref: '#/components/schemas/Status2a7Enum'
+          - $ref: '#/components/schemas/Status229Enum'
           - $ref: '#/components/schemas/BlankEnum'
         notes:
           type: string
@@ -32825,10 +33243,12 @@ components:
         project_code_label:
           type: string
           readOnly: true
+          nullable: true
         project_code_detail:
           allOf:
           - $ref: '#/components/schemas/ProjectCode'
           readOnly: true
+          nullable: true
         reference:
           type: string
         responsible:
@@ -32880,6 +33300,11 @@ components:
           oneOf:
           - $ref: '#/components/schemas/SalesOrderStatusCustomKeyEnum'
           - $ref: '#/components/schemas/NullEnum'
+        notes:
+          type: string
+          nullable: true
+          description: Markdown notes (optional)
+          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -32896,6 +33321,10 @@ components:
           type: integer
           nullable: true
           description: Company to which the items are being sold
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
         customer_reference:
           type: string
           description: Customer order reference code
@@ -32940,6 +33369,7 @@ components:
       - completed_shipments_count
       - contact_detail
       - created_by
+      - customer_detail
       - line_items
       - overdue
       - pk
@@ -32989,16 +33419,41 @@ components:
         location:
           type: integer
           readOnly: true
+        item_detail:
+          allOf:
+          - $ref: '#/components/schemas/StockItemSerializerBrief'
+          readOnly: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
+        location_detail:
+          allOf:
+          - $ref: '#/components/schemas/LocationBrief'
+          readOnly: true
         shipment_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrderShipment'
           readOnly: true
       required:
+      - customer_detail
       - item
+      - item_detail
       - line
       - location
+      - location_detail
       - order
+      - order_detail
       - part
+      - part_detail
       - pk
       - quantity
       - serial
@@ -33040,6 +33495,10 @@ components:
         order:
           type: integer
           description: Sales Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
         price:
           type: string
           format: decimal
@@ -33063,6 +33522,7 @@ components:
           maxLength: 200
       required:
       - order
+      - order_detail
       - pk
       - quantity
     SalesOrderLineItem:
@@ -33076,6 +33536,10 @@ components:
         allocated:
           type: number
           format: double
+          readOnly: true
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
         quantity:
           type: number
@@ -33091,6 +33555,10 @@ components:
         order:
           type: integer
           description: Sales Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
         overdue:
           type: boolean
           readOnly: true
@@ -33098,6 +33566,10 @@ components:
           type: integer
           nullable: true
           description: Part
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
         sale_price:
           type: string
           format: decimal
@@ -33151,9 +33623,12 @@ components:
       - available_stock
       - available_variant_stock
       - building
+      - customer_detail
       - on_order
       - order
+      - order_detail
       - overdue
+      - part_detail
       - pk
       - quantity
       - shipped
@@ -33188,6 +33663,10 @@ components:
         order:
           type: integer
           description: Sales Order
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
         allocated_items:
           type: integer
           readOnly: true
@@ -33232,6 +33711,7 @@ components:
       required:
       - allocated_items
       - order
+      - order_detail
       - pk
     SalesOrderShipmentAllocation:
       type: object
@@ -33520,6 +34000,28 @@ components:
       - password_forgotten_enabled
       - registration_enabled
       - sso_registration
+    Status229Enum:
+      enum:
+      - 10
+      - 50
+      - 55
+      - 60
+      - 65
+      - 70
+      - 75
+      - 85
+      - 150
+      type: integer
+      description: |-
+        * `10` - OK
+        * `50` - Attention needed
+        * `55` - Damaged
+        * `60` - Destroyed
+        * `65` - Rejected
+        * `70` - Lost
+        * `75` - Quarantined
+        * `85` - Returned
+        * `150` - Incoming goods inspection
     Status2a7Enum:
       enum:
       - 10
@@ -33554,6 +34056,28 @@ components:
         * `25` - On Hold
         * `30` - Cancelled
         * `40` - Complete
+    StatusCustomKey229Enum:
+      enum:
+      - 10
+      - 50
+      - 55
+      - 60
+      - 65
+      - 70
+      - 75
+      - 85
+      - 150
+      type: integer
+      description: |-
+        * `10` - OK
+        * `50` - Attention needed
+        * `55` - Damaged
+        * `60` - Destroyed
+        * `65` - Rejected
+        * `70` - Lost
+        * `75` - Quarantined
+        * `85` - Returned
+        * `150` - Incoming goods inspection
     StatusCustomKey2a7Enum:
       enum:
       - 10
@@ -33647,8 +34171,9 @@ components:
             * `70` - Lost
             * `75` - Quarantined
             * `85` - Returned
+            * `150` - Incoming goods inspection
           oneOf:
-          - $ref: '#/components/schemas/Status2a7Enum'
+          - $ref: '#/components/schemas/Status229Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         packaging:
@@ -33706,7 +34231,7 @@ components:
           description: Select stock items to change status
         status:
           allOf:
-          - $ref: '#/components/schemas/Status2a7Enum'
+          - $ref: '#/components/schemas/Status229Enum'
           default: 10
         note:
           type: string
@@ -33827,6 +34352,7 @@ components:
         purchase_order_reference:
           type: string
           readOnly: true
+          nullable: true
         sales_order:
           type: integer
           nullable: true
@@ -33834,6 +34360,7 @@ components:
         sales_order_reference:
           type: string
           readOnly: true
+          nullable: true
         status:
           allOf:
           - $ref: '#/components/schemas/Status2a7Enum'
@@ -33866,10 +34393,12 @@ components:
         SKU:
           type: string
           readOnly: true
+          nullable: true
           title: Supplier Part Number
         MPN:
           type: string
           readOnly: true
+          nullable: true
           title: Manufacturer Part Number
         barcode_hash:
           type: string
@@ -33909,6 +34438,11 @@ components:
           nullable: true
           description: 'Use pack size when adding: the quantity defined is the number
             of packs'
+        tests:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockItemTestResult'
+          readOnly: true
         allocated:
           type: number
           format: double
@@ -33922,6 +34456,12 @@ components:
           readOnly: true
         child_items:
           type: integer
+          readOnly: true
+        location_path:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
           readOnly: true
         stale:
           type: boolean
@@ -33958,6 +34498,7 @@ components:
       - in_stock
       - installed_items
       - location_detail
+      - location_path
       - parent
       - part
       - part_detail
@@ -33969,6 +34510,7 @@ components:
       - status_text
       - stocktake_date
       - supplier_part_detail
+      - tests
       - tracking_items
       - updated
     StockItemSerializerBrief:
@@ -34066,6 +34608,10 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        user_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
         date:
           type: string
           format: date-time
@@ -34075,11 +34621,17 @@ components:
           nullable: true
           title: Test template for this result
           description: Template
+        template_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartTestTemplate'
+          readOnly: true
       required:
       - date
       - pk
       - stock_item
+      - template_detail
       - user
+      - user_detail
     StockLocationType:
       type: object
       description: Serializer for StockLocationType model.
@@ -34165,6 +34717,10 @@ components:
           title: ID
         item:
           type: integer
+        item_detail:
+          allOf:
+          - $ref: '#/components/schemas/StockItemSerializerBrief'
+          readOnly: true
         date:
           type: string
           format: date-time
@@ -34186,14 +34742,20 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        user_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
       required:
       - date
       - deltas
       - item
+      - item_detail
       - label
       - pk
       - tracking_type
       - user
+      - user_detail
     StockTransfer:
       type: object
       description: Serializer for transferring (moving) stock item(s).
@@ -34215,12 +34777,26 @@ components:
       type: object
       description: Serializer for SupplierPart object.
       properties:
+        available:
+          type: number
+          format: double
+        availability_updated:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Date of last update of availability data
         description:
           type: string
           nullable: true
           description: Supplier part description
           maxLength: 250
         in_stock:
+          type: number
+          format: double
+          readOnly: true
+          nullable: true
+        on_order:
           type: number
           format: double
           readOnly: true
@@ -34233,10 +34809,20 @@ components:
         active:
           type: boolean
           description: Is this supplier part active?
+        manufacturer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
+          title: Manufacturer
         manufacturer_part:
           type: integer
           nullable: true
           description: Select manufacturer part
+        manufacturer_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/ManufacturerPart'
+          readOnly: true
+          title: Manufacturer Part
         MPN:
           type: string
           readOnly: true
@@ -34271,15 +34857,25 @@ components:
           type: integer
           title: Base Part
           description: Select part
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          title: Part
+        pretty_name:
+          type: string
+          readOnly: true
         SKU:
           type: string
           description: Supplier stock keeping unit
           maxLength: 100
         supplier:
           type: integer
-        url:
-          type: string
+        supplier_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          title: Supplier
         updated:
           type: string
           format: date-time
@@ -34290,17 +34886,27 @@ components:
           nullable: true
           description: Markdown notes (optional)
           maxLength: 50000
+        tags:
+          type: array
+          items:
+            type: string
       required:
       - MPN
       - SKU
+      - availability_updated
       - barcode_hash
       - in_stock
+      - manufacturer_detail
+      - manufacturer_part_detail
+      - on_order
       - pack_quantity_native
       - part
+      - part_detail
       - pk
+      - pretty_name
       - supplier
+      - supplier_detail
       - updated
-      - url
     SupplierPriceBreak:
       type: object
       description: Serializer for SupplierPriceBreak object.
@@ -34311,6 +34917,10 @@ components:
           title: ID
         part:
           type: integer
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
+          readOnly: true
         quantity:
           type: number
           format: double
@@ -34333,6 +34943,10 @@ components:
         supplier:
           type: integer
           readOnly: true
+        supplier_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
         updated:
           type: string
           format: date-time
@@ -34341,10 +34955,12 @@ components:
           description: Timestamp of last update
       required:
       - part
+      - part_detail
       - pk
       - price
       - quantity
       - supplier
+      - supplier_detail
       - updated
     UninstallStockItem:
       type: object
@@ -34491,9 +35107,11 @@ components:
         model_name:
           type: string
           readOnly: true
+          nullable: true
         api_url:
           type: string
           readOnly: true
+          nullable: true
         typ:
           type: string
           readOnly: true

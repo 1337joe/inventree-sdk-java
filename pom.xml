@@ -9,7 +9,7 @@
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
     <packaging>jar</packaging>
-    <version>309-SNAPSHOT</version>
+    <version>317-SNAPSHOT</version>
 
     <licenses>
         <license>
@@ -121,9 +121,91 @@
                         <regexFlag>MULTILINE</regexFlag>
                     </regexFlags>
                     <replacements>
+                        <!-- null keyword breaks enum builder -->
                         <replacement>
                             <token>- null$</token>
                             <value>- nullValue</value>
+                        </replacement>
+                        <!-- read-only (and therefore required) fields that shouldn't actually be required -->
+                        <replacement>
+                            <token>- location_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- customer_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- category_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- manufacturer_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- supplier_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- default_location_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- parameters</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- manufacturer_part_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- category_path</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- tests</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- location_path</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- permissions</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- part_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- pretty_name</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- supplier_part_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- project_code_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- responsible_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- contact_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- address_detail</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>- availability_updated</token>
+                            <value></value>
                         </replacement>
                     </replacements>
                 </configuration>
