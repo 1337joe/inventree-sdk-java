@@ -85,7 +85,7 @@ public class TestUserApi extends TestApi {
     public void userList_paginated() throws ApiException {
         int limit = 5;
         int offset = 0;
-        PaginatedUserCreateList actual = api.userList(null, null, null, limit, offset, null, null);
+        PaginatedUserCreateList actual = api.userList(limit, null, null, null, offset, null, null);
         Assertions.assertNotNull(actual);
     }
 

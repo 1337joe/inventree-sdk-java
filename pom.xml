@@ -126,6 +126,11 @@
                             <token>- null$</token>
                             <value>- nullValue</value>
                         </replacement>
+                        <!-- list endpoints require limit fields to return the expected type -->
+                        <replacement>
+                            <token>name: (limit)(\n\s+)required: false</token>
+                            <value>name: $1$2required: true</value>
+                        </replacement>
                         <!-- read-only (and therefore required) fields that shouldn't actually be required -->
                         <replacement>
                             <token>- location_detail</token>

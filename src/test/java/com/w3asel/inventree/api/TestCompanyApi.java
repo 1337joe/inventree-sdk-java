@@ -121,7 +121,7 @@ public class TestCompanyApi extends TestApi {
         int offset = 0;
         String ordering = "name";
         PaginatedCompanyList actual =
-                api.companyList(null, null, null, null, limit, null, offset, ordering, null);
+                api.companyList(limit, null, null, null, null, null, offset, ordering, null);
         Assertions.assertEquals(expectedList.size(), actual.getCount());
         List<Company> actualList = actual.getResults();
 
@@ -213,7 +213,7 @@ public class TestCompanyApi extends TestApi {
         int offset = 0;
         String ordering = "title";
         PaginatedAddressList actual =
-                api.companyAddressList(company, limit, offset, ordering, null);
+                api.companyAddressList(limit, company, offset, ordering, null);
         Assertions.assertEquals(2, actual.getCount(), "Incorrect total count");
         List<Address> actualList = actual.getResults();
 
@@ -273,7 +273,7 @@ public class TestCompanyApi extends TestApi {
         int offset = 0;
         String ordering = "name";
         PaginatedContactList actual =
-                api.companyContactList(company, limit, offset, ordering, null);
+                api.companyContactList(limit, company, offset, ordering, null);
         Assertions.assertEquals(expectedList.size(), actual.getCount());
         List<Contact> actualList = actual.getResults();
 
@@ -408,7 +408,7 @@ public class TestCompanyApi extends TestApi {
         int offset = 0;
         // TODO string company
         PaginatedSupplierPartList actual =
-                api.companyPartList(null, null, null, Integer.toString(company), null, limit, null,
+                api.companyPartList(limit, null, null, null, Integer.toString(company), null, null,
                         null, offset, null, null, null, null, null, null, null, null);
         Assertions.assertEquals(expectedList.size(), actual.getCount());
         List<SupplierPart> actualList = actual.getResults();
@@ -517,7 +517,7 @@ public class TestCompanyApi extends TestApi {
 
         int limit = 5;
         int offset = 0;
-        PaginatedManufacturerPartList actual = api.companyPartManufacturerList(null, limit, null,
+        PaginatedManufacturerPartList actual = api.companyPartManufacturerList(limit, null, null,
                 null, offset, null, null, null, null, null, null);
         Assertions.assertEquals(expectedList.size(), actual.getCount());
         List<ManufacturerPart> actualList = actual.getResults();
@@ -612,7 +612,7 @@ public class TestCompanyApi extends TestApi {
         int limit = 5;
         int offset = 0;
         PaginatedSupplierPriceBreakList actual =
-                api.companyPriceBreakList(null, limit, offset, null, part, null, null, null);
+                api.companyPriceBreakList(limit, null, offset, null, part, null, null, null);
         Assertions.assertEquals(2, actual.getCount());
         List<SupplierPriceBreak> actualList = actual.getResults();
 
