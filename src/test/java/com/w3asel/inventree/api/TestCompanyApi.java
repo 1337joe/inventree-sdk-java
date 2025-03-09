@@ -143,7 +143,7 @@ public class TestCompanyApi extends TestApi {
     @CsvSource({"1", "23"})
     public void companyRetrieve(int company) throws ApiException {
         JsonObject expected = InventreeDemoDataset.getObjects(Models.COMPANY, company).get(0);
-        Company actual = api.companyRetrieve(Integer.toString(company)); // TODO String PK
+        Company actual = api.companyRetrieve(Integer.toString(company));
         assertCompanyEquals(expected, actual, true);
 
         // verify data not directly in demo dataset
@@ -238,6 +238,59 @@ public class TestCompanyApi extends TestApi {
         assertAddressEquals(expected, actual);
     }
 
+    @Test
+    public void companyAddressDelete_NotFound() {
+        try {
+            api.companyAddressDestroy2(-1);
+            Assertions.fail("Expected 404 Not Found");
+        } catch (ApiException e) {
+            Assertions.assertTrue(e.getMessage().contains("Not Found"),
+                    "Invalid key should not have been found.");
+        }
+    }
+
+    @Test
+    public void companyAddressCreateDelete() throws ApiException {
+        int company = 1;
+
+        int initialCount = api.companyAddressList(1, company, null, null, null).getCount();
+
+        // set only required fields
+        Address newAddress = new Address().company(company).title("Title");
+        Assertions.assertNull(newAddress.getPk(), "Unsubmitted address should not have PK");
+
+        Address actual = api.companyAddressCreate(newAddress);
+        Assertions.assertNotNull(actual.getPk(), "Created address should have PK");
+
+        try {
+            int createdCount = api.companyAddressList(1, company, null, null, null).getCount();
+            Assertions.assertEquals(initialCount + 1, createdCount,
+                    "Address count should have increased");
+        } finally {
+            api.companyAddressDestroy2(actual.getPk());
+        }
+
+        int deletedCount = api.companyAddressList(1, company, null, null, null).getCount();
+        Assertions.assertEquals(initialCount, deletedCount, "Address count should have reset");
+
+        try {
+            api.companyAddressDestroy2(actual.getPk());
+            Assertions.fail("Expected 404 Not Found");
+        } catch (ApiException e) {
+            Assertions.assertTrue(e.getMessage().contains("Not Found"),
+                    "Invalid key should not have been found.");
+        }
+    }
+
+    @Disabled
+    @Test
+    public void companyAddressListDelete_NotFound() throws ApiException {
+        // TODO revisit when schema includes request content
+        api.companyAddressDestroy();
+    }
+
+    // TODO address update, address partial update
+
     private static void assertContactEquals(JsonObject expected, Contact actual) {
         Assertions.assertEquals(expected.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt(),
                 actual.getPk(), "Incorrect primary key");
@@ -294,7 +347,6 @@ public class TestCompanyApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"1"})
     public void companyContactRetrieve(int contact) throws ApiException {
-        // TODO string pk
         Contact actual = api.companyContactRetrieve(Integer.toString(contact));
         JsonObject expected =
                 InventreeDemoDataset.getObjects(Models.COMPANY_CONTACT, contact).get(0);
@@ -305,6 +357,61 @@ public class TestCompanyApi extends TestApi {
             Assertions.assertEquals("Arrow", actual.getCompanyName(), "Incorrect company name");
         }
     }
+
+
+    @Test
+    public void companyContactDelete_NotFound() {
+        try {
+            api.companyContactDestroy2(Integer.toString(-1));
+            Assertions.fail("Expected 404 Not Found");
+        } catch (ApiException e) {
+            Assertions.assertTrue(e.getMessage().contains("Not Found"),
+                    "Invalid key should not have been found.");
+        }
+    }
+
+    @Test
+    public void companyContactCreateDelete() throws ApiException {
+        int company = 1;
+
+        int initialCount = api.companyContactList(1, company, null, null, null).getCount();
+
+        // set only required fields
+        Contact newContact = new Contact().company(company).name("Name");
+        Assertions.assertNull(newContact.getPk(), "Unsubmitted contact should not have PK");
+
+        Contact actual = api.companyContactCreate(newContact);
+        Assertions.assertNotNull(actual.getPk(), "Created contact should have PK");
+
+        try {
+            int createdCount = api.companyContactList(1, company, null, null, null).getCount();
+            Assertions.assertEquals(initialCount + 1, createdCount,
+                    "Company count should have increased");
+        } finally {
+            api.companyContactDestroy2(Integer.toString(actual.getPk()));
+        }
+
+        int deletedCount = api.companyContactList(1, company, null, null, null).getCount();
+        Assertions.assertEquals(initialCount, deletedCount, "Contact count should have reset");
+
+        try {
+            api.companyContactDestroy2(Integer.toString(actual.getPk()));
+            Assertions.fail("Expected 404 Not Found");
+        } catch (ApiException e) {
+            Assertions.assertTrue(e.getMessage().contains("Not Found"),
+                    "Invalid key should not have been found.");
+        }
+    }
+
+    @Disabled
+    @Test
+    public void companyContactListDelete_NotFound() throws ApiException {
+        // TODO revisit when schema includes request content
+        api.companyContactDestroy();
+    }
+
+    // TODO contact update, contact partial update
+
 
     private static void assertSupplierPartEquals(JsonObject expected, SupplierPart actual,
             boolean detail) {
@@ -430,7 +537,6 @@ public class TestCompanyApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"11"})
     public void companyPartRetrieve(int supplierPart) throws ApiException {
-        // TODO String PK
         SupplierPart actual = api.companyPartRetrieve(Integer.toString(supplierPart));
         JsonObject expected =
                 InventreeDemoDataset.getObjects(Models.COMPANY_SUPPLIER_PART, supplierPart).get(0);
@@ -539,7 +645,6 @@ public class TestCompanyApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"1"})
     public void companyPartManufacturerRetrieve(int manufacturerPart) throws ApiException {
-        // TODO String PK
         ManufacturerPart actual =
                 api.companyPartManufacturerRetrieve(Integer.toString(manufacturerPart));
         JsonObject expected = InventreeDemoDataset
@@ -636,17 +741,20 @@ public class TestCompanyApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"2"})
-    public void companyPriceBreakRetrieve(int supplierPriceBreak) throws ApiException {
-        // TODO string PK
+    @CsvSource({"2,1"})
+    public void companyPriceBreakRetrieve(int supplierPriceBreak, int company) throws ApiException {
         SupplierPriceBreak actual =
                 api.companyPriceBreakRetrieve(Integer.toString(supplierPriceBreak));
         JsonObject expectedPriceBreak =
                 InventreeDemoDataset.getObjects(Models.COMPANY_SUPPLIER_PRICE_BREAK, 2).get(0);
         assertSupplierPriceBreakEquals(expectedPriceBreak, actual, true);
 
-        if (2 == supplierPriceBreak) {
-            Assertions.assertEquals(1, actual.getSupplier(), "Incorrect supplier reference");
-        }
+        Assertions.assertEquals(company, actual.getSupplier(), "Incorrect supplier reference");
+    }
+
+    @Test
+    public void test() throws ApiException {
+        // api.companyPriceBreakUpdate(null, null);
+        // api.companyAddressDestr
     }
 }

@@ -18,5 +18,10 @@ public class TestBuildApi extends TestApi {
     public void test() throws ApiException {
         Build actual = api.buildRetrieve(1);
         Assertions.assertNotNull(actual);
+
+        int limit = 1000;
+        api.buildList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null);
     }
 }

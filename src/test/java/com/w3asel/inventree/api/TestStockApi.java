@@ -17,7 +17,7 @@ public class TestStockApi extends TestApi {
 
     @Test
     public void stockList() throws ApiException {
-        int limit = 5;
+        int limit = 1000;
         int offset = 0;
         PaginatedStockItemList actual = api.stockList(limit, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
@@ -31,6 +31,8 @@ public class TestStockApi extends TestApi {
     public void test() throws ApiException {
         StockItem actual = api.stockRetrieve(1223);
         Assertions.assertNotNull(actual);
+
+        // api.list
     }
 
 }
