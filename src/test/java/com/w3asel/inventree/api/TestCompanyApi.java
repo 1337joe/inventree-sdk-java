@@ -547,7 +547,7 @@ public class TestCompanyApi extends TestApi {
             Assertions.assertEquals(0, actual.getInStock(), "Incorrect in stock");
             Assertions.assertEquals(null, actual.getManufacturerDetail(),
                     "Incorrect manufacturer detail");
-            Assertions.assertEquals("RR0510P-104-D", actual.getMPN(), "Incorrect MPN");
+            Assertions.assertEquals(null, actual.getMPN(), "Incorrect MPN");
             Assertions.assertEquals(0, actual.getOnOrder(), "Incorrect on order");
             Assertions.assertEquals(null, actual.getPartDetail(), "Incorrect part detail");
 

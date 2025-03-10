@@ -35,6 +35,10 @@ Be sure to run `invoke update` when pulling updates into your dev environment.
 
 You can either browse to http://localhost:8000/api-doc/ (or the corresponding path on your instance, browsable from the About InvenTree dialog), or from a dev environment run:
 
+From the root directory of a InvenTree dev environment
+
 ```sh
+pre_schema.sh
 invoke dev.schema --ignore-warnings --filename api.yaml --overwrite
+post_schema.sh api.yaml
 ```

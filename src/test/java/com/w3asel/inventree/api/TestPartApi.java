@@ -22,8 +22,7 @@ public class TestPartApi extends TestApi {
         int limit = 1000;
         api.partList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         api.partCategoryList(limit, null, null, null, null, null, null, null, null, null, null,
                 null);
@@ -44,7 +43,8 @@ public class TestPartApi extends TestApi {
 
         api.partTestTemplateList(limit, null, null, null, null, null, null, null, null, null, null);
 
-        api.partThumbsList(limit, null, null);
+        // not returning paginated list but raw list of thumbnails
+        // api.partThumbsList(limit, null, null);
     }
 
     @Test

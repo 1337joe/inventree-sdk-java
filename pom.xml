@@ -7,7 +7,7 @@
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
     <packaging>jar</packaging>
-    <version>0.18.317-SNAPSHOT</version>
+    <version>0.17.294-SNAPSHOT</version>
 
     <name>InvenTree SDK (Java)</name>
     <description>A Java implementation of the OpenAPI spec published by InvenTree to allow interfacing with a server.</description>
@@ -151,23 +151,196 @@
                             <token>name: (limit)(\n\s+)required: false</token>
                             <value>name: $1$2required: true</value>
                         </replacement>
-                        <!-- misc elements that shouldn't be required
+                        <!-- misc elements that shouldn't be required -->
                         <replacement>
-                            <token>- project_code_detail</token>
+                            <token>^\s+- overdue$\n</token>
                             <value></value>
                         </replacement>
                         <replacement>
-                            <token>- responsible_detail</token>
+                            <token>^\s+- project_code_label$\n</token>
                             <value></value>
                         </replacement>
                         <replacement>
-                            <token>- contact_detail</token>
+                            <token>^\s+- MPN$\n</token>
                             <value></value>
                         </replacement>
                         <replacement>
-                            <token>- address_detail</token>
+                            <token>^\s+- category_default_location$\n</token>
                             <value></value>
-                        </replacement> -->
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- tracking_items$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- manufacturer$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- expired$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- serial$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- completed_shipments_count$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- model_name$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- sales_order_reference$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- responsible_detail$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- purchase_order_reference$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- completed_lines$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- project_code_detail$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- api_url$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- parts$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- installed_items$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- allocated_items$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- shipments_count$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- unallocated_stock$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- SKU$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- image$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- suppliers$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- stale$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- line_items$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- address_detail$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- child_items$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- ordering$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- contact_detail$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- allocated$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- stock_item_count$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- variant_stock$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- location_name$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- destination_detail$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- ipn$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- revision_count$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- mpn$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- in_stock$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- building$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- required_for_build_orders$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- total_in_stock$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- required_for_sales_orders$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- allocated_to_sales_orders$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- allocated_to_build_orders$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- external_stock$\n</token>
+                            <value></value>
+                        </replacement>
+                        <!-- remove now-empty required list tags -->
+                        <replacement>
+                            <token>^(\s+)required:\n((?!\1))</token>
+                            <value>$2</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>

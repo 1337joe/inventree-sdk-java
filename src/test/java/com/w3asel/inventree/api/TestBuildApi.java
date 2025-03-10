@@ -21,7 +21,6 @@ public class TestBuildApi extends TestApi {
 
         int limit = 1000;
         api.buildList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null);
     }
 }
