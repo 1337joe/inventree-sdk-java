@@ -18,7 +18,6 @@ import com.w3asel.inventree.model.PaginatedManufacturerPartList;
 import com.w3asel.inventree.model.PaginatedManufacturerPartParameterList;
 import com.w3asel.inventree.model.PaginatedSupplierPartList;
 import com.w3asel.inventree.model.PaginatedSupplierPriceBreakList;
-import com.w3asel.inventree.model.SalePriceCurrencyEnum;
 import com.w3asel.inventree.model.SupplierPart;
 import com.w3asel.inventree.model.SupplierPriceBreak;
 import org.junit.jupiter.api.Assertions;
@@ -92,8 +91,8 @@ public class TestCompanyApi extends TestApi {
                 "Incorrect supplier state");
         Assertions.assertEquals(fields.get("is_manufacturer").getAsBoolean(),
                 actual.getIsManufacturer(), "Incorrect manufacturer state");
-        Assertions.assertEquals(SalePriceCurrencyEnum.valueOf(fields.get("currency").getAsString()),
-                actual.getCurrency(), "Incorrect currency");
+        Assertions.assertEquals(fields.get("currency").getAsString(), actual.getCurrency(),
+                "Incorrect currency");
 
 
         if (detail) {
@@ -684,8 +683,7 @@ public class TestCompanyApi extends TestApi {
 
         Assertions.assertEquals(fields.get("quantity").getAsDouble(), actual.getQuantity(),
                 "Incorrect quantity");
-        Assertions.assertEquals(
-                SalePriceCurrencyEnum.valueOf(fields.get("price_currency").getAsString()),
+        Assertions.assertEquals(fields.get("price_currency").getAsString(),
                 actual.getPriceCurrency(), "Incorrect currency");
         Assertions.assertEquals(fields.get("price").getAsDouble(), actual.getPrice().doubleValue(),
                 1e-10, "Incorrect price");
