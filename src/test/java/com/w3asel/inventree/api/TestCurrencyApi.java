@@ -18,6 +18,15 @@ public class TestCurrencyApi extends TestApi {
     }
 
     @Test
+    public void testCurrencyCodeSerialization() throws ApiException {
+        // comma-separated list
+        new SettingsApi(apiClient).settingsGlobalRetrieve("CURRENCY_CODES").getValue();
+        // needs to not break on CAD (which isn't in the default list)
+        new CompanyApi(apiClient).companyPriceBreakList(100, null, null, null, null, null, null,
+                null);
+    }
+
+    @Test
     public void currencyExchangeRetrieve() throws ApiException {
         // TODO don't like having a custom time format here... (also nanosecond time parsing might
         // read wrong since only micros are provided)
