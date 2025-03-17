@@ -1,25 +1,36 @@
-# inventree-java
+# InvenTree SDK (Java)
 
-An Inventree api client 
+A Java [InvenTree](https://inventree.org/) ([GitHub](https://github.com/inventree/InvenTree)) api client.
 
+## Usage
 
+Simply include in your dependency pom like so:
 
-https://github.com/inventree/inventree-python
+```xml
+<dependency>
+    <groupId>com.w3asel</groupId>
+    <artifactId>inventree-sdk-java</artifactId>
+    <version>0.18.317</version>
+</dependency>
+```
 
-https://github.com/jellyfin/jellyfin-sdk-kotlin
+The version number is a mix of the InvenTree release (0.18) and the schema version (317) with point releases after that when multiple client jars are released against the same schema.
 
-https://drf-spectacular.readthedocs.io/en/latest/client_generation.html
+## Running a Local InvenTree Server
 
-## Test Server
+Set up an [InvenTree dev environment](https://docs.inventree.org/en/stable/develop/devcontainer/).
 
 ```sh
-invoke dev.setup --test
+invoke dev.setup-test
 invoke dev.server
 ```
 
-## Generate Schema
+Be sure to run `invoke update` when pulling updates into your dev environment.
+
+### Generate Schema from InvenTree
+
+You can either browse to http://localhost:8000/api-doc/ (or the corresponding path on your instance, browsable from the About InvenTree dialog), or from a dev environment run:
 
 ```sh
-find src/backend/ -name \*serializers.py -exec sed -i "s/self.fields.pop/pass# self.fields.pop/g" {} \;
 invoke dev.schema --ignore-warnings --filename api.yaml --overwrite
 ```

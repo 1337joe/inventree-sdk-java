@@ -9,7 +9,7 @@
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
     <packaging>jar</packaging>
-    <version>317-SNAPSHOT</version>
+    <version>0.18.317-SNAPSHOT</version>
 
     <licenses>
         <license>
