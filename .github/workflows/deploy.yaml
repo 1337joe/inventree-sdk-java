@@ -1,0 +1,46 @@
+name: Deploy to Maven Central
+
+on:
+  push:
+    branches:
+      - 'main'
+      - '0.17.x'
+    paths:
+      - 'src/main/resources/api.yaml'
+      - 'pom.xml'
+      - '.github/workflows/*' # temporary while getting workflow functioning
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Import GPG signing key
+        uses: crazy-max/ghaction-import-gpg@v6.2.0
+        with:
+          gpg_private_key: ${{ secrets.MVN_SIGNING_KEY }}
+          passphrase: ${{ secrets.MVN_SIGNING_KEY_PASSPHRASE }}
+
+      - uses: actions/setup-java@v4.7.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.9
+
+      - uses: s4u/maven-settings-action@v3.1.0
+        with:
+          servers: |
+            [{
+                "id": "central",
+                "username": "${{ secrets.MVN_CENTRAL_TOKEN }}",
+                "password": "${{ secrets.MVN_CENTRAL_PASSWORD }}"
+            }]
+
+      - name: Bundle and publish to Central
+        run: mvn deploy -P publish
