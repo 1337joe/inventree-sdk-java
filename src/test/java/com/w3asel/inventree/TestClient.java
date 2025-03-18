@@ -42,7 +42,7 @@ public class TestClient {
         int limit = 5;
         PaginatedSalesOrderList salesOrders = api.orderSoList(limit, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null);
         System.out.println("Fetched " + salesOrders.getResults().size() + " of "
                 + salesOrders.getCount() + " Sales Orders");
 

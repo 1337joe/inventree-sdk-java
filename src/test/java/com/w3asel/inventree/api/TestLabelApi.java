@@ -21,7 +21,5 @@ public class TestLabelApi extends TestApi {
 
         int limit = 100;
         api.labelTemplateList(limit, null, null, null, null, null);
-
-        api.labelOutputList(limit, null, null);
     }
 }

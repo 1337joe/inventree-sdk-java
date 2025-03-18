@@ -27,7 +27,7 @@ public class TestOrderApi extends TestApi {
 
         int poPk = api.orderPoList(limit, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null).getResults().get(0).getPk();
+                null, null, null, null).getResults().get(0).getPk();
         api.orderPoRetrieve(poPk);
     }
 
@@ -55,7 +55,7 @@ public class TestOrderApi extends TestApi {
 
         int roPk = api.orderRoList(limit, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null).getResults().get(0).getPk();
+                null, null, null, null).getResults().get(0).getPk();
         api.orderRoRetrieve(roPk);
     }
 
@@ -87,7 +87,7 @@ public class TestOrderApi extends TestApi {
 
         int soPk = api.orderSoList(limit, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null).getResults().get(0).getPk();
+                null, null, null, null).getResults().get(0).getPk();
         api.orderSoRetrieve(soPk);
     }
 
@@ -138,8 +138,8 @@ public class TestOrderApi extends TestApi {
         int limit = 5;
         int offset = 0;
         PaginatedSalesOrderList actual = api.orderSoList(limit, null, null, null, null, null, null,
-                null, null, null, null, null, null, offset, null, null, null, null, null, null,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, offset, null, null, null, null,
+                null, null, null, null, null, null, null, null);
         Assertions.assertEquals(expectedList.size(), actual.getCount());
         List<SalesOrder> actualList = actual.getResults();
     }
