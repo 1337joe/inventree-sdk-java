@@ -4,12 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>InvenTree SDK (Java)</name>
-
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
     <packaging>jar</packaging>
     <version>0.18.317-SNAPSHOT</version>
+
+    <name>InvenTree SDK (Java)</name>
+    <description>A Java implementation of the OpenAPI spec published by InvenTree to allow interfacing with a server.</description>
+    <url>https://github.com/1337joe/inventree-sdk-java</url>
 
     <licenses>
         <license>
@@ -18,27 +20,45 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <name>Joseph Rogers</name>
+            <email>joe@w3asel.com</email>
+            <url>https://www.w3asel.com</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git@github.com:1337joe/inventree-sdk-java.git</connection>
+        <developerConnection>scm:git@github.com:1337joe/inventree-sdk-java.git</developerConnection>
+        <url>https://github.com/1337joe/inventree-sdk-java</url>
+    </scm>
+
     <properties>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <gson-fire-version>1.9.0</gson-fire-version>
         <okhttp-version>4.12.0</okhttp-version>
-        <gson-version>2.10.1</gson-version>
+        <gson-version>2.12.1</gson-version>
         <commons-lang3-version>3.17.0</commons-lang3-version>
         <jackson-databind-nullable-version>0.2.6</jackson-databind-nullable-version>
         <jakarta-annotation-version>1.3.5</jakarta-annotation-version>
         <beanvalidation-version>2.0.2</beanvalidation-version>
         <junit-version>5.10.3</junit-version>
         <junit-platform-runner.version>1.10.0</junit-platform-runner.version>
-        <jakarta.ws.rs-api-version>2.1.6</jakarta.ws.rs-api-version>
+        <jakarta.ws.rs-api-version>4.0.0</jakarta.ws.rs-api-version>
         <jsr311-api-version>1.1.1</jsr311-api-version>
         <jsr305-version>3.0.2</jsr305-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <junit.version>5.11.3</junit.version>
+        <junit.version>5.12.1</junit.version>
         <plugin-replacer.version>1.5.3</plugin-replacer.version>
-        <plugin-openapi-generator.version>7.11.0</plugin-openapi-generator.version>
+        <plugin-openapi-generator.version>7.12.0</plugin-openapi-generator.version>
+        <plugin-javadoc.version>3.11.2</plugin-javadoc.version>
+        <plugin-source.version>3.3.1</plugin-source.version>
+        <plugin-gpg.version>3.2.7</plugin-gpg.version>
+        <plugin-central-publishing.version>0.7.0</plugin-central-publishing.version>
     </properties>
 
     <dependencies>
@@ -255,6 +275,85 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${plugin-javadoc.version}</version>
+                <configuration>
+                    <tags>
+                        <tag>
+                            <name>http.response.details</name>
+                            <placement>a</placement>
+                            <head>HTTP Response Details:</head>
+                        </tag>
+                    </tags>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>publish</id>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${plugin-javadoc.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${plugin-source.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${plugin-gpg.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${plugin-central-publishing.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <autoPublish>true</autoPublish>
+                            <waitUntil>published</waitUntil>
+                            <checksums>required</checksums>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

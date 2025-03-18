@@ -3,5 +3,5 @@
   "extends": [
     "github>1337joe/.github//renovate-presets/default"
   ],
-  "dependencyDashboard": true
+  "dependencyDashboard": false
 }

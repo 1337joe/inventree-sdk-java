@@ -4,17 +4,21 @@ A Java [InvenTree](https://inventree.org/) ([GitHub](https://github.com/inventre
 
 ## Usage
 
-Simply include in your dependency pom like so:
+This library is published to Maven Central, so if you're using Maven simply include in your dependency pom like so:
 
 ```xml
 <dependency>
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
-    <version>0.18.317</version>
+    <version>0.17.294</version>
 </dependency>
 ```
 
-The version number is a mix of the InvenTree release (0.18) and the schema version (317) with point releases after that when multiple client jars are released against the same schema.
+Alternately, if you're just looking for a jar file you can find it attached to the corresponding [release](https://github.com/1337joe/inventree-sdk-java/releases) here on GitHub.
+
+The version number is a mix of the InvenTree release (0.17) and the schema version (294) with point releases after that when multiple client jars are released against the same schema.
+
+The `main` branch of this repository tracks `InvenTree/master` and may not be compatible with the latest stable release. As such, it is published as `-SNAPSHOT` jars, which may be consumed by [adding the central snapshot repository to your pom](https://central.sonatype.org/publish/publish-portal-snapshots/#consuming-snapshot-releases-for-your-project).
 
 ## Running a Local InvenTree Server
 
