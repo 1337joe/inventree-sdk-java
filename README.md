@@ -4,7 +4,7 @@ A Java [InvenTree](https://inventree.org/) ([GitHub](https://github.com/inventre
 
 ## Usage
 
-This library is published to Maven Central, so if you're using Maven simply include in your dependency pom like so:
+This library is published to [Maven Central](https://central.sonatype.com/artifact/com.w3asel/inventree-sdk-java), so if you're using Maven simply include in your dependency pom like so:
 
 ```xml
 <dependency>
