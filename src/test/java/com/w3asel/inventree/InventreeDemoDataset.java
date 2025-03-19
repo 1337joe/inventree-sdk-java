@@ -67,7 +67,8 @@ public class InventreeDemoDataset {
         COMPANY_CONTACT("company.contact"),
         COMPANY_MANUFACTURER_PART("company.manufacturerpart"),
         COMPANY_SUPPLIER_PRICE_BREAK("company.supplierpricebreak"),
-        COMPANY_SUPPLIER_PART("company.supplierpart");
+        COMPANY_SUPPLIER_PART("company.supplierpart"),
+        ORDER_SALES("order.salesorder");
 
         private final String key;
 

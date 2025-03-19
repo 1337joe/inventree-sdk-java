@@ -102,7 +102,8 @@ public class TestUserApi extends TestApi {
     }
 
     @Test
-    public void userTokenRetrieve() throws ApiException {
-        api.userTokenRetrieve();
+    public void userTokenList() throws ApiException {
+        int limit = 100;
+        api.userTokensList(limit, null, null, null);
     }
 }

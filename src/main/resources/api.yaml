@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '317'
+  version: '326'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -183,10 +183,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - attachment
       security:
@@ -420,10 +418,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - background-task
       security:
@@ -468,10 +464,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - background-task
       security:
@@ -646,10 +640,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - barcode
       security:
@@ -882,7 +874,7 @@ paths:
   /api/bom/:
     get:
       operationId: bom_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: allow_variants
@@ -1032,10 +1024,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - bom
       security:
@@ -1519,7 +1509,7 @@ paths:
   /api/build/:
     get:
       operationId: build_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: active
@@ -1571,6 +1561,11 @@ paths:
           format: date
         description: Created before
       - in: query
+        name: exclude_tree
+        schema:
+          type: string
+        description: Exclude Tree
+      - in: query
         name: has_project_code
         schema:
           type: boolean
@@ -1601,6 +1596,18 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: max_date
+        schema:
+          type: string
+          format: date
+        description: Max Date
+      - in: query
+        name: min_date
+        schema:
+          type: string
+          format: date
+        description: Min Date
       - name: offset
         required: false
         in: query
@@ -2260,7 +2267,7 @@ paths:
   /api/build/item/:
     get:
       operationId: build_item_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: build
@@ -2368,10 +2375,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - build
       security:
@@ -2547,7 +2552,7 @@ paths:
   /api/build/line/:
     get:
       operationId: build_line_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: allocated
@@ -2797,7 +2802,7 @@ paths:
   /api/company/:
     get:
       operationId: company_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: active
@@ -3063,7 +3068,7 @@ paths:
   /api/company/address/:
     get:
       operationId: company_address_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: company
@@ -3139,10 +3144,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - company
       security:
@@ -3263,7 +3266,7 @@ paths:
   /api/company/contact/:
     get:
       operationId: company_contact_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: company
@@ -3339,10 +3342,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - company
       security:
@@ -3525,7 +3526,7 @@ paths:
   /api/company/part/:
     get:
       operationId: company_part_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: MPN
@@ -3660,10 +3661,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - company
       security:
@@ -3866,7 +3865,7 @@ paths:
   /api/company/part/manufacturer/:
     get:
       operationId: company_part_manufacturer_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: MPN
@@ -3972,10 +3971,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - company
       security:
@@ -4274,10 +4271,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - company
       security:
@@ -4721,6 +4716,87 @@ paths:
       responses:
         '200':
           description: No response body
+  /api/data-output/:
+    get:
+      operationId: data_output_list
+      description: List view for DataOutput objects.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - data-output
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDataOutputList'
+          description: ''
+    delete:
+      operationId: data_output_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - data-output
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/data-output/{id}/:
+    get:
+      operationId: data_output_retrieve
+      description: Detail view for a DataOutput object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - data-output
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataOutput'
+          description: ''
   /api/email/generate/:
     post:
       operationId: email_generate_create
@@ -4797,10 +4873,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - error-report
       security:
@@ -5061,7 +5135,7 @@ paths:
   /api/generic/status/custom/:
     get:
       operationId: generic_status_custom_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -5482,10 +5556,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - importer
       security:
@@ -5703,10 +5775,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - importer
       security:
@@ -5882,60 +5952,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/DataImportAcceptRow'
           description: ''
-  /api/label/output/:
-    get:
-      operationId: label_output_list
-      description: List endpoint for LabelOutput objects.
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      tags:
-      - label
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedLabelOutputList'
-          description: ''
-    delete:
-      operationId: label_output_destroy
-      description: |-
-        Perform a DELETE operation against this list endpoint.
-
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
-      tags:
-      - label
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      responses:
-        '204':
-          description: No response body
   /api/label/print/:
     post:
       operationId: label_print_create
@@ -6009,8 +6025,8 @@ paths:
           * `salesordershipment` - Sales Order Shipment
           * `returnorder` - Return Order
           * `part` - Part
-          * `stocklocation` - Stock Location
           * `stockitem` - Stock Item
+          * `stocklocation` - Stock Location
       - name: offset
         required: false
         in: query
@@ -6799,10 +6815,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - news
       security:
@@ -7045,10 +7059,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - notifications
       security:
@@ -7198,7 +7210,7 @@ paths:
   /api/order/po/:
     get:
       operationId: order_po_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: assigned_to
@@ -7260,6 +7272,18 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: max_date
+        schema:
+          type: string
+          format: date
+        description: Max Date
+      - in: query
+        name: min_date
+        schema:
+          type: string
+          format: date
+        description: Min Date
       - name: offset
         required: false
         in: query
@@ -7389,7 +7413,7 @@ paths:
   /api/order/po-extra-line/:
     get:
       operationId: order_po_extra_line_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -7626,7 +7650,7 @@ paths:
   /api/order/po-line/:
     get:
       operationId: order_po_line_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: base_part
@@ -7747,10 +7771,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - order
       security:
@@ -8250,7 +8272,7 @@ paths:
   /api/order/ro/:
     get:
       operationId: order_ro_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: assigned_to
@@ -8321,6 +8343,18 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: max_date
+        schema:
+          type: string
+          format: date
+        description: Max Date
+      - in: query
+        name: min_date
+        schema:
+          type: string
+          format: date
+        description: Min Date
       - name: offset
         required: false
         in: query
@@ -8436,7 +8470,7 @@ paths:
   /api/order/ro-extra-line/:
     get:
       operationId: order_ro_extra_line_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -8673,7 +8707,7 @@ paths:
   /api/order/ro-line/:
     get:
       operationId: order_ro_line_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: has_pricing
@@ -9246,7 +9280,7 @@ paths:
   /api/order/so/:
     get:
       operationId: order_so_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: assigned_to
@@ -9317,6 +9351,18 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: max_date
+        schema:
+          type: string
+          format: date
+        description: Max Date
+      - in: query
+        name: min_date
+        schema:
+          type: string
+          format: date
+        description: Min Date
       - name: offset
         required: false
         in: query
@@ -9512,6 +9558,68 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedSalesOrderAllocationList'
           description: ''
+    put:
+      operationId: order_so_allocation_update
+      description: |-
+        Perform a PUT operation against this list endpoint.
+
+        Simply redirects to the PATCH method.
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesOrderAllocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SalesOrderAllocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SalesOrderAllocation'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesOrderAllocation'
+          description: ''
+    patch:
+      operationId: order_so_allocation_partial_update
+      description: |-
+        Perform a PATCH operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support PATCH,
+        so this method is provided as a custom implementation.
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSalesOrderAllocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSalesOrderAllocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSalesOrderAllocation'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesOrderAllocation'
+          description: ''
   /api/order/so-allocation/{id}/:
     get:
       operationId: order_so_allocation_retrieve
@@ -9536,7 +9644,7 @@ paths:
                 $ref: '#/components/schemas/SalesOrderAllocation'
           description: ''
     put:
-      operationId: order_so_allocation_update
+      operationId: order_so_allocation_update_2
       description: API endpoint for detali view of a SalesOrderAllocation object.
       parameters:
       - in: path
@@ -9570,7 +9678,7 @@ paths:
                 $ref: '#/components/schemas/SalesOrderAllocation'
           description: ''
     patch:
-      operationId: order_so_allocation_partial_update
+      operationId: order_so_allocation_partial_update_2
       description: API endpoint for detali view of a SalesOrderAllocation object.
       parameters:
       - in: path
@@ -9623,7 +9731,7 @@ paths:
   /api/order/so-extra-line/:
     get:
       operationId: order_so_extra_line_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -9860,7 +9968,7 @@ paths:
   /api/order/so-line/:
     get:
       operationId: order_so_line_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: allocated
@@ -10762,7 +10870,7 @@ paths:
   /api/part/:
     get:
       operationId: part_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: IPN
@@ -11005,6 +11113,68 @@ paths:
               schema:
                 $ref: '#/components/schemas/Part'
           description: ''
+    put:
+      operationId: part_update
+      description: |-
+        Perform a PUT operation against this list endpoint.
+
+        Simply redirects to the PATCH method.
+      tags:
+      - part
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Part'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Part'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Part'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Part'
+          description: ''
+    patch:
+      operationId: part_partial_update
+      description: |-
+        Perform a PATCH operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support PATCH,
+        so this method is provided as a custom implementation.
+      tags:
+      - part
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPart'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Part'
+          description: ''
   /api/part/{id}/:
     get:
       operationId: part_retrieve
@@ -11029,7 +11199,7 @@ paths:
                 $ref: '#/components/schemas/Part'
           description: ''
     put:
-      operationId: part_update
+      operationId: part_update_2
       description: API endpoint for detail view of a single Part object.
       parameters:
       - in: path
@@ -11063,7 +11233,7 @@ paths:
                 $ref: '#/components/schemas/Part'
           description: ''
     patch:
-      operationId: part_partial_update
+      operationId: part_partial_update_2
       description: API endpoint for detail view of a single Part object.
       parameters:
       - in: path
@@ -11464,7 +11634,7 @@ paths:
   /api/part/category/:
     get:
       operationId: part_category_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: cascade
@@ -11572,6 +11742,68 @@ paths:
               schema:
                 $ref: '#/components/schemas/Category'
           description: ''
+    put:
+      operationId: part_category_update
+      description: |-
+        Perform a PUT operation against this list endpoint.
+
+        Simply redirects to the PATCH method.
+      tags:
+      - part
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    patch:
+      operationId: part_category_partial_update
+      description: |-
+        Perform a PATCH operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support PATCH,
+        so this method is provided as a custom implementation.
+      tags:
+      - part
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
   /api/part/category/{id}/:
     get:
       operationId: part_category_retrieve
@@ -11596,7 +11828,7 @@ paths:
                 $ref: '#/components/schemas/Category'
           description: ''
     put:
-      operationId: part_category_update
+      operationId: part_category_update_2
       description: Custom put method to pass kwargs.
       parameters:
       - in: path
@@ -11630,7 +11862,7 @@ paths:
                 $ref: '#/components/schemas/Category'
           description: ''
     patch:
-      operationId: part_category_partial_update
+      operationId: part_category_partial_update_2
       description: Custom patch method to pass kwargs.
       parameters:
       - in: path
@@ -11738,7 +11970,7 @@ paths:
   /api/part/category/parameters/:
     get:
       operationId: part_category_parameters_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -11996,39 +12228,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedCategoryTreeList'
           description: ''
-  /api/part/change_category/:
-    post:
-      operationId: part_change_category_create
-      description: API endpoint to change the location of multiple parts in bulk.
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartSetCategory'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartSetCategory'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartSetCategory'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartSetCategory'
-          description: ''
   /api/part/internal-price/:
     get:
       operationId: part_internal_price_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -12210,7 +12413,7 @@ paths:
   /api/part/parameter/:
     get:
       operationId: part_parameter_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -12455,7 +12658,7 @@ paths:
   /api/part/parameter/template/:
     get:
       operationId: part_parameter_template_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: category
@@ -12972,7 +13175,7 @@ paths:
   /api/part/sale-price/:
     get:
       operationId: part_sale_price_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -13517,7 +13720,7 @@ paths:
   /api/part/test-template/:
     get:
       operationId: part_test_template_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: enabled
@@ -14544,7 +14747,7 @@ paths:
   /api/project-code/:
     get:
       operationId: project_code_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -14940,60 +15143,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/report/output/:
-    get:
-      operationId: report_output_list
-      description: List endpoint for ReportOutput objects.
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      tags:
-      - report
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedReportOutputList'
-          description: ''
-    delete:
-      operationId: report_output_destroy
-      description: |-
-        Perform a DELETE operation against this list endpoint.
-
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
-      tags:
-      - report
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      responses:
-        '204':
-          description: No response body
   /api/report/print/:
     post:
       operationId: report_print_create
@@ -15237,8 +15386,8 @@ paths:
           * `salesordershipment` - Sales Order Shipment
           * `returnorder` - Return Order
           * `part` - Part
-          * `stocklocation` - Stock Location
           * `stockitem` - Stock Item
+          * `stocklocation` - Stock Location
       - name: offset
         required: false
         in: query
@@ -16280,7 +16429,7 @@ paths:
   /api/stock/:
     get:
       operationId: stock_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: IPN
@@ -16638,10 +16787,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - stock
       security:
@@ -17113,7 +17260,7 @@ paths:
   /api/stock/location/:
     get:
       operationId: stock_location_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: cascade
@@ -17220,6 +17367,68 @@ paths:
       - cookieAuth: []
       responses:
         '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+    put:
+      operationId: stock_location_update
+      description: |-
+        Perform a PUT operation against this list endpoint.
+
+        Simply redirects to the PATCH method.
+      tags:
+      - stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Location'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Location'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: ''
+    patch:
+      operationId: stock_location_partial_update
+      description: |-
+        Perform a PATCH operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support PATCH,
+        so this method is provided as a custom implementation.
+      tags:
+      - stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLocation'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
           content:
             application/json:
               schema:
@@ -17514,7 +17723,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
     put:
-      operationId: stock_location_update
+      operationId: stock_location_update_2
       description: Custom put method to pass kwargs.
       parameters:
       - in: path
@@ -17548,7 +17757,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
     patch:
-      operationId: stock_location_partial_update
+      operationId: stock_location_partial_update_2
       description: Custom patch method to pass kwargs.
       parameters:
       - in: path
@@ -17883,10 +18092,8 @@ paths:
       description: |-
         Perform a DELETE operation against this list endpoint.
 
-        We expect a list of primary-key (ID) values to be supplied as a JSON object, e.g.
-        {
-            items: [4, 8, 15, 16, 23, 42]
-        }
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
       tags:
       - stock
       security:
@@ -18062,7 +18269,7 @@ paths:
   /api/stock/track/:
     get:
       operationId: stock_track_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: item
@@ -18183,7 +18390,7 @@ paths:
   /api/units/:
     get:
       operationId: units_list
-      description: Override the 'get' method to check for the export query parameter.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: false
@@ -18907,6 +19114,77 @@ paths:
               schema:
                 $ref: '#/components/schemas/Owner'
           description: ''
+  /api/user/profile/:
+    get:
+      operationId: user_profile_retrieve
+      description: Detail endpoint for the user profile.
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    put:
+      operationId: user_profile_update
+      description: Detail endpoint for the user profile.
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    patch:
+      operationId: user_profile_partial_update
+      description: Detail endpoint for the user profile.
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
   /api/user/roles/:
     get:
       operationId: user_roles_retrieve
@@ -18934,6 +19212,12 @@ paths:
         - If the user already has a matching token, delete it and create a new one
         - Existing tokens are *never* exposed again via the API
         - Once the token is provided, it can be used for auth until it expires
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Name of the token
       tags:
       - user
       security:
@@ -18942,11 +19226,15 @@ paths:
       - cookieAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuthToken'
+          description: ''
   /api/user/tokens/:
     get:
       operationId: user_tokens_list
-      description: List of registered tokens for current users.
+      description: List of user tokens for current user.
       parameters:
       - name: limit
         required: false
@@ -18960,6 +19248,18 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
       tags:
       - user
       security:
@@ -18973,40 +19273,48 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedApiTokenList'
           description: ''
-    delete:
-      operationId: user_tokens_destroy
-      description: List of registered tokens for current users.
+    post:
+      operationId: user_tokens_create
+      description: List of user tokens for current user.
       tags:
       - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiToken'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ApiToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ApiToken'
       security:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       responses:
-        '204':
-          description: No response body
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiToken'
+          description: ''
   /api/user/tokens/{id}/:
     get:
-      operationId: user_tokens_list_2
-      description: List of registered tokens for current users.
+      operationId: user_tokens_retrieve
+      description: Details for a user token.
       parameters:
+      - in: query
+        name: all_users
+        schema:
+          type: boolean
+        description: Display tokens for all users (superuser only)
       - in: path
         name: id
         schema:
           type: integer
         required: true
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
       tags:
       - user
       security:
@@ -19018,11 +19326,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedApiTokenList'
+                $ref: '#/components/schemas/ApiToken'
           description: ''
     delete:
-      operationId: user_tokens_destroy_2
-      description: List of registered tokens for current users.
+      operationId: user_tokens_destroy
+      description: Details for a user token.
       parameters:
       - in: path
         name: id
@@ -21255,7 +21563,7 @@ components:
           type: string
           format: uri
           description: Link to address information (external)
-          maxLength: 200
+          maxLength: 2000
       required:
       - company
       - pk
@@ -21409,7 +21717,6 @@ components:
       - id
       - in_use
       - token
-      - user
     Attachment:
       type: object
       description: Serializer class for the Attachment model.
@@ -21429,7 +21736,7 @@ components:
           format: uri
           nullable: true
           description: Link to external URL
-          maxLength: 200
+          maxLength: 2000
         comment:
           type: string
           description: Attachment comment
@@ -21466,7 +21773,6 @@ components:
       - model_type
       - pk
       - upload_date
-      - upload_user
       - user_detail
     AttachmentModelTypeEnum:
       enum:
@@ -21526,14 +21832,14 @@ components:
           type: integer
           nullable: true
           title: Build Order
-        manufacturerpart:
-          type: integer
-          nullable: true
-          title: Manufacturer Part
         supplierpart:
           type: integer
           nullable: true
           title: Supplier Part
+        manufacturerpart:
+          type: integer
+          nullable: true
+          title: Manufacturer Part
         purchaseorder:
           type: integer
           nullable: true
@@ -21549,14 +21855,14 @@ components:
         part:
           type: integer
           nullable: true
-        stocklocation:
-          type: integer
-          nullable: true
-          title: Stock Location
         stockitem:
           type: integer
           nullable: true
           title: Stock Item
+        stocklocation:
+          type: integer
+          nullable: true
+          title: Stock Location
       required:
       - barcode
     BarcodeGenerate:
@@ -21698,14 +22004,10 @@ components:
           - $ref: '#/components/schemas/User'
           readOnly: true
       required:
-      - context
       - data
-      - endpoint
       - pk
-      - response
       - result
       - timestamp
-      - user
       - user_detail
     BarcodeUnassign:
       type: object
@@ -21715,14 +22017,14 @@ components:
           type: integer
           nullable: true
           title: Build Order
-        manufacturerpart:
-          type: integer
-          nullable: true
-          title: Manufacturer Part
         supplierpart:
           type: integer
           nullable: true
           title: Supplier Part
+        manufacturerpart:
+          type: integer
+          nullable: true
+          title: Manufacturer Part
         purchaseorder:
           type: integer
           nullable: true
@@ -21738,14 +22040,14 @@ components:
         part:
           type: integer
           nullable: true
-        stocklocation:
-          type: integer
-          nullable: true
-          title: Stock Location
         stockitem:
           type: integer
           nullable: true
           title: Stock Item
+        stocklocation:
+          type: integer
+          nullable: true
+          title: Stock Location
     BlankEnum:
       enum:
       - ''
@@ -21797,6 +22099,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Assembly
         pricing_min:
           type: string
@@ -21831,12 +22134,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Component
         substitutes:
           type: array
           items:
             $ref: '#/components/schemas/BomItemSubstitute'
           readOnly: true
+          nullable: true
         validated:
           type: boolean
           description: This BOM item has been validated
@@ -21878,17 +22183,9 @@ components:
       - external_stock
       - on_order
       - part
-      - part_detail
       - pk
-      - pricing_max
-      - pricing_max_total
-      - pricing_min
-      - pricing_min_total
-      - pricing_updated
       - quantity
       - sub_part
-      - sub_part_detail
-      - substitutes
     BomItemSubstitute:
       type: object
       description: Serializer for the BomItemSubstitute class.
@@ -21919,6 +22216,58 @@ components:
         valid:
           type: boolean
           default: false
+    BriefUserProfile:
+      type: object
+      description: Brief serializer for the UserProfile model.
+      properties:
+        displayname:
+          type: string
+          nullable: true
+          title: Display Name
+          description: Chosen display name for the user
+          maxLength: 255
+        position:
+          type: string
+          nullable: true
+          description: Main job title or position
+          maxLength: 255
+        status:
+          type: string
+          nullable: true
+          description: User status message
+          maxLength: 2000
+        location:
+          type: string
+          nullable: true
+          description: User location information
+          maxLength: 2000
+        active:
+          type: boolean
+          description: User is actively using the system
+        contact:
+          type: string
+          nullable: true
+          description: Preferred contact information for the user
+          maxLength: 255
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEdaEnum'
+          description: |-
+            Which type of user is this?
+
+            * `bot` - Bot
+            * `internal` - Internal
+            * `external` - External
+            * `guest` - Guest
+        organisation:
+          type: string
+          nullable: true
+          description: Users primary organisation/affiliation
+          maxLength: 255
+        primary_group:
+          type: integer
+          nullable: true
+          description: Primary group for the user
     Build:
       type: object
       description: Serializes a Build object.
@@ -22061,7 +22410,7 @@ components:
           format: uri
           title: External Link
           description: Link to external URL
-          maxLength: 200
+          maxLength: 2000
         issued_by:
           type: integer
           nullable: true
@@ -22078,6 +22427,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
         priority:
           type: integer
           minimum: 0
@@ -22103,13 +22453,9 @@ components:
       - part_detail
       - part_name
       - pk
-      - project_code_detail
-      - project_code_label
       - quantity
       - reference
-      - responsible_detail
       - status
-      - status_custom_key
       - status_text
     BuildAllocation:
       type: object
@@ -22244,26 +22590,31 @@ components:
           allOf:
           - $ref: '#/components/schemas/Build'
           readOnly: true
+          nullable: true
           title: Build
         location_detail:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
+          nullable: true
           title: Location
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Part
         stock_item_detail:
           allOf:
           - $ref: '#/components/schemas/StockItemSerializerBrief'
           readOnly: true
+          nullable: true
           title: Stock Item
         supplier_part_detail:
           allOf:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
+          nullable: true
           title: Supplier Part
         bom_reference:
           type: string
@@ -22271,17 +22622,12 @@ components:
       required:
       - bom_reference
       - build
-      - build_detail
       - build_line
       - install_into
       - location
-      - location_detail
-      - part_detail
       - pk
       - quantity
       - stock_item
-      - stock_item_detail
-      - supplier_part_detail
     BuildLine:
       type: object
       description: Serializer for a BuildItem object.
@@ -22426,7 +22772,7 @@ components:
           description: Location for completed build outputs
         status_custom_key:
           allOf:
-          - $ref: '#/components/schemas/StatusCustomKey229Enum'
+          - $ref: '#/components/schemas/StatusCustomKey2a7Enum'
           default: 10
           title: Status
         accept_incomplete_allocation:
@@ -22586,6 +22932,7 @@ components:
             type: object
             additionalProperties: {}
           readOnly: true
+          nullable: true
         starred:
           type: boolean
           description: Return True if the category is directly "starred" by the current
@@ -22608,7 +22955,6 @@ components:
       - name
       - parent_default_location
       - part_count
-      - path
       - pathstring
       - pk
       - starred
@@ -22628,6 +22974,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Category'
           readOnly: true
+          nullable: true
         parameter_template:
           type: integer
           description: Parameter Template
@@ -22641,7 +22988,6 @@ components:
           maxLength: 500
       required:
       - category
-      - category_detail
       - parameter_template
       - parameter_template_detail
       - pk
@@ -22715,7 +23061,7 @@ components:
           type: string
           format: uri
           description: Company website URL
-          maxLength: 200
+          maxLength: 2000
         phone:
           type: string
           title: Phone number
@@ -22750,7 +23096,7 @@ components:
           type: string
           format: uri
           description: Link to external company information
-          maxLength: 200
+          maxLength: 2000
         image:
           type: string
           format: uri
@@ -22792,14 +23138,12 @@ components:
           readOnly: true
           nullable: true
       required:
-      - address
       - address_count
       - currency
       - name
       - parts_manufactured
       - parts_supplied
       - pk
-      - primary_address
     CompanyBrief:
       type: object
       description: Serializer for Company object (limited detail).
@@ -23102,9 +23446,7 @@ components:
           readOnly: true
       required:
       - complete
-      - errors
       - pk
-      - row_data
       - row_index
       - session
       - valid
@@ -23170,7 +23512,6 @@ components:
       required:
       - available_fields
       - column_mappings
-      - columns
       - completed_row_count
       - data_file
       - model_type
@@ -23178,7 +23519,6 @@ components:
       - row_count
       - status
       - timestamp
-      - user
       - user_detail
     DataImportSessionModelTypeEnum:
       enum:
@@ -23260,6 +23600,54 @@ components:
         * `20` - Importing Data
         * `30` - Processing Data
         * `40` - Complete
+    DataOutput:
+      type: object
+      description: Serializer for the DataOutput model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        created:
+          type: string
+          format: date
+          readOnly: true
+        user:
+          type: integer
+          nullable: true
+        user_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        total:
+          type: integer
+        progress:
+          type: integer
+        complete:
+          type: boolean
+        output_type:
+          type: string
+          nullable: true
+          maxLength: 100
+        template_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        plugin:
+          type: string
+          nullable: true
+          maxLength: 100
+        output:
+          type: string
+          format: uri
+          readOnly: true
+          nullable: true
+        errors:
+          nullable: true
+      required:
+      - created
+      - pk
+      - user_detail
     DefaultLocaleEnum:
       enum:
       - ar
@@ -23435,9 +23823,7 @@ components:
           readOnly: true
           title: ID
       required:
-      - data
       - info
-      - path
       - pk
       - when
     ExtendedUser:
@@ -23478,6 +23864,10 @@ components:
           type: boolean
           title: Active
           description: Is this user account active
+        profile:
+          allOf:
+          - $ref: '#/components/schemas/BriefUserProfile'
+          readOnly: true
       required:
       - email
       - first_name
@@ -23487,6 +23877,7 @@ components:
       - is_superuser
       - last_name
       - pk
+      - profile
       - username
     FailedTask:
       type: object
@@ -23522,9 +23913,7 @@ components:
         result:
           type: string
       required:
-      - args
       - func
-      - kwargs
       - name
       - pk
       - result
@@ -23634,6 +24023,23 @@ components:
       - key
       - label
       - name
+    GetAuthToken:
+      type: object
+      description: Serializer for the GetAuthToken API endpoint.
+      properties:
+        token:
+          type: string
+          readOnly: true
+        name:
+          type: string
+        expiry:
+          type: string
+          format: date
+          readOnly: true
+      required:
+      - expiry
+      - name
+      - token
     GetSimpleLogin:
       type: object
       description: Serializer for the simple login view.
@@ -23685,11 +24091,9 @@ components:
           type: string
           readOnly: true
       required:
-      - api_url
       - choices
       - description
       - key
-      - model_name
       - name
       - pk
       - typ
@@ -23708,13 +24112,11 @@ components:
           type: string
           maxLength: 150
         permissions:
-          type: object
-          additionalProperties: {}
-          description: Return a list of permissions associated with the group.
+          type: string
           readOnly: true
+          nullable: true
       required:
       - name
-      - permissions
       - pk
     Icon:
       type: object
@@ -23930,59 +24332,6 @@ components:
       type: boolean
       enum:
       - true
-    LabelOutput:
-      type: object
-      description: Serializer class for the LabelOutput model.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        created:
-          type: string
-          format: date
-          readOnly: true
-        user:
-          type: integer
-          nullable: true
-        user_detail:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
-        model_type:
-          type: string
-          readOnly: true
-        items:
-          type: integer
-          description: Number of items to process
-        complete:
-          type: boolean
-          description: Report generation is complete
-        progress:
-          type: integer
-          description: Report generation progress
-        output:
-          type: string
-          format: uri
-        template:
-          type: integer
-          title: Label Template
-        plugin:
-          type: string
-          description: Label output plugin
-          maxLength: 100
-        template_detail:
-          allOf:
-          - $ref: '#/components/schemas/LabelTemplate'
-          readOnly: true
-      required:
-      - created
-      - model_type
-      - output
-      - pk
-      - template
-      - template_detail
-      - user_detail
     LabelPrint:
       type: object
       description: Serializer class for printing a label.
@@ -24019,7 +24368,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType28bEnum'
+          $ref: '#/components/schemas/ModelType820Enum'
         template:
           type: string
           format: uri
@@ -24155,6 +24504,7 @@ components:
             type: object
             additionalProperties: {}
           readOnly: true
+          nullable: true
         items:
           type: integer
           readOnly: true
@@ -24201,7 +24551,6 @@ components:
       - level
       - location_type_detail
       - name
-      - path
       - pathstring
       - pk
       - sublocations
@@ -24329,7 +24678,6 @@ components:
       - pk
       - restart_required
       - status
-      - status_model
       - status_text
     MachineConfigCreate:
       type: object
@@ -24396,7 +24744,6 @@ components:
       - pk
       - restart_required
       - status
-      - status_model
       - status_text
     MachineDriver:
       type: object
@@ -24440,7 +24787,6 @@ components:
       - machine_type
       - name
       - provider_file
-      - provider_plugin
       - slug
     MachineRegistryError:
       type: object
@@ -24519,13 +24865,11 @@ components:
           - $ref: '#/components/schemas/ConfigTypeEnum'
           readOnly: true
       required:
-      - api_url
       - choices
       - config_type
       - description
       - key
       - model_filters
-      - model_name
       - name
       - pk
       - required
@@ -24562,7 +24906,6 @@ components:
       - is_builtin
       - name
       - provider_file
-      - provider_plugin
       - slug
     ManufacturerPart:
       type: object
@@ -24580,15 +24923,18 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         pretty_name:
           type: string
           readOnly: true
+          nullable: true
         manufacturer:
           type: integer
         manufacturer_detail:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         description:
           type: string
           nullable: true
@@ -24604,7 +24950,7 @@ components:
           format: uri
           nullable: true
           description: URL for external manufacturer part link
-          maxLength: 200
+          maxLength: 2000
         barcode_hash:
           type: string
           description: Unique hash of barcode data
@@ -24621,11 +24967,8 @@ components:
       required:
       - MPN
       - manufacturer
-      - manufacturer_detail
       - part
-      - part_detail
       - pk
-      - pretty_name
     ManufacturerPartParameter:
       type: object
       description: Serializer for the ManufacturerPartParameter model.
@@ -24640,6 +24983,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ManufacturerPart'
           readOnly: true
+          nullable: true
         name:
           type: string
           description: Parameter name
@@ -24655,7 +24999,6 @@ components:
           maxLength: 64
       required:
       - manufacturer_part
-      - manufacturer_part_detail
       - name
       - pk
       - value
@@ -24697,6 +25040,10 @@ components:
           type: boolean
           title: Active
           description: Is this user account active
+        profile:
+          allOf:
+          - $ref: '#/components/schemas/UserProfile'
+          readOnly: true
       required:
       - email
       - first_name
@@ -24706,8 +25053,9 @@ components:
       - is_superuser
       - last_name
       - pk
+      - profile
       - username
-    ModelType28bEnum:
+    ModelType820Enum:
       enum:
       - build
       - buildline
@@ -24716,8 +25064,8 @@ components:
       - salesordershipment
       - returnorder
       - part
-      - stocklocation
       - stockitem
+      - stocklocation
       type: string
       description: |-
         * `build` - Build Order
@@ -24727,8 +25075,8 @@ components:
         * `salesordershipment` - Sales Order Shipment
         * `returnorder` - Return Order
         * `part` - Part
-        * `stocklocation` - Stock Location
         * `stockitem` - Stock Item
+        * `stocklocation` - Stock Location
     NewsFeedEntry:
       type: object
       description: Serializer for the NewsFeedEntry model.
@@ -24800,7 +25148,6 @@ components:
       - date
       - image
       - pk
-      - user
     NotificationMessage:
       type: object
       description: Serializer for the InvenTreeUserSetting model.
@@ -24851,7 +25198,6 @@ components:
       - age_human
       - category
       - creation
-      - message
       - name
       - pk
       - read
@@ -24908,13 +25254,11 @@ components:
           type: string
           readOnly: true
       required:
-      - api_url
       - choices
       - description
       - key
       - method
       - model_filters
-      - model_name
       - name
       - pk
       - required
@@ -24951,6 +25295,9 @@ components:
         owner_id:
           type: integer
           nullable: true
+        owner_model:
+          type: string
+          readOnly: true
         name:
           type: string
           readOnly: true
@@ -24960,6 +25307,7 @@ components:
       required:
       - label
       - name
+      - owner_model
       - pk
     PageSizeEnum:
       enum:
@@ -25393,6 +25741,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DataImportSession'
+    PaginatedDataOutputList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataOutput'
     PaginatedErrorMessageList:
       type: object
       properties:
@@ -25493,26 +25861,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/IconPackage'
-    PaginatedLabelOutputList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LabelOutput'
     PaginatedLabelTemplateList:
       type: object
       properties:
@@ -26093,26 +26441,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ReportAsset'
-    PaginatedReportOutputList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReportOutput'
     PaginatedReportSnippetList:
       type: object
       properties:
@@ -26577,12 +26905,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/Category'
           readOnly: true
+          nullable: true
         category_path:
           type: array
           items:
             type: object
             additionalProperties: {}
           readOnly: true
+          nullable: true
         category_name:
           type: string
           readOnly: true
@@ -26609,6 +26939,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/DefaultLocation'
           readOnly: true
+          nullable: true
         default_supplier:
           type: integer
           nullable: true
@@ -26656,7 +26987,7 @@ components:
           format: uri
           nullable: true
           description: Link to external URL
-          maxLength: 200
+          maxLength: 2000
         locked:
           type: boolean
           description: Locked parts cannot be edited
@@ -26678,6 +27009,7 @@ components:
           items:
             $ref: '#/components/schemas/PartParameter'
           readOnly: true
+          nullable: true
         pk:
           type: integer
           readOnly: true
@@ -26831,22 +27163,13 @@ components:
       - allocated_to_sales_orders
       - barcode_hash
       - building
-      - category_default_location
-      - category_detail
       - category_name
-      - category_path
-      - creation_date
-      - default_location_detail
       - external_stock
       - full_name
       - in_stock
       - name
       - ordering
-      - parameters
       - pk
-      - pricing_max
-      - pricing_min
-      - pricing_updated
       - required_for_build_orders
       - required_for_sales_orders
       - revision_count
@@ -26960,13 +27283,10 @@ components:
           nullable: true
       required:
       - barcode_hash
-      - category_default_location
       - full_name
       - image
       - name
       - pk
-      - pricing_max
-      - pricing_min
       - thumbnail
     PartCopyBOM:
       type: object
@@ -27044,6 +27364,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         template:
           type: integer
           description: Parameter Template
@@ -27051,6 +27372,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartParameterTemplate'
           readOnly: true
+          nullable: true
         data:
           type: string
           description: Parameter Value
@@ -27063,10 +27385,8 @@ components:
       required:
       - data
       - part
-      - part_detail
       - pk
       - template
-      - template_detail
     PartParameterTemplate:
       type: object
       description: JSON serializer for the PartParameterTemplate model.
@@ -27248,25 +27568,7 @@ components:
           default: false
           description: Update pricing for this part
       required:
-      - bom_cost_max
-      - bom_cost_min
-      - currency
-      - internal_cost_max
-      - internal_cost_min
-      - overall_max
-      - overall_min
-      - purchase_cost_max
-      - purchase_cost_min
-      - sale_history_max
-      - sale_history_min
-      - sale_price_max
-      - sale_price_min
       - scheduled_for_update
-      - supplier_price_max
-      - supplier_price_min
-      - updated
-      - variant_cost_max
-      - variant_cost_min
     PartRelation:
       type: object
       description: Serializer for a PartRelated model.
@@ -27360,21 +27662,6 @@ components:
       - model_id
       - quantity
       - title
-    PartSetCategory:
-      type: object
-      description: Serializer for changing PartCategory for multiple Part objects.
-      properties:
-        parts:
-          type: array
-          items:
-            type: integer
-            title: Parts
-        category:
-          type: integer
-          description: Select category
-      required:
-      - category
-      - parts
     PartStocktake:
       type: object
       description: Serializer for the PartStocktake model.
@@ -27448,7 +27735,6 @@ components:
       - part
       - pk
       - quantity
-      - user
       - user_detail
     PartStocktakeReport:
       type: object
@@ -27484,7 +27770,6 @@ components:
       - part_count
       - pk
       - report
-      - user
       - user_detail
     PartStocktakeReportGenerate:
       type: object
@@ -27656,7 +27941,7 @@ components:
           type: string
           format: uri
           description: Link to address information (external)
-          maxLength: 200
+          maxLength: 2000
     PatchedAttachment:
       type: object
       description: Serializer class for the Attachment model.
@@ -27676,7 +27961,7 @@ components:
           format: uri
           nullable: true
           description: Link to external URL
-          maxLength: 200
+          maxLength: 2000
         comment:
           type: string
           description: Attachment comment
@@ -27767,6 +28052,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Assembly
         pricing_min:
           type: string
@@ -27801,12 +28087,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Component
         substitutes:
           type: array
           items:
             $ref: '#/components/schemas/BomItemSubstitute'
           readOnly: true
+          nullable: true
         validated:
           type: boolean
           description: This BOM item has been validated
@@ -28006,7 +28294,7 @@ components:
           format: uri
           title: External Link
           description: Link to external URL
-          maxLength: 200
+          maxLength: 2000
         issued_by:
           type: integer
           nullable: true
@@ -28023,6 +28311,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
         priority:
           type: integer
           minimum: 0
@@ -28070,26 +28359,31 @@ components:
           allOf:
           - $ref: '#/components/schemas/Build'
           readOnly: true
+          nullable: true
           title: Build
         location_detail:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
+          nullable: true
           title: Location
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Part
         stock_item_detail:
           allOf:
           - $ref: '#/components/schemas/StockItemSerializerBrief'
           readOnly: true
+          nullable: true
           title: Stock Item
         supplier_part_detail:
           allOf:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
+          nullable: true
           title: Supplier Part
         bom_reference:
           type: string
@@ -28239,6 +28533,7 @@ components:
             type: object
             additionalProperties: {}
           readOnly: true
+          nullable: true
         starred:
           type: boolean
           description: Return True if the category is directly "starred" by the current
@@ -28271,6 +28566,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Category'
           readOnly: true
+          nullable: true
         parameter_template:
           type: integer
           description: Parameter Template
@@ -28304,7 +28600,7 @@ components:
           type: string
           format: uri
           description: Company website URL
-          maxLength: 200
+          maxLength: 2000
         phone:
           type: string
           title: Phone number
@@ -28339,7 +28635,7 @@ components:
           type: string
           format: uri
           description: Link to external company information
-          maxLength: 200
+          maxLength: 2000
         image:
           type: string
           format: uri
@@ -28648,6 +28944,10 @@ components:
           type: boolean
           title: Active
           description: Is this user account active
+        profile:
+          allOf:
+          - $ref: '#/components/schemas/BriefUserProfile'
+          readOnly: true
     PatchedGlobalSettings:
       type: object
       description: Serializer for the InvenTreeSetting model.
@@ -28702,10 +29002,9 @@ components:
           type: string
           maxLength: 150
         permissions:
-          type: object
-          additionalProperties: {}
-          description: Return a list of permissions associated with the group.
+          type: string
           readOnly: true
+          nullable: true
     PatchedLabelTemplate:
       type: object
       description: Serializer class for label template model.
@@ -28723,7 +29022,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType28bEnum'
+          $ref: '#/components/schemas/ModelType820Enum'
         template:
           type: string
           format: uri
@@ -28797,6 +29096,7 @@ components:
             type: object
             additionalProperties: {}
           readOnly: true
+          nullable: true
         items:
           type: integer
           readOnly: true
@@ -28957,15 +29257,18 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         pretty_name:
           type: string
           readOnly: true
+          nullable: true
         manufacturer:
           type: integer
         manufacturer_detail:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         description:
           type: string
           nullable: true
@@ -28981,7 +29284,7 @@ components:
           format: uri
           nullable: true
           description: URL for external manufacturer part link
-          maxLength: 200
+          maxLength: 2000
         barcode_hash:
           type: string
           description: Unique hash of barcode data
@@ -29009,6 +29312,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ManufacturerPart'
           readOnly: true
+          nullable: true
         name:
           type: string
           description: Parameter name
@@ -29060,6 +29364,10 @@ components:
           type: boolean
           title: Active
           description: Is this user account active
+        profile:
+          allOf:
+          - $ref: '#/components/schemas/UserProfile'
+          readOnly: true
     PatchedNewsFeedEntry:
       type: object
       description: Serializer for the NewsFeedEntry model.
@@ -29208,12 +29516,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/Category'
           readOnly: true
+          nullable: true
         category_path:
           type: array
           items:
             type: object
             additionalProperties: {}
           readOnly: true
+          nullable: true
         category_name:
           type: string
           readOnly: true
@@ -29240,6 +29550,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/DefaultLocation'
           readOnly: true
+          nullable: true
         default_supplier:
           type: integer
           nullable: true
@@ -29287,7 +29598,7 @@ components:
           format: uri
           nullable: true
           description: Link to external URL
-          maxLength: 200
+          maxLength: 2000
         locked:
           type: boolean
           description: Locked parts cannot be edited
@@ -29309,6 +29620,7 @@ components:
           items:
             $ref: '#/components/schemas/PartParameter'
           readOnly: true
+          nullable: true
         pk:
           type: integer
           readOnly: true
@@ -29501,6 +29813,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         template:
           type: integer
           description: Parameter Template
@@ -29508,6 +29821,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartParameterTemplate'
           readOnly: true
+          nullable: true
         data:
           type: string
           description: Parameter Value
@@ -29987,6 +30301,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
     PatchedPurchaseOrder:
       type: object
       description: Serializer for a PurchaseOrder object.
@@ -30003,6 +30318,12 @@ components:
           type: string
           format: date
           nullable: true
+        issue_date:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+          description: Date order was issued
         start_date:
           type: string
           format: date
@@ -30028,7 +30349,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         project_code:
           type: integer
           nullable: true
@@ -30052,6 +30373,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
         contact:
           type: integer
           nullable: true
@@ -30060,6 +30382,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Contact'
           readOnly: true
+          nullable: true
         address:
           type: integer
           nullable: true
@@ -30068,6 +30391,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
+          nullable: true
         status:
           type: integer
           readOnly: true
@@ -30109,12 +30433,6 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
-        issue_date:
-          type: string
-          format: date
-          readOnly: true
-          nullable: true
-          description: Date order was issued
         complete_date:
           type: string
           format: date
@@ -30130,6 +30448,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         supplier_reference:
           type: string
           description: Supplier order reference code
@@ -30194,6 +30513,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PurchaseOrder'
           readOnly: true
+          nullable: true
         price:
           type: string
           format: decimal
@@ -30214,7 +30534,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
     PatchedPurchaseOrderLineItem:
       type: object
       description: Serializer class for the PurchaseOrderLineItem model.
@@ -30246,6 +30566,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PurchaseOrder'
           readOnly: true
+          nullable: true
         overdue:
           type: boolean
           readOnly: true
@@ -30253,10 +30574,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         supplier_part_detail:
           allOf:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
+          nullable: true
         received:
           type: number
           format: double
@@ -30305,7 +30628,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         merge_items:
           type: boolean
           writeOnly: true
@@ -30375,7 +30698,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType28bEnum'
+          $ref: '#/components/schemas/ModelType820Enum'
         template:
           type: string
           format: uri
@@ -30421,6 +30744,11 @@ components:
           type: string
           format: date
           nullable: true
+        issue_date:
+          type: string
+          format: date
+          nullable: true
+          description: Date order was issued
         start_date:
           type: string
           format: date
@@ -30446,7 +30774,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         project_code:
           type: integer
           nullable: true
@@ -30470,6 +30798,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
         contact:
           type: integer
           nullable: true
@@ -30478,6 +30807,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Contact'
           readOnly: true
+          nullable: true
         address:
           type: integer
           nullable: true
@@ -30486,6 +30816,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
+          nullable: true
         status:
           type: integer
           readOnly: true
@@ -30525,11 +30856,6 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
-        issue_date:
-          type: string
-          format: date
-          nullable: true
-          description: Date order was issued
         complete_date:
           type: string
           format: date
@@ -30544,6 +30870,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         customer_reference:
           type: string
           description: Customer order reference code
@@ -30601,6 +30928,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReturnOrder'
           readOnly: true
+          nullable: true
         price:
           type: string
           format: decimal
@@ -30621,7 +30949,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
     PatchedReturnOrderLineItem:
       type: object
       description: Serializer for a ReturnOrderLineItem object.
@@ -30637,6 +30965,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReturnOrder'
           readOnly: true
+          nullable: true
         item:
           type: integer
           description: Select item to return from customer
@@ -30644,6 +30973,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockItem'
           readOnly: true
+          nullable: true
         quantity:
           type: number
           format: double
@@ -30669,6 +30999,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         price:
           type: string
           format: decimal
@@ -30689,7 +31020,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         reference:
           type: string
           description: Line item reference
@@ -30720,6 +31051,11 @@ components:
           type: string
           format: date
           nullable: true
+        issue_date:
+          type: string
+          format: date
+          nullable: true
+          description: Date order was issued
         start_date:
           type: string
           format: date
@@ -30745,7 +31081,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         project_code:
           type: integer
           nullable: true
@@ -30769,6 +31105,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
         contact:
           type: integer
           nullable: true
@@ -30777,6 +31114,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Contact'
           readOnly: true
+          nullable: true
         address:
           type: integer
           nullable: true
@@ -30785,6 +31123,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
+          nullable: true
         status:
           type: integer
           readOnly: true
@@ -30835,6 +31174,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         customer_reference:
           type: string
           description: Customer order reference code
@@ -30912,22 +31252,27 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockItemSerializerBrief'
           readOnly: true
+          nullable: true
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
           readOnly: true
+          nullable: true
         customer_detail:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         location_detail:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
+          nullable: true
         shipment_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrderShipment'
@@ -30965,6 +31310,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
           readOnly: true
+          nullable: true
         price:
           type: string
           format: decimal
@@ -30985,7 +31331,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
     PatchedSalesOrderLineItem:
       type: object
       description: Serializer for a SalesOrderLineItem object.
@@ -31002,6 +31348,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         quantity:
           type: number
           format: double
@@ -31020,6 +31367,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
           readOnly: true
+          nullable: true
         overdue:
           type: boolean
           readOnly: true
@@ -31031,6 +31379,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         sale_price:
           type: string
           format: decimal
@@ -31061,7 +31410,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         available_stock:
           type: number
           format: double
@@ -31094,6 +31443,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
           readOnly: true
+          nullable: true
         allocated_items:
           type: integer
           readOnly: true
@@ -31129,7 +31479,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         notes:
           type: string
           nullable: true
@@ -31285,7 +31635,7 @@ components:
           format: uri
           title: External Link
           description: Link to external URL
-          maxLength: 200
+          maxLength: 2000
         notes:
           type: string
           nullable: true
@@ -31404,6 +31754,7 @@ components:
           items:
             $ref: '#/components/schemas/StockItemTestResult'
           readOnly: true
+          nullable: true
         allocated:
           type: number
           format: double
@@ -31424,6 +31775,7 @@ components:
             type: object
             additionalProperties: {}
           readOnly: true
+          nullable: true
         stale:
           type: boolean
           readOnly: true
@@ -31438,16 +31790,19 @@ components:
           allOf:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
+          nullable: true
           title: Supplier Part
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Part
         location_detail:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
+          nullable: true
           title: Location
     PatchedStockItemTestResult:
       type: object
@@ -31499,6 +31854,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
         date:
           type: string
           format: date-time
@@ -31512,6 +31868,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartTestTemplate'
           readOnly: true
+          nullable: true
     PatchedStockLocationType:
       type: object
       description: Serializer for StockLocationType model.
@@ -31562,12 +31919,13 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
         link:
           type: string
           format: uri
           nullable: true
           description: URL for external supplier part link
-          maxLength: 200
+          maxLength: 2000
         active:
           type: boolean
           description: Is this supplier part active?
@@ -31575,6 +31933,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
           title: Manufacturer
         manufacturer_part:
           type: integer
@@ -31584,6 +31943,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ManufacturerPart'
           readOnly: true
+          nullable: true
           title: Manufacturer Part
         MPN:
           type: string
@@ -31623,10 +31983,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Part
         pretty_name:
           type: string
           readOnly: true
+          nullable: true
         SKU:
           type: string
           description: Supplier stock keeping unit
@@ -31637,6 +31999,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
           title: Supplier
         updated:
           type: string
@@ -31666,6 +32029,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
+          nullable: true
         quantity:
           type: number
           format: double
@@ -31692,12 +32056,76 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         updated:
           type: string
           format: date-time
           readOnly: true
           nullable: true
           description: Timestamp of last update
+    PatchedUserProfile:
+      type: object
+      description: Serializer for the UserProfile model.
+      properties:
+        language:
+          type: string
+          nullable: true
+          description: Preferred language for the user
+          maxLength: 10
+        theme:
+          nullable: true
+          description: Settings for the web UI as JSON - do not edit manually!
+        widgets:
+          nullable: true
+          description: Settings for the dashboard widgets as JSON - do not edit manually!
+        displayname:
+          type: string
+          nullable: true
+          title: Display Name
+          description: Chosen display name for the user
+          maxLength: 255
+        position:
+          type: string
+          nullable: true
+          description: Main job title or position
+          maxLength: 255
+        status:
+          type: string
+          nullable: true
+          description: User status message
+          maxLength: 2000
+        location:
+          type: string
+          nullable: true
+          description: User location information
+          maxLength: 2000
+        active:
+          type: boolean
+          description: User is actively using the system
+        contact:
+          type: string
+          nullable: true
+          description: Preferred contact information for the user
+          maxLength: 255
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEdaEnum'
+          description: |-
+            Which type of user is this?
+
+            * `bot` - Bot
+            * `internal` - Internal
+            * `external` - External
+            * `guest` - Guest
+        organisation:
+          type: string
+          nullable: true
+          description: Users primary organisation/affiliation
+          maxLength: 255
+        primary_group:
+          type: integer
+          nullable: true
+          description: Primary group for the user
     PatchedUserSettings:
       type: object
       description: Serializer for the InvenTreeUserSetting model.
@@ -31991,12 +32419,10 @@ components:
           type: string
           readOnly: true
       required:
-      - api_url
       - choices
       - description
       - key
       - model_filters
-      - model_name
       - name
       - pk
       - plugin
@@ -32074,10 +32500,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
       required:
       - code
       - pk
-      - responsible_detail
     PurchaseOrder:
       type: object
       description: Serializer for a PurchaseOrder object.
@@ -32094,6 +32520,12 @@ components:
           type: string
           format: date
           nullable: true
+        issue_date:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+          description: Date order was issued
         start_date:
           type: string
           format: date
@@ -32119,7 +32551,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         project_code:
           type: integer
           nullable: true
@@ -32143,6 +32575,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
         contact:
           type: integer
           nullable: true
@@ -32151,6 +32584,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Contact'
           readOnly: true
+          nullable: true
         address:
           type: integer
           nullable: true
@@ -32159,6 +32593,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
+          nullable: true
         status:
           type: integer
           readOnly: true
@@ -32200,12 +32635,6 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
-        issue_date:
-          type: string
-          format: date
-          readOnly: true
-          nullable: true
-          description: Date order was issued
         complete_date:
           type: string
           format: date
@@ -32221,6 +32650,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         supplier_reference:
           type: string
           description: Supplier order reference code
@@ -32253,27 +32683,17 @@ components:
           nullable: true
           description: Destination for received items
       required:
-      - address_detail
       - barcode_hash
-      - complete_date
       - completed_lines
-      - contact_detail
       - created_by
-      - issue_date
       - line_items
       - overdue
       - pk
-      - project_code_detail
-      - project_code_label
       - reference
-      - responsible_detail
       - status
-      - status_custom_key
       - status_text
       - supplier
-      - supplier_detail
       - supplier_name
-      - total_price
     PurchaseOrderComplete:
       type: object
       description: Serializer for completing a purchase order.
@@ -32315,6 +32735,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PurchaseOrder'
           readOnly: true
+          nullable: true
         price:
           type: string
           format: decimal
@@ -32335,10 +32756,9 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
       required:
       - order
-      - order_detail
       - pk
       - quantity
     PurchaseOrderLineItem:
@@ -32372,6 +32792,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PurchaseOrder'
           readOnly: true
+          nullable: true
         overdue:
           type: boolean
           readOnly: true
@@ -32379,10 +32800,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         supplier_part_detail:
           allOf:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
+          nullable: true
         received:
           type: number
           format: double
@@ -32431,7 +32854,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         merge_items:
           type: boolean
           writeOnly: true
@@ -32461,15 +32884,12 @@ components:
       - ipn
       - mpn
       - order
-      - order_detail
       - overdue
       - part
-      - part_detail
       - pk
       - quantity
       - received
       - sku
-      - supplier_part_detail
       - total_price
     PurchaseOrderLineItemReceive:
       type: object
@@ -32501,7 +32921,7 @@ components:
           description: Enter serial numbers for incoming stock items
         status:
           allOf:
-          - $ref: '#/components/schemas/Status229Enum'
+          - $ref: '#/components/schemas/Status2a7Enum'
           default: 10
         packaging:
           type: string
@@ -32594,55 +33014,6 @@ components:
       - asset
       - description
       - pk
-    ReportOutput:
-      type: object
-      description: Serializer class for the ReportOutput model.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        created:
-          type: string
-          format: date
-          readOnly: true
-        user:
-          type: integer
-          nullable: true
-        user_detail:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
-        model_type:
-          type: string
-          readOnly: true
-        items:
-          type: integer
-          description: Number of items to process
-        complete:
-          type: boolean
-          description: Report generation is complete
-        progress:
-          type: integer
-          description: Report generation progress
-        output:
-          type: string
-          format: uri
-        template:
-          type: integer
-          title: Report Template
-        template_detail:
-          allOf:
-          - $ref: '#/components/schemas/ReportTemplate'
-          readOnly: true
-      required:
-      - created
-      - model_type
-      - output
-      - pk
-      - template
-      - template_detail
-      - user_detail
     ReportPrint:
       type: object
       description: Serializer class for printing a report.
@@ -32694,7 +33065,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType28bEnum'
+          $ref: '#/components/schemas/ModelType820Enum'
         template:
           type: string
           format: uri
@@ -32747,6 +33118,11 @@ components:
           type: string
           format: date
           nullable: true
+        issue_date:
+          type: string
+          format: date
+          nullable: true
+          description: Date order was issued
         start_date:
           type: string
           format: date
@@ -32772,7 +33148,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         project_code:
           type: integer
           nullable: true
@@ -32796,6 +33172,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
         contact:
           type: integer
           nullable: true
@@ -32804,6 +33181,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Contact'
           readOnly: true
+          nullable: true
         address:
           type: integer
           nullable: true
@@ -32812,6 +33190,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
+          nullable: true
         status:
           type: integer
           readOnly: true
@@ -32851,11 +33230,6 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
-        issue_date:
-          type: string
-          format: date
-          nullable: true
-          description: Date order was issued
         complete_date:
           type: string
           format: date
@@ -32870,6 +33244,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         customer_reference:
           type: string
           description: Customer order reference code
@@ -32895,23 +33270,15 @@ components:
           readOnly: true
           nullable: true
       required:
-      - address_detail
       - barcode_hash
       - completed_lines
-      - contact_detail
       - created_by
-      - customer_detail
       - line_items
       - overdue
       - pk
-      - project_code_detail
-      - project_code_label
       - reference
-      - responsible_detail
       - status
-      - status_custom_key
       - status_text
-      - total_price
     ReturnOrderExtraLine:
       type: object
       description: Serializer for a ReturnOrderExtraLine object.
@@ -32945,6 +33312,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReturnOrder'
           readOnly: true
+          nullable: true
         price:
           type: string
           format: decimal
@@ -32965,10 +33333,9 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
       required:
       - order
-      - order_detail
       - pk
       - quantity
     ReturnOrderLineItem:
@@ -32986,6 +33353,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReturnOrder'
           readOnly: true
+          nullable: true
         item:
           type: integer
           description: Select item to return from customer
@@ -32993,6 +33361,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockItem'
           readOnly: true
+          nullable: true
         quantity:
           type: number
           format: double
@@ -33018,6 +33387,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         price:
           type: string
           format: decimal
@@ -33038,7 +33408,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         reference:
           type: string
           description: Line item reference
@@ -33055,10 +33425,7 @@ components:
             date from the order)
       required:
       - item
-      - item_detail
       - order
-      - order_detail
-      - part_detail
       - pk
       - quantity
     ReturnOrderLineItemReceive:
@@ -33080,9 +33447,8 @@ components:
             * `70` - Lost
             * `75` - Quarantined
             * `85` - Returned
-            * `150` - Incoming goods inspection
           oneOf:
-          - $ref: '#/components/schemas/Status229Enum'
+          - $ref: '#/components/schemas/Status2a7Enum'
           - $ref: '#/components/schemas/BlankEnum'
       required:
       - item
@@ -33137,9 +33503,8 @@ components:
             * `70` - Lost
             * `75` - Quarantined
             * `85` - Returned
-            * `150` - Incoming goods inspection
           oneOf:
-          - $ref: '#/components/schemas/Status229Enum'
+          - $ref: '#/components/schemas/Status2a7Enum'
           - $ref: '#/components/schemas/BlankEnum'
         notes:
           type: string
@@ -33168,6 +33533,7 @@ components:
           additionalProperties: {}
           description: Permissions associated with the user.
           readOnly: true
+          nullable: true
         is_staff:
           type: boolean
           title: Staff status
@@ -33178,7 +33544,6 @@ components:
           description: Designates that this user has all permissions without explicitly
             assigning them.
       required:
-      - permissions
       - roles
       - user
       - username
@@ -33210,6 +33575,11 @@ components:
           type: string
           format: date
           nullable: true
+        issue_date:
+          type: string
+          format: date
+          nullable: true
+          description: Date order was issued
         start_date:
           type: string
           format: date
@@ -33235,7 +33605,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         project_code:
           type: integer
           nullable: true
@@ -33259,6 +33629,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
+          nullable: true
         contact:
           type: integer
           nullable: true
@@ -33267,6 +33638,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Contact'
           readOnly: true
+          nullable: true
         address:
           type: integer
           nullable: true
@@ -33275,6 +33647,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
+          nullable: true
         status:
           type: integer
           readOnly: true
@@ -33325,6 +33698,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         customer_reference:
           type: string
           description: Customer order reference code
@@ -33363,26 +33737,17 @@ components:
           readOnly: true
           title: Completed Shipments
       required:
-      - address_detail
       - barcode_hash
       - completed_lines
       - completed_shipments_count
-      - contact_detail
       - created_by
-      - customer_detail
       - line_items
       - overdue
       - pk
-      - project_code_detail
-      - project_code_label
       - reference
-      - responsible_detail
-      - shipment_date
       - shipments_count
       - status
-      - status_custom_key
       - status_text
-      - total_price
     SalesOrderAllocation:
       type: object
       description: |-
@@ -33423,37 +33788,37 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockItemSerializerBrief'
           readOnly: true
+          nullable: true
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
           readOnly: true
+          nullable: true
         customer_detail:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         location_detail:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
+          nullable: true
         shipment_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrderShipment'
           readOnly: true
       required:
-      - customer_detail
       - item
-      - item_detail
       - line
       - location
-      - location_detail
       - order
-      - order_detail
       - part
-      - part_detail
       - pk
       - quantity
       - serial
@@ -33499,6 +33864,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
           readOnly: true
+          nullable: true
         price:
           type: string
           format: decimal
@@ -33519,10 +33885,9 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
       required:
       - order
-      - order_detail
       - pk
       - quantity
     SalesOrderLineItem:
@@ -33541,6 +33906,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         quantity:
           type: number
           format: double
@@ -33559,6 +33925,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
           readOnly: true
+          nullable: true
         overdue:
           type: boolean
           readOnly: true
@@ -33570,6 +33937,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
         sale_price:
           type: string
           format: decimal
@@ -33600,7 +33968,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         available_stock:
           type: number
           format: double
@@ -33623,12 +33991,9 @@ components:
       - available_stock
       - available_variant_stock
       - building
-      - customer_detail
       - on_order
       - order
-      - order_detail
       - overdue
-      - part_detail
       - pk
       - quantity
       - shipped
@@ -33667,6 +34032,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
           readOnly: true
+          nullable: true
         allocated_items:
           type: integer
           readOnly: true
@@ -33702,7 +34068,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
         notes:
           type: string
           nullable: true
@@ -33711,7 +34077,6 @@ components:
       required:
       - allocated_items
       - order
-      - order_detail
       - pk
     SalesOrderShipmentAllocation:
       type: object
@@ -33771,7 +34136,7 @@ components:
           type: string
           format: uri
           description: Link to external page
-          maxLength: 200
+          maxLength: 2000
     SalesOrderStatusCustomKeyEnum:
       enum:
       - 10
@@ -33865,7 +34230,6 @@ components:
       - last_run
       - pk
       - success
-      - task
     SelectionEntry:
       type: object
       description: Serializer for a selection entry.
@@ -34000,28 +34364,6 @@ components:
       - password_forgotten_enabled
       - registration_enabled
       - sso_registration
-    Status229Enum:
-      enum:
-      - 10
-      - 50
-      - 55
-      - 60
-      - 65
-      - 70
-      - 75
-      - 85
-      - 150
-      type: integer
-      description: |-
-        * `10` - OK
-        * `50` - Attention needed
-        * `55` - Damaged
-        * `60` - Destroyed
-        * `65` - Rejected
-        * `70` - Lost
-        * `75` - Quarantined
-        * `85` - Returned
-        * `150` - Incoming goods inspection
     Status2a7Enum:
       enum:
       - 10
@@ -34056,28 +34398,6 @@ components:
         * `25` - On Hold
         * `30` - Cancelled
         * `40` - Complete
-    StatusCustomKey229Enum:
-      enum:
-      - 10
-      - 50
-      - 55
-      - 60
-      - 65
-      - 70
-      - 75
-      - 85
-      - 150
-      type: integer
-      description: |-
-        * `10` - OK
-        * `50` - Attention needed
-        * `55` - Damaged
-        * `60` - Destroyed
-        * `65` - Rejected
-        * `70` - Lost
-        * `75` - Quarantined
-        * `85` - Returned
-        * `150` - Incoming goods inspection
     StatusCustomKey2a7Enum:
       enum:
       - 10
@@ -34171,9 +34491,8 @@ components:
             * `70` - Lost
             * `75` - Quarantined
             * `85` - Returned
-            * `150` - Incoming goods inspection
           oneOf:
-          - $ref: '#/components/schemas/Status229Enum'
+          - $ref: '#/components/schemas/Status2a7Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         packaging:
@@ -34231,7 +34550,7 @@ components:
           description: Select stock items to change status
         status:
           allOf:
-          - $ref: '#/components/schemas/Status229Enum'
+          - $ref: '#/components/schemas/Status2a7Enum'
           default: 10
         note:
           type: string
@@ -34324,7 +34643,7 @@ components:
           format: uri
           title: External Link
           description: Link to external URL
-          maxLength: 200
+          maxLength: 2000
         notes:
           type: string
           nullable: true
@@ -34443,6 +34762,7 @@ components:
           items:
             $ref: '#/components/schemas/StockItemTestResult'
           readOnly: true
+          nullable: true
         allocated:
           type: number
           format: double
@@ -34463,6 +34783,7 @@ components:
             type: object
             additionalProperties: {}
           readOnly: true
+          nullable: true
         stale:
           type: boolean
           readOnly: true
@@ -34477,42 +34798,34 @@ components:
           allOf:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
+          nullable: true
           title: Supplier Part
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Part
         location_detail:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
+          nullable: true
           title: Location
       required:
-      - MPN
-      - SKU
       - allocated
       - barcode_hash
       - child_items
       - expired
       - in_stock
       - installed_items
-      - location_detail
-      - location_path
       - parent
       - part
-      - part_detail
       - pk
-      - purchase_order_reference
       - quantity
-      - sales_order_reference
       - stale
       - status_text
-      - stocktake_date
-      - supplier_part_detail
-      - tests
       - tracking_items
-      - updated
     StockItemSerializerBrief:
       type: object
       description: Brief serializers for a StockItem.
@@ -34612,6 +34925,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
         date:
           type: string
           format: date-time
@@ -34625,13 +34939,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartTestTemplate'
           readOnly: true
+          nullable: true
       required:
       - date
       - pk
       - stock_item
-      - template_detail
-      - user
-      - user_detail
     StockLocationType:
       type: object
       description: Serializer for StockLocationType model.
@@ -34721,6 +35033,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockItemSerializerBrief'
           readOnly: true
+          nullable: true
         date:
           type: string
           format: date-time
@@ -34746,16 +35059,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
       required:
       - date
       - deltas
       - item
-      - item_detail
       - label
       - pk
       - tracking_type
-      - user
-      - user_detail
     StockTransfer:
       type: object
       description: Serializer for transferring (moving) stock item(s).
@@ -34800,12 +35111,13 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
         link:
           type: string
           format: uri
           nullable: true
           description: URL for external supplier part link
-          maxLength: 200
+          maxLength: 2000
         active:
           type: boolean
           description: Is this supplier part active?
@@ -34813,6 +35125,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
           title: Manufacturer
         manufacturer_part:
           type: integer
@@ -34822,6 +35135,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ManufacturerPart'
           readOnly: true
+          nullable: true
           title: Manufacturer Part
         MPN:
           type: string
@@ -34861,10 +35175,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Part
         pretty_name:
           type: string
           readOnly: true
+          nullable: true
         SKU:
           type: string
           description: Supplier stock keeping unit
@@ -34875,6 +35191,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
           title: Supplier
         updated:
           type: string
@@ -34893,20 +35210,11 @@ components:
       required:
       - MPN
       - SKU
-      - availability_updated
       - barcode_hash
-      - in_stock
-      - manufacturer_detail
-      - manufacturer_part_detail
-      - on_order
       - pack_quantity_native
       - part
-      - part_detail
       - pk
-      - pretty_name
       - supplier
-      - supplier_detail
-      - updated
     SupplierPriceBreak:
       type: object
       description: Serializer for SupplierPriceBreak object.
@@ -34921,6 +35229,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
+          nullable: true
         quantity:
           type: number
           format: double
@@ -34947,6 +35256,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
+          nullable: true
         updated:
           type: string
           format: date-time
@@ -34955,13 +35265,22 @@ components:
           description: Timestamp of last update
       required:
       - part
-      - part_detail
       - pk
       - price
       - quantity
       - supplier
-      - supplier_detail
-      - updated
+    TypeEdaEnum:
+      enum:
+      - bot
+      - internal
+      - external
+      - guest
+      type: string
+      description: |-
+        * `bot` - Bot
+        * `internal` - Internal
+        * `external` - External
+        * `guest` - Guest
     UninstallStockItem:
       type: object
       description: API serializers for uninstalling an installed item from a stock
@@ -35060,6 +35379,10 @@ components:
           type: boolean
           title: Active
           description: Is this user account active
+        profile:
+          allOf:
+          - $ref: '#/components/schemas/BriefUserProfile'
+          readOnly: true
       required:
       - email
       - first_name
@@ -35069,7 +35392,71 @@ components:
       - is_superuser
       - last_name
       - pk
+      - profile
       - username
+    UserProfile:
+      type: object
+      description: Serializer for the UserProfile model.
+      properties:
+        language:
+          type: string
+          nullable: true
+          description: Preferred language for the user
+          maxLength: 10
+        theme:
+          nullable: true
+          description: Settings for the web UI as JSON - do not edit manually!
+        widgets:
+          nullable: true
+          description: Settings for the dashboard widgets as JSON - do not edit manually!
+        displayname:
+          type: string
+          nullable: true
+          title: Display Name
+          description: Chosen display name for the user
+          maxLength: 255
+        position:
+          type: string
+          nullable: true
+          description: Main job title or position
+          maxLength: 255
+        status:
+          type: string
+          nullable: true
+          description: User status message
+          maxLength: 2000
+        location:
+          type: string
+          nullable: true
+          description: User location information
+          maxLength: 2000
+        active:
+          type: boolean
+          description: User is actively using the system
+        contact:
+          type: string
+          nullable: true
+          description: Preferred contact information for the user
+          maxLength: 255
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEdaEnum'
+          description: |-
+            Which type of user is this?
+
+            * `bot` - Bot
+            * `internal` - Internal
+            * `external` - External
+            * `guest` - Guest
+        organisation:
+          type: string
+          nullable: true
+          description: Users primary organisation/affiliation
+          maxLength: 255
+        primary_group:
+          type: integer
+          nullable: true
+          description: Primary group for the user
     UserSettings:
       type: object
       description: Serializer for the InvenTreeUserSetting model.
@@ -35116,11 +35503,9 @@ components:
           type: string
           readOnly: true
       required:
-      - api_url
       - choices
       - description
       - key
-      - model_name
       - name
       - pk
       - typ

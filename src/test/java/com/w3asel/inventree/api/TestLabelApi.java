@@ -18,5 +18,8 @@ public class TestLabelApi extends TestApi {
     public void test() throws ApiException {
         LabelTemplate actual = api.labelTemplateRetrieve(1);
         Assertions.assertNotNull(actual);
+
+        int limit = 100;
+        api.labelTemplateList(limit, null, null, null, null, null);
     }
 }
