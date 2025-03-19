@@ -7,7 +7,6 @@ on:
     paths:
       - 'src/main/resources/api.yaml'
       - 'pom.xml'
-      - '.github/workflows/*' # temporary while getting workflow functioning
   release:
     types:
       - published

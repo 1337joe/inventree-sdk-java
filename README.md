@@ -22,7 +22,7 @@ Alternately, if you're just looking for a jar file you can find it attached to t
 
 The version number is a mix of the InvenTree release (0.17) and the schema version (294) with point releases after that when multiple client jars are released against the same schema.
 
-The `main` branch of this repository tracks `InvenTree/master` and may not be compatible with the latest stable release. As such, it is published as `-SNAPSHOT` jars, which may be consumed by [adding the central snapshot repository to your pom](https://central.sonatype.org/publish/publish-portal-snapshots/#consuming-snapshot-releases-for-your-project).
+The `main` branch of this repository tracks `InvenTree/master` and may not be compatible with the latest stable release. ~~As such, it is published as `-SNAPSHOT` jars, which may be consumed by [adding the central snapshot repository to your pom](https://central.sonatype.org/publish/publish-portal-snapshots/#consuming-snapshot-releases-for-your-project).~~ TODO: get snapshot publishing working
 
 ### Calling a server
 
