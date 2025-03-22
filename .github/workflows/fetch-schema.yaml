@@ -1,0 +1,88 @@
+name: Fetch Schema
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New schema version number'
+        required: true
+        type: number
+
+env:
+  NEW_VERSION: ${{ inputs.version }}
+  BRANCH_NAME: schema-${{ inputs.version }}
+
+jobs:
+  update_to_schema_version:
+    runs-on: ubuntu-latest
+    permissions:
+      # permission to commit and push changed files
+      contents: write
+      # permission to create a pull request
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Read current schema version
+        run: |
+          echo "OLD_VERSION=$(sed -nE "s/^\s+version: '([0-9]+)'$/\1/p" src/main/resources/api.yaml)" >> "$GITHUB_ENV"
+
+      - name: Ensure new version is an upgrade
+        if: ${{ env.NEW_VERSION <= env.OLD_VERSION }}
+        run: |
+          echo "::error title=Invalid update version::${{ env.NEW_VERSION }} <= ${{ env.OLD_VERSION}}"
+          exit 1
+
+        # Verify branch doesn't exist
+      - name: Ensure branch doesn't exist
+        run: |
+          EXISTS=$(git ls-remote --heads origin refs/heads/${{ env.BRANCH_NAME }} | wc -l)
+          if [ $EXISTS -eq 1 ] ; then
+            echo "::error title=Invalid update version::Branch ${{ env.BRANCH_NAME }} already exists"
+            exit 1
+          fi
+
+      - name: Checkout schema
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: 'inventree/schema'
+          path: 'schema'
+
+      - name: Verify schema exists
+        run: |
+          if [ ! -d "schema/export/${{ env.NEW_VERSION }}" ]; then
+            echo "::error title=Invalid update version::${{ env.NEW_VERSION }} not found"
+            exit 1
+          fi
+
+      - name: Read original commit hash
+        run: |
+          cd schema
+          git log export/${{ env.NEW_VERSION }}/api.yaml | sed -nE 's|^\s+Update API schema for [0-9]+ / (.*)$|\1|p' > ../inventree_test_hash.txt
+          echo "COMMIT_HASH=$(cat ../inventree_test_hash.txt)" >> "$GITHUB_ENV"
+
+      - name: Checkout inventree demo dataset
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: 'inventree/demo-dataset'
+          path: 'demo-dataset'
+
+      - name: Collect files
+        run: |
+          sed -iE "s/${{ env.OLD_VERSION }}-SNAPSHOT/${{ env.NEW_VERSION }}-SNAPSHOT/g" pom.xml
+          cp schema/export/${{ env.NEW_VERSION }}/api.yaml src/main/resources/api.yaml
+          cp demo-dataset/inventree_data.json src/test/resources/inventree_data.json
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
+        with:
+          branch: '${{ env.BRANCH_NAME }}'
+          create_branch: true
+          file_pattern: 'pom.xml inventree_test_hash.txt src/*'
+          commit_message: 'Update to schema ${{ env.NEW_VERSION }}'
+
+      - name: Create pull request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr create --draft -B main -H ${{ env.BRANCH_NAME }} --title 'Update to schema version ${{ inputs.version }}' --body 'Automatically generated, check schema diff for needed changes'
