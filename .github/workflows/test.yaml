@@ -12,7 +12,8 @@ on:
       - '**.md'
 
 jobs:
-  build-tests:
+  generate-and-javadoc:
+    name: Generate from schema and javadoc
     runs-on: ubuntu-latest
 
     steps:
@@ -28,5 +29,113 @@ jobs:
         with:
           maven-version: 3.9.9
 
-      - name: Build all
+      - name: Generate Javadoc
+        run: mvn javadoc:javadoc
+
+  compile-with-test:
+    name: Compile generated code and tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4.7.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - uses: stCarolas/setup-maven@d6af6abeda15e98926a57b5aa970a96bb37f97d1 # v5
+        with:
+          maven-version: 3.9.9
+
+      - name: Build with tests
         run: mvn verify -DskipTests
+
+  test-with-server:
+    name: Run InvenTree server and tests
+    runs-on: ubuntu-latest
+    needs: compile-with-test
+
+    env:
+      python_version: 3.9
+      apt_dependency: gettext poppler-utils
+      server_start_sleep: 60
+      INVENTREE_DB_ENGINE: sqlite3
+      INVENTREE_DB_NAME: inventree
+      INVENTREE_MEDIA_ROOT: /home/runner/work/inventree-java/InvenTree/test_inventree_media
+      INVENTREE_STATIC_ROOT: /home/runner/work/inventree-java/InvenTree/test_inventree_static
+      INVENTREE_BACKUP_DIR: /home/runner/work/inventree-java/InvenTree/test_inventree_backup
+      INVENTREE_SITE_URL: http://localhost:8000
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Read target commit hash
+        run: |
+          echo "COMMIT_HASH=$(cat inventree_test_hash.txt)" >> "$GITHUB_ENV"
+
+      # Set up and start InvenTree server
+
+      - name: Checkout inventree
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: 'inventree/inventree'
+          path: 'InvenTree'
+          ref: '${{ env.COMMIT_HASH }}'
+
+      # Python installs
+      - name: Set up Python ${{ env.python_version }}
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: ${{ env.python_version }}
+          cache: pip
+          cache-dependency-path: |
+            InvenTree/src/backend/requirements.txt
+            InvenTree/src/backend/requirements-dev.txt
+            InvenTree/contrib/container/requirements.txt
+            InvenTree/contrib/dev_reqs/requirements.txt
+      - name: Install Base Python Dependencies
+        run: |
+          python3 -m pip install -U pip
+          pip3 install -U invoke wheel
+          pip3 install 'uv<0.3.0'
+      - name: Allow uv to use the system Python by default
+        run: echo "UV_SYSTEM_PYTHON=1" >> $GITHUB_ENV
+
+      # OS installs
+      - name: Install OS Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install ${{ env.apt_dependency }}
+          sudo apt-get install ${{ env.apt_dependency }}
+
+      # Invoke commands
+      - name: Install dev requirements
+        run: uv pip install --require-hashes -r InvenTree/src/backend/requirements-dev.txt
+      - name: Run invoke install
+        run: cd InvenTree && invoke install --uv
+      - name: Setup test environment
+        run: cd InvenTree && invoke dev.setup-test
+#      - name: Run invoke update
+#        run: cd InvenTree && invoke update --uv --skip-backup --skip-static
+      - name: Start InvenTree Server
+        run: |
+          cd InvenTree
+          invoke dev.server -a 127.0.0.1:8000 &
+          invoke wait
+
+      # Run tests
+
+      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4.7.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - uses: stCarolas/setup-maven@d6af6abeda15e98926a57b5aa970a96bb37f97d1 # v5
+        with:
+          maven-version: 3.9.9
+
+      - name: Run tests
+        run: mvn test
