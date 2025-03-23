@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '326'
+  version: '327'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -14137,6 +14137,11 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: mandatory
+        schema:
+          type: boolean
+        description: Mandatory
       - in: query
         name: mixin
         schema:
@@ -32292,9 +32297,13 @@ components:
           type: boolean
           description: Return True if this is a 'package' plugin.
           readOnly: true
+        is_mandatory:
+          type: boolean
+          readOnly: true
       required:
       - is_builtin
       - is_installed
+      - is_mandatory
       - is_package
       - is_sample
       - key
