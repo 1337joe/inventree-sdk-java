@@ -73,7 +73,7 @@ jobs:
 
       - name: Read target commit hash
         run: |
-          echo "COMMIT_HASH=$(cat inventree_test_hash.txt)" >> "$GITHUB_ENV"
+          echo "COMMIT_HASH=$(cat .github/inventree_test_hash.txt)" >> "$GITHUB_ENV"
 
       # Set up and start InvenTree server
 

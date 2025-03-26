@@ -59,8 +59,8 @@ jobs:
       - name: Read original commit hash
         run: |
           cd schema
-          git log export/${{ env.NEW_VERSION }}/api.yaml | sed -nE 's|^\s+Update API schema for [0-9]+ / (.*)$|\1|p' > ../inventree_test_hash.txt
-          echo "COMMIT_HASH=$(cat ../inventree_test_hash.txt)" >> "$GITHUB_ENV"
+          git log export/${{ env.NEW_VERSION }}/api.yaml | sed -nE 's|^\s+Update API schema for [0-9]+ / (.*)$|\1|p' > ../.github/inventree_test_hash.txt
+          echo "COMMIT_HASH=$(cat ../.github/inventree_test_hash.txt)" >> "$GITHUB_ENV"
 
       - name: Checkout inventree demo dataset
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -79,7 +79,7 @@ jobs:
         with:
           branch: '${{ env.BRANCH_NAME }}'
           create_branch: true
-          file_pattern: 'pom.xml inventree_test_hash.txt src/*'
+          file_pattern: 'pom.xml .github/inventree_test_hash.txt src/*'
           commit_message: 'Update to schema ${{ env.NEW_VERSION }}'
 
       - name: Create pull request
