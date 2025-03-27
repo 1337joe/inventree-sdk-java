@@ -14,7 +14,7 @@ This library is published to [Maven Central](https://central.sonatype.com/artifa
 <dependency>
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
-    <version>0.17.294</version>
+    <version>0.17.294.1</version>
 </dependency>
 ```
 
@@ -22,7 +22,23 @@ Alternately, if you're just looking for a jar file you can find it attached to t
 
 The version number is a mix of the InvenTree release (0.17) and the schema version (294) with point releases after that when multiple client jars are released against the same schema.
 
-The `main` branch of this repository tracks `InvenTree/master` and may not be compatible with the latest stable release. ~~As such, it is published as `-SNAPSHOT` jars, which may be consumed by [adding the central snapshot repository to your pom](https://central.sonatype.org/publish/publish-portal-snapshots/#consuming-snapshot-releases-for-your-project).~~ TODO: get snapshot publishing working
+The `main` branch of this repository tracks `InvenTree/master` and may not be compatible with the latest stable release. As it is not tied to an InvenTree release, it is published as `-SNAPSHOT` jars ([browsable here](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/com/w3asel/inventree-sdk-java/)), which may be consumed by [adding the central snapshot repository to your pom](https://central.sonatype.org/publish/publish-portal-snapshots/#consuming-snapshot-releases-for-your-project):
+
+```xml
+<repositories>
+  <repository>
+    <name>Central Portal Snapshots</name>
+    <id>central-portal-snapshots</id>
+    <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+    <releases>
+      <enabled>false</enabled>
+    </releases>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </repository>
+</repositories>
+```
 
 ### Calling a server
 
