@@ -127,7 +127,7 @@ jobs:
 
 
       - name: Run tests
-        run: mvn test
+        run: mvn verify
 
       # Report results
       - name: Upload to Codecov
