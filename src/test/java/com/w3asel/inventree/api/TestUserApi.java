@@ -46,8 +46,7 @@ public class TestUserApi extends TestApi {
 
     @Test
     public void userRetrieve_admin() throws ApiException {
-        ExtendedUser actual = api.userRetrieve("1"); // TODO why is this a string, regex only allows
-                                                     // digits?
+        ExtendedUser actual = api.userRetrieve(1);
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(1, actual.getPk(), "Incorrect pk returned");
         Assertions.assertEquals("admin", actual.getUsername(), "Incorrect username returned");
@@ -62,8 +61,7 @@ public class TestUserApi extends TestApi {
 
     @Test
     public void userRetrieve_reader() throws ApiException {
-        ExtendedUser actual = api.userRetrieve("2"); // TODO why is this a string, regex only allows
-                                                     // digits?
+        ExtendedUser actual = api.userRetrieve(2);
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(2, actual.getPk(), "Incorrect pk returned");
         Assertions.assertEquals("reader", actual.getUsername(), "Incorrect username returned");
@@ -91,7 +89,7 @@ public class TestUserApi extends TestApi {
 
     @Test
     public void userGroupRetrieve_readers() throws ApiException {
-        Group actual = api.userGroupRetrieve("1"); // TODO string
+        Group actual = api.userGroupRetrieve(1);
         Assertions.assertNotNull(actual);
     }
 

@@ -142,7 +142,7 @@ public class TestCompanyApi extends TestApi {
     @CsvSource({"1", "23"})
     public void companyRetrieve(int company) throws ApiException {
         JsonObject expected = InventreeDemoDataset.getObjects(Models.COMPANY, company).get(0);
-        Company actual = api.companyRetrieve(Integer.toString(company));
+        Company actual = api.companyRetrieve(company);
         assertCompanyEquals(expected, actual, true);
 
         // verify data not directly in demo dataset
@@ -346,7 +346,7 @@ public class TestCompanyApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"1"})
     public void companyContactRetrieve(int contact) throws ApiException {
-        Contact actual = api.companyContactRetrieve(Integer.toString(contact));
+        Contact actual = api.companyContactRetrieve(contact);
         JsonObject expected =
                 InventreeDemoDataset.getObjects(Models.COMPANY_CONTACT, contact).get(0);
         assertContactEquals(expected, actual);
@@ -361,7 +361,7 @@ public class TestCompanyApi extends TestApi {
     @Test
     public void companyContactDelete_NotFound() {
         try {
-            api.companyContactDestroy2(Integer.toString(-1));
+            api.companyContactDestroy2(-1);
             Assertions.fail("Expected 404 Not Found");
         } catch (ApiException e) {
             Assertions.assertTrue(e.getMessage().contains("Not Found"),
@@ -387,14 +387,14 @@ public class TestCompanyApi extends TestApi {
             Assertions.assertEquals(initialCount + 1, createdCount,
                     "Company count should have increased");
         } finally {
-            api.companyContactDestroy2(Integer.toString(actual.getPk()));
+            api.companyContactDestroy2(actual.getPk());
         }
 
         int deletedCount = api.companyContactList(1, company, null, null, null).getCount();
         Assertions.assertEquals(initialCount, deletedCount, "Contact count should have reset");
 
         try {
-            api.companyContactDestroy2(Integer.toString(actual.getPk()));
+            api.companyContactDestroy2(actual.getPk());
             Assertions.fail("Expected 404 Not Found");
         } catch (ApiException e) {
             Assertions.assertTrue(e.getMessage().contains("Not Found"),
@@ -536,7 +536,7 @@ public class TestCompanyApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"11"})
     public void companyPartRetrieve(int supplierPart) throws ApiException {
-        SupplierPart actual = api.companyPartRetrieve(Integer.toString(supplierPart));
+        SupplierPart actual = api.companyPartRetrieve(supplierPart);
         JsonObject expected =
                 InventreeDemoDataset.getObjects(Models.COMPANY_SUPPLIER_PART, supplierPart).get(0);
         assertSupplierPartEquals(expected, actual, true);
@@ -644,8 +644,7 @@ public class TestCompanyApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"1"})
     public void companyPartManufacturerRetrieve(int manufacturerPart) throws ApiException {
-        ManufacturerPart actual =
-                api.companyPartManufacturerRetrieve(Integer.toString(manufacturerPart));
+        ManufacturerPart actual = api.companyPartManufacturerRetrieve(manufacturerPart);
         JsonObject expected = InventreeDemoDataset
                 .getObjects(Models.COMPANY_MANUFACTURER_PART, manufacturerPart).get(0);
         assertManufacturerPartEquals(expected, actual, true);
@@ -741,8 +740,7 @@ public class TestCompanyApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"2,1"})
     public void companyPriceBreakRetrieve(int supplierPriceBreak, int company) throws ApiException {
-        SupplierPriceBreak actual =
-                api.companyPriceBreakRetrieve(Integer.toString(supplierPriceBreak));
+        SupplierPriceBreak actual = api.companyPriceBreakRetrieve(supplierPriceBreak);
         JsonObject expectedPriceBreak =
                 InventreeDemoDataset.getObjects(Models.COMPANY_SUPPLIER_PRICE_BREAK, 2).get(0);
         assertSupplierPriceBreakEquals(expectedPriceBreak, actual, true);
