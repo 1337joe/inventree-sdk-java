@@ -354,6 +354,11 @@
                             <token>(allOf|oneOf):(\n\s+- \$ref: '#/components/schemas/Status2a7Enum')(\n\s+- \$ref: '#/components/schemas/(Blank|Null)Enum')*</token>
                             <value>type: integer</value>
                         </replacement>
+                        <!-- convert string type PK path variables to int -->
+                        <replacement>
+                            <token>schema:(\n\s+)type: string\n\s+pattern: \^(\[0-9\]|\\d)+.*\$</token>
+                            <value>schema:$1type: integer</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
