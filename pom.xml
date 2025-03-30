@@ -381,6 +381,15 @@
                             <token>permissions:(\n\s+)type: string</token>
                             <value>permissions:$1type: object$1additionalProperties: {}</value>
                         </replacement>
+                        <!-- fill in GenericState responsees -->
+                        <replacement>
+                            <token>'200':(\n\s+)description: Status code information</token>
+                            <value>'200':$1content:$1  application/json:$1    schema:$1      \$ref: '#/components/schemas/GenericStateClass'$1description: Status code information</value>
+                        </replacement>
+                        <replacement>
+                            <token>email(\n\s+)GlobalSettings:</token>
+                            <value>email$1GenericStateClass:$1  type: object$1  description: API serializer for generic state class information.$1  properties:$1    class:$1      type: string$1      readOnly: true$1      title: Class$1    values:$1      type: object$1      additionalProperties:$1        \$ref: '#/components/schemas/GenericStateValue'$1  required:$1  - status_class$1  - values$1GenericStateValue:$1  type: object$1  description: API serializer for generic state information.$1  properties:$1    key:$1      type: integer$1    logical_key:$1      type: string$1    name:$1      type: string$1    label:$1      type: string$1    color:$1      type: string$1    custom:$1      type: boolean$1  required:$1  - key$1  - label$1  - name$1GlobalSettings:</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
