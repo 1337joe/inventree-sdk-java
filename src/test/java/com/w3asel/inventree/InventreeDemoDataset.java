@@ -71,7 +71,9 @@ public class InventreeDemoDataset {
         COMPANY_MANUFACTURER_PART("company.manufacturerpart"),
         COMPANY_SUPPLIER_PRICE_BREAK("company.supplierpricebreak"),
         COMPANY_SUPPLIER_PART("company.supplierpart"),
-        ORDER_SALES("order.salesorder");
+        CUSTOM_USER_STATE("common.inventreecustomuserstatemodel"),
+        ORDER_SALES("order.salesorder"),
+        STOCK_TRACKING("stock.stockitemtracking");
 
         private final String key;
 
