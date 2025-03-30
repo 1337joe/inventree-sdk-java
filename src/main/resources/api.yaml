@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '327'
+  version: '329'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2903,8 +2903,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -2926,8 +2925,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -2961,8 +2959,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -2995,8 +2992,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3015,8 +3011,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3034,8 +3029,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3053,8 +3047,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3361,8 +3354,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3384,8 +3376,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3419,8 +3410,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3453,8 +3443,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3473,8 +3462,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3492,8 +3480,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3511,8 +3498,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3685,8 +3671,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3713,8 +3698,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3753,8 +3737,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3792,8 +3775,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3812,8 +3794,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3831,8 +3812,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3850,8 +3830,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -3995,8 +3974,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4023,8 +4001,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4063,8 +4040,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4102,8 +4078,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4122,8 +4097,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4141,8 +4115,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4160,8 +4133,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4494,8 +4466,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4517,8 +4488,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4552,8 +4522,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -4586,8 +4555,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - company
@@ -14024,8 +13992,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - part
@@ -14047,8 +14014,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - part
@@ -14082,8 +14048,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^\d+$
+          type: integer
         required: true
       tags:
       - part
@@ -18690,8 +18655,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^[0-9]+$
+          type: integer
         required: true
       tags:
       - user
@@ -18713,8 +18677,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^[0-9]+$
+          type: integer
         required: true
       tags:
       - user
@@ -18748,8 +18711,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^[0-9]+$
+          type: integer
         required: true
       tags:
       - user
@@ -18782,8 +18744,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^[0-9]+$
+          type: integer
         required: true
       tags:
       - user
@@ -18872,8 +18833,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^[0-9]+$
+          type: integer
         required: true
       tags:
       - user
@@ -18895,8 +18855,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^[0-9]+$
+          type: integer
         required: true
       tags:
       - user
@@ -18930,8 +18889,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^[0-9]+$
+          type: integer
         required: true
       tags:
       - user
@@ -18964,8 +18922,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
-          pattern: ^[0-9]+$
+          type: integer
         required: true
       tags:
       - user
@@ -22627,8 +22584,6 @@ components:
       required:
       - bom_reference
       - build
-      - build_line
-      - install_into
       - location
       - pk
       - quantity
@@ -24970,7 +24925,6 @@ components:
           items:
             type: string
       required:
-      - MPN
       - manufacturer
       - part
       - pk
@@ -25328,6 +25282,9 @@ components:
         * `Letter` - Letter
     PaginatedAddressList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25348,6 +25305,9 @@ components:
             $ref: '#/components/schemas/Address'
     PaginatedAllUnitListResponseList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25368,6 +25328,9 @@ components:
             $ref: '#/components/schemas/AllUnitListResponse'
     PaginatedApiTokenList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25388,6 +25351,9 @@ components:
             $ref: '#/components/schemas/ApiToken'
     PaginatedAttachmentList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25408,6 +25374,9 @@ components:
             $ref: '#/components/schemas/Attachment'
     PaginatedBarcodeScanResultList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25428,6 +25397,9 @@ components:
             $ref: '#/components/schemas/BarcodeScanResult'
     PaginatedBomItemList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25448,6 +25420,9 @@ components:
             $ref: '#/components/schemas/BomItem'
     PaginatedBomItemSubstituteList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25468,6 +25443,9 @@ components:
             $ref: '#/components/schemas/BomItemSubstitute'
     PaginatedBuildItemList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25488,6 +25466,9 @@ components:
             $ref: '#/components/schemas/BuildItem'
     PaginatedBuildLineList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25508,6 +25489,9 @@ components:
             $ref: '#/components/schemas/BuildLine'
     PaginatedBuildList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25528,6 +25512,9 @@ components:
             $ref: '#/components/schemas/Build'
     PaginatedCategoryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25548,6 +25535,9 @@ components:
             $ref: '#/components/schemas/Category'
     PaginatedCategoryParameterTemplateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25568,6 +25558,9 @@ components:
             $ref: '#/components/schemas/CategoryParameterTemplate'
     PaginatedCategoryTreeList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25588,6 +25581,9 @@ components:
             $ref: '#/components/schemas/CategoryTree'
     PaginatedCompanyList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25608,6 +25604,9 @@ components:
             $ref: '#/components/schemas/Company'
     PaginatedContactList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25628,6 +25627,9 @@ components:
             $ref: '#/components/schemas/Contact'
     PaginatedContentTypeList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25648,6 +25650,9 @@ components:
             $ref: '#/components/schemas/ContentType'
     PaginatedCustomStateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25668,6 +25673,9 @@ components:
             $ref: '#/components/schemas/CustomState'
     PaginatedCustomUnitList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25688,6 +25696,9 @@ components:
             $ref: '#/components/schemas/CustomUnit'
     PaginatedDataImportColumnMapList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25708,6 +25719,9 @@ components:
             $ref: '#/components/schemas/DataImportColumnMap'
     PaginatedDataImportRowList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25728,6 +25742,9 @@ components:
             $ref: '#/components/schemas/DataImportRow'
     PaginatedDataImportSessionList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25748,6 +25765,9 @@ components:
             $ref: '#/components/schemas/DataImportSession'
     PaginatedDataOutputList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25768,6 +25788,9 @@ components:
             $ref: '#/components/schemas/DataOutput'
     PaginatedErrorMessageList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25788,6 +25811,9 @@ components:
             $ref: '#/components/schemas/ErrorMessage'
     PaginatedFailedTaskList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25808,6 +25834,9 @@ components:
             $ref: '#/components/schemas/FailedTask'
     PaginatedGlobalSettingsList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25828,6 +25857,9 @@ components:
             $ref: '#/components/schemas/GlobalSettings'
     PaginatedGroupList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25848,6 +25880,9 @@ components:
             $ref: '#/components/schemas/Group'
     PaginatedIconPackageList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25868,6 +25903,9 @@ components:
             $ref: '#/components/schemas/IconPackage'
     PaginatedLabelTemplateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25888,6 +25926,9 @@ components:
             $ref: '#/components/schemas/LabelTemplate'
     PaginatedLocationList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25908,6 +25949,9 @@ components:
             $ref: '#/components/schemas/Location'
     PaginatedLocationTreeList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25928,6 +25972,9 @@ components:
             $ref: '#/components/schemas/LocationTree'
     PaginatedMachineConfigList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25948,6 +25995,9 @@ components:
             $ref: '#/components/schemas/MachineConfig'
     PaginatedManufacturerPartList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25968,6 +26018,9 @@ components:
             $ref: '#/components/schemas/ManufacturerPart'
     PaginatedManufacturerPartParameterList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -25988,6 +26041,9 @@ components:
             $ref: '#/components/schemas/ManufacturerPartParameter'
     PaginatedNewsFeedEntryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26008,6 +26064,9 @@ components:
             $ref: '#/components/schemas/NewsFeedEntry'
     PaginatedNotesImageList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26028,6 +26087,9 @@ components:
             $ref: '#/components/schemas/NotesImage'
     PaginatedNotificationMessageList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26048,6 +26110,9 @@ components:
             $ref: '#/components/schemas/NotificationMessage'
     PaginatedNotificationUserSettingList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26068,6 +26133,9 @@ components:
             $ref: '#/components/schemas/NotificationUserSetting'
     PaginatedOwnerList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26088,6 +26156,9 @@ components:
             $ref: '#/components/schemas/Owner'
     PaginatedPartInternalPriceList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26108,6 +26179,9 @@ components:
             $ref: '#/components/schemas/PartInternalPrice'
     PaginatedPartList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26128,6 +26202,9 @@ components:
             $ref: '#/components/schemas/Part'
     PaginatedPartParameterList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26148,6 +26225,9 @@ components:
             $ref: '#/components/schemas/PartParameter'
     PaginatedPartParameterTemplateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26168,6 +26248,9 @@ components:
             $ref: '#/components/schemas/PartParameterTemplate'
     PaginatedPartRelationList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26188,6 +26271,9 @@ components:
             $ref: '#/components/schemas/PartRelation'
     PaginatedPartSalePriceList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26208,6 +26294,9 @@ components:
             $ref: '#/components/schemas/PartSalePrice'
     PaginatedPartStocktakeList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26228,6 +26317,9 @@ components:
             $ref: '#/components/schemas/PartStocktake'
     PaginatedPartStocktakeReportList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26248,6 +26340,9 @@ components:
             $ref: '#/components/schemas/PartStocktakeReport'
     PaginatedPartTestTemplateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26268,6 +26363,9 @@ components:
             $ref: '#/components/schemas/PartTestTemplate'
     PaginatedPartThumbList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26288,6 +26386,9 @@ components:
             $ref: '#/components/schemas/PartThumb'
     PaginatedPendingTaskList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26308,6 +26409,9 @@ components:
             $ref: '#/components/schemas/PendingTask'
     PaginatedPluginConfigList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26328,6 +26432,9 @@ components:
             $ref: '#/components/schemas/PluginConfig'
     PaginatedPluginSettingList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26348,6 +26455,9 @@ components:
             $ref: '#/components/schemas/PluginSetting'
     PaginatedProjectCodeList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26368,6 +26478,9 @@ components:
             $ref: '#/components/schemas/ProjectCode'
     PaginatedPurchaseOrderExtraLineList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26388,6 +26501,9 @@ components:
             $ref: '#/components/schemas/PurchaseOrderExtraLine'
     PaginatedPurchaseOrderLineItemList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26408,6 +26524,9 @@ components:
             $ref: '#/components/schemas/PurchaseOrderLineItem'
     PaginatedPurchaseOrderList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26428,6 +26547,9 @@ components:
             $ref: '#/components/schemas/PurchaseOrder'
     PaginatedReportAssetList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26448,6 +26570,9 @@ components:
             $ref: '#/components/schemas/ReportAsset'
     PaginatedReportSnippetList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26468,6 +26593,9 @@ components:
             $ref: '#/components/schemas/ReportSnippet'
     PaginatedReportTemplateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26488,6 +26616,9 @@ components:
             $ref: '#/components/schemas/ReportTemplate'
     PaginatedReturnOrderExtraLineList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26508,6 +26639,9 @@ components:
             $ref: '#/components/schemas/ReturnOrderExtraLine'
     PaginatedReturnOrderLineItemList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26528,6 +26662,9 @@ components:
             $ref: '#/components/schemas/ReturnOrderLineItem'
     PaginatedReturnOrderList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26548,6 +26685,9 @@ components:
             $ref: '#/components/schemas/ReturnOrder'
     PaginatedSalesOrderAllocationList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26568,6 +26708,9 @@ components:
             $ref: '#/components/schemas/SalesOrderAllocation'
     PaginatedSalesOrderExtraLineList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26588,6 +26731,9 @@ components:
             $ref: '#/components/schemas/SalesOrderExtraLine'
     PaginatedSalesOrderLineItemList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26608,6 +26754,9 @@ components:
             $ref: '#/components/schemas/SalesOrderLineItem'
     PaginatedSalesOrderList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26628,6 +26777,9 @@ components:
             $ref: '#/components/schemas/SalesOrder'
     PaginatedSalesOrderShipmentList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26648,6 +26800,9 @@ components:
             $ref: '#/components/schemas/SalesOrderShipment'
     PaginatedScheduledTaskList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26668,6 +26823,9 @@ components:
             $ref: '#/components/schemas/ScheduledTask'
     PaginatedSelectionEntryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26688,6 +26846,9 @@ components:
             $ref: '#/components/schemas/SelectionEntry'
     PaginatedSelectionListList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26708,6 +26869,9 @@ components:
             $ref: '#/components/schemas/SelectionList'
     PaginatedStockItemList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26728,6 +26892,9 @@ components:
             $ref: '#/components/schemas/StockItem'
     PaginatedStockItemTestResultList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26748,6 +26915,9 @@ components:
             $ref: '#/components/schemas/StockItemTestResult'
     PaginatedStockLocationTypeList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26768,6 +26938,9 @@ components:
             $ref: '#/components/schemas/StockLocationType'
     PaginatedStockTrackingList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26788,6 +26961,9 @@ components:
             $ref: '#/components/schemas/StockTracking'
     PaginatedSupplierPartList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26808,6 +26984,9 @@ components:
             $ref: '#/components/schemas/SupplierPart'
     PaginatedSupplierPriceBreakList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26828,6 +27007,9 @@ components:
             $ref: '#/components/schemas/SupplierPriceBreak'
     PaginatedUserCreateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26848,6 +27030,9 @@ components:
             $ref: '#/components/schemas/UserCreate'
     PaginatedUserSettingsList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -26868,6 +27053,9 @@ components:
             $ref: '#/components/schemas/UserSettings'
     PaginatedVersionInformationList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -34269,7 +34457,6 @@ components:
       required:
       - id
       - label
-      - list
       - value
     SelectionList:
       type: object
