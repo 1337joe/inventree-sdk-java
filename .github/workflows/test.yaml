@@ -109,10 +109,10 @@ jobs:
         run: uv pip install --require-hashes -r InvenTree/src/backend/requirements-dev.txt
       - name: Run invoke install
         run: cd InvenTree && invoke install --uv
+      - name: Run invoke update
+        run: cd InvenTree && invoke update --skip-backup --no-frontend
       - name: Setup test environment
-        run: cd InvenTree && invoke dev.setup-test
-#      - name: Run invoke update
-#        run: cd InvenTree && invoke update --uv --skip-backup --skip-static
+        run: cd InvenTree && invoke dev.setup-test --ignore-update
       - name: Start InvenTree Server
         run: |
           cd InvenTree
@@ -134,9 +134,12 @@ jobs:
         id: jacoco
         uses: madrapps/jacoco-report@7c362aca34caf958e7b1c03464bd8781db9f8da7 # v1.7.1
         with:
-          paths: ${{ github.workspace}}/**/target/sites/jacoco/jacoco.xml
+          paths: ${{ github.workspace }}/**/target/sites/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 0
           min-coverage-changed-files: 0
           update-comment: true
-          title: '#`Coverage Report`'
+          title: '`Coverage Report`'
+
+      - run: |
+          echo "Overall coverage: ${{ steps.jacoco.outputs.coverage-overall }}"
