@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '329'
+  version: '330'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -179,7 +179,7 @@ paths:
                 $ref: '#/components/schemas/Attachment'
           description: ''
     delete:
-      operationId: attachment_destroy
+      operationId: attachment_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -194,6 +194,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/attachment/{id}/:
     get:
       operationId: attachment_retrieve
@@ -285,7 +297,7 @@ paths:
                 $ref: '#/components/schemas/Attachment'
           description: ''
     delete:
-      operationId: attachment_destroy_2
+      operationId: attachment_destroy
       description: Detail API endpoint for Attachment objects.
       parameters:
       - in: path
@@ -414,7 +426,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedFailedTaskList'
           description: ''
     delete:
-      operationId: background_task_failed_destroy
+      operationId: background_task_failed_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -429,6 +441,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/background-task/pending/:
     get:
       operationId: background_task_pending_list
@@ -460,7 +484,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedPendingTaskList'
           description: ''
     delete:
-      operationId: background_task_pending_destroy
+      operationId: background_task_pending_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -475,6 +499,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/background-task/scheduled/:
     get:
       operationId: background_task_scheduled_list
@@ -636,7 +672,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedBarcodeScanResultList'
           description: ''
     delete:
-      operationId: barcode_history_destroy
+      operationId: barcode_history_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -651,6 +687,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/barcode/history/{id}/:
     get:
       operationId: barcode_history_retrieve
@@ -675,7 +723,7 @@ paths:
                 $ref: '#/components/schemas/BarcodeScanResult'
           description: ''
     delete:
-      operationId: barcode_history_destroy_2
+      operationId: barcode_history_destroy
       description: Detail endpoint for a BarcodeScan object.
       parameters:
       - in: path
@@ -1020,7 +1068,7 @@ paths:
                 $ref: '#/components/schemas/BomItem'
           description: ''
     delete:
-      operationId: bom_destroy
+      operationId: bom_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -1035,6 +1083,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/bom/{id}/:
     get:
       operationId: bom_retrieve
@@ -1126,7 +1186,7 @@ paths:
                 $ref: '#/components/schemas/BomItem'
           description: ''
     delete:
-      operationId: bom_destroy_2
+      operationId: bom_destroy
       description: API endpoint for detail view of a single BomItem object.
       parameters:
       - in: path
@@ -2371,7 +2431,7 @@ paths:
                 $ref: '#/components/schemas/BuildItem'
           description: ''
     delete:
-      operationId: build_item_destroy
+      operationId: build_item_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -2386,6 +2446,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/build/item/{id}/:
     get:
       operationId: build_item_retrieve
@@ -2477,7 +2549,7 @@ paths:
                 $ref: '#/components/schemas/BuildItem'
           description: ''
     delete:
-      operationId: build_item_destroy_2
+      operationId: build_item_destroy
       description: API endpoint for detail view of a BuildItem object.
       parameters:
       - in: path
@@ -3133,7 +3205,7 @@ paths:
                 $ref: '#/components/schemas/Address'
           description: ''
     delete:
-      operationId: company_address_destroy
+      operationId: company_address_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -3148,6 +3220,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/company/address/{id}/:
     get:
       operationId: company_address_retrieve
@@ -3239,7 +3323,7 @@ paths:
                 $ref: '#/components/schemas/Address'
           description: ''
     delete:
-      operationId: company_address_destroy_2
+      operationId: company_address_destroy
       description: API endpoint for a single Address object.
       parameters:
       - in: path
@@ -3331,7 +3415,7 @@ paths:
                 $ref: '#/components/schemas/Contact'
           description: ''
     delete:
-      operationId: company_contact_destroy
+      operationId: company_contact_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -3346,6 +3430,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/company/contact/{id}/:
     get:
       operationId: company_contact_retrieve
@@ -3437,7 +3533,7 @@ paths:
                 $ref: '#/components/schemas/Contact'
           description: ''
     delete:
-      operationId: company_contact_destroy_2
+      operationId: company_contact_destroy
       description: Detail endpoint for Company model.
       parameters:
       - in: path
@@ -3643,7 +3739,7 @@ paths:
                 $ref: '#/components/schemas/SupplierPart'
           description: ''
     delete:
-      operationId: company_part_destroy
+      operationId: company_part_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -3658,6 +3754,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/company/part/{id}/:
     get:
       operationId: company_part_retrieve
@@ -3764,7 +3872,7 @@ paths:
                 $ref: '#/components/schemas/SupplierPart'
           description: ''
     delete:
-      operationId: company_part_destroy_2
+      operationId: company_part_destroy
       description: |-
         API endpoint for detail view of SupplierPart object.
 
@@ -3946,7 +4054,7 @@ paths:
                 $ref: '#/components/schemas/ManufacturerPart'
           description: ''
     delete:
-      operationId: company_part_manufacturer_destroy
+      operationId: company_part_manufacturer_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -3961,6 +4069,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/company/part/manufacturer/{id}/:
     get:
       operationId: company_part_manufacturer_retrieve
@@ -4067,7 +4187,7 @@ paths:
                 $ref: '#/components/schemas/ManufacturerPart'
           description: ''
     delete:
-      operationId: company_part_manufacturer_destroy_2
+      operationId: company_part_manufacturer_destroy
       description: |-
         API endpoint for detail view of ManufacturerPart object.
 
@@ -4239,7 +4359,7 @@ paths:
                 $ref: '#/components/schemas/ManufacturerPartParameter'
           description: ''
     delete:
-      operationId: company_part_manufacturer_parameter_destroy
+      operationId: company_part_manufacturer_parameter_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -4254,6 +4374,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/company/part/manufacturer/parameter/{id}/:
     get:
       operationId: company_part_manufacturer_parameter_retrieve
@@ -4345,7 +4477,7 @@ paths:
                 $ref: '#/components/schemas/ManufacturerPartParameter'
           description: ''
     delete:
-      operationId: company_part_manufacturer_parameter_destroy_2
+      operationId: company_part_manufacturer_parameter_destroy
       description: API endpoint for detail view of ManufacturerPartParameter model.
       parameters:
       - in: path
@@ -4727,7 +4859,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedDataOutputList'
           description: ''
     delete:
-      operationId: data_output_destroy
+      operationId: data_output_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -4742,6 +4874,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/data-output/{id}/:
     get:
       operationId: data_output_retrieve
@@ -4837,7 +4981,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedErrorMessageList'
           description: ''
     delete:
-      operationId: error_report_destroy
+      operationId: error_report_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -4852,6 +4996,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/error-report/{id}/:
     get:
       operationId: error_report_retrieve
@@ -4942,7 +5098,7 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
           description: ''
     delete:
-      operationId: error_report_destroy_2
+      operationId: error_report_destroy
       description: Detail view for a single error message.
       parameters:
       - in: path
@@ -5520,7 +5676,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedDataImportRowList'
           description: ''
     delete:
-      operationId: importer_row_destroy
+      operationId: importer_row_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -5535,6 +5691,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/importer/row/{id}/:
     get:
       operationId: importer_row_retrieve
@@ -5625,7 +5793,7 @@ paths:
                 $ref: '#/components/schemas/DataImportRow'
           description: ''
     delete:
-      operationId: importer_row_destroy_2
+      operationId: importer_row_destroy
       description: Detail endpoint for a single DataImportRow object.
       parameters:
       - in: path
@@ -5739,7 +5907,7 @@ paths:
                 $ref: '#/components/schemas/DataImportSession'
           description: ''
     delete:
-      operationId: importer_session_destroy
+      operationId: importer_session_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -5754,6 +5922,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/importer/session/{id}/:
     get:
       operationId: importer_session_retrieve
@@ -5845,7 +6025,7 @@ paths:
                 $ref: '#/components/schemas/DataImportSession'
           description: ''
     delete:
-      operationId: importer_session_destroy_2
+      operationId: importer_session_destroy
       description: Detail endpoint for a single DataImportSession object.
       parameters:
       - in: path
@@ -6779,7 +6959,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedNewsFeedEntryList'
           description: ''
     delete:
-      operationId: news_destroy
+      operationId: news_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -6794,6 +6974,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/news/{id}/:
     get:
       operationId: news_retrieve
@@ -6885,7 +7077,7 @@ paths:
                 $ref: '#/components/schemas/NewsFeedEntry'
           description: ''
     delete:
-      operationId: news_destroy_2
+      operationId: news_destroy
       description: Detail view for an individual news feed object.
       parameters:
       - in: path
@@ -7023,7 +7215,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedNotificationMessageList'
           description: ''
     delete:
-      operationId: notifications_destroy
+      operationId: notifications_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -7038,6 +7230,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/notifications/{id}/:
     get:
       operationId: notifications_retrieve
@@ -7138,7 +7342,7 @@ paths:
                 $ref: '#/components/schemas/NotificationMessage'
           description: ''
     delete:
-      operationId: notifications_destroy_2
+      operationId: notifications_destroy
       description: |-
         Detail view for an individual notification object.
 
@@ -7735,7 +7939,7 @@ paths:
                 $ref: '#/components/schemas/PurchaseOrderLineItem'
           description: ''
     delete:
-      operationId: order_po_line_destroy
+      operationId: order_po_line_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -7750,6 +7954,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/order/po-line/{id}/:
     get:
       operationId: order_po_line_retrieve
@@ -7841,7 +8057,7 @@ paths:
                 $ref: '#/components/schemas/PurchaseOrderLineItem'
           description: ''
     delete:
-      operationId: order_po_line_destroy_2
+      operationId: order_po_line_destroy
       description: Detail API endpoint for PurchaseOrderLineItem object.
       parameters:
       - in: path
@@ -16753,7 +16969,7 @@ paths:
                 $ref: '#/components/schemas/StockItem'
           description: ''
     delete:
-      operationId: stock_destroy
+      operationId: stock_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -16768,6 +16984,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/stock/{id}/:
     get:
       operationId: stock_retrieve
@@ -16859,7 +17087,7 @@ paths:
                 $ref: '#/components/schemas/StockItem'
           description: ''
     delete:
-      operationId: stock_destroy_2
+      operationId: stock_destroy
       description: API detail endpoint for a single StockItem instance.
       parameters:
       - in: path
@@ -18058,7 +18286,7 @@ paths:
                 $ref: '#/components/schemas/StockItemTestResult'
           description: ''
     delete:
-      operationId: stock_test_destroy
+      operationId: stock_test_bulk_destroy
       description: |-
         Perform a DELETE operation against this list endpoint.
 
@@ -18073,6 +18301,18 @@ paths:
       responses:
         '204':
           description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/stock/test/{id}/:
     get:
       operationId: stock_test_retrieve
@@ -18164,7 +18404,7 @@ paths:
                 $ref: '#/components/schemas/StockItemTestResult'
           description: ''
     delete:
-      operationId: stock_test_destroy_2
+      operationId: stock_test_destroy
       description: Detail endpoint for StockItemTestResult.
       parameters:
       - in: path
@@ -22841,6 +23081,19 @@ components:
           type: integer
           nullable: true
           title: Build output
+    BulkRequest:
+      type: object
+      description: Parameters for selecting items for bulk operations.
+      properties:
+        items:
+          type: array
+          items:
+            type: integer
+          title: A list of primary key values
+        filters:
+          type: object
+          additionalProperties: {}
+          title: A dictionary of filter values
     Category:
       type: object
       description: Serializer for PartCategory.

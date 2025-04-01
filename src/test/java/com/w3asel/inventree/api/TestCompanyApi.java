@@ -6,6 +6,7 @@ import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Models;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.Address;
+import com.w3asel.inventree.model.BulkRequest;
 import com.w3asel.inventree.model.Company;
 import com.w3asel.inventree.model.CompanyBrief;
 import com.w3asel.inventree.model.Contact;
@@ -30,6 +31,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -240,7 +242,7 @@ public class TestCompanyApi extends TestApi {
     @Test
     public void companyAddressDelete_NotFound() {
         try {
-            api.companyAddressDestroy2(-1);
+            api.companyAddressDestroy(-1);
             Assertions.fail("Expected 404 Not Found");
         } catch (ApiException e) {
             Assertions.assertTrue(e.getMessage().contains("Not Found"),
@@ -266,14 +268,14 @@ public class TestCompanyApi extends TestApi {
             Assertions.assertEquals(initialCount + 1, createdCount,
                     "Address count should have increased");
         } finally {
-            api.companyAddressDestroy2(actual.getPk());
+            api.companyAddressDestroy(actual.getPk());
         }
 
         int deletedCount = api.companyAddressList(1, company, null, null, null).getCount();
         Assertions.assertEquals(initialCount, deletedCount, "Address count should have reset");
 
         try {
-            api.companyAddressDestroy2(actual.getPk());
+            api.companyAddressDestroy(actual.getPk());
             Assertions.fail("Expected 404 Not Found");
         } catch (ApiException e) {
             Assertions.assertTrue(e.getMessage().contains("Not Found"),
@@ -281,11 +283,15 @@ public class TestCompanyApi extends TestApi {
         }
     }
 
-    @Disabled
     @Test
-    public void companyAddressListDelete_NotFound() throws ApiException {
-        // TODO revisit when schema includes request content
-        api.companyAddressDestroy();
+    public void companyAddressBulkDelete_NotFound() {
+        try {
+            api.companyAddressBulkDestroy(new BulkRequest().items(List.of(-1, -2)));
+            Assertions.fail("Expected 400 Bad Request");
+        } catch (ApiException e) {
+            Assertions.assertTrue(e.getMessage().contains("No items match"),
+                    "Invalid key should not have been found.");
+        }
     }
 
     // TODO address update, address partial update
@@ -357,11 +363,10 @@ public class TestCompanyApi extends TestApi {
         }
     }
 
-
     @Test
     public void companyContactDelete_NotFound() {
         try {
-            api.companyContactDestroy2(-1);
+            api.companyContactDestroy(-1);
             Assertions.fail("Expected 404 Not Found");
         } catch (ApiException e) {
             Assertions.assertTrue(e.getMessage().contains("Not Found"),
@@ -387,14 +392,14 @@ public class TestCompanyApi extends TestApi {
             Assertions.assertEquals(initialCount + 1, createdCount,
                     "Company count should have increased");
         } finally {
-            api.companyContactDestroy2(actual.getPk());
+            api.companyContactDestroy(actual.getPk());
         }
 
         int deletedCount = api.companyContactList(1, company, null, null, null).getCount();
         Assertions.assertEquals(initialCount, deletedCount, "Contact count should have reset");
 
         try {
-            api.companyContactDestroy2(actual.getPk());
+            api.companyContactDestroy(actual.getPk());
             Assertions.fail("Expected 404 Not Found");
         } catch (ApiException e) {
             Assertions.assertTrue(e.getMessage().contains("Not Found"),
@@ -402,11 +407,52 @@ public class TestCompanyApi extends TestApi {
         }
     }
 
-    @Disabled
     @Test
-    public void companyContactListDelete_NotFound() throws ApiException {
-        // TODO revisit when schema includes request content
-        api.companyContactDestroy();
+    public void companyContactBulkDestroy_NotFound() {
+        try {
+            api.companyContactBulkDestroy(new BulkRequest().items(List.of(-1, -2)));
+            Assertions.fail("Expected 400 Bad Request");
+        } catch (ApiException e) {
+            Assertions.assertTrue(e.getMessage().contains("No items match"),
+                    "Invalid key should not have been found.");
+        }
+    }
+
+    @Test
+    public void companyContactCreateListDelete() throws ApiException {
+        int company = 1;
+        int targetCount = 3;
+
+        int initialCount = api.companyContactList(1, company, null, null, null).getCount();
+
+        List<Integer> createdPks = new ArrayList<>();
+        try {
+            for (int i = 0; i < targetCount; i++) {
+                // set only required fields
+                Contact newContact = new Contact().company(company).name("Name");
+
+                Contact actual = api.companyContactCreate(newContact);
+                Assertions.assertNotNull(actual.getPk(), "Created contact should have PK");
+                createdPks.add(actual.getPk());
+            }
+
+            int createdCount = api.companyContactList(1, company, null, null, null).getCount();
+            Assertions.assertEquals(initialCount + targetCount, createdCount,
+                    "Company count should have increased");
+
+            api.companyContactBulkDestroy(new BulkRequest().items(createdPks));
+
+            int deletedCount = api.companyContactList(1, company, null, null, null).getCount();
+            Assertions.assertEquals(initialCount, deletedCount, "Contact count should have reset");
+        } finally {
+            for (int pk : createdPks) {
+                try {
+                    api.companyContactDestroy(pk);
+                } catch (ApiException e) {
+                    // should throw 404 exceptions on success
+                }
+            }
+        }
     }
 
     // TODO contact update, contact partial update

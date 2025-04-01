@@ -82,7 +82,21 @@ jobs:
           file_pattern: 'pom.xml .github/inventree_test_hash.txt src/*'
           commit_message: 'Update to schema ${{ env.NEW_VERSION }}'
 
+      - name: Checkout inventree
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: 'inventree/InvenTree'
+          path: 'demo-dataset'
+          
+      - name: Build PR body text
+        run: |
+          echo "**v${{ env.NEW_VERSION }}**" > pr_body.md
+          # delete (don't print) from line 1 to version header, then from blank line to end
+          sed '1,^v${{ env.NEW_VERSION }}.*$/d;/^$/,$d' inventree/InvenTree/src/backend/InvenTree/InvenTree | sed 's/   //' >> pr_body.md
+          echo "" >> pr_body.md
+          echo "Automatically generated, check schema diff for needed changes" >> pr_body.md
+
       - name: Create pull request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr create --draft -B main -H ${{ env.BRANCH_NAME }} --title 'Update to schema version ${{ inputs.version }}' --body 'Automatically generated, check schema diff for needed changes'
+        run: gh pr create --draft -B main -H ${{ env.BRANCH_NAME }} --title 'Update to schema version ${{ inputs.version }}' --body-file pr_body.md
