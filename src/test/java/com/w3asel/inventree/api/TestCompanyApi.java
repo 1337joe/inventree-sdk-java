@@ -43,6 +43,73 @@ public class TestCompanyApi extends TestApi {
         api = new CompanyApi(apiClient);
     }
 
+    @Disabled
+    @Test
+    public void todo() throws ApiException {
+        api.companyAddressBulkDestroy(null);
+        // api.companyAddressCreate(null);
+        // api.companyAddressDestroy(null);
+        // api.companyAddressList(null, null, null, null, null);
+        api.companyAddressPartialUpdate(null, null);
+        // api.companyAddressRetrieve(null);
+        api.companyAddressUpdate(null, null);
+        api.companyContactBulkDestroy(null);
+        // api.companyContactCreate(null);
+        // api.companyContactDestroy(null);
+        // api.companyContactList(null, null, null, null, null);
+        api.companyContactMetadataPartialUpdate(null, null);
+        api.companyContactMetadataRetrieve(null);
+        api.companyContactMetadataUpdate(null, null);
+        api.companyContactPartialUpdate(null, null);
+        // api.companyContactRetrieve(null);
+        api.companyContactUpdate(null, null);
+        api.companyCreate(null);
+        api.companyDestroy(null);
+        // api.companyList(null, null, null, null, null, null, null, null, null);
+        api.companyMetadataPartialUpdate(null, null);
+        api.companyMetadataRetrieve(null);
+        api.companyMetadataUpdate(null, null);
+        api.companyPartBulkDestroy(null);
+        api.companyPartCreate(null);
+        api.companyPartDestroy(null);
+        api.companyPartialUpdate(null, null);
+        // api.companyPartList(null, null, null, null, null, null, null, null, null, null, null,
+        // null, null, null, null, null, null);
+        api.companyPartManufacturerBulkDestroy(null);
+        api.companyPartManufacturerCreate(null);
+        api.companyPartManufacturerDestroy(null);
+        // api.companyPartManufacturerList(null, null, null, null, null, null, null, null, null,
+        // null, null);
+        api.companyPartManufacturerMetadataPartialUpdate(null, null);
+        api.companyPartManufacturerMetadataRetrieve(null);
+        api.companyPartManufacturerMetadataUpdate(null, null);
+        api.companyPartManufacturerParameterBulkDestroy(null);
+        api.companyPartManufacturerParameterCreate(null);
+        api.companyPartManufacturerParameterDestroy(null);
+        // api.companyPartManufacturerParameterList(null, null, null, null, null, null, null, null,
+        // null, null);
+        api.companyPartManufacturerParameterPartialUpdate(null, null);
+        // api.companyPartManufacturerParameterRetrieve(null);
+        api.companyPartManufacturerParameterUpdate(null, null);
+        api.companyPartManufacturerPartialUpdate(null, null);
+        // api.companyPartManufacturerRetrieve(null);
+        api.companyPartManufacturerUpdate(null, null);
+        api.companyPartMetadataPartialUpdate(null, null);
+        api.companyPartMetadataRetrieve(null);
+        api.companyPartMetadataUpdate(null, null);
+        api.companyPartPartialUpdate(null, null);
+        api.companyPartRetrieve(null);
+        api.companyPartUpdate(null, null);
+        api.companyPriceBreakCreate(null);
+        api.companyPriceBreakDestroy(null);
+        // api.companyPriceBreakList(null, null, null, null, null, null, null, null);
+        api.companyPriceBreakPartialUpdate(null, null);
+        // api.companyPriceBreakRetrieve(null);
+        api.companyPriceBreakUpdate(null, null);
+        // api.companyRetrieve(null);
+        api.companyUpdate(null, null);
+    }
+
     private static void assertCompanyEquals(JsonObject expected, Company actual, boolean detail) {
         Assertions.assertEquals(expected.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt(),
                 actual.getPk(), "Incorrect primary key");
@@ -123,7 +190,8 @@ public class TestCompanyApi extends TestApi {
         String ordering = "name";
         PaginatedCompanyList actual =
                 api.companyList(limit, null, null, null, null, null, offset, ordering, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount());
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect company list count");
         List<Company> actualList = actual.getResults();
 
         // check items returned by key
@@ -240,7 +308,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @Test
-    public void companyAddressDelete_NotFound() {
+    public void companyAddressDestroy_NotFound() {
         try {
             api.companyAddressDestroy(-1);
             Assertions.fail("Expected 404 Not Found");
@@ -251,7 +319,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @Test
-    public void companyAddressCreateDelete() throws ApiException {
+    public void companyAddressCreateDestroy() throws ApiException {
         int company = 1;
 
         int initialCount = api.companyAddressList(1, company, null, null, null).getCount();
@@ -332,7 +400,8 @@ public class TestCompanyApi extends TestApi {
         String ordering = "name";
         PaginatedContactList actual =
                 api.companyContactList(limit, company, offset, ordering, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount());
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect contact list count");
         List<Contact> actualList = actual.getResults();
 
         // check items returned by key
@@ -364,7 +433,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @Test
-    public void companyContactDelete_NotFound() {
+    public void companyContactDestroy_NotFound() {
         try {
             api.companyContactDestroy(-1);
             Assertions.fail("Expected 404 Not Found");
@@ -375,7 +444,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @Test
-    public void companyContactCreateDelete() throws ApiException {
+    public void companyContactCreateDestroy() throws ApiException {
         int company = 1;
 
         int initialCount = api.companyContactList(1, company, null, null, null).getCount();
@@ -565,10 +634,10 @@ public class TestCompanyApi extends TestApi {
         int limit = 5;
         int offset = 0;
         // TODO string company
-        PaginatedSupplierPartList actual =
-                api.companyPartList(limit, null, null, null, Integer.toString(company), null, null,
-                        null, offset, null, null, null, null, null, null, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount());
+        PaginatedSupplierPartList actual = api.companyPartList(limit, null, null, null, company,
+                null, null, null, offset, null, null, null, null, null, null, null, null);
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect part list count");
         List<SupplierPart> actualList = actual.getResults();
 
         // check items returned by key
@@ -676,7 +745,8 @@ public class TestCompanyApi extends TestApi {
         int offset = 0;
         PaginatedManufacturerPartList actual = api.companyPartManufacturerList(limit, null, null,
                 null, offset, null, null, null, null, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount());
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect manufacturer list count");
         List<ManufacturerPart> actualList = actual.getResults();
 
         // check items returned by key
@@ -702,7 +772,7 @@ public class TestCompanyApi extends TestApi {
         assertManufacturerPartEquals(expected, actual, true);
     }
 
-
+    @Disabled("No data in database")
     @Test
     public void companyPartManufacturerParameterList() throws ApiException {
         int limit = 5;
@@ -767,7 +837,7 @@ public class TestCompanyApi extends TestApi {
         int offset = 0;
         PaginatedSupplierPriceBreakList actual =
                 api.companyPriceBreakList(limit, null, offset, null, part, null, null, null);
-        Assertions.assertEquals(2, actual.getCount());
+        Assertions.assertEquals(2, actual.getCount(), "Incorrect price break list count");
         List<SupplierPriceBreak> actualList = actual.getResults();
 
         // check items returned by key
@@ -798,11 +868,5 @@ public class TestCompanyApi extends TestApi {
         assertSupplierPriceBreakEquals(expectedPriceBreak, actual, true);
 
         Assertions.assertEquals(company, actual.getSupplier(), "Incorrect supplier reference");
-    }
-
-    @Test
-    public void test() throws ApiException {
-        // api.companyPriceBreakUpdate(null, null);
-        // api.companyAddressDestr
     }
 }
