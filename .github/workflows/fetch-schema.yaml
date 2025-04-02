@@ -92,7 +92,7 @@ jobs:
         run: |
           echo "**v${{ env.NEW_VERSION }}**" > pr_body.md
           # delete (don't print) from line 1 to version header, then from blank line to end
-          sed '1,^v${{ env.NEW_VERSION }}.*$/d;/^$/,$d' inventree/InvenTree/src/backend/InvenTree/InvenTree | sed 's/   //' >> pr_body.md
+          sed '1,/^v${{ env.NEW_VERSION }}.*$/d;/^$/,$d' inventree/InvenTree/src/backend/InvenTree/InvenTree | sed 's/   //' >> pr_body.md
           echo "" >> pr_body.md
           echo "Automatically generated, check schema diff for needed changes" >> pr_body.md
 
