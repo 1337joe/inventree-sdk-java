@@ -4,18 +4,24 @@ import com.w3asel.inventree.api.OrderApi;
 import com.w3asel.inventree.invoker.ApiClient;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.invoker.ServerConfiguration;
+import com.w3asel.inventree.model.PaginatedSalesOrderLineItemList;
 import com.w3asel.inventree.model.PaginatedSalesOrderList;
+import com.w3asel.inventree.model.SalesOrderLineItem;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
+/** A test class that demonstrates configuring and calling the API. */
 public class TestClient {
     private static final String INVENTREE_PROPERTIES = "inventree.properties";
 
-    @Test
-    public void test() throws ApiException {
+    private ApiClient initializeClient() {
         // Load properties file
         final InputStream is =
                 TestClient.class.getClassLoader().getResourceAsStream(INVENTREE_PROPERTIES);
@@ -36,17 +42,44 @@ public class TestClient {
                 Collections.emptyMap());
         client.setServers(Collections.singletonList(server));
 
+        return client;
+    }
+
+    @Test
+    public void fetchSalesOrder() throws ApiException {
+        ApiClient client = initializeClient();
+
+        // Configure date time format to match what's returned by InvenTree
+        client.setOffsetDateTimeFormat(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").withZone(ZoneOffset.UTC));
+
         // Construct and call API
         OrderApi api = new OrderApi(client);
 
-        int limit = 5;
+        // Fetch first sales order (batch of 1)
+        int limit = 1;
+        int offset = 0;
         PaginatedSalesOrderList salesOrders = api.orderSoList(limit, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null);
-        System.out.println("Fetched " + salesOrders.getResults().size() + " of "
-                + salesOrders.getCount() + " Sales Orders");
+                null, null, null, null, null, null, null, null, null, offset, null, null, null,
+                null, null, null, null, null, null, null, null, null);
+        System.out.printf("Fetched %d of %d sales orders%n", salesOrders.getResults().size(),
+                salesOrders.getCount());
 
-        // SalesOrder result = api.orderSoRetrieve(11);
-        // System.out.println(result.getReference());
+        // Fetch all line items for the sales order (multiple pages in batches of 1)
+        int targetOrder = salesOrders.getResults().get(0).getPk();
+        List<SalesOrderLineItem> lineItems = new ArrayList<>();
+        try {
+            PaginatedSalesOrderLineItemList lineItemPage;
+            do {
+                lineItemPage = api.orderSoLineList(limit, null, null, null, lineItems.size(),
+                        targetOrder, null, null, null, null, null, null);
+                lineItems.addAll(lineItemPage.getResults());
+            } while (lineItemPage.getCount() > lineItems.size());
+        } catch (ApiException e) {
+            System.err.printf("Failed to query API for line items for sales order %d.%n",
+                    targetOrder);
+            e.printStackTrace();
+        }
+        System.out.printf("SO %d: Fetched %d line items%n", targetOrder, lineItems.size());
     }
 }

@@ -3,7 +3,7 @@ package com.w3asel.inventree.api;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
-import com.w3asel.inventree.InventreeDemoDataset.Models;
+import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.Address;
 import com.w3asel.inventree.model.BulkRequest;
@@ -41,6 +41,73 @@ public class TestCompanyApi extends TestApi {
     @BeforeEach
     public void setup() {
         api = new CompanyApi(apiClient);
+    }
+
+    @Disabled
+    @Test
+    public void todo() throws ApiException {
+        api.companyAddressBulkDestroy(null);
+        // api.companyAddressCreate(null);
+        // api.companyAddressDestroy(null);
+        // api.companyAddressList(null, null, null, null, null);
+        api.companyAddressPartialUpdate(null, null);
+        // api.companyAddressRetrieve(null);
+        api.companyAddressUpdate(null, null);
+        api.companyContactBulkDestroy(null);
+        // api.companyContactCreate(null);
+        // api.companyContactDestroy(null);
+        // api.companyContactList(null, null, null, null, null);
+        api.companyContactMetadataPartialUpdate(null, null);
+        api.companyContactMetadataRetrieve(null);
+        api.companyContactMetadataUpdate(null, null);
+        api.companyContactPartialUpdate(null, null);
+        // api.companyContactRetrieve(null);
+        api.companyContactUpdate(null, null);
+        api.companyCreate(null);
+        api.companyDestroy(null);
+        // api.companyList(null, null, null, null, null, null, null, null, null);
+        api.companyMetadataPartialUpdate(null, null);
+        api.companyMetadataRetrieve(null);
+        api.companyMetadataUpdate(null, null);
+        api.companyPartBulkDestroy(null);
+        api.companyPartCreate(null);
+        api.companyPartDestroy(null);
+        api.companyPartialUpdate(null, null);
+        // api.companyPartList(null, null, null, null, null, null, null, null, null, null, null,
+        // null, null, null, null, null, null);
+        api.companyPartManufacturerBulkDestroy(null);
+        api.companyPartManufacturerCreate(null);
+        api.companyPartManufacturerDestroy(null);
+        // api.companyPartManufacturerList(null, null, null, null, null, null, null, null, null,
+        // null, null);
+        api.companyPartManufacturerMetadataPartialUpdate(null, null);
+        api.companyPartManufacturerMetadataRetrieve(null);
+        api.companyPartManufacturerMetadataUpdate(null, null);
+        api.companyPartManufacturerParameterBulkDestroy(null);
+        api.companyPartManufacturerParameterCreate(null);
+        api.companyPartManufacturerParameterDestroy(null);
+        // api.companyPartManufacturerParameterList(null, null, null, null, null, null, null, null,
+        // null, null);
+        api.companyPartManufacturerParameterPartialUpdate(null, null);
+        // api.companyPartManufacturerParameterRetrieve(null);
+        api.companyPartManufacturerParameterUpdate(null, null);
+        api.companyPartManufacturerPartialUpdate(null, null);
+        // api.companyPartManufacturerRetrieve(null);
+        api.companyPartManufacturerUpdate(null, null);
+        api.companyPartMetadataPartialUpdate(null, null);
+        api.companyPartMetadataRetrieve(null);
+        api.companyPartMetadataUpdate(null, null);
+        api.companyPartPartialUpdate(null, null);
+        api.companyPartRetrieve(null);
+        api.companyPartUpdate(null, null);
+        api.companyPriceBreakCreate(null);
+        api.companyPriceBreakDestroy(null);
+        // api.companyPriceBreakList(null, null, null, null, null, null, null, null);
+        api.companyPriceBreakPartialUpdate(null, null);
+        // api.companyPriceBreakRetrieve(null);
+        api.companyPriceBreakUpdate(null, null);
+        // api.companyRetrieve(null);
+        api.companyUpdate(null, null);
     }
 
     private static void assertCompanyEquals(JsonObject expected, Company actual, boolean detail) {
@@ -115,7 +182,7 @@ public class TestCompanyApi extends TestApi {
 
     @Test
     public void companyList() throws ApiException {
-        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Models.COMPANY, null);
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.COMPANY, null);
         Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 10;
@@ -123,7 +190,8 @@ public class TestCompanyApi extends TestApi {
         String ordering = "name";
         PaginatedCompanyList actual =
                 api.companyList(limit, null, null, null, null, null, offset, ordering, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount());
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect company list count");
         List<Company> actualList = actual.getResults();
 
         // check items returned by key
@@ -136,14 +204,14 @@ public class TestCompanyApi extends TestApi {
         // deep equals on first value
         Company actualFirst = actualList.get(0);
         JsonObject expectedFirst =
-                InventreeDemoDataset.getObjects(Models.COMPANY, actualFirst.getPk()).get(0);
+                InventreeDemoDataset.getObjects(Model.COMPANY, actualFirst.getPk()).get(0);
         assertCompanyEquals(expectedFirst, actualFirst, false);
     }
 
     @ParameterizedTest
     @CsvSource({"1", "23"})
     public void companyRetrieve(int company) throws ApiException {
-        JsonObject expected = InventreeDemoDataset.getObjects(Models.COMPANY, company).get(0);
+        JsonObject expected = InventreeDemoDataset.getObjects(Model.COMPANY, company).get(0);
         Company actual = api.companyRetrieve(company);
         assertCompanyEquals(expected, actual, true);
 
@@ -155,7 +223,7 @@ public class TestCompanyApi extends TestApi {
             Assertions.assertEquals(2, actual.getAddressCount(), "Incorrect address count");
 
             JsonObject expectedAddress =
-                    InventreeDemoDataset.getObjects(Models.COMPANY_ADDRESS, 54).get(0);
+                    InventreeDemoDataset.getObjects(Model.COMPANY_ADDRESS, 54).get(0);
             assertAddressEquals(expectedAddress, actual.getPrimaryAddress());
 
             Assertions.assertEquals(0, actual.getPartsManufactured(),
@@ -226,7 +294,7 @@ public class TestCompanyApi extends TestApi {
         // deep equals on first value
         Address actualFirst = actualList.get(0);
         JsonObject expectedFirst =
-                InventreeDemoDataset.getObjects(Models.COMPANY_ADDRESS, actualFirst.getPk()).get(0);
+                InventreeDemoDataset.getObjects(Model.COMPANY_ADDRESS, actualFirst.getPk()).get(0);
         assertAddressEquals(expectedFirst, actualFirst);
     }
 
@@ -235,12 +303,12 @@ public class TestCompanyApi extends TestApi {
     public void companyAddressRetrieve(int address) throws ApiException {
         Address actual = api.companyAddressRetrieve(address);
         JsonObject expected =
-                InventreeDemoDataset.getObjects(Models.COMPANY_ADDRESS, address).get(0);
+                InventreeDemoDataset.getObjects(Model.COMPANY_ADDRESS, address).get(0);
         assertAddressEquals(expected, actual);
     }
 
     @Test
-    public void companyAddressDelete_NotFound() {
+    public void companyAddressDestroy_NotFound() {
         try {
             api.companyAddressDestroy(-1);
             Assertions.fail("Expected 404 Not Found");
@@ -251,7 +319,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @Test
-    public void companyAddressCreateDelete() throws ApiException {
+    public void companyAddressCreateDestroy() throws ApiException {
         int company = 1;
 
         int initialCount = api.companyAddressList(1, company, null, null, null).getCount();
@@ -322,7 +390,7 @@ public class TestCompanyApi extends TestApi {
         int company = 1;
 
         List<JsonObject> expectedList =
-                InventreeDemoDataset.getObjects(Models.COMPANY_CONTACT, null);
+                InventreeDemoDataset.getObjects(Model.COMPANY_CONTACT, null);
         expectedList.removeIf(
                 jo -> InventreeDemoDataset.getFields(jo).get("company").getAsInt() != company);
         Assertions.assertTrue(expectedList.size() > 1, "Expected demo data");
@@ -332,7 +400,8 @@ public class TestCompanyApi extends TestApi {
         String ordering = "name";
         PaginatedContactList actual =
                 api.companyContactList(limit, company, offset, ordering, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount());
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect contact list count");
         List<Contact> actualList = actual.getResults();
 
         // check items returned by key
@@ -345,7 +414,7 @@ public class TestCompanyApi extends TestApi {
         // deep equals on first value
         Contact actualFirst = actualList.get(0);
         JsonObject expectedFirst =
-                InventreeDemoDataset.getObjects(Models.COMPANY_CONTACT, actualFirst.getPk()).get(0);
+                InventreeDemoDataset.getObjects(Model.COMPANY_CONTACT, actualFirst.getPk()).get(0);
         assertContactEquals(expectedFirst, actualFirst);
     }
 
@@ -354,7 +423,7 @@ public class TestCompanyApi extends TestApi {
     public void companyContactRetrieve(int contact) throws ApiException {
         Contact actual = api.companyContactRetrieve(contact);
         JsonObject expected =
-                InventreeDemoDataset.getObjects(Models.COMPANY_CONTACT, contact).get(0);
+                InventreeDemoDataset.getObjects(Model.COMPANY_CONTACT, contact).get(0);
         assertContactEquals(expected, actual);
 
         // verify data not directly in demo dataset
@@ -364,7 +433,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @Test
-    public void companyContactDelete_NotFound() {
+    public void companyContactDestroy_NotFound() {
         try {
             api.companyContactDestroy(-1);
             Assertions.fail("Expected 404 Not Found");
@@ -375,7 +444,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @Test
-    public void companyContactCreateDelete() throws ApiException {
+    public void companyContactCreateDestroy() throws ApiException {
         int company = 1;
 
         int initialCount = api.companyContactList(1, company, null, null, null).getCount();
@@ -551,7 +620,7 @@ public class TestCompanyApi extends TestApi {
         int company = 1;
 
         List<JsonObject> expectedList =
-                InventreeDemoDataset.getObjects(Models.COMPANY_SUPPLIER_PART, null);
+                InventreeDemoDataset.getObjects(Model.COMPANY_SUPPLIER_PART, null);
         expectedList.removeIf(
                 jo -> InventreeDemoDataset.getFields(jo).get("supplier").getAsInt() != company);
         Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
@@ -559,10 +628,10 @@ public class TestCompanyApi extends TestApi {
         int limit = 5;
         int offset = 0;
         // TODO string company
-        PaginatedSupplierPartList actual =
-                api.companyPartList(limit, null, null, null, Integer.toString(company), null, null,
-                        null, offset, null, null, null, null, null, null, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount());
+        PaginatedSupplierPartList actual = api.companyPartList(limit, null, null, null, company,
+                null, null, null, offset, null, null, null, null, null, null, null, null);
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect part list count");
         List<SupplierPart> actualList = actual.getResults();
 
         // check items returned by key
@@ -575,7 +644,7 @@ public class TestCompanyApi extends TestApi {
         // deep equals on first value
         SupplierPart actualFirst = actualList.get(0);
         JsonObject expectedFirst = InventreeDemoDataset
-                .getObjects(Models.COMPANY_SUPPLIER_PART, actualFirst.getPk()).get(0);
+                .getObjects(Model.COMPANY_SUPPLIER_PART, actualFirst.getPk()).get(0);
         assertSupplierPartEquals(expectedFirst, actualFirst, false);
     }
 
@@ -584,7 +653,7 @@ public class TestCompanyApi extends TestApi {
     public void companyPartRetrieve(int supplierPart) throws ApiException {
         SupplierPart actual = api.companyPartRetrieve(supplierPart);
         JsonObject expected =
-                InventreeDemoDataset.getObjects(Models.COMPANY_SUPPLIER_PART, supplierPart).get(0);
+                InventreeDemoDataset.getObjects(Model.COMPANY_SUPPLIER_PART, supplierPart).get(0);
         assertSupplierPartEquals(expected, actual, true);
 
         // verify data not directly in demo dataset
@@ -598,7 +667,7 @@ public class TestCompanyApi extends TestApi {
 
             CompanyBrief actualSupplierDetail = actual.getSupplierDetail();
             JsonObject expectedSupplier =
-                    InventreeDemoDataset.getObjects(Models.COMPANY, actual.getSupplier()).get(0);
+                    InventreeDemoDataset.getObjects(Model.COMPANY, actual.getSupplier()).get(0);
             Assertions.assertEquals(
                     InventreeDemoDataset.getFields(expectedSupplier).get("name").getAsString(),
                     actualSupplierDetail.getName(), "Incorrect supplier detail name");
@@ -663,14 +732,15 @@ public class TestCompanyApi extends TestApi {
     @Test
     public void companyPartManufacturerList() throws ApiException {
         List<JsonObject> expectedList =
-                InventreeDemoDataset.getObjects(Models.COMPANY_MANUFACTURER_PART, null);
+                InventreeDemoDataset.getObjects(Model.COMPANY_MANUFACTURER_PART, null);
         Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 5;
         int offset = 0;
         PaginatedManufacturerPartList actual = api.companyPartManufacturerList(limit, null, null,
                 null, offset, null, null, null, null, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount());
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect manufacturer list count");
         List<ManufacturerPart> actualList = actual.getResults();
 
         // check items returned by key
@@ -683,7 +753,7 @@ public class TestCompanyApi extends TestApi {
         // deep equals on first value
         ManufacturerPart actualFirst = actualList.get(0);
         JsonObject expectedFirst = InventreeDemoDataset
-                .getObjects(Models.COMPANY_MANUFACTURER_PART, actualFirst.getPk()).get(0);
+                .getObjects(Model.COMPANY_MANUFACTURER_PART, actualFirst.getPk()).get(0);
         assertManufacturerPartEquals(expectedFirst, actualFirst, false);
     }
 
@@ -692,11 +762,11 @@ public class TestCompanyApi extends TestApi {
     public void companyPartManufacturerRetrieve(int manufacturerPart) throws ApiException {
         ManufacturerPart actual = api.companyPartManufacturerRetrieve(manufacturerPart);
         JsonObject expected = InventreeDemoDataset
-                .getObjects(Models.COMPANY_MANUFACTURER_PART, manufacturerPart).get(0);
+                .getObjects(Model.COMPANY_MANUFACTURER_PART, manufacturerPart).get(0);
         assertManufacturerPartEquals(expected, actual, true);
     }
 
-
+    @Disabled("No data in database")
     @Test
     public void companyPartManufacturerParameterList() throws ApiException {
         int limit = 5;
@@ -752,7 +822,7 @@ public class TestCompanyApi extends TestApi {
         int part = 177;
 
         List<JsonObject> expectedList =
-                InventreeDemoDataset.getObjects(Models.COMPANY_SUPPLIER_PRICE_BREAK, null);
+                InventreeDemoDataset.getObjects(Model.COMPANY_SUPPLIER_PRICE_BREAK, null);
         expectedList
                 .removeIf(jo -> InventreeDemoDataset.getFields(jo).get("part").getAsInt() != part);
         Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
@@ -761,7 +831,7 @@ public class TestCompanyApi extends TestApi {
         int offset = 0;
         PaginatedSupplierPriceBreakList actual =
                 api.companyPriceBreakList(limit, null, offset, null, part, null, null, null);
-        Assertions.assertEquals(2, actual.getCount());
+        Assertions.assertEquals(2, actual.getCount(), "Incorrect price break list count");
         List<SupplierPriceBreak> actualList = actual.getResults();
 
         // check items returned by key
@@ -774,7 +844,7 @@ public class TestCompanyApi extends TestApi {
         // deep equals on first value
         SupplierPriceBreak actualFirst = actualList.get(0);
         JsonObject expectedFirst = InventreeDemoDataset
-                .getObjects(Models.COMPANY_SUPPLIER_PRICE_BREAK, actualFirst.getPk()).get(0);
+                .getObjects(Model.COMPANY_SUPPLIER_PRICE_BREAK, actualFirst.getPk()).get(0);
         assertSupplierPriceBreakEquals(expectedFirst, actualFirst, false);
 
         for (SupplierPriceBreak priceBreak : actualList) {
@@ -788,15 +858,9 @@ public class TestCompanyApi extends TestApi {
     public void companyPriceBreakRetrieve(int supplierPriceBreak, int company) throws ApiException {
         SupplierPriceBreak actual = api.companyPriceBreakRetrieve(supplierPriceBreak);
         JsonObject expectedPriceBreak =
-                InventreeDemoDataset.getObjects(Models.COMPANY_SUPPLIER_PRICE_BREAK, 2).get(0);
+                InventreeDemoDataset.getObjects(Model.COMPANY_SUPPLIER_PRICE_BREAK, 2).get(0);
         assertSupplierPriceBreakEquals(expectedPriceBreak, actual, true);
 
         Assertions.assertEquals(company, actual.getSupplier(), "Incorrect supplier reference");
-    }
-
-    @Test
-    public void test() throws ApiException {
-        // api.companyPriceBreakUpdate(null, null);
-        // api.companyAddressDestr
     }
 }
