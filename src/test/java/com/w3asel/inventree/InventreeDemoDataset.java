@@ -62,6 +62,9 @@ public class InventreeDemoDataset {
     }
 
     public enum Models {
+        GLOBAL_SETTING("common.inventreesetting"),
+        NOTIFICATION_SETTING("plugin.notificationusersetting"),
+        USER_SETTING("common.inventreeusersetting"),
         COMPANY("company.company"),
         COMPANY_ADDRESS("company.address"),
         COMPANY_CONTACT("company.contact"),
