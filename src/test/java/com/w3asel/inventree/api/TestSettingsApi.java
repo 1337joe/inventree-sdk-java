@@ -3,7 +3,7 @@ package com.w3asel.inventree.api;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
-import com.w3asel.inventree.InventreeDemoDataset.Models;
+import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.GlobalSettings;
 import com.w3asel.inventree.model.NotificationUserSetting;
@@ -45,7 +45,7 @@ public class TestSettingsApi extends TestApi {
         // api.settingsUserUpdate(null, null);
     }
 
-    private JsonElement getExpectedValue(Models model, String name, String user) {
+    private JsonElement getExpectedValue(Model model, String name, String user) {
         List<JsonObject> loadedSettings = InventreeDemoDataset.getObjects(model, null);
         if (user != null) {
             loadedSettings.removeIf(jo -> !InventreeDemoDataset.getFields(jo).get("user")
@@ -82,7 +82,7 @@ public class TestSettingsApi extends TestApi {
     @Test
     public void settingsGlobalList() throws ApiException {
         List<JsonObject> expectedList =
-                InventreeDemoDataset.getObjects(Models.GLOBAL_SETTING, null);
+                InventreeDemoDataset.getObjects(Model.GLOBAL_SETTING, null);
         Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 5;
@@ -97,7 +97,7 @@ public class TestSettingsApi extends TestApi {
         boolean foundNonNull = false;
         for (GlobalSettings actualSetting : actualList) {
             JsonElement expectedValue =
-                    getExpectedValue(Models.GLOBAL_SETTING, actualSetting.getKey(), null);
+                    getExpectedValue(Model.GLOBAL_SETTING, actualSetting.getKey(), null);
             if (expectedValue != null) {
                 foundNonNull = true;
                 Assertions.assertEquals(expectedValue.getAsString(), actualSetting.getValue(),
@@ -114,7 +114,7 @@ public class TestSettingsApi extends TestApi {
     @CsvSource({"CURRENCY_CODES,string", "INVENTREE_DEFAULT_CURRENCY,string",
             "REPORT_LOG_ERRORS,boolean", "BARCODE_RESULTS_MAX_NUM,integer"})
     public void settingsGlobalRetrieve(String targetSetting, String type) throws ApiException {
-        JsonElement expectedValue = getExpectedValue(Models.GLOBAL_SETTING, targetSetting, null);
+        JsonElement expectedValue = getExpectedValue(Model.GLOBAL_SETTING, targetSetting, null);
 
         GlobalSettings actual = api.settingsGlobalRetrieve(targetSetting);
         Assertions.assertNotNull(actual);
@@ -127,7 +127,7 @@ public class TestSettingsApi extends TestApi {
     public void settingsNotificationList() throws ApiException {
         String user = "admin";
         List<JsonObject> expectedList =
-                InventreeDemoDataset.getObjects(Models.NOTIFICATION_SETTING, null);
+                InventreeDemoDataset.getObjects(Model.NOTIFICATION_SETTING, null);
         // expect only settings for current user
         expectedList.removeIf(
                 jo -> !InventreeDemoDataset.getFields(jo).get("user").getAsString().contains(user));
@@ -151,7 +151,7 @@ public class TestSettingsApi extends TestApi {
         // deep equals on first value
         NotificationUserSetting actualFirst = actualList.get(0);
         JsonObject expectedFirst = InventreeDemoDataset
-                .getObjects(Models.NOTIFICATION_SETTING, actualFirst.getPk()).get(0);
+                .getObjects(Model.NOTIFICATION_SETTING, actualFirst.getPk()).get(0);
 
         Map<String, JsonElement> fields = InventreeDemoDataset.getFields(expectedFirst);
         Assertions.assertEquals(fields.get("key").getAsString(), actualFirst.getKey(),
@@ -165,7 +165,7 @@ public class TestSettingsApi extends TestApi {
     @Test
     public void settingsUserList() throws ApiException {
         String user = "admin";
-        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Models.USER_SETTING, null);
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.USER_SETTING, null);
         // expect only settings for current user
         expectedList.removeIf(
                 jo -> !InventreeDemoDataset.getFields(jo).get("user").getAsString().contains(user));
@@ -183,7 +183,7 @@ public class TestSettingsApi extends TestApi {
         boolean foundNonNull = false;
         for (UserSettings actualSetting : actualList) {
             JsonElement expectedValue =
-                    getExpectedValue(Models.USER_SETTING, actualSetting.getKey(), user);
+                    getExpectedValue(Model.USER_SETTING, actualSetting.getKey(), user);
             if (expectedValue != null) {
                 foundNonNull = true;
                 Assertions.assertEquals(expectedValue.getAsString(), actualSetting.getValue(),
@@ -200,7 +200,7 @@ public class TestSettingsApi extends TestApi {
     @CsvSource({"NOTIFICATION_ERROR_REPORT,boolean", "SEARCH_PREVIEW_RESULTS,integer"})
     public void settingsUserRetrieve(String targetSetting, String type) throws ApiException {
         String user = "admin";
-        JsonElement expectedValue = getExpectedValue(Models.USER_SETTING, targetSetting, user);
+        JsonElement expectedValue = getExpectedValue(Model.USER_SETTING, targetSetting, user);
 
         UserSettings actual = api.settingsUserRetrieve(targetSetting);
         Assertions.assertNotNull(actual);

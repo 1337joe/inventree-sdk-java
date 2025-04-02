@@ -2,7 +2,7 @@ package com.w3asel.inventree.api;
 
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
-import com.w3asel.inventree.InventreeDemoDataset.Models;
+import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.PaginatedSalesOrderList;
 import com.w3asel.inventree.model.SalesOrder;
@@ -132,7 +132,7 @@ public class TestOrderApi extends TestApi {
     @Test
     public void orderSoList() throws ApiException {
 
-        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Models.ORDER_SALES, null);
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.ORDER_SALES, null);
         Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 5;
