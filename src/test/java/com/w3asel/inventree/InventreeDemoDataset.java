@@ -36,7 +36,7 @@ public class InventreeDemoDataset {
         }
     }
 
-    public static List<JsonObject> getObjects(Models model, Integer pk) {
+    public static List<JsonObject> getObjects(Model model, Integer pk) {
         List<JsonObject> foundObjects = new ArrayList<>();
         for (JsonElement element : rootElements) {
             JsonObject object = element.getAsJsonObject();
@@ -61,7 +61,7 @@ public class InventreeDemoDataset {
         return OffsetDateTime.from(DATETIME_FORMAT.parse(field));
     }
 
-    public enum Models {
+    public enum Model {
         GLOBAL_SETTING("common.inventreesetting"),
         NOTIFICATION_SETTING("plugin.notificationusersetting"),
         USER_SETTING("common.inventreeusersetting"),
@@ -75,21 +75,21 @@ public class InventreeDemoDataset {
 
         private final String key;
 
-        private Models(String key) {
+        private Model(String key) {
             this.key = key;
         }
     }
 
     @Test
     public void getObjects_model() {
-        List<JsonObject> actual = getObjects(Models.COMPANY_SUPPLIER_PRICE_BREAK, null);
+        List<JsonObject> actual = getObjects(Model.COMPANY_SUPPLIER_PRICE_BREAK, null);
         Assertions.assertTrue(actual.size() > 1);
     }
 
     @Test
     public void getObjects_model_pk() {
         int expected = 2;
-        List<JsonObject> actual = getObjects(Models.COMPANY_SUPPLIER_PRICE_BREAK, expected);
+        List<JsonObject> actual = getObjects(Model.COMPANY_SUPPLIER_PRICE_BREAK, expected);
         Assertions.assertTrue(actual.size() == 1);
         JsonObject object = actual.get(0);
         Assertions.assertEquals(expected, object.get(PRIMARY_KEY_KEY).getAsInt(),
