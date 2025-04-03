@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '331'
+  version: '332'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -22862,6 +22862,9 @@ components:
           type: boolean
           default: false
         search_whole:
+          type: boolean
+          default: false
+        search_notes:
           type: boolean
           default: false
         limit:
