@@ -1,6 +1,5 @@
 package com.w3asel.inventree.api;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
@@ -153,18 +152,14 @@ public class TestStockApi extends TestApi {
     }
 
     private static void assertStockTrackingEquals(JsonObject expected, StockTracking actual) {
-        Assertions.assertEquals(expected.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt(),
-                actual.getPk(), "Incorrect primary key");
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
 
-        Map<String, JsonElement> fields = InventreeDemoDataset.getFields(expected);
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        Assertions.assertEquals(fields.get("tracking_type").getAsInt(), actual.getTrackingType(),
-                "Incorrect tracking type");
-        Assertions.assertEquals(fields.get("item").getAsInt(), actual.getItem(), "Incorrect item");
-
-        String notesString =
-                fields.get("notes").isJsonNull() ? null : fields.get("notes").getAsString();
-        Assertions.assertEquals(notesString, actual.getNotes(), "Incorrect notes");
+        InventreeDemoDataset.assertEquals("tracking_type", fields, actual.getTrackingType());
+        InventreeDemoDataset.assertEquals("item", fields, actual.getItem());
+        InventreeDemoDataset.assertNullableEquals(String.class, "notes", fields, actual.getNotes());
 
         // user given as name in demo dataset file, just verify null state matches
         if (fields.get("user").isJsonNull()) {
