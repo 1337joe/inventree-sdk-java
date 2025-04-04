@@ -318,8 +318,6 @@ public class TestCompanyApi extends TestApi {
         }
     }
 
-    // TODO address update, address partial update
-
     private static void assertContactEquals(JsonObject expected, Contact actual) {
         InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
                 actual.getPk());
@@ -475,9 +473,6 @@ public class TestCompanyApi extends TestApi {
         }
     }
 
-    // TODO contact update, contact partial update
-
-
     private static void assertSupplierPartEquals(JsonObject expected, SupplierPart actual,
             boolean detail) {
         InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
@@ -560,7 +555,6 @@ public class TestCompanyApi extends TestApi {
 
         int limit = 5;
         int offset = 0;
-        // TODO string company
         PaginatedSupplierPartList actual = api.companyPartList(limit, null, null, null, company,
                 null, null, null, offset, null, null, null, null, null, null, null, null);
         Assertions.assertEquals(expectedList.size(), actual.getCount(),
