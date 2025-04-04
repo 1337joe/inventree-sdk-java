@@ -1,6 +1,5 @@
 package com.w3asel.inventree.api;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
@@ -33,7 +32,6 @@ import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class TestCompanyApi extends TestApi {
     private CompanyApi api;
@@ -111,38 +109,18 @@ public class TestCompanyApi extends TestApi {
     }
 
     private static void assertCompanyEquals(JsonObject expected, Company actual, boolean detail) {
-        Assertions.assertEquals(expected.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt(),
-                actual.getPk(), "Incorrect primary key");
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
 
-        Map<String, JsonElement> fields = InventreeDemoDataset.getFields(expected);
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        Assertions.assertEquals(fields.get("name").getAsString(), actual.getName(),
-                "Incorrect name");
-        Assertions.assertEquals(fields.get("description").getAsString(), actual.getDescription(),
-                "Incorrect description");
-
-        String websiteString = fields.get("website").getAsString();
-        try {
-            Assertions.assertEquals(new URI(websiteString), actual.getWebsite(),
-                    "Incorrect website");
-        } catch (URISyntaxException e) {
-            Assertions.fail("Unable to create URI from " + websiteString);
-        }
-
-        Assertions.assertEquals(fields.get("phone").getAsString(), actual.getPhone(),
-                "Incorrect phone");
-        String emailString =
-                fields.get("email").isJsonNull() ? null : fields.get("email").getAsString();
-        Assertions.assertEquals(emailString, actual.getEmail(), "Incorrect email");
-        Assertions.assertEquals(fields.get("contact").getAsString(), actual.getContact(),
-                "Incorrect contact");
-
-        String linkString = fields.get("link").getAsString();
-        try {
-            Assertions.assertEquals(new URI(linkString), actual.getLink(), "Incorrect link");
-        } catch (URISyntaxException e) {
-            Assertions.fail("Unable to create URI from " + linkString);
-        }
+        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
+        InventreeDemoDataset.assertEquals("description", fields, actual.getDescription());
+        InventreeDemoDataset.assertEquals("website", fields, actual.getWebsite());
+        InventreeDemoDataset.assertEquals("phone", fields, actual.getPhone());
+        InventreeDemoDataset.assertNullableEquals(String.class, "email", fields, actual.getEmail());
+        InventreeDemoDataset.assertEquals("contact", fields, actual.getContact());
+        InventreeDemoDataset.assertEquals("link", fields, actual.getLink());
 
         String mediaPrefix = "/media/";
 
@@ -152,21 +130,15 @@ public class TestCompanyApi extends TestApi {
         } catch (URISyntaxException e) {
             Assertions.fail("Unable to create URI from " + imageString);
         }
-        Assertions.assertEquals(fields.get("active").getAsBoolean(), actual.getActive(),
-                "Incorrect active state");
-        Assertions.assertEquals(fields.get("is_customer").getAsBoolean(), actual.getIsCustomer(),
-                "Incorrect customer state");
-        Assertions.assertEquals(fields.get("is_supplier").getAsBoolean(), actual.getIsSupplier(),
-                "Incorrect supplier state");
-        Assertions.assertEquals(fields.get("is_manufacturer").getAsBoolean(),
-                actual.getIsManufacturer(), "Incorrect manufacturer state");
-        Assertions.assertEquals(fields.get("currency").getAsString(), actual.getCurrency(),
-                "Incorrect currency");
 
+        InventreeDemoDataset.assertEquals("active", fields, actual.getActive());
+        InventreeDemoDataset.assertEquals("is_customer", fields, actual.getIsCustomer());
+        InventreeDemoDataset.assertEquals("is_supplier", fields, actual.getIsSupplier());
+        InventreeDemoDataset.assertEquals("is_manufacturer", fields, actual.getIsManufacturer());
+        InventreeDemoDataset.assertEquals("currency", fields, actual.getCurrency());
 
         if (detail) {
-            Assertions.assertEquals(fields.get("notes").getAsString(), actual.getNotes(),
-                    "Incorrect notes");
+            InventreeDemoDataset.assertEquals("notes", fields, actual.getNotes());
         } else {
             Assertions.assertNull(actual.getNotes(), "Expect null notes on non-detail calls");
         }
@@ -239,40 +211,24 @@ public class TestCompanyApi extends TestApi {
     }
 
     private static void assertAddressEquals(JsonObject expected, Address actual) {
-        Assertions.assertEquals(expected.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt(),
-                actual.getPk(), "Incorrect primary key");
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
 
-        Map<String, JsonElement> fields = InventreeDemoDataset.getFields(expected);
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        Assertions.assertEquals(fields.get("company").getAsInt(), actual.getCompany(),
-                "Incorrect company reference");
-        Assertions.assertEquals(fields.get("title").getAsString(), actual.getTitle(),
-                "Incorrect title");
-        Assertions.assertEquals(fields.get("primary").getAsBoolean(), actual.getPrimary(),
-                "Expected to be primary address");
-        Assertions.assertEquals(fields.get("line1").getAsString(), actual.getLine1(),
-                "Incorrect line 1");
-        Assertions.assertEquals(fields.get("line2").getAsString(), actual.getLine2(),
-                "Incorrect line 2");
-        Assertions.assertEquals(fields.get("postal_code").getAsString(), actual.getPostalCode(),
-                "Incorrect postal code");
-        Assertions.assertEquals(fields.get("postal_city").getAsString(), actual.getPostalCity(),
-                "Incorrect postal city");
-        Assertions.assertEquals(fields.get("province").getAsString(), actual.getProvince(),
-                "Incorrect province");
-        Assertions.assertEquals(fields.get("country").getAsString(), actual.getCountry(),
-                "Incorrect country");
-        Assertions.assertEquals(fields.get("shipping_notes").getAsString(),
-                actual.getShippingNotes(), "Incorrect shipping notes");
-        Assertions.assertEquals(fields.get("internal_shipping_notes").getAsString(),
-                actual.getInternalShippingNotes(), "Incorrect internal shipping notes");
-
-        String uriString = fields.get("link").getAsString();
-        try {
-            Assertions.assertEquals(new URI(uriString), actual.getLink(), "Incorrect link");
-        } catch (URISyntaxException e) {
-            Assertions.fail("Unable to create URI from " + uriString);
-        }
+        InventreeDemoDataset.assertEquals("company", fields, actual.getCompany());
+        InventreeDemoDataset.assertEquals("title", fields, actual.getTitle());
+        InventreeDemoDataset.assertEquals("primary", fields, actual.getPrimary());
+        InventreeDemoDataset.assertEquals("line1", fields, actual.getLine1());
+        InventreeDemoDataset.assertEquals("line2", fields, actual.getLine2());
+        InventreeDemoDataset.assertEquals("postal_code", fields, actual.getPostalCode());
+        InventreeDemoDataset.assertEquals("postal_city", fields, actual.getPostalCity());
+        InventreeDemoDataset.assertEquals("province", fields, actual.getProvince());
+        InventreeDemoDataset.assertEquals("country", fields, actual.getCountry());
+        InventreeDemoDataset.assertEquals("shipping_notes", fields, actual.getShippingNotes());
+        InventreeDemoDataset.assertEquals("internal_shipping_notes", fields,
+                actual.getInternalShippingNotes());
+        InventreeDemoDataset.assertEquals("link", fields, actual.getLink());
     }
 
     @Test
@@ -365,21 +321,16 @@ public class TestCompanyApi extends TestApi {
     // TODO address update, address partial update
 
     private static void assertContactEquals(JsonObject expected, Contact actual) {
-        Assertions.assertEquals(expected.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt(),
-                actual.getPk(), "Incorrect primary key");
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
 
-        Map<String, JsonElement> fields = InventreeDemoDataset.getFields(expected);
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        Assertions.assertEquals(fields.get("company").getAsInt(), actual.getCompany(),
-                "Incorrect company reference");
-        Assertions.assertEquals(fields.get("name").getAsString(), actual.getName(),
-                "Incorrect name");
-        Assertions.assertEquals(fields.get("phone").getAsString(), actual.getPhone(),
-                "Incorrect phone");
-        Assertions.assertEquals(fields.get("email").getAsString(), actual.getEmail(),
-                "Incorrect email");
-        Assertions.assertEquals(fields.get("role").getAsString(), actual.getRole(),
-                "Incorrect role");
+        InventreeDemoDataset.assertEquals("company", fields, actual.getCompany());
+        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
+        InventreeDemoDataset.assertEquals("phone", fields, actual.getPhone());
+        InventreeDemoDataset.assertEquals("email", fields, actual.getEmail());
+        InventreeDemoDataset.assertEquals("role", fields, actual.getRole());
 
         // not directly available in demo dataset:
         // actual.getCompanyName()
@@ -535,51 +486,34 @@ public class TestCompanyApi extends TestApi {
 
     private static void assertSupplierPartEquals(JsonObject expected, SupplierPart actual,
             boolean detail) {
-        Assertions.assertEquals(expected.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt(),
-                actual.getPk(), "Incorrect primary key");
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
 
-        Map<String, JsonElement> fields = InventreeDemoDataset.getFields(expected);
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        Assertions.assertEquals(fields.get("barcode_hash").getAsString(), actual.getBarcodeHash(),
-                "Incorrect barcode hash");
+        InventreeDemoDataset.assertEquals("barcode_hash", fields, actual.getBarcodeHash());
 
         OffsetDateTime expectedUpdated = fields.get("updated").isJsonNull() ? null
                 : InventreeDemoDataset.parseOffsetDateTime(fields.get("updated").getAsString())
                         .truncatedTo(ChronoUnit.MINUTES);
         Assertions.assertEquals(expectedUpdated, actual.getUpdated(), "Incorrect updated");
 
-        Assertions.assertEquals(fields.get("part").getAsInt(), actual.getPart(),
-                "Incorrect part reference");
-        Assertions.assertEquals(fields.get("supplier").getAsInt(), actual.getSupplier(),
-                "Incorrect supplier reference");
-        Assertions.assertEquals(fields.get("SKU").getAsString(), actual.getSKU(), "Incorrect SKU");
-        Assertions.assertEquals(fields.get("active").getAsBoolean(), actual.getActive(),
-                "Incorrect active state");
-        Assertions.assertEquals(fields.get("manufacturer_part").getAsInt(),
-                actual.getManufacturerPart(), "Incorrect manufacturer part reference");
+        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
+        InventreeDemoDataset.assertEquals("supplier", fields, actual.getSupplier());
+        InventreeDemoDataset.assertEquals("SKU", fields, actual.getSKU());
+        InventreeDemoDataset.assertEquals("active", fields, actual.getActive());
+        InventreeDemoDataset.assertEquals("manufacturer_part", fields,
+                actual.getManufacturerPart());
+        InventreeDemoDataset.assertEquals("description", fields, actual.getDescription());
+        InventreeDemoDataset.assertNullableEquals(String.class, "note", fields, actual.getNote());
+        InventreeDemoDataset.assertEquals("link", fields, actual.getLink());
+        InventreeDemoDataset.assertNullableEquals(String.class, "packaging", fields,
+                actual.getPackaging());
+        InventreeDemoDataset.assertEquals("pack_quantity", fields, actual.getPackQuantity());
+        InventreeDemoDataset.assertEquals("pack_quantity_native", fields,
+                actual.getPackQuantityNative());
+        InventreeDemoDataset.assertEquals("available", fields, actual.getAvailable());
 
-        Assertions.assertEquals(fields.get("description").getAsString(), actual.getDescription(),
-                "Incorrect description");
-        String noteString =
-                fields.get("note").isJsonNull() ? null : fields.get("note").getAsString();
-        Assertions.assertEquals(noteString, actual.getNote(), "Incorrect note");
-
-        String linkString = fields.get("link").getAsString();
-        try {
-            Assertions.assertEquals(new URI(linkString), actual.getLink(), "Incorrect link");
-        } catch (URISyntaxException e) {
-            Assertions.fail("Unable to create URI from " + linkString);
-        }
-
-        String packagingString =
-                fields.get("packaging").isJsonNull() ? null : fields.get("packaging").getAsString();
-        Assertions.assertEquals(packagingString, actual.getPackaging(), "Incorrect packaging");
-        Assertions.assertEquals(fields.get("pack_quantity").getAsString(), actual.getPackQuantity(),
-                "Incorrect pack quantity");
-        Assertions.assertEquals(fields.get("pack_quantity_native").getAsDouble(),
-                actual.getPackQuantityNative(), "Incorrect pack quantity native");
-        Assertions.assertEquals(fields.get("available").getAsDouble(), actual.getAvailable(),
-                "Incorrect available quantity");
         OffsetDateTime expectedAvailabilityUpdated = InventreeDemoDataset
                 .parseOffsetDateTime(fields.get("availability_updated").getAsString())
                 .truncatedTo(ChronoUnit.MINUTES);
@@ -587,9 +521,8 @@ public class TestCompanyApi extends TestApi {
                 "Incorrect availability updated");
 
         if (detail) {
-            String expectedNotes =
-                    fields.get("notes").isJsonNull() ? null : fields.get("notes").getAsString();
-            Assertions.assertEquals(expectedNotes, actual.getNotes(), "Incorrect notes");
+            InventreeDemoDataset.assertNullableEquals(String.class, "notes", fields,
+                    actual.getNotes());
         } else {
             Assertions.assertNull(actual.getNotes(), "Expect null notes on non-detail calls");
 
@@ -685,37 +618,22 @@ public class TestCompanyApi extends TestApi {
 
     private static void assertManufacturerPartEquals(JsonObject expected, ManufacturerPart actual,
             boolean detail) {
-        Assertions.assertEquals(expected.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt(),
-                actual.getPk(), "Incorrect primary key");
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
 
-        Map<String, JsonElement> fields = InventreeDemoDataset.getFields(expected);
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        Assertions.assertEquals(fields.get("part").getAsInt(), actual.getPart(),
-                "Incorrect part reference");
-        Assertions.assertEquals(fields.get("barcode_hash").getAsString(), actual.getBarcodeHash(),
-                "Incorrect barcode hash");
-        Assertions.assertEquals(fields.get("manufacturer").getAsInt(), actual.getManufacturer(),
-                "Incorrect manufacturer reference");
-        Assertions.assertEquals(fields.get("MPN").getAsString(), actual.getMPN(), "Incorrect MPN");
-
-        String descriptionString = fields.get("description").isJsonNull() ? null
-                : fields.get("description").getAsString();
-        Assertions.assertEquals(descriptionString, actual.getDescription(),
-                "Incorrect description");
-
-        String linkString =
-                fields.get("link").isJsonNull() ? null : fields.get("link").getAsString();
-        try {
-            Assertions.assertEquals(linkString == null ? null : new URI(linkString),
-                    actual.getLink(), "Incorrect link");
-        } catch (URISyntaxException e) {
-            Assertions.fail("Unable to create URI from " + linkString);
-        }
+        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
+        InventreeDemoDataset.assertEquals("barcode_hash", fields, actual.getBarcodeHash());
+        InventreeDemoDataset.assertEquals("manufacturer", fields, actual.getManufacturer());
+        InventreeDemoDataset.assertEquals("MPN", fields, actual.getMPN());
+        InventreeDemoDataset.assertNullableEquals(String.class, "description", fields,
+                actual.getDescription());
+        InventreeDemoDataset.assertNullableEquals(URI.class, "link", fields, actual.getLink());
 
         if (detail) {
-            String expectedNotes =
-                    fields.get("notes").isJsonNull() ? null : fields.get("notes").getAsString();
-            Assertions.assertEquals(expectedNotes, actual.getNotes(), "Incorrect notes");
+            InventreeDemoDataset.assertNullableEquals(String.class, "notes", fields,
+                    actual.getNotes());
         } else {
             Assertions.assertNull(actual.getNotes(), "Expect null notes on list calls");
 
@@ -792,23 +710,20 @@ public class TestCompanyApi extends TestApi {
 
     private static void assertSupplierPriceBreakEquals(JsonObject expected,
             SupplierPriceBreak actual, boolean detail) {
-        Assertions.assertEquals(expected.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt(),
-                actual.getPk(), "Incorrect primary key");
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
 
-        Map<String, JsonElement> fields = InventreeDemoDataset.getFields(expected);
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
 
         OffsetDateTime expectedUpdate =
                 InventreeDemoDataset.parseOffsetDateTime(fields.get("updated").getAsString())
                         .truncatedTo(ChronoUnit.MINUTES);
         Assertions.assertEquals(expectedUpdate, actual.getUpdated(), "Incorrect updated time");
 
-        Assertions.assertEquals(fields.get("quantity").getAsDouble(), actual.getQuantity(),
-                "Incorrect quantity");
-        Assertions.assertEquals(fields.get("price_currency").getAsString(),
-                actual.getPriceCurrency(), "Incorrect currency");
-        Assertions.assertEquals(fields.get("price").getAsDouble(), actual.getPrice().doubleValue(),
-                1e-10, "Incorrect price");
-        Assertions.assertEquals(fields.get("part").getAsInt(), actual.getPart(), "Incorrect part");
+        InventreeDemoDataset.assertEquals("quantity", fields, actual.getQuantity());
+        InventreeDemoDataset.assertEquals("price_currency", fields, actual.getPriceCurrency());
+        InventreeDemoDataset.assertEquals("price", fields, actual.getPrice().doubleValue());
+        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
 
         if (!detail) {
             Assertions.assertNull(actual.getPartDetail(), "Expect null part detail on list calls");
