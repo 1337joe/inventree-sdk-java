@@ -42,7 +42,7 @@ public class TestStockApi extends TestApi {
 
     @Disabled
     @Test
-    public void testAll() throws ApiException {
+    public void todo() throws ApiException {
         api.stockAddCreate(null);
         api.stockAssignCreate(null);
         api.stockChangeStatusCreate(null);
