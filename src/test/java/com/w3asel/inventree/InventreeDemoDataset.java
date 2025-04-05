@@ -152,6 +152,7 @@ public class InventreeDemoDataset {
         CUSTOM_UNIT("common.customunit"),
         CUSTOM_USER_STATE("common.inventreecustomuserstatemodel"),
         ORDER_SALES("order.salesorder"),
+        REPORT_LABEL_TEMPLATE("report.labeltemplate"),
         STOCK_TRACKING("stock.stockitemtracking");
 
         private final String key;
