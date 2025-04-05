@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import java.util.List;
-import java.util.Map;
 
 public class TestSettingsApi extends TestApi {
     private SettingsApi api;
@@ -81,8 +80,7 @@ public class TestSettingsApi extends TestApi {
 
     @Test
     public void settingsGlobalList() throws ApiException {
-        List<JsonObject> expectedList =
-                InventreeDemoDataset.getObjects(Model.GLOBAL_SETTING, null);
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.GLOBAL_SETTING, null);
         Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 5;
@@ -153,7 +151,7 @@ public class TestSettingsApi extends TestApi {
         JsonObject expectedFirst = InventreeDemoDataset
                 .getObjects(Model.NOTIFICATION_SETTING, actualFirst.getPk()).get(0);
 
-        Map<String, JsonElement> fields = InventreeDemoDataset.getFields(expectedFirst);
+        JsonObject fields = InventreeDemoDataset.getFields(expectedFirst);
         Assertions.assertEquals(fields.get("key").getAsString(), actualFirst.getKey(),
                 "Incorrect notification setting key");
         Assertions.assertEquals(fields.get("value").getAsString(), actualFirst.getValue(),

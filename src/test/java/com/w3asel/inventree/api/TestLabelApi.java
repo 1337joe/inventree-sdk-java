@@ -1,10 +1,20 @@
 package com.w3asel.inventree.api;
 
+import com.google.gson.JsonObject;
+import com.w3asel.inventree.InventreeDemoDataset;
+import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.LabelTemplate;
+import com.w3asel.inventree.model.PaginatedLabelTemplateList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 
 public class TestLabelApi extends TestApi {
     private LabelApi api;
@@ -14,12 +24,87 @@ public class TestLabelApi extends TestApi {
         api = new LabelApi(apiClient);
     }
 
+    @Disabled
     @Test
-    public void test() throws ApiException {
-        LabelTemplate actual = api.labelTemplateRetrieve(1);
-        Assertions.assertNotNull(actual);
+    public void todo() throws ApiException {
+        api.labelPrintCreate(null);
+        api.labelTemplateCreate(null);
+        api.labelTemplateDestroy(null);
+        // api.labelTemplateList(null, null, null, null, null, null);
+        api.labelTemplateMetadataPartialUpdate(null, null);
+        api.labelTemplateMetadataRetrieve(null);
+        api.labelTemplateMetadataUpdate(null, null);
+        api.labelTemplatePartialUpdate(null, null);
+        // api.labelTemplateRetrieve(null);
+        api.labelTemplateUpdate(null, null);
+    }
 
-        int limit = 100;
-        api.labelTemplateList(limit, null, null, null, null, null);
+
+    private static void assertLabelTemplateEquals(JsonObject expected, LabelTemplate actual) {
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
+        InventreeDemoDataset.assertEquals("description", fields, actual.getDescription());
+        InventreeDemoDataset.assertEquals("revision", fields, actual.getRevision());
+        InventreeDemoDataset.assertEquals("attach_to_model", fields, actual.getAttachToModel());
+        InventreeDemoDataset.assertEquals("filename_pattern", fields, actual.getFilenamePattern());
+        InventreeDemoDataset.assertEquals("enabled", fields, actual.getEnabled());
+        // TODO requires proper enum naming
+        // InventreeDemoDataset.assertEquals("model_type", fields, actual.getModelType());
+        InventreeDemoDataset.assertEquals("filters", fields, actual.getFilters());
+
+        String mediaPrefix = "/media/";
+        String imageString = mediaPrefix + fields.get("template").getAsString();
+        try {
+            Assertions.assertEquals(new URI(imageString), actual.getTemplate(),
+                    "Incorrect template");
+        } catch (URISyntaxException e) {
+            Assertions.fail("Unable to create URI from " + imageString);
+        }
+
+        InventreeDemoDataset.assertEquals("width", fields, actual.getWidth());
+        InventreeDemoDataset.assertEquals("height", fields, actual.getHeight());
+    }
+
+    @Test
+    public void labelTemplateList() throws ApiException {
+        List<JsonObject> expectedList =
+                InventreeDemoDataset.getObjects(Model.REPORT_LABEL_TEMPLATE, null);
+        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+
+        int limit = 10;
+        int offset = 0;
+
+        PaginatedLabelTemplateList actual =
+                api.labelTemplateList(limit, null, null, null, offset, null);
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect label template count");
+        List<LabelTemplate> actualList = actual.getResults();
+
+        // check items returned by key
+        List<Integer> expectedPks = expectedList.stream()
+                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
+                .toList();
+        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+        Assertions.assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+
+        // deep equals on first value
+        LabelTemplate actualFirst = actualList.get(0);
+        JsonObject expectedFirst = InventreeDemoDataset
+                .getObjects(Model.REPORT_LABEL_TEMPLATE, actualFirst.getPk()).get(0);
+        assertLabelTemplateEquals(expectedFirst, actualFirst);
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({"1", "6"})
+    public void stockTrackRetrieve(int template) throws ApiException {
+        LabelTemplate actual = api.labelTemplateRetrieve(template);
+        JsonObject expected =
+                InventreeDemoDataset.getObjects(Model.REPORT_LABEL_TEMPLATE, template).get(0);
+        assertLabelTemplateEquals(expected, actual);
     }
 }

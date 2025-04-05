@@ -281,6 +281,10 @@
                             <token>^\s+- external_stock$\n</token>
                             <value></value>
                         </replacement>
+                        <replacement>
+                            <token>^\s+- commit_branch$\n</token>
+                            <value></value>
+                        </replacement>
                         <!--
                         <replacement>
                             <token>^\s+- project_code_detail$\n</token>

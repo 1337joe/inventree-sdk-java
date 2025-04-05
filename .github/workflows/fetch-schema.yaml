@@ -86,13 +86,13 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: 'inventree/InvenTree'
-          path: 'demo-dataset'
+          path: 'InvenTree'
           
       - name: Build PR body text
         run: |
           echo "**v${{ env.NEW_VERSION }}**" > pr_body.md
           # delete (don't print) from line 1 to version header, then from blank line to end
-          sed '1,/^v${{ env.NEW_VERSION }}.*$/d;/^$/,$d' inventree/InvenTree/src/backend/InvenTree/InvenTree | sed 's/   //' >> pr_body.md
+          sed '1,/^v${{ env.NEW_VERSION }}.*$/d;/^$/,$d' InvenTree/src/backend/InvenTree/InvenTree/api_version.py | sed 's/   //' >> pr_body.md
           echo "" >> pr_body.md
           echo "Automatically generated, check schema diff for needed changes" >> pr_body.md
 
