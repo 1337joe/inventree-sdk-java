@@ -127,6 +127,8 @@ public class InventreeDemoDataset {
             } catch (URISyntaxException e) {
                 Assertions.fail("Unable to create URI from " + uriString);
             }
+        } else if (Enum.class.isAssignableFrom(type)) {
+            Assertions.assertEquals(fieldValue.getAsString(), actualValue.toString(), message);
         } else {
             Assertions.fail("Unsupported type: " + type.getName());
         }
