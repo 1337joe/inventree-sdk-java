@@ -1,5 +1,7 @@
 package com.w3asel.inventree.api;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
@@ -17,6 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -136,25 +139,39 @@ public class TestStockApi extends TestApi {
         // check for custom values
         List<JsonObject> customList =
                 InventreeDemoDataset.getObjects(Model.CUSTOM_USER_STATE, null);
-        Assertions.assertTrue(customList.size() > 0, "Expected custom user states");
 
-        JsonObject expectedCustom = customList.get(0).get("fields").getAsJsonObject();
+        // remove custom state models that don't apply here
+        String targetModel = "stock";
+        Iterator<JsonObject> customListIterator = customList.iterator();
+        outer: while (customListIterator.hasNext()) {
+            JsonObject nextFields = InventreeDemoDataset.getFields(customListIterator.next());
+            JsonArray models = nextFields.get("model").getAsJsonArray();
+            for (JsonElement model : models) {
+                if (targetModel.equals(model.getAsString())) {
+                    continue outer;
+                }
+            }
+            customListIterator.remove();
+        }
+        Assertions.assertTrue(customList.size() > 0, "Expected custom user states: " + targetModel);
+
+        JsonObject expectedCustom = InventreeDemoDataset.getFields(customList.get(0));
+
         String customName = expectedCustom.get("name").getAsString();
         Assertions.assertTrue(actualValues.containsKey(customName),
                 "Missing " + customName + " custom stock status");
-        GenericStateValue customValue = actualValues.get(customName);
-        Assertions.assertTrue(customValue.getCustom(), "Custom value should be marked custom");
-        Assertions.assertEquals(expectedCustom.get("key").getAsInt(), customValue.getKey(),
-                "Incorrect custom status code key");
+        GenericStateValue customActual = actualValues.get(customName);
+
+        Assertions.assertTrue(customActual.getCustom(), "Custom value should be marked custom");
+        InventreeDemoDataset.assertEquals("key", expectedCustom, customActual.getKey());
+
         // TODO is it intended that logical_key come back as null?
-        // Assertions.assertEquals(expectedCustom.get("logical_key").getAsInt(),
-        // customValue.getLogicalKey(), "Incorrect custom status code logical key");
-        Assertions.assertEquals(customName, customValue.getName(),
-                "Incorrect custom status code name");
-        Assertions.assertEquals(expectedCustom.get("label").getAsString(), customValue.getLabel(),
-                "Incorrect custom status code label");
-        Assertions.assertEquals(expectedCustom.get("color").getAsString(), customValue.getColor(),
-                "Incorrect custom status code color");
+        // InventreeDemoDataset.assertEquals("logical_key", expectedCustom,
+        // customActual.getLogicalKey());
+
+        InventreeDemoDataset.assertEquals("name", expectedCustom, customActual.getName());
+        InventreeDemoDataset.assertEquals("label", expectedCustom, customActual.getLabel());
+        InventreeDemoDataset.assertEquals("color", expectedCustom, customActual.getColor());
     }
 
     private static void assertStockTrackingEquals(JsonObject expected, StockTracking actual) {
