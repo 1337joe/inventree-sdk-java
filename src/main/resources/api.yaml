@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '333'
+  version: '334'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -5535,7 +5535,7 @@ paths:
           description: ''
   /api/generic/status/:
     get:
-      operationId: generic_status_retrieve
+      operationId: generic_status_retrieve_all
       description: Perform a GET request to learn information about status codes.
       tags:
       - generic
@@ -5548,7 +5548,7 @@ paths:
           description: No response body
   /api/generic/status/{statusmodel}/:
     get:
-      operationId: generic_status_retrieve_2
+      operationId: generic_status_retrieve
       description: Retrieve information about a specific status code
       parameters:
       - in: path
@@ -5925,7 +5925,7 @@ paths:
           description: ''
   /api/importer/models/:
     get:
-      operationId: importer_models_retrieve
+      operationId: importer_models_list
       description: Return a list of models available for import.
       tags:
       - importer
@@ -5935,7 +5935,13 @@ paths:
       - cookieAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataImporterModel'
+          description: ''
   /api/importer/row/:
     get:
       operationId: importer_row_list
@@ -10303,7 +10309,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedSalesOrderAllocationList'
           description: ''
     put:
-      operationId: order_so_allocation_update
+      operationId: order_so_allocation_bulk_update
       description: |-
         Perform a PUT operation against this list endpoint.
 
@@ -10334,7 +10340,7 @@ paths:
                 $ref: '#/components/schemas/SalesOrderAllocation'
           description: ''
     patch:
-      operationId: order_so_allocation_partial_update
+      operationId: order_so_allocation_bulk_partial_update
       description: |-
         Perform a PATCH operation against this list endpoint.
 
@@ -10388,7 +10394,7 @@ paths:
                 $ref: '#/components/schemas/SalesOrderAllocation'
           description: ''
     put:
-      operationId: order_so_allocation_update_2
+      operationId: order_so_allocation_update
       description: API endpoint for detali view of a SalesOrderAllocation object.
       parameters:
       - in: path
@@ -10422,7 +10428,7 @@ paths:
                 $ref: '#/components/schemas/SalesOrderAllocation'
           description: ''
     patch:
-      operationId: order_so_allocation_partial_update_2
+      operationId: order_so_allocation_partial_update
       description: API endpoint for detali view of a SalesOrderAllocation object.
       parameters:
       - in: path
@@ -11998,7 +12004,7 @@ paths:
                 $ref: '#/components/schemas/Part'
           description: ''
     put:
-      operationId: part_update
+      operationId: part_bulk_update
       description: |-
         Perform a PUT operation against this list endpoint.
 
@@ -12029,7 +12035,7 @@ paths:
                 $ref: '#/components/schemas/Part'
           description: ''
     patch:
-      operationId: part_partial_update
+      operationId: part_bulk_partial_update
       description: |-
         Perform a PATCH operation against this list endpoint.
 
@@ -12083,7 +12089,7 @@ paths:
                 $ref: '#/components/schemas/Part'
           description: ''
     put:
-      operationId: part_update_2
+      operationId: part_update
       description: API endpoint for detail view of a single Part object.
       parameters:
       - in: path
@@ -12117,7 +12123,7 @@ paths:
                 $ref: '#/components/schemas/Part'
           description: ''
     patch:
-      operationId: part_partial_update_2
+      operationId: part_partial_update
       description: API endpoint for detail view of a single Part object.
       parameters:
       - in: path
@@ -12662,7 +12668,7 @@ paths:
                 $ref: '#/components/schemas/Category'
           description: ''
     put:
-      operationId: part_category_update
+      operationId: part_category_bulk_update
       description: |-
         Perform a PUT operation against this list endpoint.
 
@@ -12693,7 +12699,7 @@ paths:
                 $ref: '#/components/schemas/Category'
           description: ''
     patch:
-      operationId: part_category_partial_update
+      operationId: part_category_bulk_partial_update
       description: |-
         Perform a PATCH operation against this list endpoint.
 
@@ -12747,7 +12753,7 @@ paths:
                 $ref: '#/components/schemas/Category'
           description: ''
     put:
-      operationId: part_category_update_2
+      operationId: part_category_update
       description: Custom put method to pass kwargs.
       parameters:
       - in: path
@@ -12781,7 +12787,7 @@ paths:
                 $ref: '#/components/schemas/Category'
           description: ''
     patch:
-      operationId: part_category_partial_update_2
+      operationId: part_category_partial_update
       description: Custom patch method to pass kwargs.
       parameters:
       - in: path
@@ -15562,7 +15568,7 @@ paths:
           description: ''
   /api/plugins/{plugin}/settings/:
     get:
-      operationId: plugins_settings_list_2
+      operationId: plugins_settings_list
       description: Get all settings for a plugin config.
       parameters:
       - in: path
@@ -15828,7 +15834,7 @@ paths:
           description: ''
   /api/plugins/settings/:
     get:
-      operationId: plugins_settings_list
+      operationId: plugins_settings_list_all
       description: |-
         List endpoint for all plugin related settings.
 
@@ -18656,7 +18662,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
     put:
-      operationId: stock_location_update
+      operationId: stock_location_bulk_update
       description: |-
         Perform a PUT operation against this list endpoint.
 
@@ -18687,7 +18693,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
     patch:
-      operationId: stock_location_partial_update
+      operationId: stock_location_bulk_partial_update
       description: |-
         Perform a PATCH operation against this list endpoint.
 
@@ -19041,7 +19047,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
     put:
-      operationId: stock_location_update_2
+      operationId: stock_location_update
       description: Custom put method to pass kwargs.
       parameters:
       - in: path
@@ -19075,7 +19081,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
     patch:
-      operationId: stock_location_partial_update_2
+      operationId: stock_location_partial_update
       description: Custom patch method to pass kwargs.
       parameters:
       - in: path
@@ -20646,12 +20652,20 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
+      - in: query
+        name: revoked
+        schema:
+          type: boolean
       - name: search
         required: false
         in: query
         description: A search term.
         schema:
           type: string
+      - in: query
+        name: user
+        schema:
+          type: integer
       tags:
       - user
       security:
@@ -23643,7 +23657,8 @@ components:
           maxLength: 255
         type:
           allOf:
-          - $ref: '#/components/schemas/TypeEdaEnum'
+          - $ref: '#/components/schemas/UserTypeEnum'
+          title: User Type
           description: |-
             Which type of user is this?
 
@@ -25030,6 +25045,24 @@ components:
         * `20` - Importing Data
         * `30` - Processing Data
         * `40` - Complete
+    DataImporterModel:
+      type: object
+      description: Model references to map info that might get imported.
+      properties:
+        serializer:
+          type: string
+          readOnly: true
+        model_type:
+          type: string
+          readOnly: true
+        api_url:
+          type: string
+          format: uri
+          readOnly: true
+      required:
+      - api_url
+      - model_type
+      - serializer
     DataOutput:
       type: object
       description: Serializer for the DataOutput model.
@@ -25760,7 +25793,7 @@ components:
           description: Add transaction note (optional)
       required:
       - stock_item
-    IsPendingEnum:
+    IsTrueEnum:
       type: boolean
       enum:
       - true
@@ -25800,7 +25833,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType820Enum'
+          $ref: '#/components/schemas/TemplateModelTypeEnum'
         template:
           type: string
           format: uri
@@ -26493,28 +26526,6 @@ components:
         metadata: {}
       required:
       - metadata
-    ModelType820Enum:
-      enum:
-      - build
-      - buildline
-      - purchaseorder
-      - salesorder
-      - salesordershipment
-      - returnorder
-      - part
-      - stockitem
-      - stocklocation
-      type: string
-      description: |-
-        * `build` - Build Order
-        * `buildline` - Build Order Line Item
-        * `purchaseorder` - Purchase Order
-        * `salesorder` - Sales Order
-        * `salesordershipment` - Sales Order Shipment
-        * `returnorder` - Return Order
-        * `part` - Part
-        * `stockitem` - Stock Item
-        * `stocklocation` - Stock Location
     NewsFeedEntry:
       type: object
       description: Serializer for the NewsFeedEntry model.
@@ -30714,7 +30725,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType820Enum'
+          $ref: '#/components/schemas/TemplateModelTypeEnum'
         template:
           type: string
           format: uri
@@ -32416,7 +32427,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType820Enum'
+          $ref: '#/components/schemas/TemplateModelTypeEnum'
         template:
           type: string
           format: uri
@@ -33831,7 +33842,8 @@ components:
           maxLength: 255
         type:
           allOf:
-          - $ref: '#/components/schemas/TypeEdaEnum'
+          - $ref: '#/components/schemas/UserTypeEnum'
+          title: User Type
           description: |-
             Which type of user is this?
 
@@ -34786,7 +34798,7 @@ components:
           description: Template description
           maxLength: 250
         model_type:
-          $ref: '#/components/schemas/ModelType820Enum'
+          $ref: '#/components/schemas/TemplateModelTypeEnum'
         template:
           type: string
           format: uri
@@ -36040,10 +36052,6 @@ components:
       - password_forgotten_enabled
       - registration_enabled
       - sso_registration
-    StatusE7fEnum:
-      type: integer
-      enum:
-      - 401
     StockAdd:
       type: object
       description: Serializer for adding stock to stock item(s).
@@ -36910,18 +36918,32 @@ components:
       - price
       - quantity
       - supplier
-    TypeEdaEnum:
+    TemplateModelTypeEnum:
       enum:
-      - bot
-      - internal
-      - external
-      - guest
+      - build
+      - buildline
+      - purchaseorder
+      - salesorder
+      - salesordershipment
+      - returnorder
+      - part
+      - stockitem
+      - stocklocation
       type: string
       description: |-
-        * `bot` - Bot
-        * `internal` - Internal
-        * `external` - External
-        * `guest` - Guest
+        * `build` - Build Order
+        * `buildline` - Build Order Line Item
+        * `purchaseorder` - Purchase Order
+        * `salesorder` - Sales Order
+        * `salesordershipment` - Sales Order Shipment
+        * `returnorder` - Return Order
+        * `part` - Part
+        * `stockitem` - Stock Item
+        * `stocklocation` - Stock Location
+    UnauthorizedStatus:
+      type: integer
+      enum:
+      - 401
     UninstallStockItem:
       type: object
       description: API serializers for uninstalling an installed item from a stock
@@ -37081,7 +37103,8 @@ components:
           maxLength: 255
         type:
           allOf:
-          - $ref: '#/components/schemas/TypeEdaEnum'
+          - $ref: '#/components/schemas/UserTypeEnum'
+          title: User Type
           description: |-
             Which type of user is this?
 
@@ -37154,6 +37177,18 @@ components:
       - units
       - user
       - value
+    UserTypeEnum:
+      enum:
+      - bot
+      - internal
+      - external
+      - guest
+      type: string
+      description: |-
+        * `bot` - Bot
+        * `internal` - Internal
+        * `external` - External
+        * `guest` - Guest
     Version:
       type: object
       description: Serializer for server version.
@@ -37259,7 +37294,7 @@ components:
           Metadata available in an re-authentication related response.
         properties:
           is_authenticated:
-            $ref: '#/components/schemas/IsPendingEnum'
+            $ref: '#/components/schemas/IsTrueEnum'
         required:
         - is_authenticated
     allauth.AuthenticatedResponse:
@@ -37312,7 +37347,7 @@ components:
           at:
             $ref: '#/components/schemas/allauth.Timestamp'
           reauthenticated:
-            $ref: '#/components/schemas/IsPendingEnum'
+            $ref: '#/components/schemas/IsTrueEnum'
         required:
         - method
         - reauthenticated
@@ -37357,7 +37392,7 @@ components:
         An authentication related response.
       properties:
         status:
-          $ref: '#/components/schemas/StatusE7fEnum'
+          $ref: '#/components/schemas/UnauthorizedStatus'
         data:
           type: object
           properties:
@@ -37580,7 +37615,7 @@ components:
         provider:
           $ref: '#/components/schemas/allauth.Provider'
         is_pending:
-          $ref: '#/components/schemas/IsPendingEnum'
+          $ref: '#/components/schemas/IsTrueEnum'
       required:
       - id
     allauth.ForbiddenResponse:
@@ -37784,7 +37819,7 @@ components:
         A response indicating reauthentication is required.
       properties:
         status:
-          $ref: '#/components/schemas/StatusE7fEnum'
+          $ref: '#/components/schemas/UnauthorizedStatus'
         data:
           $ref: '#/components/schemas/allauth.Authenticated'
         meta:

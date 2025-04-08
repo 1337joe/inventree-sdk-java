@@ -32,8 +32,8 @@ public class TestGenericApi extends TestApi {
         api.genericStatusCustomPartialUpdate(null, null);
         // api.genericStatusCustomRetrieve(null);
         api.genericStatusCustomUpdate(null, null);
-        api.genericStatusRetrieve();
-        // api.genericStatusRetrieve2(null);
+        // api.genericStatusRetrieve(null);
+        // api.genericStatusRetrieveAll();
     }
 
     public static void assertCustomStateEquals(JsonObject expected, CustomState actual) {
@@ -114,6 +114,12 @@ public class TestGenericApi extends TestApi {
     @CsvSource({"InvenTree.build.status_codes.BuildStatus"/* , "stock", "stockitem" */})
     public void genericStatusRetrieve2(String statusModel) throws ApiException {
         // TODO statusModel must be a valid class, should restrict to enum
-        GenericStateClass actual = api.genericStatusRetrieve2(statusModel);
+        GenericStateClass actual = api.genericStatusRetrieve(statusModel);
+    }
+
+    @Disabled("Void return")
+    @Test
+    public void genericStatusRetrieveAll() throws ApiException {
+        api.genericStatusRetrieveAll();
     }
 }
