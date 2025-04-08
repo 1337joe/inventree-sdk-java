@@ -7,7 +7,7 @@
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
     <packaging>jar</packaging>
-    <version>0.18.332-SNAPSHOT</version>
+    <version>0.18.333-SNAPSHOT</version>
 
     <name>InvenTree SDK (Java)</name>
     <description>A Java implementation of the OpenAPI spec published by InvenTree.</description>
@@ -142,11 +142,6 @@
                         <regexFlag>MULTILINE</regexFlag>
                     </regexFlags>
                     <replacements>
-                        <!-- null keyword breaks enum builder -->
-                        <replacement>
-                            <token>- null$</token>
-                            <value>- nullValue</value>
-                        </replacement>
                         <!-- list endpoints require limit fields to return the expected type -->
                         <replacement>
                             <token>name: (limit)(\n\s+)required: false</token>
@@ -304,19 +299,6 @@
                             <token>^(\s+)required:\n((?!\1))</token>
                             <value>$2</value>
                         </replacement>
-                        <!-- replace customizable enums with their keys as primitive types -->
-                        <replacement>
-                            <token>(allOf|oneOf):(\n\s+- \$ref: '#/components/schemas/SalePriceCurrencyEnum')(\n\s+- \$ref: '#/components/schemas/(Blank|Null)Enum')*</token>
-                            <value>type: string</value>
-                        </replacement>
-                        <replacement>
-                            <token>(allOf|oneOf):(\n\s+- \$ref: '#/components/schemas/[a-zA-Z]*StatusCustomKey[a-zA-Z0-9]*Enum')(\n\s+- \$ref: '#/components/schemas/(Blank|Null)Enum')*</token>
-                            <value>type: integer</value>
-                        </replacement>
-                        <replacement>
-                            <token>(allOf|oneOf):(\n\s+- \$ref: '#/components/schemas/Status2a7Enum')(\n\s+- \$ref: '#/components/schemas/(Blank|Null)Enum')*</token>
-                            <value>type: integer</value>
-                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
@@ -346,16 +328,6 @@
                                 <invokerPackage>com.w3asel.inventree.invoker</invokerPackage>
                                 <dateLibrary>java8</dateLibrary>
                             </configOptions>
-                            <!-- TODO none of these work -->
-                            <nameMappings>
-                                <nameMapping>null=_null</nameMapping>
-                            </nameMappings>
-                            <parameterNameMappings>
-                                <parameterNameMapping>null=_null</parameterNameMapping>
-                            </parameterNameMappings>
-                            <reservedWordsMappings>
-                                <reservedWordsMapping>null=_null</reservedWordsMapping>
-                            </reservedWordsMappings>
                         </configuration>
                     </execution>
                 </executions>
