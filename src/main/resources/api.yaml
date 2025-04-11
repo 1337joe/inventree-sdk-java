@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '334'
+  version: '335'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -20004,7 +20004,12 @@ paths:
   /api/user/:
     get:
       operationId: user_list
-      description: List endpoint for detail on all users.
+      description: |-
+        List endpoint for detail on all users.
+
+        Permissions:
+        - Staff users (who also have the 'admin' role) can perform write operations
+        - Otherwise authenticated users have read-only access
       parameters:
       - in: query
         name: is_active
@@ -20057,7 +20062,12 @@ paths:
           description: ''
     post:
       operationId: user_create
-      description: List endpoint for detail on all users.
+      description: |-
+        List endpoint for detail on all users.
+
+        Permissions:
+        - Staff users (who also have the 'admin' role) can perform write operations
+        - Otherwise authenticated users have read-only access
       tags:
       - user
       requestBody:
@@ -20086,7 +20096,12 @@ paths:
   /api/user/{id}/:
     get:
       operationId: user_retrieve
-      description: Detail endpoint for a single user.
+      description: |-
+        Detail endpoint for a single user.
+
+        Permissions:
+        - Staff users (who also have the 'admin' role) can perform write operations
+        - Otherwise authenticated users have read-only access
       parameters:
       - in: path
         name: id
@@ -20108,7 +20123,12 @@ paths:
           description: ''
     put:
       operationId: user_update
-      description: Detail endpoint for a single user.
+      description: |-
+        Detail endpoint for a single user.
+
+        Permissions:
+        - Staff users (who also have the 'admin' role) can perform write operations
+        - Otherwise authenticated users have read-only access
       parameters:
       - in: path
         name: id
@@ -20142,7 +20162,12 @@ paths:
           description: ''
     patch:
       operationId: user_partial_update
-      description: Detail endpoint for a single user.
+      description: |-
+        Detail endpoint for a single user.
+
+        Permissions:
+        - Staff users (who also have the 'admin' role) can perform write operations
+        - Otherwise authenticated users have read-only access
       parameters:
       - in: path
         name: id
@@ -20175,7 +20200,12 @@ paths:
           description: ''
     delete:
       operationId: user_destroy
-      description: Detail endpoint for a single user.
+      description: |-
+        Detail endpoint for a single user.
+
+        Permissions:
+        - Staff users (who also have the 'admin' role) can perform write operations
+        - Otherwise authenticated users have read-only access
       parameters:
       - in: path
         name: id
@@ -20372,7 +20402,12 @@ paths:
   /api/user/me/:
     get:
       operationId: user_me_retrieve
-      description: Detail endpoint for current user.
+      description: |-
+        Detail endpoint for current user.
+
+        Permissions:
+        - User can edit their own details via this endpoint
+        - Only a subset of fields are available here
       tags:
       - user
       security:
@@ -20388,7 +20423,12 @@ paths:
           description: ''
     put:
       operationId: user_me_update
-      description: Detail endpoint for current user.
+      description: |-
+        Detail endpoint for current user.
+
+        Permissions:
+        - User can edit their own details via this endpoint
+        - Only a subset of fields are available here
       tags:
       - user
       requestBody:
@@ -20416,7 +20456,12 @@ paths:
           description: ''
     patch:
       operationId: user_me_partial_update
-      description: Detail endpoint for current user.
+      description: |-
+        Detail endpoint for current user.
+
+        Permissions:
+        - User can edit their own details via this endpoint
+        - Only a subset of fields are available here
       tags:
       - user
       requestBody:
@@ -20443,7 +20488,12 @@ paths:
           description: ''
     delete:
       operationId: user_me_destroy
-      description: Detail endpoint for current user.
+      description: |-
+        Detail endpoint for current user.
+
+        Permissions:
+        - User can edit their own details via this endpoint
+        - Only a subset of fields are available here
       tags:
       - user
       security:
@@ -20459,7 +20509,7 @@ paths:
       description: |-
         List API endpoint for Owner model.
 
-        Cannot create.
+        Cannot create a new Owner object via the API, but can view existing instances.
       parameters:
       - name: limit
         required: false
@@ -20515,7 +20565,12 @@ paths:
   /api/user/profile/:
     get:
       operationId: user_profile_retrieve
-      description: Detail endpoint for the user profile.
+      description: |-
+        Detail endpoint for the user profile.
+
+        Permissions:
+        - Any authenticated user has write access against this endpoint
+        - The endpoint always returns the profile associated with the current user
       tags:
       - user
       security:
@@ -20531,7 +20586,12 @@ paths:
           description: ''
     put:
       operationId: user_profile_update
-      description: Detail endpoint for the user profile.
+      description: |-
+        Detail endpoint for the user profile.
+
+        Permissions:
+        - Any authenticated user has write access against this endpoint
+        - The endpoint always returns the profile associated with the current user
       tags:
       - user
       requestBody:
@@ -20558,7 +20618,12 @@ paths:
           description: ''
     patch:
       operationId: user_profile_partial_update
-      description: Detail endpoint for the user profile.
+      description: |-
+        Detail endpoint for the user profile.
+
+        Permissions:
+        - Any authenticated user has write access against this endpoint
+        - The endpoint always returns the profile associated with the current user
       tags:
       - user
       requestBody:
@@ -20601,6 +20666,187 @@ paths:
               schema:
                 $ref: '#/components/schemas/Role'
           description: ''
+  /api/user/ruleset/:
+    get:
+      operationId: user_ruleset_list
+      description: List endpoint for all RuleSet instances.
+      parameters:
+      - in: query
+        name: group
+        schema:
+          type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+          enum:
+          - admin
+          - build
+          - part
+          - part_category
+          - purchase_order
+          - return_order
+          - sales_order
+          - stock
+          - stock_location
+          - stocktake
+        description: |-
+          Permission set
+
+          * `admin` - Admin
+          * `part_category` - Part Categories
+          * `part` - Parts
+          * `stocktake` - Stocktake
+          * `stock_location` - Stock Locations
+          * `stock` - Stock Items
+          * `build` - Build Orders
+          * `purchase_order` - Purchase Orders
+          * `sales_order` - Sales Orders
+          * `return_order` - Return Orders
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRuleSetList'
+          description: ''
+  /api/user/ruleset/{id}/:
+    get:
+      operationId: user_ruleset_retrieve
+      description: Detail endpoint for a particular RuleSet instance.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleSet'
+          description: ''
+    put:
+      operationId: user_ruleset_update
+      description: Detail endpoint for a particular RuleSet instance.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuleSet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RuleSet'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RuleSet'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleSet'
+          description: ''
+    patch:
+      operationId: user_ruleset_partial_update
+      description: Detail endpoint for a particular RuleSet instance.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRuleSet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRuleSet'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRuleSet'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleSet'
+          description: ''
+    delete:
+      operationId: user_ruleset_destroy
+      description: Detail endpoint for a particular RuleSet instance.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/user/token/:
     get:
       operationId: user_token_retrieve
@@ -25315,6 +25561,12 @@ components:
           items:
             $ref: '#/components/schemas/Group'
           readOnly: true
+        group_ids:
+          type: array
+          items:
+            type: integer
+            writeOnly: true
+          writeOnly: true
         is_staff:
           type: boolean
           title: Staff
@@ -25335,9 +25587,6 @@ components:
       - email
       - first_name
       - groups
-      - is_active
-      - is_staff
-      - is_superuser
       - last_name
       - pk
       - profile
@@ -25580,9 +25829,21 @@ components:
           description: Return a list of permissions associated with the group.
           readOnly: true
           nullable: true
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleSet'
+          readOnly: true
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          readOnly: true
       required:
       - name
       - pk
+      - roles
+      - users
     Icon:
       type: object
       description: Serializer for an icon.
@@ -26492,6 +26753,12 @@ components:
           items:
             $ref: '#/components/schemas/Group'
           readOnly: true
+        group_ids:
+          type: array
+          items:
+            type: integer
+            writeOnly: true
+          writeOnly: true
         is_staff:
           type: boolean
           title: Staff
@@ -26512,9 +26779,6 @@ components:
       - email
       - first_name
       - groups
-      - is_active
-      - is_staff
-      - is_superuser
       - last_name
       - pk
       - profile
@@ -26526,6 +26790,30 @@ components:
         metadata: {}
       required:
       - metadata
+    NameEnum:
+      enum:
+      - admin
+      - part_category
+      - part
+      - stocktake
+      - stock_location
+      - stock
+      - build
+      - purchase_order
+      - sales_order
+      - return_order
+      type: string
+      description: |-
+        * `admin` - Admin
+        * `part_category` - Part Categories
+        * `part` - Parts
+        * `stocktake` - Stocktake
+        * `stock_location` - Stock Locations
+        * `stock` - Stock Items
+        * `build` - Build Orders
+        * `purchase_order` - Purchase Orders
+        * `sales_order` - Sales Orders
+        * `return_order` - Return Orders
     NewsFeedEntry:
       type: object
       description: Serializer for the NewsFeedEntry model.
@@ -28170,6 +28458,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ReturnOrder'
+    PaginatedRuleSetList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleSet'
     PaginatedSalesOrderAllocationList:
       type: object
       required:
@@ -30633,6 +30944,12 @@ components:
           items:
             $ref: '#/components/schemas/Group'
           readOnly: true
+        group_ids:
+          type: array
+          items:
+            type: integer
+            writeOnly: true
+          writeOnly: true
         is_staff:
           type: boolean
           title: Staff
@@ -30708,6 +31025,16 @@ components:
           description: Return a list of permissions associated with the group.
           readOnly: true
           nullable: true
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuleSet'
+          readOnly: true
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          readOnly: true
     PatchedLabelTemplate:
       type: object
       description: Serializer class for label template model.
@@ -31055,6 +31382,12 @@ components:
           items:
             $ref: '#/components/schemas/Group'
           readOnly: true
+        group_ids:
+          type: array
+          items:
+            type: integer
+            writeOnly: true
+          writeOnly: true
         is_staff:
           type: boolean
           title: Staff
@@ -32765,6 +33098,55 @@ components:
           nullable: true
           description: Target date for this line item (leave blank to use the target
             date from the order)
+    PatchedRuleSet:
+      type: object
+      description: Serializer for a RuleSet.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NameEnum'
+          readOnly: true
+          description: |-
+            Permission set
+
+            * `admin` - Admin
+            * `part_category` - Part Categories
+            * `part` - Parts
+            * `stocktake` - Stocktake
+            * `stock_location` - Stock Locations
+            * `stock` - Stock Items
+            * `build` - Build Orders
+            * `purchase_order` - Purchase Orders
+            * `sales_order` - Sales Orders
+            * `return_order` - Return Orders
+        label:
+          type: string
+          description: Return the translated label for this ruleset.
+          readOnly: true
+        group:
+          type: integer
+          readOnly: true
+          description: Group
+        can_view:
+          type: boolean
+          title: View
+          description: Permission to view items
+        can_add:
+          type: boolean
+          title: Add
+          description: Permission to add items
+        can_change:
+          type: boolean
+          title: Change
+          description: Permissions to edit items
+        can_delete:
+          type: boolean
+          title: Delete
+          description: Permission to delete items
     PatchedSalesOrder:
       type: object
       description: Serializer for the SalesOrder model class.
@@ -35267,6 +35649,60 @@ components:
       - roles
       - user
       - username
+    RuleSet:
+      type: object
+      description: Serializer for a RuleSet.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NameEnum'
+          readOnly: true
+          description: |-
+            Permission set
+
+            * `admin` - Admin
+            * `part_category` - Part Categories
+            * `part` - Parts
+            * `stocktake` - Stocktake
+            * `stock_location` - Stock Locations
+            * `stock` - Stock Items
+            * `build` - Build Orders
+            * `purchase_order` - Purchase Orders
+            * `sales_order` - Sales Orders
+            * `return_order` - Return Orders
+        label:
+          type: string
+          description: Return the translated label for this ruleset.
+          readOnly: true
+        group:
+          type: integer
+          readOnly: true
+          description: Group
+        can_view:
+          type: boolean
+          title: View
+          description: Permission to view items
+        can_add:
+          type: boolean
+          title: Add
+          description: Permission to add items
+        can_change:
+          type: boolean
+          title: Change
+          description: Permissions to edit items
+        can_delete:
+          type: boolean
+          title: Delete
+          description: Permission to delete items
+      required:
+      - group
+      - label
+      - name
+      - pk
     SalesOrder:
       type: object
       description: Serializer for the SalesOrder model class.
@@ -37030,6 +37466,12 @@ components:
           items:
             $ref: '#/components/schemas/Group'
           readOnly: true
+        group_ids:
+          type: array
+          items:
+            type: integer
+            writeOnly: true
+          writeOnly: true
         is_staff:
           type: boolean
           title: Staff
@@ -37050,9 +37492,6 @@ components:
       - email
       - first_name
       - groups
-      - is_active
-      - is_staff
-      - is_superuser
       - last_name
       - pk
       - profile
