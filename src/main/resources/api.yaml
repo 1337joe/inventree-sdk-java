@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '335'
+  version: '336'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -19973,21 +19973,8 @@ paths:
           description: No response body
   /api/units/all/:
     get:
-      operationId: units_all_list
+      operationId: units_all_retrieve
       description: Return a list of all available units.
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
       tags:
       - units
       security:
@@ -19999,7 +19986,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedAllUnitListResponseList'
+                $ref: '#/components/schemas/AllUnitListResponse'
           description: ''
   /api/user/:
     get:
@@ -21020,18 +21007,18 @@ paths:
       operationId: version_text_list
       description: Simple JSON endpoint for InvenTree version text.
       parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
+      - in: query
+        name: start_version
         schema:
           type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
+        description: First version to report. Defaults to return the latest {versions}
+          versions.
+      - in: query
+        name: versions
         schema:
           type: integer
+          default: 10
+        description: Number of versions to return.
       tags:
       - version-text
       security:
@@ -21043,7 +21030,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedVersionInformationList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/VersionInformation'
           description: ''
   /api/webhook/{endpoint}/:
     post:
@@ -23281,8 +23270,8 @@ components:
           items:
             type: string
         available_units:
-          type: array
-          items:
+          type: object
+          additionalProperties:
             $ref: '#/components/schemas/Unit'
       required:
       - available_systems
@@ -26141,11 +26130,13 @@ components:
       description: Serializer for license information.
       properties:
         backend:
-          type: string
+          type: array
+          items: {}
           readOnly: true
           description: Backend licenses texts
         frontend:
-          type: string
+          type: array
+          items: {}
           readOnly: true
           description: Frontend licenses texts
       required:
@@ -26161,9 +26152,6 @@ components:
         code:
           type: string
           format: uri
-        credit:
-          type: string
-          format: uri
         app:
           type: string
           format: uri
@@ -26174,7 +26162,6 @@ components:
       - app
       - bug
       - code
-      - credit
       - doc
     LocatePlugin:
       type: object
@@ -27078,29 +27065,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Address'
-    PaginatedAllUnitListResponseList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/AllUnitListResponse'
     PaginatedApiTokenList:
       type: object
       required:
@@ -28849,29 +28813,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserSettings'
-    PaginatedVersionInformationList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/VersionInformation'
     Part:
       type: object
       description: |-
@@ -37642,6 +37583,7 @@ components:
           type: string
         commit_branch:
           type: string
+          nullable: true
         python:
           type: string
         django:
@@ -37662,10 +37604,14 @@ components:
           type: string
         date:
           type: string
+          format: date
         gh:
           type: string
+          nullable: true
         text:
-          type: string
+          type: array
+          items:
+            type: string
         latest:
           type: boolean
       required:
