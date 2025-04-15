@@ -89,6 +89,7 @@ public class TestStockApi extends TestApi {
         api.stockRetrieve(null);
         api.stockReturnCreate(null, null);
         api.stockSerializeCreate(null, null);
+        api.stockSerialNumbersRetrieve(null);
         // api.stockStatusRetrieve();
         api.stockTestCreate(null);
         api.stockTestBulkDestroy(null);

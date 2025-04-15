@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '336'
+  version: '337'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -18359,6 +18359,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReturnStockItem'
+          description: ''
+  /api/stock/{id}/serial-numbers/:
+    get:
+      operationId: stock_serial_numbers_retrieve
+      description: |-
+        View extra serial number information for a given stock item.
+
+        Provides information on the "previous" and "next" stock items,
+        based on the serial number of the given stock item.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - stock
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockItemSerialNumbers'
           description: ''
   /api/stock/{id}/serialize/:
     post:
@@ -36831,6 +36858,23 @@ components:
       - stale
       - status_text
       - tracking_items
+    StockItemSerialNumbers:
+      type: object
+      description: Serializer for extra serial number information about a stock item.
+      properties:
+        next:
+          allOf:
+          - $ref: '#/components/schemas/StockItem'
+          readOnly: true
+          title: Next Serial Number
+        previous:
+          allOf:
+          - $ref: '#/components/schemas/StockItem'
+          readOnly: true
+          title: Previous Serial Number
+      required:
+      - next
+      - previous
     StockItemSerializerBrief:
       type: object
       description: Brief serializers for a StockItem.
