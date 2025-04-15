@@ -115,10 +115,10 @@ jobs:
         run: uv pip install --require-hashes -r InvenTree/src/backend/requirements-dev.txt
       - name: Run invoke install
         run: cd InvenTree && invoke install --uv
+      - name: Run invoke update
+        run: cd InvenTree && invoke update --uv --skip-backup --skip-static
       - name: Setup test environment
-        run: cd InvenTree && invoke dev.setup-test
-#      - name: Run invoke update
-#        run: cd InvenTree && invoke update --uv --skip-backup --skip-static
+        run: cd InvenTree && invoke dev.setup-test --ignore-update
       - name: Start InvenTree Server
         run: |
           cd InvenTree
