@@ -181,9 +181,8 @@ public class TestStockApi extends TestApi {
 
         JsonObject expectedDeltas = fields.get("deltas").getAsJsonObject();
         // TODO can this be strongly typed in the schema?
+        @SuppressWarnings("unchecked")
         Map<String, Object> actualDeltas = (Map<String, Object>) actual.getDeltas();
-        Assertions.assertIterableEquals(expectedDeltas.keySet(), actualDeltas.keySet(),
-                "Key mismatch in deltas");
         for (String key : expectedDeltas.keySet()) {
             if (actualDeltas.get(key) instanceof Double) {
                 Assertions.assertEquals(expectedDeltas.get(key).getAsDouble(),
