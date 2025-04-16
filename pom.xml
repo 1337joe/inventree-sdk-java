@@ -359,6 +359,19 @@
                             <token>schema:(\n\s+)type: string\n\s+pattern: \^(\[0-9\]|\\d)+.*\$</token>
                             <value>schema:$1type: integer</value>
                         </replacement>
+                        <!-- fix endpoints for bulk delete -->
+                        <replacement>
+                            <token>(attachment|background_task_failed|background_task_pending|barcode_history|bom|build_item|company_address|company_contact|company_part|company_part_manufacturer|company_part_manufacturer_parameter|error_report|importer_row|importer_session|news|notifications|order_po_line|stock|stock_test|user_tokens)_destroy(\n\s+)description: \|-(\n\s+Perform)</token>
+                            <value>$1_bulk_destroy$2requestBody:$2  content:$2    application/json:$2      schema:$2        \$ref: '#/components/schemas/BulkRequest'$2    application/x-www-form-urlencoded:$2      schema:$2        \$ref: '#/components/schemas/BulkRequest'$2    application/form-data:$2      schema:$2        \$ref: '#/components/schemas/BulkRequest'$2  required: true$2description: |-$3</value>
+                        </replacement>
+                        <replacement>
+                            <token>(?&lt;!user_tokens)_destroy_2</token>
+                            <value>_destroy</value>
+                        </replacement>
+                        <replacement>
+                            <token>output(\n\s+)Category:</token>
+                            <value>output$1BulkRequest:$1  type: object$1  description: Parameters for selecting items for bulk operations.$1  properties:$1    items:$1      type: array$1      items:$1        type: integer$1      title: A list of primary key values$1    filters:$1      type: object$1      additionalProperties: {}$1      title: A dictionary of filter values$1Category:</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
