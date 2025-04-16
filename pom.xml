@@ -394,6 +394,48 @@
                             <token>email(\n\s+)GlobalSettings:</token>
                             <value>email$1GenericStateClass:$1  type: object$1  description: API serializer for generic state class information.$1  properties:$1    class:$1      type: string$1      readOnly: true$1      title: Class$1    values:$1      type: object$1      additionalProperties:$1        \$ref: '#/components/schemas/GenericStateValue'$1  required:$1  - status_class$1  - values$1GenericStateValue:$1  type: object$1  description: API serializer for generic state information.$1  properties:$1    key:$1      type: integer$1    logical_key:$1      type: string$1    name:$1      type: string$1    label:$1      type: string$1    color:$1      type: string$1    custom:$1      type: boolean$1  required:$1  - key$1  - label$1  - name$1GlobalSettings:</value>
                         </replacement>
+                        <!-- map remaining enum names -->
+                        <replacement>
+                            <token>ModelType28bEnum</token>
+                            <value>TemplateModelTypeEnum</value>
+                        </replacement>
+                        <replacement>
+                            <token>StatusC2fEnum</token>
+                            <value>BuildStatusEnum</value>
+                        </replacement>
+                        <replacement>
+                            <token>Status2a7Enum</token>
+                            <value>StockItemStatusEnum</value>
+                        </replacement>
+                        <!-- fix endpoints for remaining bulk operations -->
+                        <replacement>
+                            <token>(/api/generic/status/:\n\s+get:\n\s+operationId: )generic_status_retrieve$</token>
+                            <value>$1generic_status_retrieve_all</value>
+                        </replacement>
+                        <replacement>
+                            <token>(/api/generic/status/\{statusmodel\}/:\n\s+get:\n\s+operationId: )generic_status_retrieve_2</token>
+                            <value>$1generic_status_retrieve</value>
+                        </replacement>
+                        <replacement>
+                            <token>importer_models_retrieve$</token>
+                            <value>importer_models_list</value>
+                        </replacement>
+                        <replacement>
+                            <token>'200':(\n\s+)description: No response body(\n\s+/api/importer/row/:)</token>
+                            <value>'200':$1content:$1  application/json:$1    schema:$1      type: array$1      items:$1        \$ref: '#/components/schemas/DataImporterModel'$1description: ''$2</value>
+                        </replacement>
+                        <replacement>
+                            <token>pk(\n\s+)DataImportAcceptRow:</token>
+                            <value>pk$1DataImporterModel:$1  type: object$1  description: Model references to map info that might get imported.$1  properties:$1    serializer:$1      type: string$1      readOnly: true$1    model_type:$1      type: string$1      readOnly: true$1    api_url:$1      type: string$1      format: uri$1      readOnly: true$1  required:$1  - api_url$1  - model_type$1  - serializer$1DataImportAcceptRow:</value>
+                        </replacement>
+                        <replacement>
+                            <token>plugins_settings_list(\n\s+description: \|-\n\s+List endpoint)</token>
+                            <value>plugins_settings_list_all$1</value>
+                        </replacement>
+                        <replacement>
+                            <token>plugins_settings_list_2$</token>
+                            <value>plugins_settings_list</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
