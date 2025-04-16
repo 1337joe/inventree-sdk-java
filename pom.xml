@@ -372,6 +372,15 @@
                             <token>output(\n\s+)Category:</token>
                             <value>output$1BulkRequest:$1  type: object$1  description: Parameters for selecting items for bulk operations.$1  properties:$1    items:$1      type: array$1      items:$1        type: integer$1      title: A list of primary key values$1    filters:$1      type: object$1      additionalProperties: {}$1      title: A dictionary of filter values$1Category:</value>
                         </replacement>
+                        <!-- fix query parameter and permissions types -->
+                        <replacement>
+                            <token>(in: query\n\s+name: (ancestor|category|company|part|supplier_part|base_part)\n\s+schema:\n\s+type: )string$</token>
+                            <value>$1integer</value>
+                        </replacement>
+                        <replacement>
+                            <token>permissions:(\n\s+)type: string</token>
+                            <value>permissions:$1type: object$1additionalProperties: {}</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
