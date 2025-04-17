@@ -4,23 +4,18 @@ import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.AllUnitListResponse;
 import com.w3asel.inventree.model.CustomUnit;
 import com.w3asel.inventree.model.PaginatedCustomUnitList;
 import com.w3asel.inventree.model.PatchedCustomUnit;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestUnitsApi extends TestApi {
-    private static final String CREATED_NAME = "TestUnit";
-    private static final String UPDATED_NAME = "TestUpdate";
-
     private UnitsApi api;
 
     @BeforeEach
@@ -28,50 +23,24 @@ public class TestUnitsApi extends TestApi {
         api = new UnitsApi(apiClient);
     }
 
-    @AfterAll
-    public static void cleanup() throws ApiException {
-        UnitsApi api = new UnitsApi(apiClient);
-
-        // gather units
-        int limit = 10;
-        List<CustomUnit> allUnits = new ArrayList<>();
-        PaginatedCustomUnitList page;
-        do {
-            page = api.unitsList(limit, allUnits.size(), null, null);
-            allUnits.addAll(page.getResults());
-        } while (allUnits.size() < page.getCount());
-
-        // ensure they weren't created by tests
-        List<String> removed = new ArrayList<>();
-        for (CustomUnit unit : allUnits) {
-            if (CREATED_NAME.equals(unit.getName()) || UPDATED_NAME.equals(unit.getName())) {
-                removed.add(unit.getName());
-                api.unitsDestroy(unit.getPk());
-            }
-        }
-        if (!removed.isEmpty()) {
-            Assertions.fail("Created CustomUnits not cleaned up: " + String.join(", ", removed));
-        }
-    }
-
-    @Disabled("Result is not currently paginated or even a list")
     @Test
     public void unitsAllList() throws ApiException {
-        // TODO Result is not currently paginated or even a list
-        int limit = 10;
-        int offset = 0;
-        api.unitsAllList(limit, offset);
+        AllUnitListResponse actual = api.unitsAllList();
+        Assertions.assertNotNull(actual, "Missing all units response");
+        Assertions.assertNotNull(actual.getDefaultSystem(), "Missing default system");
+        Assertions.assertNotNull(actual.getAvailableSystems(), "Missing available system");
+        Assertions.assertTrue(actual.getAvailableSystems().contains(actual.getDefaultSystem()),
+                "Default system not in available systems");
+        Assertions.assertNotNull(actual.getAvailableUnits(), "Missing available units");
+        Assertions.assertTrue(actual.getAvailableUnits().size() > 0, "Empty available units");
     }
 
     @Test
     public void unitsCreateDestroy() throws ApiException {
         int initialCount = api.unitsList(1, null, null, null).getCount();
 
-        // TODO document what's being selected from or figure out how to otherwise resolve
-        // newUnit.definition("Definition") => "'Definition' is not defined in the unit registry"
-
         // set only required fields
-        CustomUnit newUnit = new CustomUnit().name(CREATED_NAME).definition("gram");
+        CustomUnit newUnit = new CustomUnit().name("Name").definition("nautical_mile");
         Assertions.assertNull(newUnit.getPk(), "Unsubmitted item should not have PK");
 
         CustomUnit actual = api.unitsCreate(newUnit);
@@ -148,16 +117,19 @@ public class TestUnitsApi extends TestApi {
     public void unitsPartialUpdate() throws ApiException {
         // Assumes retrieve/create/destroy work, ensure that test is working before debugging this
 
+        int initialCount = api.unitsList(1, null, null, null).getCount();
+
         // set only required fields
-        CustomUnit newUnit = new CustomUnit().name(CREATED_NAME).definition("gram");
+        CustomUnit newUnit = new CustomUnit().name("Updatable").definition("gram");
 
         CustomUnit createdUnit = api.unitsCreate(newUnit);
         Assertions.assertNotNull(createdUnit.getPk(), "Created item should have PK");
 
         int createdCount = api.unitsList(1, null, null, null).getCount();
+        Assertions.assertEquals(initialCount + 1, createdCount, "Count should have increased");
 
         try {
-            PatchedCustomUnit modifiedUnit = new PatchedCustomUnit().name(UPDATED_NAME);
+            PatchedCustomUnit modifiedUnit = new PatchedCustomUnit().name("Potato");
 
             CustomUnit updatedUnit = api.unitsPartialUpdate(createdUnit.getPk(), modifiedUnit);
 
@@ -183,7 +155,7 @@ public class TestUnitsApi extends TestApi {
 
     @ParameterizedTest
     @CsvSource({"1"})
-    public void unitsRetrieve(int customUnit) throws ApiException {
+    public void stockTrackRetrieve(int customUnit) throws ApiException {
         CustomUnit actual = api.unitsRetrieve(customUnit);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.CUSTOM_UNIT, customUnit).get(0);
         assertCustomUnitEquals(expected, actual);
@@ -193,17 +165,20 @@ public class TestUnitsApi extends TestApi {
     public void unitsUpdate() throws ApiException {
         // Assumes retrieve/create/destroy work, ensure that test is working before debugging this
 
+        int initialCount = api.unitsList(1, null, null, null).getCount();
+
         // set only required fields
-        CustomUnit newUnit = new CustomUnit().name(CREATED_NAME).definition("gram");
+        CustomUnit newUnit = new CustomUnit().name("Updatable").definition("gram");
 
         CustomUnit createdUnit = api.unitsCreate(newUnit);
         Assertions.assertNotNull(createdUnit.getPk(), "Created item should have PK");
 
         int createdCount = api.unitsList(1, null, null, null).getCount();
+        Assertions.assertEquals(initialCount + 1, createdCount, "Count should have increased");
 
         try {
             CustomUnit modifiedUnit =
-                    new CustomUnit().name(UPDATED_NAME).definition("dozen").symbol("dz");
+                    new CustomUnit().name("Potato").definition("dozen").symbol("dz");
 
             CustomUnit updatedUnit = api.unitsUpdate(createdUnit.getPk(), modifiedUnit);
 

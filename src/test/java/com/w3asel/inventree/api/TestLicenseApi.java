@@ -4,7 +4,6 @@ import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.LicenseView;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class TestLicenseApi extends TestApi {
@@ -15,7 +14,6 @@ public class TestLicenseApi extends TestApi {
         api = new LicenseApi(apiClient);
     }
 
-    @Disabled("Serializer currently doesn't match schema")
     @Test
     public void licenseRetrieve() throws ApiException {
         LicenseView actual = api.licenseRetrieve();
@@ -23,6 +21,7 @@ public class TestLicenseApi extends TestApi {
         Assertions.assertNotNull(actual.getBackend(), "Null backend licenses");
         Assertions.assertFalse(actual.getBackend().isEmpty(), "Missing backend licenses");
         Assertions.assertNotNull(actual.getFrontend(), "Null frontend licenses");
-        Assertions.assertFalse(actual.getFrontend().isEmpty(), "Missing frontend licenses");
+        // empty when front-end is not built, such as in the CI environment
+        // Assertions.assertFalse(actual.getFrontend().isEmpty(), "Missing frontend licenses");
     }
 }
