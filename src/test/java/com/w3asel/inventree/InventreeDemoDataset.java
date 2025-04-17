@@ -129,6 +129,9 @@ public class InventreeDemoDataset {
             }
         } else if (Enum.class.isAssignableFrom(type)) {
             Assertions.assertEquals(fieldValue.getAsString(), actualValue.toString(), message);
+        } else if (type == Iterable.class) {
+            Assertions.assertIterableEquals(fieldValue.getAsJsonArray().asList().stream()
+                    .map(JsonElement::getAsString).toList(), (Iterable<?>) actualValue, message);
         } else {
             Assertions.fail("Unsupported type: " + type.getName());
         }
@@ -155,7 +158,8 @@ public class InventreeDemoDataset {
         CUSTOM_USER_STATE("common.inventreecustomuserstatemodel"),
         ORDER_SALES("order.salesorder"),
         REPORT_LABEL_TEMPLATE("report.labeltemplate"),
-        STOCK_TRACKING("stock.stockitemtracking");
+        STOCK_TRACKING("stock.stockitemtracking"),
+        USER("auth.user");
 
         private final String key;
 

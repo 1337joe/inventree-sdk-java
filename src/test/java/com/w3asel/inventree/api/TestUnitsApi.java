@@ -4,12 +4,12 @@ import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.AllUnitListResponse;
 import com.w3asel.inventree.model.CustomUnit;
 import com.w3asel.inventree.model.PaginatedCustomUnitList;
 import com.w3asel.inventree.model.PatchedCustomUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -23,24 +23,24 @@ public class TestUnitsApi extends TestApi {
         api = new UnitsApi(apiClient);
     }
 
-    @Disabled("Result is not currently paginated or even a list")
     @Test
     public void unitsAllList() throws ApiException {
-        // TODO Result is not currently paginated or even a list
-        int limit = 10;
-        int offset = 0;
-        api.unitsAllList(limit, offset);
+        AllUnitListResponse actual = api.unitsAllList();
+        Assertions.assertNotNull(actual, "Missing all units response");
+        Assertions.assertNotNull(actual.getDefaultSystem(), "Missing default system");
+        Assertions.assertNotNull(actual.getAvailableSystems(), "Missing available system");
+        Assertions.assertTrue(actual.getAvailableSystems().contains(actual.getDefaultSystem()),
+                "Default system not in available systems");
+        Assertions.assertNotNull(actual.getAvailableUnits(), "Missing available units");
+        Assertions.assertTrue(actual.getAvailableUnits().size() > 0, "Empty available units");
     }
 
     @Test
     public void unitsCreateDestroy() throws ApiException {
         int initialCount = api.unitsList(1, null, null, null).getCount();
 
-        // TODO document what's being selected from or figure out how to otherwise resolve
-        // newUnit.definition("Definition") => "'Definition' is not defined in the unit registry"
-
         // set only required fields
-        CustomUnit newUnit = new CustomUnit().name("Name").definition("gram");
+        CustomUnit newUnit = new CustomUnit().name("Name").definition("nautical_mile");
         Assertions.assertNull(newUnit.getPk(), "Unsubmitted item should not have PK");
 
         CustomUnit actual = api.unitsCreate(newUnit);

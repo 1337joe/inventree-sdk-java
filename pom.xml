@@ -436,6 +436,23 @@
                             <token>plugins_settings_list_2$</token>
                             <value>plugins_settings_list</value>
                         </replacement>
+                        <!-- units list serializer fixes -->
+                        <replacement>
+                            <token>(description: Return a list of all available units.)\n\s+parameters:\n^.+$\n^.+$\n^.+$\n^.+$\n^.+$\n^.+$\n^.+$\n^.+$\n^.+$\n^.+$\n^.+$\n^.+$</token>
+                            <value>$1</value>
+                        </replacement>
+                        <replacement>
+                            <token>schemas/PaginatedAllUnitListResponseList</token>
+                            <value>schemas/AllUnitListResponse</value>
+                        </replacement>
+                        <replacement>
+                            <token>available_units:(\n\s+)type: array\n\s+items:</token>
+                            <value>available_units:$1type: object$1additionalProperties:</value>
+                        </replacement>
+                        <replacement>
+                            <token>(frontend|backend):(\n\s+)type: string$</token>
+                            <value>$1:$2type: array$2items: {}</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
