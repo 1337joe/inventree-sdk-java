@@ -10,6 +10,15 @@ on:
   release:
     types:
       - published
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag name (include initial v)'
+        required: true
+        type: string
+
+env:
+  TAG_NAME: ${{ inputs.tag }}
 
 jobs:
   deploy:
@@ -22,7 +31,12 @@ jobs:
 
       - name: Set version on release
         if: github.event_name == 'release'
-        run: sed -i "0,\|</version>|{s|<version>.*-SNAPSHOT</version>|<version>${GITHUB_REF##*/v}</version>|}" pom.xml
+        run: |
+          echo "TAG_NAME=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
+
+      - name: Write version into pom if overridden
+        if: github.event_name == 'workflow_dispatch' ||  github.event_name == 'release'
+        run: sed -i "0,\|</version>|{s|<version>.*-SNAPSHOT</version>|<version>${TAG_NAME##v}</version>|}" pom.xml
 
       - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
         with:
@@ -35,18 +49,18 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
           cache: 'maven'
 
+      - name: Attach artifacts to release
+        if: github.event_name == 'workflow_dispatch' ||  github.event_name == 'release'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for f in $(find target -maxdepth 1 -name \*.jar -o -name \*.asc -o -name \*.pom); do
+            gh release upload $TAG_NAME $f
+          done
+
       - name: Bundle and publish to Central
         run: mvn deploy -P publish -DdeploymentName=github_workflow
         env:
           MAVEN_USERNAME: ${{ secrets.MVN_CENTRAL_TOKEN }}
           MAVEN_PASSWORD: ${{ secrets.MVN_CENTRAL_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MVN_SIGNING_KEY_PASSPHRASE }}
-
-      - name: Attach artifacts to release
-        if: github.event_name == 'release'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          for f in $(find target -maxdepth 1 -name \*.jar -o -name \*.asc -o -name \*.pom); do
-            gh release upload ${{ github.event.release.tag_name }} $f
-          done
