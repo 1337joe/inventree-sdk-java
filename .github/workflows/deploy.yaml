@@ -49,6 +49,13 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
           cache: 'maven'
 
+      - name: Bundle and publish to Central
+        run: mvn deploy -P publish -DdeploymentName=github_workflow
+        env:
+          MAVEN_USERNAME: ${{ secrets.MVN_CENTRAL_TOKEN }}
+          MAVEN_PASSWORD: ${{ secrets.MVN_CENTRAL_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MVN_SIGNING_KEY_PASSPHRASE }}
+
       - name: Attach artifacts to release
         if: github.event_name == 'workflow_dispatch' ||  github.event_name == 'release'
         env:
@@ -57,10 +64,3 @@ jobs:
           for f in $(find target -maxdepth 1 -name \*.jar -o -name \*.asc -o -name \*.pom); do
             gh release upload $TAG_NAME $f
           done
-
-      - name: Bundle and publish to Central
-        run: mvn deploy -P publish -DdeploymentName=github_workflow
-        env:
-          MAVEN_USERNAME: ${{ secrets.MVN_CENTRAL_TOKEN }}
-          MAVEN_PASSWORD: ${{ secrets.MVN_CENTRAL_PASSWORD }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.MVN_SIGNING_KEY_PASSPHRASE }}
