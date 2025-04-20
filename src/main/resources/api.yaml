@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '338'
+  version: '339'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -35971,7 +35971,6 @@ components:
       - feature_type
       - key
       - plugin_name
-      - source
     PluginUninstall:
       type: object
       description: Serializer for uninstalling a plugin.
