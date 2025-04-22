@@ -16,6 +16,9 @@ public class TestProjectCodeApi extends TestApi {
 
     @Test
     public void test() throws ApiException {
+        // TODO verify results
+        api.projectCodeList(1000, null, null, null);
+
         ProjectCode actual = api.projectCodeRetrieve(1);
         Assertions.assertNotNull(actual);
     }

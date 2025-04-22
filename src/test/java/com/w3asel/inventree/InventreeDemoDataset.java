@@ -10,8 +10,10 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -116,6 +118,9 @@ public class InventreeDemoDataset {
             Assertions.assertEquals(fieldValue.getAsBoolean(), actualValue, message);
         } else if (type == Double.class) {
             Assertions.assertEquals(fieldValue.getAsDouble(), (Double) actualValue, delta, message);
+        } else if (type == BigDecimal.class) {
+            Assertions.assertEquals(fieldValue.getAsDouble(),
+                    ((BigDecimal) actualValue).doubleValue(), delta, message);
         } else if (type == Integer.class) {
             Assertions.assertEquals(fieldValue.getAsInt(), actualValue, message);
         } else if (type == String.class) {
@@ -132,19 +137,32 @@ public class InventreeDemoDataset {
         } else if (type == Iterable.class) {
             Assertions.assertIterableEquals(fieldValue.getAsJsonArray().asList().stream()
                     .map(JsonElement::getAsString).toList(), (Iterable<?>) actualValue, message);
+        } else if (type == LocalDate.class) {
+            Assertions.assertEquals(LocalDate.from(DATE_FORMAT.parse(fieldValue.getAsString())),
+                    actualValue, message);
+
         } else {
             Assertions.fail("Unsupported type: " + type.getName());
         }
     }
 
-    private static DateTimeFormatter DATETIME_FORMAT =
+    private static DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static DateTimeFormatter DATETIME_FORMAT_MILLIS =
             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+    private static DateTimeFormatter DATETIME_FORMAT_SECONDS =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssX");
 
     public static OffsetDateTime parseOffsetDateTime(String field) {
-        return OffsetDateTime.from(DATETIME_FORMAT.parse(field));
+        try {
+            return OffsetDateTime.from(DATETIME_FORMAT_MILLIS.parse(field));
+        } catch (Exception e) {
+        }
+        return OffsetDateTime.from(DATETIME_FORMAT_SECONDS.parse(field));
     }
 
     public enum Model {
+        BOM_ITEM("part.bomitem"),
+        BOM_ITEM_SUBSTITUTE("part.bomitemsubstitute"),
         GLOBAL_SETTING("common.inventreesetting"),
         NOTIFICATION_SETTING("plugin.notificationusersetting"),
         USER_SETTING("common.inventreeusersetting"),
@@ -158,6 +176,7 @@ public class InventreeDemoDataset {
         CUSTOM_USER_STATE("common.inventreecustomuserstatemodel"),
         ORDER_SALES("order.salesorder"),
         REPORT_LABEL_TEMPLATE("report.labeltemplate"),
+        STOCK_ITEM("stock.stockitem"),
         STOCK_TRACKING("stock.stockitemtracking"),
         USER("auth.user");
 

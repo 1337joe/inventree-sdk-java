@@ -59,6 +59,14 @@ public class TestUserApi extends TestApi {
     }
 
     @Test
+    public void test() throws ApiException {
+        // TODO verify results
+        int limit = 1000;
+        api.userGroupList(limit, null, null, null);
+        api.userOwnerList(limit, null);
+    }
+
+    @Test
     public void userGroupRetrieve_readers() throws ApiException {
         Group actual = api.userGroupRetrieve(1);
         Assertions.assertNotNull(actual);
