@@ -7,7 +7,7 @@
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
     <packaging>jar</packaging>
-    <version>0.18.340-SNAPSHOT</version>
+    <version>0.18.341-SNAPSHOT</version>
 
     <name>InvenTree SDK (Java)</name>
     <description>A Java implementation of the OpenAPI spec published by InvenTree.</description>
@@ -148,11 +148,6 @@
                         <regexFlag>MULTILINE</regexFlag>
                     </regexFlags>
                     <replacements>
-                        <!-- list endpoints require limit fields to return the expected type -->
-                        <replacement>
-                            <token>name: (limit)(\n\s+)required: false</token>
-                            <value>name: $1$2required: true</value>
-                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
