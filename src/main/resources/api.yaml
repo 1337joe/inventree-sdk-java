@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '339'
+  version: '340'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -25235,39 +25235,39 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
         available_substitute_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         available_variant_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         external_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         on_order:
           type: number
           format: double
           readOnly: true
+          nullable: true
         building:
           type: number
           format: double
           readOnly: true
+          nullable: true
           title: In Production
         can_build:
           type: number
           format: double
           readOnly: true
+          nullable: true
       required:
-      - available_stock
-      - available_substitute_stock
-      - available_variant_stock
-      - building
-      - can_build
-      - external_stock
-      - on_order
       - part
       - pk
       - quantity
@@ -25806,6 +25806,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Build'
           readOnly: true
+          nullable: true
           title: Build
       required:
       - allocated
@@ -25817,7 +25818,6 @@ components:
       - bom_item
       - bom_item_detail
       - build
-      - build_detail
       - build_reference
       - consumable
       - external_stock
@@ -26041,10 +26041,12 @@ components:
         part_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Parts
         subcategories:
           type: integer
           readOnly: true
+          nullable: true
         pathstring:
           type: string
           readOnly: true
@@ -26074,15 +26076,13 @@ components:
         parent_default_location:
           type: integer
           readOnly: true
+          nullable: true
       required:
       - level
       - name
-      - parent_default_location
-      - part_count
       - pathstring
       - pk
       - starred
-      - subcategories
     CategoryParameterTemplate:
       type: object
       description: Serializer for the PartCategoryParameterTemplate model.
@@ -26493,9 +26493,14 @@ components:
           type: string
         login_message:
           type: string
+          nullable: true
+        navbar_message:
+          type: string
+          nullable: true
       required:
       - login_message
       - logo
+      - navbar_message
       - splash
     DataImportAcceptRow:
       type: object
@@ -26739,8 +26744,8 @@ components:
           type: string
           format: uri
           readOnly: true
+          nullable: true
       required:
-      - api_url
       - model_type
       - serializer
     DataOutput:
@@ -26791,86 +26796,6 @@ components:
       - created
       - pk
       - user_detail
-    DefaultLocaleEnum:
-      enum:
-      - ar
-      - bg
-      - cs
-      - da
-      - de
-      - el
-      - en
-      - es
-      - es-mx
-      - et
-      - fa
-      - fi
-      - fr
-      - he
-      - hi
-      - hu
-      - it
-      - ja
-      - ko
-      - lt
-      - lv
-      - nl
-      - 'no'
-      - pl
-      - pt
-      - pt-br
-      - ro
-      - ru
-      - sk
-      - sl
-      - sr
-      - sv
-      - th
-      - tr
-      - uk
-      - vi
-      - zh-hans
-      - zh-hant
-      type: string
-      description: |-
-        * `ar` - ar
-        * `bg` - bg
-        * `cs` - cs
-        * `da` - da
-        * `de` - de
-        * `el` - el
-        * `en` - en
-        * `es` - es
-        * `es-mx` - es-mx
-        * `et` - et
-        * `fa` - fa
-        * `fi` - fi
-        * `fr` - fr
-        * `he` - he
-        * `hi` - hi
-        * `hu` - hu
-        * `it` - it
-        * `ja` - ja
-        * `ko` - ko
-        * `lt` - lt
-        * `lv` - lv
-        * `nl` - nl
-        * `no` - no
-        * `pl` - pl
-        * `pt` - pt
-        * `pt-br` - pt-br
-        * `ro` - ro
-        * `ru` - ru
-        * `sk` - sk
-        * `sl` - sl
-        * `sr` - sr
-        * `sv` - sv
-        * `th` - th
-        * `tr` - tr
-        * `uk` - uk
-        * `vi` - vi
-        * `zh-hans` - zh-hans
-        * `zh-hant` - zh-hant
     DefaultLocation:
       type: object
       description: |-
@@ -27268,16 +27193,16 @@ components:
           items:
             $ref: '#/components/schemas/RuleSet'
           readOnly: true
+          nullable: true
         users:
           type: array
           items:
             $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
       required:
       - name
       - pk
-      - roles
-      - users
     Icon:
       type: object
       description: Serializer for an icon.
@@ -27343,6 +27268,7 @@ components:
         id:
           type: string
           readOnly: true
+          nullable: true
         version:
           type: string
           readOnly: true
@@ -27379,8 +27305,7 @@ components:
           type: boolean
           readOnly: true
         default_locale:
-          allOf:
-          - $ref: '#/components/schemas/DefaultLocaleEnum'
+          type: string
           readOnly: true
         customize:
           allOf:
@@ -27401,6 +27326,7 @@ components:
         target:
           type: string
           readOnly: true
+          nullable: true
         django_admin:
           type: string
           readOnly: true
@@ -27418,7 +27344,6 @@ components:
       - django_admin
       - docker_mode
       - email_configured
-      - id
       - installer
       - instance
       - platform
@@ -27427,7 +27352,6 @@ components:
       - server
       - settings
       - system_health
-      - target
       - version
       - worker_count
       - worker_pending_tasks
@@ -27698,6 +27622,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockLocationType'
           readOnly: true
+          nullable: true
         tags:
           type: array
           items:
@@ -27707,7 +27632,6 @@ components:
       - icon
       - items
       - level
-      - location_type_detail
       - name
       - pathstring
       - pk
@@ -30406,6 +30330,7 @@ components:
         revision_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Revisions
         salable:
           type: boolean
@@ -30459,14 +30384,17 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
         allocated_to_sales_orders:
           type: number
           format: double
           readOnly: true
+          nullable: true
         building:
           type: number
           format: double
           readOnly: true
+          nullable: true
         category_default_location:
           type: integer
           readOnly: true
@@ -30475,41 +30403,51 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
         ordering:
           type: number
           format: double
           readOnly: true
+          nullable: true
           title: On Order
         required_for_build_orders:
           type: integer
           readOnly: true
+          nullable: true
         required_for_sales_orders:
           type: integer
           readOnly: true
+          nullable: true
         stock_item_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Stock Items
         suppliers:
           type: integer
           readOnly: true
+          nullable: true
         total_in_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
           title: Total Stock
         external_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         unallocated_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         variant_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         duplicate:
           allOf:
           - $ref: '#/components/schemas/DuplicatePart'
@@ -30536,27 +30474,13 @@ components:
           items:
             type: string
       required:
-      - allocated_to_build_orders
-      - allocated_to_sales_orders
       - barcode_hash
-      - building
       - category_name
-      - external_stock
       - full_name
-      - in_stock
       - name
-      - ordering
       - pk
-      - required_for_build_orders
-      - required_for_sales_orders
-      - revision_count
       - starred
-      - stock_item_count
-      - suppliers
       - thumbnail
-      - total_in_stock
-      - unallocated_stock
-      - variant_stock
     PartBrief:
       type: object
       description: Serializer for Part (brief detail).
@@ -30608,6 +30532,7 @@ components:
           type: string
           format: uri
           readOnly: true
+          nullable: true
         thumbnail:
           type: string
           readOnly: true
@@ -30661,7 +30586,6 @@ components:
       required:
       - barcode_hash
       - full_name
-      - image
       - name
       - pk
       - thumbnail
@@ -30788,6 +30712,7 @@ components:
         parts:
           type: integer
           readOnly: true
+          nullable: true
           description: Number of parts using this template
         checkbox:
           type: boolean
@@ -30803,7 +30728,6 @@ components:
           description: Selection list for this parameter
       required:
       - name
-      - parts
       - pk
     PartPricing:
       type: object
@@ -31499,31 +31423,38 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
         available_substitute_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         available_variant_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         external_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         on_order:
           type: number
           format: double
           readOnly: true
+          nullable: true
         building:
           type: number
           format: double
           readOnly: true
+          nullable: true
           title: In Production
         can_build:
           type: number
           format: double
           readOnly: true
+          nullable: true
     PatchedBomItemSubstitute:
       type: object
       description: Serializer for the BomItemSubstitute class.
@@ -31878,6 +31809,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Build'
           readOnly: true
+          nullable: true
           title: Build
     PatchedCategory:
       type: object
@@ -31915,10 +31847,12 @@ components:
         part_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Parts
         subcategories:
           type: integer
           readOnly: true
+          nullable: true
         pathstring:
           type: string
           readOnly: true
@@ -31948,6 +31882,7 @@ components:
         parent_default_location:
           type: integer
           readOnly: true
+          nullable: true
     PatchedCategoryParameterTemplate:
       type: object
       description: Serializer for the PartCategoryParameterTemplate model.
@@ -32416,11 +32351,13 @@ components:
           items:
             $ref: '#/components/schemas/RuleSet'
           readOnly: true
+          nullable: true
         users:
           type: array
           items:
             $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
     PatchedLabelTemplate:
       type: object
       description: Serializer class for label template model.
@@ -32548,6 +32485,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockLocationType'
           readOnly: true
+          nullable: true
         tags:
           type: array
           items:
@@ -33067,6 +33005,7 @@ components:
         revision_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Revisions
         salable:
           type: boolean
@@ -33120,14 +33059,17 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
         allocated_to_sales_orders:
           type: number
           format: double
           readOnly: true
+          nullable: true
         building:
           type: number
           format: double
           readOnly: true
+          nullable: true
         category_default_location:
           type: integer
           readOnly: true
@@ -33136,41 +33078,51 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
         ordering:
           type: number
           format: double
           readOnly: true
+          nullable: true
           title: On Order
         required_for_build_orders:
           type: integer
           readOnly: true
+          nullable: true
         required_for_sales_orders:
           type: integer
           readOnly: true
+          nullable: true
         stock_item_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Stock Items
         suppliers:
           type: integer
           readOnly: true
+          nullable: true
         total_in_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
           title: Total Stock
         external_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         unallocated_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         variant_stock:
           type: number
           format: double
           readOnly: true
+          nullable: true
         duplicate:
           allOf:
           - $ref: '#/components/schemas/DuplicatePart'
@@ -33282,6 +33234,7 @@ components:
         parts:
           type: integer
           readOnly: true
+          nullable: true
           description: Number of parts using this template
         checkbox:
           type: boolean
@@ -33789,9 +33742,11 @@ components:
         line_items:
           type: integer
           readOnly: true
+          nullable: true
         completed_lines:
           type: integer
           readOnly: true
+          nullable: true
         link:
           type: string
           format: uri
@@ -33874,6 +33829,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         duplicate:
           allOf:
           - $ref: '#/components/schemas/DuplicateOrder'
@@ -34017,6 +33973,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
@@ -34062,6 +34019,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
+          nullable: true
         target_date:
           type: string
           format: date
@@ -34086,12 +34044,15 @@ components:
         sku:
           type: string
           readOnly: true
+          nullable: true
         mpn:
           type: string
           readOnly: true
+          nullable: true
         ipn:
           type: string
           readOnly: true
+          nullable: true
           title: Internal Part Number
         internal_part:
           type: integer
@@ -34215,9 +34176,11 @@ components:
         line_items:
           type: integer
           readOnly: true
+          nullable: true
         completed_lines:
           type: integer
           readOnly: true
+          nullable: true
         link:
           type: string
           format: uri
@@ -34298,6 +34261,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         duplicate:
           allOf:
           - $ref: '#/components/schemas/DuplicateOrder'
@@ -34572,9 +34536,11 @@ components:
         line_items:
           type: integer
           readOnly: true
+          nullable: true
         completed_lines:
           type: integer
           readOnly: true
+          nullable: true
         link:
           type: string
           format: uri
@@ -34658,6 +34624,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         duplicate:
           allOf:
           - $ref: '#/components/schemas/DuplicateOrder'
@@ -34704,10 +34671,12 @@ components:
         shipments_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Shipments
         completed_shipments_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Completed Shipments
     PatchedSalesOrderAllocation:
       type: object
@@ -34742,6 +34711,7 @@ components:
         serial:
           type: string
           readOnly: true
+          nullable: true
         location:
           type: integer
           readOnly: true
@@ -34869,6 +34839,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         part:
           type: integer
           nullable: true
@@ -34946,6 +34917,7 @@ components:
         allocated_items:
           type: integer
           readOnly: true
+          nullable: true
         shipment_date:
           type: string
           format: date
@@ -35259,16 +35231,20 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
           title: Allocated Quantity
         expired:
           type: boolean
           readOnly: true
+          nullable: true
         installed_items:
           type: integer
           readOnly: true
+          nullable: true
         child_items:
           type: integer
           readOnly: true
+          nullable: true
         location_path:
           type: array
           items:
@@ -35279,9 +35255,11 @@ components:
         stale:
           type: boolean
           readOnly: true
+          nullable: true
         tracking_items:
           type: integer
           readOnly: true
+          nullable: true
         tags:
           type: array
           items:
@@ -35392,6 +35370,7 @@ components:
         location_count:
           type: integer
           readOnly: true
+          nullable: true
     PatchedSupplierPart:
       type: object
       description: Serializer for SupplierPart object.
@@ -35448,6 +35427,7 @@ components:
         MPN:
           type: string
           readOnly: true
+          nullable: true
         note:
           type: string
           nullable: true
@@ -36049,9 +36029,11 @@ components:
         line_items:
           type: integer
           readOnly: true
+          nullable: true
         completed_lines:
           type: integer
           readOnly: true
+          nullable: true
         link:
           type: string
           format: uri
@@ -36134,6 +36116,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         duplicate:
           allOf:
           - $ref: '#/components/schemas/DuplicateOrder'
@@ -36188,10 +36171,7 @@ components:
           description: Destination for received items
       required:
       - barcode_hash
-      - completed_lines
       - created_by
-      - line_items
-      - overdue
       - pk
       - reference
       - status
@@ -36301,6 +36281,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
@@ -36346,6 +36327,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
+          nullable: true
         target_date:
           type: string
           format: date
@@ -36370,12 +36352,15 @@ components:
         sku:
           type: string
           readOnly: true
+          nullable: true
         mpn:
           type: string
           readOnly: true
+          nullable: true
         ipn:
           type: string
           readOnly: true
+          nullable: true
           title: Internal Part Number
         internal_part:
           type: integer
@@ -36384,18 +36369,13 @@ components:
           type: string
           readOnly: true
       required:
-      - destination_detail
       - internal_part
       - internal_part_name
-      - ipn
-      - mpn
       - order
-      - overdue
       - part
       - pk
       - quantity
       - received
-      - sku
       - total_price
     PurchaseOrderLineItemReceive:
       type: object
@@ -36641,9 +36621,11 @@ components:
         line_items:
           type: integer
           readOnly: true
+          nullable: true
         completed_lines:
           type: integer
           readOnly: true
+          nullable: true
         link:
           type: string
           format: uri
@@ -36724,6 +36706,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         duplicate:
           allOf:
           - $ref: '#/components/schemas/DuplicateOrder'
@@ -36770,10 +36753,7 @@ components:
           nullable: true
       required:
       - barcode_hash
-      - completed_lines
       - created_by
-      - line_items
-      - overdue
       - pk
       - reference
       - status
@@ -37127,9 +37107,11 @@ components:
         line_items:
           type: integer
           readOnly: true
+          nullable: true
         completed_lines:
           type: integer
           readOnly: true
+          nullable: true
         link:
           type: string
           format: uri
@@ -37213,6 +37195,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         duplicate:
           allOf:
           - $ref: '#/components/schemas/DuplicateOrder'
@@ -37259,21 +37242,18 @@ components:
         shipments_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Shipments
         completed_shipments_count:
           type: integer
           readOnly: true
+          nullable: true
           title: Completed Shipments
       required:
       - barcode_hash
-      - completed_lines
-      - completed_shipments_count
       - created_by
-      - line_items
-      - overdue
       - pk
       - reference
-      - shipments_count
       - status
       - status_text
     SalesOrderAllocation:
@@ -37309,6 +37289,7 @@ components:
         serial:
           type: string
           readOnly: true
+          nullable: true
         location:
           type: integer
           readOnly: true
@@ -37349,7 +37330,6 @@ components:
       - part
       - pk
       - quantity
-      - serial
       - shipment_detail
     SalesOrderComplete:
       type: object
@@ -37458,6 +37438,7 @@ components:
         overdue:
           type: boolean
           readOnly: true
+          nullable: true
         part:
           type: integer
           nullable: true
@@ -37523,7 +37504,6 @@ components:
       - building
       - on_order
       - order
-      - overdue
       - pk
       - quantity
       - shipped
@@ -37566,6 +37546,7 @@ components:
         allocated_items:
           type: integer
           readOnly: true
+          nullable: true
         shipment_date:
           type: string
           format: date
@@ -37605,7 +37586,6 @@ components:
           description: Markdown notes (optional)
           maxLength: 50000
       required:
-      - allocated_items
       - order
       - pk
     SalesOrderShipmentAllocation:
@@ -38216,16 +38196,20 @@ components:
           type: number
           format: double
           readOnly: true
+          nullable: true
           title: Allocated Quantity
         expired:
           type: boolean
           readOnly: true
+          nullable: true
         installed_items:
           type: integer
           readOnly: true
+          nullable: true
         child_items:
           type: integer
           readOnly: true
+          nullable: true
         location_path:
           type: array
           items:
@@ -38236,9 +38220,11 @@ components:
         stale:
           type: boolean
           readOnly: true
+          nullable: true
         tracking_items:
           type: integer
           readOnly: true
+          nullable: true
         tags:
           type: array
           items:
@@ -38262,19 +38248,13 @@ components:
           nullable: true
           title: Location
       required:
-      - allocated
       - barcode_hash
-      - child_items
-      - expired
       - in_stock
-      - installed_items
       - parent
       - part
       - pk
       - quantity
-      - stale
       - status_text
-      - tracking_items
     StockItemSerialNumbers:
       type: object
       description: Serializer for extra serial number information about a stock item.
@@ -38453,8 +38433,8 @@ components:
         location_count:
           type: integer
           readOnly: true
+          nullable: true
       required:
-      - location_count
       - name
       - pk
     StockMerge:
@@ -38626,6 +38606,7 @@ components:
         MPN:
           type: string
           readOnly: true
+          nullable: true
         note:
           type: string
           nullable: true
@@ -38694,7 +38675,6 @@ components:
           items:
             type: string
       required:
-      - MPN
       - SKU
       - barcode_hash
       - pack_quantity_native
