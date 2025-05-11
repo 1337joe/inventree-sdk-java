@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '341'
+  version: '342'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27042,12 +27042,13 @@ components:
         Any of the provided write-only fields can be used for additional context.
 
         Note that in the case where multiple serial numbers are required,
-        the "serial" field will return a string with multiple serial numbers separated by a comma.
+        the "serial_number" field will return a string with multiple serial numbers
+        separated by a comma.
       properties:
-        serial:
+        serial_number:
           type: string
           readOnly: true
-          title: Serial Number
+          nullable: true
           description: Generated serial number
         part:
           type: integer
@@ -27057,8 +27058,6 @@ components:
           type: integer
           default: 1
           description: Quantity of serial numbers to generate
-      required:
-      - serial
     GenericStateClass:
       type: object
       description: API serializer for generic state class information.
