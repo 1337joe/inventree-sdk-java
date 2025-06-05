@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '342'
+  version: '343'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26207,10 +26207,10 @@ components:
           description: |-
             Default currency used for this supplier
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         contact:
@@ -30640,10 +30640,10 @@ components:
           description: |-
             Purchase currency of this stock item
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
       required:
@@ -30816,10 +30816,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
           title: Minimum price currency
@@ -30835,10 +30835,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
           title: Maximum price currency
@@ -30941,10 +30941,10 @@ components:
           description: |-
             Purchase currency of this stock item
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
       required:
@@ -31013,10 +31013,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         cost_max:
@@ -31030,10 +31030,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         note:
@@ -31953,10 +31953,10 @@ components:
           description: |-
             Default currency used for this supplier
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         contact:
@@ -33171,10 +33171,10 @@ components:
           description: |-
             Purchase currency of this stock item
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
     PatchedPartParameter:
@@ -33335,10 +33335,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
           title: Minimum price currency
@@ -33354,10 +33354,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
           title: Maximum price currency
@@ -33452,10 +33452,10 @@ components:
           description: |-
             Purchase currency of this stock item
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
     PatchedPartStocktake:
@@ -33491,10 +33491,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         cost_max:
@@ -33508,10 +33508,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         note:
@@ -33871,10 +33871,10 @@ components:
             Currency for this order (leave blank to use company default)
 
             * `` - ---------
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         destination:
@@ -33926,10 +33926,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         link:
@@ -33999,10 +33999,10 @@ components:
           description: |-
             Purchase price currency
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         auto_pricing:
@@ -34293,10 +34293,10 @@ components:
             Currency for this order (leave blank to use company default)
 
             * `` - ---------
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         total_price:
@@ -34350,10 +34350,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         link:
@@ -34422,10 +34422,10 @@ components:
           description: |-
             Line price currency
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         link:
@@ -34661,10 +34661,10 @@ components:
             Currency for this order (leave blank to use company default)
 
             * `` - ---------
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         shipments_count:
@@ -34788,10 +34788,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         link:
@@ -34859,10 +34859,10 @@ components:
           description: |-
             Sale price currency
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         shipped:
@@ -35208,10 +35208,10 @@ components:
           description: |-
             Purchase currency of this stock item
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         use_pack_size:
@@ -35523,10 +35523,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         supplier:
@@ -36158,10 +36158,10 @@ components:
             Currency for this order (leave blank to use company default)
 
             * `` - ---------
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         destination:
@@ -36230,10 +36230,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         link:
@@ -36307,10 +36307,10 @@ components:
           description: |-
             Purchase price currency
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         auto_pricing:
@@ -36738,10 +36738,10 @@ components:
             Currency for this order (leave blank to use company default)
 
             * `` - ---------
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         total_price:
@@ -36802,10 +36802,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         link:
@@ -36878,10 +36878,10 @@ components:
           description: |-
             Line price currency
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         link:
@@ -37232,10 +37232,10 @@ components:
             Currency for this order (leave blank to use company default)
 
             * `` - ---------
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         shipments_count:
@@ -37383,10 +37383,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         link:
@@ -37458,10 +37458,10 @@ components:
           description: |-
             Sale price currency
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         shipped:
@@ -38173,10 +38173,10 @@ components:
           description: |-
             Purchase currency of this stock item
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         use_pack_size:
@@ -38709,10 +38709,10 @@ components:
           description: |-
             Select currency from available options
 
-            * `AUD` - Australian Dollar
-            * `CNY` - Chinese Yuan
-            * `EUR` - Euro
-            * `USD` - US Dollar
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         supplier:
