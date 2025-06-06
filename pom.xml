@@ -526,6 +526,11 @@
                             <token>(frontend|backend):(\n\s+)type: string$</token>
                             <value>$1:$2type: array$2items: {}</value>
                         </replacement>
+                        <!-- serial number generator fixes-->
+                        <replacement>
+                            <token>serial:(\n\s+type: string\n\s+readOnly: true\n\s+)title: Serial Number</token>
+                            <value>serial_number:$1nullable: true</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
