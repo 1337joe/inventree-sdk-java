@@ -10,6 +10,7 @@ import com.w3asel.inventree.model.GenericStateClass;
 import com.w3asel.inventree.model.GenericStateValue;
 import com.w3asel.inventree.model.PaginatedStockItemList;
 import com.w3asel.inventree.model.PaginatedStockTrackingList;
+import com.w3asel.inventree.model.StockItem;
 import com.w3asel.inventree.model.StockTracking;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
@@ -31,18 +34,6 @@ public class TestStockApi extends TestApi {
         api = new StockApi(apiClient);
     }
 
-    @Test
-    public void stockList() throws ApiException {
-        int limit = 1000;
-        int offset = 0;
-        PaginatedStockItemList actual = api.stockList(limit, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, offset, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-        Assertions.assertNotNull(actual);
-    }
-
     @Disabled
     @Test
     public void todo() throws ApiException {
@@ -55,11 +46,12 @@ public class TestStockApi extends TestApi {
         api.stockBulkDestroy(null);
         api.stockDestroy(null);
         api.stockInstallCreate(null, null);
-        api.stockList(null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null);
+        // api.stockList(null, null, null, null, null, null, null, null, null, null, null, null,
+        // null,
+        // null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+        // null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+        // null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+        // null, null, null, null, null, null, null);
         api.stockLocationCreate(null);
         api.stockLocationDestroy(null);
         api.stockLocationList(null, null, null, null, null, null, null, null, null, null, null,
@@ -85,7 +77,7 @@ public class TestStockApi extends TestApi {
         api.stockMetadataUpdate(null, null);
         api.stockPartialUpdate(null, null);
         api.stockRemoveCreate(null);
-        api.stockRetrieve(null);
+        // api.stockRetrieve(null);
         api.stockReturnCreate(null, null);
         api.stockSerializeCreate(null, null);
         // api.stockStatusRetrieve();
@@ -108,6 +100,149 @@ public class TestStockApi extends TestApi {
         api.stockUpdate(null, null);
     }
 
+    @Test
+    public void test() throws ApiException {
+        // TODO verify results
+        int limit = 1000;
+        api.stockLocationList(limit, null, null, null, null, null, null, null, null, null, null,
+                null, null);
+        api.stockTestList(limit, null, null, null, null, null, null, null, null, null, null, null,
+                null);
+    }
+
+    private static void assertStockItemEquals(JsonObject expected, StockItem actual) {
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        InventreeDemoDataset.assertNullableEquals(String.class, "notes", fields, actual.getNotes());
+        InventreeDemoDataset.assertEquals("barcode_hash", fields, actual.getBarcodeHash());
+
+        OffsetDateTime expectedUpdated = fields.get("updated").isJsonNull() ? null
+                : InventreeDemoDataset.parseOffsetDateTime(fields.get("updated").getAsString())
+                        .truncatedTo(ChronoUnit.MINUTES);
+        Assertions.assertEquals(expectedUpdated, actual.getUpdated(), "Incorrect date");
+
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "parent", fields,
+                actual.getParent());
+        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
+        InventreeDemoDataset.assertEquals("supplier_part", fields, actual.getSupplierPart());
+        InventreeDemoDataset.assertEquals("location", fields, actual.getLocation());
+        InventreeDemoDataset.assertEquals("packaging", fields, actual.getPackaging());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "belongs_to", fields,
+                actual.getBelongsTo());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "customer", fields,
+                actual.getCustomer());
+        InventreeDemoDataset.assertNullableEquals(String.class, "serial", fields,
+                actual.getSerial());
+        InventreeDemoDataset.assertEquals("link", fields, actual.getLink());
+        InventreeDemoDataset.assertNullableEquals(String.class, "batch", fields, actual.getBatch());
+        InventreeDemoDataset.assertEquals("quantity", fields, actual.getQuantity());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "build", fields,
+                actual.getBuild());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "consumed_by", fields,
+                actual.getConsumedBy());
+        InventreeDemoDataset.assertEquals("is_building", fields, actual.getIsBuilding());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "purchase_order", fields,
+                actual.getPurchaseOrder());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "sales_order", fields,
+                actual.getSalesOrder());
+        InventreeDemoDataset.assertNullableEquals(LocalDate.class, "expiry_date", fields,
+                actual.getExpiryDate());
+        InventreeDemoDataset.assertNullableEquals(LocalDate.class, "stocktake_date", fields,
+                actual.getStocktakeDate());
+        InventreeDemoDataset.assertEquals("delete_on_deplete", fields, actual.getDeleteOnDeplete());
+        InventreeDemoDataset.assertEquals("status", fields, actual.getStatus());
+        InventreeDemoDataset.assertEquals("purchase_price_currency", fields,
+                actual.getPurchasePriceCurrency());
+        InventreeDemoDataset.assertNullableEquals(BigDecimal.class, "purchase_price", fields,
+                actual.getPurchasePrice());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "owner", fields,
+                actual.getOwner());
+
+        // inherits status value if null
+        if (fields.get("status_custom_key").isJsonNull()) {
+            InventreeDemoDataset.assertEquals("status", fields, actual.getStatusCustomKey());
+        } else {
+            InventreeDemoDataset.assertEquals("status_custom_key", fields,
+                    actual.getStatusCustomKey());
+        }
+
+        // not directly available in demo dataset:
+        // actual.getAllocated();
+        // actual.getChildItems();
+        // actual.getExpired();
+        // actual.getInstalledItems();
+        // actual.getInStock();
+        // actual.getLocationDetail();
+        // actual.getLocationPath();
+        // actual.getMPN();
+        // actual.getPartDetail();
+        // actual.getPurchaseOrderReference();
+        // actual.getSalesOrderReference();
+        // actual.getSKU();
+        // actual.getStale();
+        // actual.getStatusText();
+        // actual.getSupplierPartDetail();
+        // actual.getTags();
+        // actual.getTests();
+        // actual.getTrackingItems();
+        // actual.getUsePackSize();
+
+        // not available through schema-mapped API:
+        // metadata
+        // barcode_data
+        // serial_int
+        // stocktake_user
+        // review_needed
+        // lft
+        // rght
+        // tree_id
+        // level
+
+    }
+
+    @Test
+    public void stockList() throws ApiException {
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.STOCK_ITEM, null);
+        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+
+        int limit = 10;
+        int offset = 0;
+
+        PaginatedStockItemList actual = api.stockList(limit, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, offset, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect total stock item count");
+        List<StockItem> actualList = actual.getResults();
+
+        // check items returned by key
+        List<Integer> expectedPks = expectedList.stream()
+                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
+                .toList();
+        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+        Assertions.assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+
+        // deep equals on first value
+        StockItem actualFirst = actualList.get(0);
+        JsonObject expectedFirst =
+                InventreeDemoDataset.getObjects(Model.STOCK_ITEM, actualFirst.getPk()).get(0);
+        assertStockItemEquals(expectedFirst, actualFirst);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"2", "220"})
+    public void stockRetrieve(int pk) throws ApiException {
+        StockItem actual = api.stockRetrieve(pk);
+        JsonObject expected = InventreeDemoDataset.getObjects(Model.STOCK_ITEM, pk).get(0);
+        assertStockItemEquals(expected, actual);
+
+        // TODO verify non-demo dataset fields?
+    }
 
     @Test
     public void stockStatusRetrieve() throws ApiException {
