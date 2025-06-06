@@ -5,8 +5,9 @@ import com.w3asel.inventree.model.GenerateBatchCode;
 import com.w3asel.inventree.model.GenerateSerialNumber;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class TestGenerateApi extends TestApi {
     private GenerateApi api;
@@ -23,11 +24,25 @@ public class TestGenerateApi extends TestApi {
         Assertions.assertNotNull(result.getBatchCode());
     }
 
-    @Disabled("Return expects serial, gets serial_number")
+    /**
+     * Part number is required for a serial number to be generated but omitting it is still a valid
+     * request.
+     */
     @Test
-    public void generateSerialNumberCreate() throws ApiException {
+    public void generateSerialNumberCreate_null() throws ApiException {
         GenerateSerialNumber newItem = new GenerateSerialNumber();
         GenerateSerialNumber result = api.generateSerialNumberCreate(newItem);
-        Assertions.assertNotNull(result.getSerial());
+        Assertions.assertNull(result.getSerialNumber());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1,", "1,2"})
+    public void generateSerialNumberCreate(int part, Integer quantity) throws ApiException {
+        GenerateSerialNumber newItem = new GenerateSerialNumber().part(part).quantity(quantity);
+        GenerateSerialNumber result = api.generateSerialNumberCreate(newItem);
+        Assertions.assertNotNull(result.getSerialNumber());
+
+        String[] actualSplit = result.getSerialNumber().split(",");
+        Assertions.assertEquals(quantity == null ? 1 : quantity, actualSplit.length);
     }
 }
