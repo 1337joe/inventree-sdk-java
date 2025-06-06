@@ -340,6 +340,74 @@
                             <token>^\s+- commit_branch$\n</token>
                             <value></value>
                         </replacement>
+                        <replacement>
+                            <token>^\s+- name$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- subcategories$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- item_serial_number$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- can_build$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- parent_default_location$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- func$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- target$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- location_count$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- part_count$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- args$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- on_order$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- available_variant_stock$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- kwargs$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- available_stock$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- location_type_detail$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- available_substitute_stock$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- part_IPN$\n</token>
+                            <value></value>
+                        </replacement>
                         <!-- remove now-empty required list tags -->
                         <replacement>
                             <token>^(\s+)required:\n((?!\1))</token>
@@ -357,6 +425,11 @@
                         <replacement>
                             <token>(allOf|oneOf):(\n\s+- \$ref: '#/components/schemas/Status2a7Enum')(\n\s+- \$ref: '#/components/schemas/(Blank|Null)Enum')*</token>
                             <value>type: integer</value>
+                        </replacement>
+                        <!-- replace other problematic enums -->
+                        <replacement>
+                            <token>(allOf|oneOf):(\n\s+- \$ref: '#/components/schemas/DefaultLocaleEnum')(\n\s+- \$ref: '#/components/schemas/(Blank|Null)Enum')*</token>
+                            <value>type: string</value>
                         </replacement>
                         <!-- convert string type PK path variables to int -->
                         <replacement>
@@ -426,7 +499,7 @@
                         </replacement>
                         <replacement>
                             <token>pk(\n\s+)DataImportAcceptRow:</token>
-                            <value>pk$1DataImporterModel:$1  type: object$1  description: Model references to map info that might get imported.$1  properties:$1    serializer:$1      type: string$1      readOnly: true$1    model_type:$1      type: string$1      readOnly: true$1    api_url:$1      type: string$1      format: uri$1      readOnly: true$1  required:$1  - api_url$1  - model_type$1  - serializer$1DataImportAcceptRow:</value>
+                            <value>pk$1DataImporterModel:$1  type: object$1  description: Model references to map info that might get imported.$1  properties:$1    serializer:$1      type: string$1      readOnly: true$1    model_type:$1      type: string$1      readOnly: true$1    api_url:$1      type: string$1      format: uri$1      readOnly: true$1  required:$1  - model_type$1  - serializer$1DataImportAcceptRow:</value>
                         </replacement>
                         <replacement>
                             <token>plugins_settings_list(\n\s+description: \|-\n\s+List endpoint)</token>
