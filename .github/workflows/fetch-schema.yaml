@@ -48,6 +48,7 @@ jobs:
         with:
           repository: 'inventree/schema'
           path: 'schema'
+          fetch-depth: 0
 
       - name: Verify schema exists
         run: |
@@ -78,7 +79,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
         with:
           branch: '${{ env.BRANCH_NAME }}'
-          create_branch: true
           file_pattern: 'pom.xml .github/inventree_test_hash.txt src/*'
           commit_message: 'Update to schema ${{ env.NEW_VERSION }}'
 
