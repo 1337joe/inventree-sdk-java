@@ -88,9 +88,11 @@ public class TestUserApi extends TestApi {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(1, actual.getPk(), "Incorrect pk returned");
         Assertions.assertEquals("admin", actual.getUsername(), "Incorrect username returned");
-        Assertions.assertEquals("", actual.getFirstName(), "Incorrect first name returned");
-        Assertions.assertEquals("", actual.getLastName(), "Incorrect last name returned");
-        Assertions.assertEquals("", actual.getEmail(), "Incorrect email returned");
+        Assertions.assertEquals("Adam", actual.getFirstName(), "Incorrect first name returned");
+        Assertions.assertEquals("Administrator", actual.getLastName(),
+                "Incorrect last name returned");
+        Assertions.assertEquals("admin@demo.inventree.org", actual.getEmail(),
+                "Incorrect email returned");
         Assertions.assertEquals(0, actual.getGroups().size(), "Incorrect groups returned");
         Assertions.assertTrue(actual.getIsStaff(), "Incorrect isStaff returned");
         Assertions.assertTrue(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
