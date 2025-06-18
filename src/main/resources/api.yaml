@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '346'
+  version: '347'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27176,6 +27176,10 @@ components:
           type: boolean
           default: true
           description: Copy notes from original part
+        copy_tests:
+          type: boolean
+          default: false
+          description: Copy test templates from original part
       required:
       - part
     ErrorMessage:
