@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '345'
+  version: '346'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27473,12 +27473,18 @@ components:
         typ:
           type: string
           readOnly: true
+        read_only:
+          type: boolean
+          description: Indicates if the setting is overridden by an environment variable
+          readOnly: true
+          title: Override
       required:
       - choices
       - description
       - key
       - name
       - pk
+      - read_only
       - typ
       - type
       - units
@@ -32642,6 +32648,11 @@ components:
         typ:
           type: string
           readOnly: true
+        read_only:
+          type: boolean
+          description: Indicates if the setting is overridden by an environment variable
+          readOnly: true
+          title: Override
     PatchedGroup:
       type: object
       description: Serializer for a 'Group'.
