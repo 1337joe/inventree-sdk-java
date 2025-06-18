@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '348'
+  version: '349'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -25850,11 +25850,6 @@ components:
           type: integer
           readOnly: true
           title: Build Level
-        create_child_builds:
-          type: boolean
-          writeOnly: true
-          default: false
-          description: Automatically generate child build orders
       required:
       - barcode_hash
       - completed
@@ -31996,11 +31991,6 @@ components:
           type: integer
           readOnly: true
           title: Build Level
-        create_child_builds:
-          type: boolean
-          writeOnly: true
-          default: false
-          description: Automatically generate child build orders
     PatchedBuildItem:
       type: object
       description: Serializes a BuildItem object, which is an allocation of a stock
