@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '349'
+  version: '350'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -13350,6 +13350,7 @@ paths:
         - Sales Orders
         - Build Orders
         - Total requirements
+        - How many of this part can be assembled with available stock
 
         As this data is somewhat complex to calculate, is it not included in the default API
       parameters:
@@ -13365,10 +13366,15 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:view:part
+        - r:view:build
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartRequirements'
+          description: ''
   /api/part/{id}/scheduling/:
     get:
       operationId: part_scheduling_retrieve
@@ -31256,6 +31262,65 @@ components:
       - part_2
       - part_2_detail
       - pk
+    PartRequirements:
+      type: object
+      description: Serializer for Part requirements.
+      properties:
+        total_stock:
+          type: number
+          format: double
+          readOnly: true
+        unallocated_stock:
+          type: number
+          format: double
+          readOnly: true
+          title: Available Stock
+        can_build:
+          type: number
+          format: double
+          readOnly: true
+        ordering:
+          type: number
+          format: double
+          readOnly: true
+          title: On Order
+        building:
+          type: number
+          format: double
+          readOnly: true
+          title: In Production
+        scheduled_to_build:
+          type: number
+          format: double
+          readOnly: true
+        required_for_build_orders:
+          type: number
+          format: double
+          readOnly: true
+        allocated_to_build_orders:
+          type: number
+          format: double
+          readOnly: true
+        required_for_sales_orders:
+          type: number
+          format: double
+          readOnly: true
+        allocated_to_sales_orders:
+          type: number
+          format: double
+          description: Return the allocated sales order quantity.
+          readOnly: true
+      required:
+      - allocated_to_build_orders
+      - allocated_to_sales_orders
+      - building
+      - can_build
+      - ordering
+      - required_for_build_orders
+      - required_for_sales_orders
+      - scheduled_to_build
+      - total_stock
+      - unallocated_stock
     PartSalePrice:
       type: object
       description: Serializer for sale prices for Part model.
