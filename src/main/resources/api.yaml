@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '347'
+  version: '348'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1852,6 +1852,10 @@ paths:
         schema:
           type: integer
         description: Exclude Tree
+      - in: query
+        name: external
+        schema:
+          type: boolean
       - in: query
         name: has_project_code
         schema:
@@ -8345,6 +8349,11 @@ paths:
         schema:
           type: integer
         description: Created By
+      - in: query
+        name: external_build
+        schema:
+          type: integer
+        description: External Build Order
       - in: query
         name: has_project_code
         schema:
@@ -25708,6 +25717,10 @@ components:
           nullable: true
           title: Destination Location
           description: Select location where the completed items will be stored
+        external:
+          type: boolean
+          title: External Build
+          description: This build order is fulfilled externally
         parent:
           type: integer
           nullable: true
@@ -30718,6 +30731,13 @@ components:
           format: double
           readOnly: true
           nullable: true
+          description: Quantity of this part currently being in production
+        scheduled_to_build:
+          type: number
+          format: double
+          readOnly: true
+          nullable: true
+          description: Outstanding quantity of this part scheduled to be built
         category_default_location:
           type: integer
           readOnly: true
@@ -31843,6 +31863,10 @@ components:
           nullable: true
           title: Destination Location
           description: Select location where the completed items will be stored
+        external:
+          type: boolean
+          title: External Build
+          description: This build order is fulfilled externally
         parent:
           type: integer
           nullable: true
@@ -33398,6 +33422,13 @@ components:
           format: double
           readOnly: true
           nullable: true
+          description: Quantity of this part currently being in production
+        scheduled_to_build:
+          type: number
+          format: double
+          readOnly: true
+          nullable: true
+          description: Outstanding quantity of this part scheduled to be built
         category_default_location:
           type: integer
           readOnly: true
@@ -34298,6 +34329,14 @@ components:
           - $ref: '#/components/schemas/PurchaseOrder'
           readOnly: true
           nullable: true
+        build_order:
+          type: integer
+          nullable: true
+          description: External Build Order to be fulfilled by this line item
+        build_order_detail:
+          allOf:
+          - $ref: '#/components/schemas/Build'
+          readOnly: true
         overdue:
           type: boolean
           readOnly: true
@@ -36610,6 +36649,14 @@ components:
           - $ref: '#/components/schemas/PurchaseOrder'
           readOnly: true
           nullable: true
+        build_order:
+          type: integer
+          nullable: true
+          description: External Build Order to be fulfilled by this line item
+        build_order_detail:
+          allOf:
+          - $ref: '#/components/schemas/Build'
+          readOnly: true
         overdue:
           type: boolean
           readOnly: true
@@ -36701,6 +36748,7 @@ components:
           type: string
           readOnly: true
       required:
+      - build_order_detail
       - internal_part
       - internal_part_name
       - order

@@ -48,7 +48,7 @@ public class TestBuildApi extends TestApi {
         api.buildLineUpdate(null, null);
         api.buildList(null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
         api.buildMetadataPartialUpdate(null, null);
         api.buildMetadataRetrieve(null);
         api.buildMetadataUpdate(null, null);
@@ -69,7 +69,7 @@ public class TestBuildApi extends TestApi {
         int limit = 1000;
         api.buildList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
 
         api.buildItemList(limit, null, null, null, null, null, null, null, null, null, null);
 
