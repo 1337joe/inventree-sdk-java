@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '351'
+  version: '352'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -131,7 +131,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          model_id, model_type, upload_date, file_size.'
         schema:
           type: string
       - name: search
@@ -467,7 +468,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          pk, func, started, stopped.'
         schema:
           type: string
       - name: search
@@ -603,7 +605,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          pk, func, last_run, next_run.'
         schema:
           type: string
       - name: search
@@ -719,7 +722,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          user, plugin, timestamp, endpoint, result.'
         schema:
           type: string
       - in: query
@@ -1066,7 +1070,10 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          can_build, quantity, sub_part, available_stock, allow_variants, inherited,
+          optional, consumable, reference, validated, pricing_min, pricing_max, pricing_min_total,
+          pricing_max_total, pricing_updated.'
         schema:
           type: string
       - in: query
@@ -1908,7 +1915,10 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          reference, part__name, status, creation_date, start_date, target_date, completion_date,
+          quantity, completed, issued_by, responsible, project_code, priority, level,
+          external.'
         schema:
           type: string
       - in: query
@@ -2668,7 +2678,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          part, sku, quantity, location, reference, IPN.'
         schema:
           type: string
       - in: query
@@ -3040,7 +3051,9 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          part, allocated, reference, quantity, consumable, optional, unit_quantity,
+          available_stock, trackable, allow_variants, inherited.'
         schema:
           type: string
       - in: query
@@ -3286,7 +3299,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          active, name, parts_supplied, parts_manufactured.'
         schema:
           type: string
       - name: search
@@ -3600,7 +3614,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          title.'
         schema:
           type: string
       - name: search
@@ -3838,7 +3853,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name.'
         schema:
           type: string
       - name: search
@@ -4207,7 +4223,9 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          SKU, part, supplier, manufacturer, active, MPN, packaging, pack_quantity,
+          in_stock, updated.'
         schema:
           type: string
       - in: query
@@ -5223,7 +5241,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          quantity, supplier, SKU, price.'
         schema:
           type: string
       - in: query
@@ -5558,7 +5577,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          pk, user, plugin, output_type, created.'
         schema:
           type: string
       - name: search
@@ -5686,7 +5706,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          when, info.'
         schema:
           type: string
       - name: search
@@ -6030,7 +6051,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          key.'
         schema:
           type: string
       - in: query
@@ -6424,7 +6446,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          pk, row_index, valid.'
         schema:
           type: string
       - name: search
@@ -6625,7 +6648,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          timestamp, status, model_type.'
         schema:
           type: string
       - name: search
@@ -7341,7 +7365,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name, machine_type, driver, active.'
         schema:
           type: string
       - name: search
@@ -7834,7 +7859,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          published, author, read.'
         schema:
           type: string
       - in: query
@@ -8100,7 +8126,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          category, name, read, creation.'
         schema:
           type: string
       - in: query
@@ -8396,7 +8423,9 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          creation_date, created_by, reference, supplier__name, start_date, target_date,
+          complete_date, line_items, status, responsible, total_price, project_code.'
         schema:
           type: string
       - in: query
@@ -8541,7 +8570,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          quantity, notes, reference.'
         schema:
           type: string
       - name: search
@@ -8857,7 +8887,9 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          MPN, part_name, purchase_price, quantity, received, reference, SKU, IPN,
+          total_price, target_date, order, status, complete_date.'
         schema:
           type: string
       - in: query
@@ -9652,7 +9684,9 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          creation_date, created_by, reference, customer__name, customer_reference,
+          line_items, status, start_date, target_date, complete_date, project_code.'
         schema:
           type: string
       - in: query
@@ -9783,7 +9817,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          quantity, notes, reference.'
         schema:
           type: string
       - name: search
@@ -10087,7 +10122,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          reference, target_date, received_date.'
         schema:
           type: string
       - in: query
@@ -10833,7 +10869,10 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          creation_date, created_by, reference, customer__name, customer_reference,
+          status, start_date, target_date, line_items, shipment_date, total_price,
+          project_code.'
         schema:
           type: string
       - in: query
@@ -10987,7 +11026,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          quantity, part, serial, batch, location, order, shipment_date.'
         schema:
           type: string
       - in: query
@@ -11231,7 +11271,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          quantity, notes, reference.'
         schema:
           type: string
       - name: search
@@ -11552,7 +11593,9 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          customer, order, part, part__name, quantity, allocated, shipped, reference,
+          sale_price, target_date.'
         schema:
           type: string
       - in: query
@@ -12242,7 +12285,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          reference, delivery_date, shipment_date, allocated_items.'
         schema:
           type: string
       - name: search
@@ -12708,7 +12752,10 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name, creation_date, IPN, in_stock, total_in_stock, unallocated_stock, category,
+          default_location, last_stocktake, units, pricing_min, pricing_max, pricing_updated,
+          revision, revision_count.'
         schema:
           type: string
       - in: query
@@ -13469,7 +13516,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name, pathstring, level, tree_id, lft, part_count.'
         schema:
           type: string
       - in: query
@@ -14133,7 +14181,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          level, name, subcategories.'
         schema:
           type: string
       tags:
@@ -14172,7 +14221,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          quantity, price.'
         schema:
           type: string
       - in: query
@@ -14366,7 +14416,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name, data, part, template.'
         schema:
           type: string
       - in: query
@@ -14686,7 +14737,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name, units, checkbox, parts.'
         schema:
           type: string
       - in: query
@@ -15287,7 +15339,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          quantity, price.'
         schema:
           type: string
       - in: query
@@ -15481,7 +15534,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          part, item_count, quantity, date, user, pk.'
         schema:
           type: string
       - in: query
@@ -15685,7 +15739,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          date, pk.'
         schema:
           type: string
       tags:
@@ -15881,7 +15936,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          enabled, required, requires_value, requires_attachment, results, test_name.'
         schema:
           type: string
       - in: query
@@ -16348,7 +16404,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          key, name, active.'
         schema:
           type: string
       - in: query
@@ -17036,7 +17093,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          code.'
         schema:
           type: string
       - name: search
@@ -18446,7 +18504,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          pk, key, name.'
         schema:
           type: string
       - name: search
@@ -18599,7 +18658,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          pk, key, name.'
         schema:
           type: string
       - name: search
@@ -18748,7 +18808,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          pk, key, name.'
         schema:
           type: string
       - name: search
@@ -19078,7 +19139,9 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          batch, location, part__name, part__IPN, updated, stocktake_date, expiry_date,
+          packaging, quantity, stock, status, SKU, MPN.'
         schema:
           type: string
       - in: query
@@ -19883,7 +19946,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name, pathstring, items, level, tree_id, lft.'
         schema:
           type: string
       - in: query
@@ -20049,7 +20113,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name, location_count, icon.'
         schema:
           type: string
       - name: search
@@ -20583,7 +20648,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          level, name, sublocations.'
         schema:
           type: string
       tags:
@@ -20715,7 +20781,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          date, result.'
         schema:
           type: string
       - in: query
@@ -21066,7 +21133,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          date.'
         schema:
           type: string
       - name: search
@@ -21417,7 +21485,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          email, username, first_name, last_name, is_staff, is_superuser, is_active.'
         schema:
           type: string
       - name: search
@@ -21704,7 +21773,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name.'
         schema:
           type: string
       - name: search
@@ -22213,7 +22283,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          name.'
         schema:
           type: string
       - name: search
@@ -22402,7 +22473,8 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: Which field to use when ordering the results.
+        description: 'Which field to use when ordering the results. Possible fields:
+          created, expiry, last_seen, user, name, revoked, revoked.'
         schema:
           type: string
       - in: query
@@ -34464,6 +34536,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Build'
           readOnly: true
+          nullable: true
         overdue:
           type: boolean
           readOnly: true
@@ -36796,6 +36869,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/Build'
           readOnly: true
+          nullable: true
         overdue:
           type: boolean
           readOnly: true
@@ -36887,7 +36961,6 @@ components:
           type: string
           readOnly: true
       required:
-      - build_order_detail
       - internal_part
       - internal_part_name
       - order
