@@ -25,10 +25,6 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - uses: stCarolas/setup-maven@d6af6abeda15e98926a57b5aa970a96bb37f97d1 # v5
-        with:
-          maven-version: 3.9.9
-
       - name: Generate Javadoc
         run: mvn javadoc:javadoc
 
@@ -44,10 +40,6 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'maven'
-
-      - uses: stCarolas/setup-maven@d6af6abeda15e98926a57b5aa970a96bb37f97d1 # v5
-        with:
-          maven-version: 3.9.9
 
       - name: Build with tests
         run: mvn verify -DskipTests
@@ -133,9 +125,5 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - uses: stCarolas/setup-maven@d6af6abeda15e98926a57b5aa970a96bb37f97d1 # v5
-        with:
-          maven-version: 3.9.9
-
       - name: Run tests
-        run: mvn test
+        run: mvn verify

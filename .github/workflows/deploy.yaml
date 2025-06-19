@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'main'
+      - '0.17.x'
     paths:
       - 'src/main/resources/api.yaml'
       - 'pom.xml'
