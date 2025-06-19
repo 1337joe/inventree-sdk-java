@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '350'
+  version: '351'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -21612,6 +21612,78 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/user/{id}/set-password/:
+    put:
+      operationId: user_set_password_update
+      description: Allows superusers to set the password for a user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSetPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserSetPassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserSetPassword'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:superuser
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSetPassword'
+          description: ''
+    patch:
+      operationId: user_set_password_partial_update
+      description: Allows superusers to set the password for a user.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserSetPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserSetPassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserSetPassword'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:superuser
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSetPassword'
+          description: ''
   /api/user/group/:
     get:
       operationId: user_group_list
@@ -36034,6 +36106,18 @@ components:
           type: integer
           nullable: true
           description: Primary group for the user
+    PatchedUserSetPassword:
+      type: object
+      description: Serializer for setting a password for a user.
+      properties:
+        password:
+          type: string
+          writeOnly: true
+          description: Password for the user
+        override_warning:
+          type: boolean
+          writeOnly: true
+          description: Override the warning about password rules
     PatchedUserSettings:
       type: object
       description: Serializer for the InvenTreeUserSetting model.
@@ -39381,6 +39465,20 @@ components:
           type: integer
           nullable: true
           description: Primary group for the user
+    UserSetPassword:
+      type: object
+      description: Serializer for setting a password for a user.
+      properties:
+        password:
+          type: string
+          writeOnly: true
+          description: Password for the user
+        override_warning:
+          type: boolean
+          writeOnly: true
+          description: Override the warning about password rules
+      required:
+      - password
     UserSettings:
       type: object
       description: Serializer for the InvenTreeUserSetting model.

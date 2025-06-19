@@ -58,6 +58,8 @@ public class TestUserApi extends TestApi {
         api.userRulesetPartialUpdate(null, null);
         api.userRulesetRetrieve(null);
         api.userRulesetUpdate(null, null);
+        api.userSetPasswordPartialUpdate(null, null);
+        api.userSetPasswordUpdate(null, null);
         api.userTokenRetrieve(null);
         api.userTokensCreate(null);
         api.userTokensDestroy(null);
