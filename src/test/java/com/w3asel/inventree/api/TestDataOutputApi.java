@@ -9,13 +9,13 @@ public class TestDataOutputApi extends TestApi {
     private DataOutputApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new DataOutputApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.dataOutputBulkDestroy(null);
         // api.dataOutputList(null, null, null, null);
         api.dataOutputRetrieve(null);
@@ -23,7 +23,7 @@ public class TestDataOutputApi extends TestApi {
 
     @Disabled("No data")
     @Test
-    public void dataOutputList() throws ApiException {
+    void dataOutputList() throws ApiException {
         int limit = 1000;
         api.dataOutputList(limit, null, null, null);
     }

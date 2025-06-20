@@ -9,13 +9,13 @@ public class TestAuthenticationPasswordResetApi extends TestApi {
     private AuthenticationPasswordResetApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AuthenticationPasswordResetApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAuthPasswordRequestPost(null);
         api.allauthAuthPasswordResetGet(null);
         api.allauthAuthPasswordResetPost(null);

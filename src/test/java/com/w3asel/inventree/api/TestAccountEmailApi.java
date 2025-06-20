@@ -9,13 +9,13 @@ public class TestAccountEmailApi extends TestApi {
     private AccountEmailApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AccountEmailApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAccountEmailDelete(null);
         api.allauthAccountEmailPatch(null);
         api.allauthAccountEmailPost(null);
@@ -24,7 +24,7 @@ public class TestAccountEmailApi extends TestApi {
 
     @Disabled("Unauthorized")
     @Test
-    public void allauthAccountEmailGet() throws ApiException {
+    void allauthAccountEmailGet() throws ApiException {
         api.allauthAccountEmailGet();
     }
 }

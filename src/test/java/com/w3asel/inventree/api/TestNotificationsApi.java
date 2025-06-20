@@ -10,13 +10,13 @@ public class TestNotificationsApi extends TestApi {
     private NotificationsApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new NotificationsApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.notificationsBulkDestroy(null);
         api.notificationsDestroy(null);
         // api.notificationsList(null, null, null, null, null, null);
@@ -27,7 +27,7 @@ public class TestNotificationsApi extends TestApi {
     }
 
     @Test
-    public void notificationsList() throws ApiException {
+    void notificationsList() throws ApiException {
         // TODO verify results
         int limit = 10;
         int offset = 0;

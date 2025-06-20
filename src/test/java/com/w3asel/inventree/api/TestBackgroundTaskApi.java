@@ -9,33 +9,39 @@ public class TestBackgroundTaskApi extends TestApi {
     private BackgroundTaskApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new BackgroundTaskApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.backgroundTaskFailedBulkDestroy(null);
         // api.backgroundTaskFailedList(null, null, null, null);
         api.backgroundTaskPendingBulkDestroy(null);
-        api.backgroundTaskPendingList(null, null);
+        // api.backgroundTaskPendingList(null, null);
         api.backgroundTaskRetrieve();
-        api.backgroundTaskScheduledList(null, null, null, null);
+        // api.backgroundTaskScheduledList(null, null, null, null);
     }
 
     @Disabled("No data")
     @Test
-    public void backgroundTaskFailedList() throws ApiException {
+    void backgroundTaskFailedList() throws ApiException {
         int limit = 1000;
         api.backgroundTaskFailedList(limit, null, null, null);
     }
 
     @Test
-    public void test() throws ApiException {
+    void backgroundTaskPendingList() throws ApiException {
         // TODO verify results
         int limit = 1000;
         api.backgroundTaskPendingList(limit, null).getCount();
+    }
+
+    @Test
+    void backgroundTaskScheduledList() throws ApiException {
+        // TODO verify results
+        int limit = 1000;
         api.backgroundTaskScheduledList(limit, null, null, null).getCount();
     }
 }

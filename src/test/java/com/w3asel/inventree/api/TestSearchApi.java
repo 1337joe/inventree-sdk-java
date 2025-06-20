@@ -9,13 +9,13 @@ public class TestSearchApi extends TestApi {
     private SearchApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new SearchApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void searchCreate() throws ApiException {
         api.searchCreate(null);
     }
 }

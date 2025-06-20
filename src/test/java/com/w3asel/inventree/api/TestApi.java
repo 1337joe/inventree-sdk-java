@@ -16,7 +16,7 @@ public abstract class TestApi {
     protected static ApiClient apiClient;
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         Properties properties = new Properties();
         try (InputStream is =
                 TestApi.class.getClassLoader().getResourceAsStream(INVENTREE_PROPERTIES)) {

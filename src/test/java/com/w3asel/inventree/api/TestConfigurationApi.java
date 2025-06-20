@@ -9,13 +9,13 @@ public class TestConfigurationApi extends TestApi {
     private ConfigurationApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new ConfigurationApi(apiClient);
     }
 
     @Disabled("field authentication_method not defined")
     @Test
-    public void allauthConfigGet() throws ApiException {
+    void allauthConfigGet() throws ApiException {
         api.allauthConfigGet();
     }
 }

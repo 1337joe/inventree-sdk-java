@@ -8,12 +8,12 @@ public class TestNewsApi extends TestApi {
     private NewsApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new NewsApi(apiClient);
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
         api.newsList(limit, null, null, null);

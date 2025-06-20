@@ -9,13 +9,13 @@ public class TestAuthenticationLoginByCodeApi extends TestApi {
     private AuthenticationLoginByCodeApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AuthenticationLoginByCodeApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAuthCodeConfirmPost(null);
         api.allauthAuthCodeRequestPost(null);
     }

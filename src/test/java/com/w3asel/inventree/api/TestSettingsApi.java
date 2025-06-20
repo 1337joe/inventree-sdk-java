@@ -1,5 +1,9 @@
 package com.w3asel.inventree.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
@@ -11,7 +15,6 @@ import com.w3asel.inventree.model.PaginatedGlobalSettingsList;
 import com.w3asel.inventree.model.PaginatedNotificationUserSettingList;
 import com.w3asel.inventree.model.PaginatedUserSettingsList;
 import com.w3asel.inventree.model.UserSettings;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -23,13 +26,13 @@ public class TestSettingsApi extends TestApi {
     private SettingsApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new SettingsApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         // api.settingsGlobalList(null, null, null, null);
         api.settingsGlobalPartialUpdate(null, null);
         // api.settingsGlobalRetrieve(null);
@@ -59,8 +62,8 @@ public class TestSettingsApi extends TestApi {
 
     private void assertTypedEquals(String expectedType, JsonElement expectedValue,
             String actualType, String actualValue) {
-        Assertions.assertEquals(expectedValue.getAsString(), actualValue, "Incorrect value");
-        Assertions.assertEquals(expectedType, actualType, "Incorrect type");
+        assertEquals(expectedValue.getAsString(), actualValue, "Incorrect value");
+        assertEquals(expectedType, actualType, "Incorrect type");
 
         switch (expectedType) {
             default:
@@ -68,27 +71,26 @@ public class TestSettingsApi extends TestApi {
                 // already tested by string comparison
                 break;
             case "boolean":
-                Assertions.assertEquals(expectedValue.getAsBoolean(),
-                        Boolean.parseBoolean(actualValue), "Incorrect parsed value");
+                assertEquals(expectedValue.getAsBoolean(), Boolean.parseBoolean(actualValue),
+                        "Incorrect parsed value");
                 break;
             case "integer":
-                Assertions.assertEquals(expectedValue.getAsInt(), Integer.parseInt(actualValue),
+                assertEquals(expectedValue.getAsInt(), Integer.parseInt(actualValue),
                         "Incorrect parsed value");
                 break;
         }
     }
 
     @Test
-    public void settingsGlobalList() throws ApiException {
+    void settingsGlobalList() throws ApiException {
         List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.GLOBAL_SETTING, null);
-        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+        assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 5;
         int offset = 0;
         String ordering = "pk";
         PaginatedGlobalSettingsList actual = api.settingsGlobalList(limit, offset, ordering, null);
-        Assertions.assertTrue(expectedList.size() <= actual.getCount(),
-                "Incorrect global settings count");
+        assertTrue(expectedList.size() <= actual.getCount(), "Incorrect global settings count");
         List<GlobalSettings> actualList = actual.getResults();
 
         // demo data is minimal, just verify that we find key/value pairs that match
@@ -98,44 +100,44 @@ public class TestSettingsApi extends TestApi {
                     getExpectedValue(Model.GLOBAL_SETTING, actualSetting.getKey(), null);
             if (expectedValue != null) {
                 foundNonNull = true;
-                Assertions.assertEquals(expectedValue.getAsString(), actualSetting.getValue(),
+                assertEquals(expectedValue.getAsString(), actualSetting.getValue(),
                         "Incorrect value for " + actualSetting.getKey());
             }
         }
         if (!foundNonNull) {
             List<String> nameList = actualList.stream().map(GlobalSettings::getKey).toList();
-            Assertions.fail("Found no demo-configured settings: " + nameList);
+            fail("Found no demo-configured settings: " + nameList);
         }
     }
 
     @ParameterizedTest
     @CsvSource({"CURRENCY_CODES,string", "INVENTREE_DEFAULT_CURRENCY,string",
             "REPORT_LOG_ERRORS,boolean", "BARCODE_RESULTS_MAX_NUM,integer"})
-    public void settingsGlobalRetrieve(String targetSetting, String type) throws ApiException {
+    void settingsGlobalRetrieve(String targetSetting, String type) throws ApiException {
         JsonElement expectedValue = getExpectedValue(Model.GLOBAL_SETTING, targetSetting, null);
 
         GlobalSettings actual = api.settingsGlobalRetrieve(targetSetting);
-        Assertions.assertNotNull(actual);
-        Assertions.assertEquals(targetSetting, actual.getKey(), "Incorrect key");
+        assertNotNull(actual);
+        assertEquals(targetSetting, actual.getKey(), "Incorrect key");
 
         assertTypedEquals(type, expectedValue, actual.getType(), actual.getValue());
     }
 
     @Test
-    public void settingsNotificationList() throws ApiException {
+    void settingsNotificationList() throws ApiException {
         String user = "admin";
         List<JsonObject> expectedList =
                 InventreeDemoDataset.getObjects(Model.NOTIFICATION_SETTING, null);
         // expect only settings for current user
         expectedList.removeIf(
                 jo -> !InventreeDemoDataset.getFields(jo).get("user").getAsString().contains(user));
-        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+        assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 10;
         int offset = 0;
         PaginatedNotificationUserSettingList actual =
                 api.settingsNotificationList(limit, offset, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+        assertEquals(expectedList.size(), actual.getCount(),
                 "Incorrect admin notification settings count");
         List<NotificationUserSetting> actualList = actual.getResults();
 
@@ -144,7 +146,7 @@ public class TestSettingsApi extends TestApi {
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
                 .toList();
         List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
-        Assertions.assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
+        assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
 
         // deep equals on first value
         NotificationUserSetting actualFirst = actualList.get(0);
@@ -152,29 +154,28 @@ public class TestSettingsApi extends TestApi {
                 .getObjects(Model.NOTIFICATION_SETTING, actualFirst.getPk()).get(0);
 
         JsonObject fields = InventreeDemoDataset.getFields(expectedFirst);
-        Assertions.assertEquals(fields.get("key").getAsString(), actualFirst.getKey(),
+        assertEquals(fields.get("key").getAsString(), actualFirst.getKey(),
                 "Incorrect notification setting key");
-        Assertions.assertEquals(fields.get("value").getAsString(), actualFirst.getValue(),
+        assertEquals(fields.get("value").getAsString(), actualFirst.getValue(),
                 "Incorrect notification setting value");
-        Assertions.assertEquals(fields.get("method").getAsString(), actualFirst.getMethod(),
+        assertEquals(fields.get("method").getAsString(), actualFirst.getMethod(),
                 "Incorrect notification setting method");
     }
 
     @Test
-    public void settingsUserList() throws ApiException {
+    void settingsUserList() throws ApiException {
         String user = "admin";
         List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.USER_SETTING, null);
         // expect only settings for current user
         expectedList.removeIf(
                 jo -> !InventreeDemoDataset.getFields(jo).get("user").getAsString().contains(user));
-        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+        assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 10;
         int offset = 0;
         String ordering = "pk";
         PaginatedUserSettingsList actual = api.settingsUserList(limit, offset, ordering, null);
-        Assertions.assertTrue(expectedList.size() <= actual.getCount(),
-                "Incorrect user settings count");
+        assertTrue(expectedList.size() <= actual.getCount(), "Incorrect user settings count");
         List<UserSettings> actualList = actual.getResults();
 
         // demo data is minimal, just verify that we find key/value pairs that match
@@ -184,25 +185,25 @@ public class TestSettingsApi extends TestApi {
                     getExpectedValue(Model.USER_SETTING, actualSetting.getKey(), user);
             if (expectedValue != null) {
                 foundNonNull = true;
-                Assertions.assertEquals(expectedValue.getAsString(), actualSetting.getValue(),
+                assertEquals(expectedValue.getAsString(), actualSetting.getValue(),
                         "Incorrect value for " + actualSetting.getKey());
             }
         }
         if (!foundNonNull) {
             List<String> nameList = actualList.stream().map(UserSettings::getKey).toList();
-            Assertions.fail("Found no demo-configured user settings: " + nameList);
+            fail("Found no demo-configured user settings: " + nameList);
         }
     }
 
     @ParameterizedTest
     @CsvSource({"NOTIFICATION_ERROR_REPORT,boolean", "SEARCH_PREVIEW_RESULTS,integer"})
-    public void settingsUserRetrieve(String targetSetting, String type) throws ApiException {
+    void settingsUserRetrieve(String targetSetting, String type) throws ApiException {
         String user = "admin";
         JsonElement expectedValue = getExpectedValue(Model.USER_SETTING, targetSetting, user);
 
         UserSettings actual = api.settingsUserRetrieve(targetSetting);
-        Assertions.assertNotNull(actual);
-        Assertions.assertEquals(targetSetting, actual.getKey(), "Incorrect key");
+        assertNotNull(actual);
+        assertEquals(targetSetting, actual.getKey(), "Incorrect key");
 
         assertTypedEquals(type, expectedValue, actual.getType(), actual.getValue());
     }

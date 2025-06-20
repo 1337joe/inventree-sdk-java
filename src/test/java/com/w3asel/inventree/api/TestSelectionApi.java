@@ -11,13 +11,13 @@ public class TestSelectionApi extends TestApi {
     private SelectionApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new SelectionApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.selectionCreate(null);
         api.selectionDestroy(null);
         api.selectionEntryCreate(null, null);
@@ -33,7 +33,7 @@ public class TestSelectionApi extends TestApi {
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
         PaginatedSelectionListList actual = api.selectionList(limit, null);

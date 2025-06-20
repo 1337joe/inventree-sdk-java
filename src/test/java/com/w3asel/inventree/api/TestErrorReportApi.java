@@ -9,13 +9,13 @@ public class TestErrorReportApi extends TestApi {
     private ErrorReportApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new ErrorReportApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.errorReportBulkDestroy(null);
         api.errorReportDestroy(null);
         // api.errorReportList(null, null, null, null);
@@ -26,7 +26,7 @@ public class TestErrorReportApi extends TestApi {
 
     @Disabled("No data")
     @Test
-    public void errorReportList() throws ApiException {
+    void errorReportList() throws ApiException {
         int limit = 1000;
         api.errorReportList(limit, null, null, null);
     }

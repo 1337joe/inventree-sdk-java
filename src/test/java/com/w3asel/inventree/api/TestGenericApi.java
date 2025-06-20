@@ -1,5 +1,7 @@
 package com.w3asel.inventree.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
@@ -7,7 +9,6 @@ import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.CustomState;
 import com.w3asel.inventree.model.GenericStateClass;
 import com.w3asel.inventree.model.PaginatedCustomStateList;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -19,13 +20,13 @@ public class TestGenericApi extends TestApi {
     private GenericApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new GenericApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.genericStatusCustomCreate(null);
         api.genericStatusCustomDestroy(null);
         // api.genericStatusCustomList(null, null, null, null, null, null);
@@ -57,17 +58,17 @@ public class TestGenericApi extends TestApi {
     }
 
     @Test
-    public void genericStatusCustomList() throws ApiException {
+    void genericStatusCustomList() throws ApiException {
         List<JsonObject> expectedList =
                 InventreeDemoDataset.getObjects(Model.CUSTOM_USER_STATE, null);
-        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+        assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 10;
         int offset = 0;
 
         PaginatedCustomStateList actual =
                 api.genericStatusCustomList(limit, null, offset, null, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+        assertEquals(expectedList.size(), actual.getCount(),
                 "Incorrect total generic status custom count");
         List<CustomState> actualList = actual.getResults();
 
@@ -76,7 +77,7 @@ public class TestGenericApi extends TestApi {
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
                 .toList();
         List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
-        Assertions.assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
         CustomState actualFirst = actualList.get(0);
@@ -87,7 +88,7 @@ public class TestGenericApi extends TestApi {
 
     @ParameterizedTest
     @CsvSource({"1"})
-    public void genericStatusCustomRetrieve(int pk) throws ApiException {
+    void genericStatusCustomRetrieve(int pk) throws ApiException {
         CustomState actual = api.genericStatusCustomRetrieve(pk);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.CUSTOM_USER_STATE, pk).get(0);
         assertCustomStateEquals(expected, actual);
@@ -105,21 +106,21 @@ public class TestGenericApi extends TestApi {
                 expectedModel = null;
                 expectedModelName = null;
         }
-        Assertions.assertEquals(expectedModel, actual.getModel(), "Incorrect model");
-        Assertions.assertEquals(expectedModelName, actual.getModelName(), "Incorrect model name");
+        assertEquals(expectedModel, actual.getModel(), "Incorrect model");
+        assertEquals(expectedModelName, actual.getModelName(), "Incorrect model name");
     }
 
     @Disabled("Can't figure out what a valid statusModel string is")
     @ParameterizedTest
     @CsvSource({"InvenTree.build.status_codes.BuildStatus"/* , "stock", "stockitem" */})
-    public void genericStatusRetrieve2(String statusModel) throws ApiException {
+    void genericStatusRetrieve2(String statusModel) throws ApiException {
         // TODO statusModel must be a valid class, should restrict to enum
         GenericStateClass actual = api.genericStatusRetrieve(statusModel);
     }
 
     @Disabled("Void return")
     @Test
-    public void genericStatusRetrieveAll() throws ApiException {
+    void genericStatusRetrieveAll() throws ApiException {
         api.genericStatusRetrieveAll();
     }
 }

@@ -11,20 +11,20 @@ public class TestAdminApi extends TestApi {
     private AdminApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AdminApi(apiClient);
     }
 
     @Disabled("void response")
     @Test
-    public void adminConfigList() throws ApiException {
+    void adminConfigList() throws ApiException {
         api.adminConfigList();
     }
 
     @Disabled("void response")
     @ParameterizedTest
     @CsvSource({"key"})
-    public void adminConfigRetrieve(String key) throws ApiException {
+    void adminConfigRetrieve(String key) throws ApiException {
         api.adminConfigRetrieve(key);
     }
 }

@@ -9,13 +9,13 @@ public class TestSessionsApi extends TestApi {
     private SessionsApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new SessionsApi(apiClient);
     }
 
     @Disabled("Unauthorized")
     @Test
-    public void allauthAuthSessionsGet() throws ApiException {
+    void allauthAuthSessionsGet() throws ApiException {
         api.allauthAuthSessionsGet();
     }
 }

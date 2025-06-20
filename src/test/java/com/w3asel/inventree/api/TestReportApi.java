@@ -8,12 +8,12 @@ public class TestReportApi extends TestApi {
     private ReportApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new ReportApi(apiClient);
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
         api.reportAssetList(limit, null);
@@ -21,6 +21,6 @@ public class TestReportApi extends TestApi {
         api.reportTemplateList(limit, null, null, null, null, null, null);
 
         // ReportAsset actual = api.reportAssetRetrieve(1);
-        // Assertions.assertNotNull(actual);
+        // assertNotNull(actual);
     }
 }

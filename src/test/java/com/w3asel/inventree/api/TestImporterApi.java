@@ -9,13 +9,13 @@ public class TestImporterApi extends TestApi {
     private ImporterApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new ImporterApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.importerColumnMappingList(null, null, null, null, null);
         api.importerColumnMappingPartialUpdate(null, null);
         api.importerColumnMappingRetrieve(null);
@@ -39,7 +39,7 @@ public class TestImporterApi extends TestApi {
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
         api.importerColumnMappingList(limit, null, null, null, null);

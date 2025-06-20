@@ -9,13 +9,13 @@ public class TestLocateApi extends TestApi {
     private LocateApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new LocateApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.locateCreate(null);
     }
 }

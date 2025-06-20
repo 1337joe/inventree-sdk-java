@@ -9,13 +9,13 @@ public class TestAccountPasswordApi extends TestApi {
     private AccountPasswordApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AccountPasswordApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAccountPasswordChangePost(null);
     }
 }

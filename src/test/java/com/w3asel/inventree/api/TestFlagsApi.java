@@ -11,13 +11,13 @@ public class TestFlagsApi extends TestApi {
     private FlagsApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new FlagsApi(apiClient);
     }
 
     @Disabled("void response")
     @Test
-    public void flagsList() throws ApiException {
+    void flagsList() throws ApiException {
         int limit = 10;
         int offset = 0;
 
@@ -27,7 +27,7 @@ public class TestFlagsApi extends TestApi {
     @Disabled("void response")
     @ParameterizedTest
     @CsvSource({"key"})
-    public void flagsRetrieve(String key) throws ApiException {
+    void flagsRetrieve(String key) throws ApiException {
         api.flagsRetrieve(key);
     }
 }

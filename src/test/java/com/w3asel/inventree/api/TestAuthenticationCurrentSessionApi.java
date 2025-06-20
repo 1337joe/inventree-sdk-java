@@ -9,20 +9,20 @@ public class TestAuthenticationCurrentSessionApi extends TestApi {
     private AuthenticationCurrentSessionApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AuthenticationCurrentSessionApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAuthSessionDelete();
         api.allauthAuthSessionGet();
     }
 
     @Disabled("Unauthorized")
     @Test
-    public void allauthAuthSessionGet() throws ApiException {
+    void allauthAuthSessionGet() throws ApiException {
         api.allauthAuthSessionGet();
     }
 }

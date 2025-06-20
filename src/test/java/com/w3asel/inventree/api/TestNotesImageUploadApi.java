@@ -8,12 +8,12 @@ public class TestNotesImageUploadApi extends TestApi {
     private NotesImageUploadApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new NotesImageUploadApi(apiClient);
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
         api.notesImageUploadList(limit, null, null, null);

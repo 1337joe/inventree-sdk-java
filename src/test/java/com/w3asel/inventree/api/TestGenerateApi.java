@@ -1,9 +1,11 @@
 package com.w3asel.inventree.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.GenerateBatchCode;
 import com.w3asel.inventree.model.GenerateSerialNumber;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,15 +15,15 @@ public class TestGenerateApi extends TestApi {
     private GenerateApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new GenerateApi(apiClient);
     }
 
     @Test
-    public void generateBatchCodeCreate() throws ApiException {
+    void generateBatchCodeCreate() throws ApiException {
         GenerateBatchCode newItem = new GenerateBatchCode();
         GenerateBatchCode result = api.generateBatchCodeCreate(newItem);
-        Assertions.assertNotNull(result.getBatchCode());
+        assertNotNull(result.getBatchCode());
     }
 
     /**
@@ -29,20 +31,20 @@ public class TestGenerateApi extends TestApi {
      * request.
      */
     @Test
-    public void generateSerialNumberCreate_null() throws ApiException {
+    void generateSerialNumberCreate_null() throws ApiException {
         GenerateSerialNumber newItem = new GenerateSerialNumber();
         GenerateSerialNumber result = api.generateSerialNumberCreate(newItem);
-        Assertions.assertNull(result.getSerialNumber());
+        assertNull(result.getSerialNumber());
     }
 
     @ParameterizedTest
     @CsvSource({"1,", "1,2"})
-    public void generateSerialNumberCreate(int part, Integer quantity) throws ApiException {
+    void generateSerialNumberCreate(int part, Integer quantity) throws ApiException {
         GenerateSerialNumber newItem = new GenerateSerialNumber().part(part).quantity(quantity);
         GenerateSerialNumber result = api.generateSerialNumberCreate(newItem);
-        Assertions.assertNotNull(result.getSerialNumber());
+        assertNotNull(result.getSerialNumber());
 
         String[] actualSplit = result.getSerialNumber().split(",");
-        Assertions.assertEquals(quantity == null ? 1 : quantity, actualSplit.length);
+        assertEquals(quantity == null ? 1 : quantity, actualSplit.length);
     }
 }

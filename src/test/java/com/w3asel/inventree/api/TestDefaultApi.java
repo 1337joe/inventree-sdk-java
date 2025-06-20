@@ -9,12 +9,12 @@ public class TestDefaultApi extends TestApi {
     private DefaultApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new DefaultApi(apiClient);
     }
 
     @Test
-    public void rootRetrieve() throws ApiException {
+    void rootRetrieve() throws ApiException {
         // TODO verify results
         InfoApi actual = api.rootRetrieve();
     }

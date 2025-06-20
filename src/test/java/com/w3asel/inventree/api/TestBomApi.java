@@ -1,5 +1,7 @@
 package com.w3asel.inventree.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
@@ -8,7 +10,6 @@ import com.w3asel.inventree.model.BomItem;
 import com.w3asel.inventree.model.BomItemSubstitute;
 import com.w3asel.inventree.model.PaginatedBomItemList;
 import com.w3asel.inventree.model.PaginatedBomItemSubstituteList;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,13 @@ public class TestBomApi extends TestApi {
     private BomApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new BomApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.bomBulkDestroy(null);
         api.bomCreate(null);
         api.bomDestroy(null);
@@ -92,17 +93,16 @@ public class TestBomApi extends TestApi {
     }
 
     @Test
-    public void bomList() throws ApiException {
+    void bomList() throws ApiException {
         List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.BOM_ITEM, null);
-        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+        assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 10;
         int offset = 0;
 
         PaginatedBomItemList actual = api.bomList(limit, null, null, null, null, null, offset, null,
                 null, null, null, null, null, null, null, null, null, null, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount(),
-                "Incorrect total bom item count");
+        assertEquals(expectedList.size(), actual.getCount(), "Incorrect total bom item count");
         List<BomItem> actualList = actual.getResults();
 
         // check items returned by key
@@ -110,7 +110,7 @@ public class TestBomApi extends TestApi {
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
                 .toList();
         List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
-        Assertions.assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
         BomItem actualFirst = actualList.get(0);
@@ -121,7 +121,7 @@ public class TestBomApi extends TestApi {
 
     @ParameterizedTest
     @CsvSource({"1", "375"})
-    public void bomRetrieve(int pk) throws ApiException {
+    void bomRetrieve(int pk) throws ApiException {
         BomItem actual = api.bomRetrieve(pk);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.BOM_ITEM, pk).get(0);
         assertBomItemEquals(expected, actual);
@@ -138,7 +138,7 @@ public class TestBomApi extends TestApi {
             default:
                 canBuild = null;
         }
-        Assertions.assertEquals(canBuild, actual.getCanBuild(), "Incorrect canBuild");
+        assertEquals(canBuild, actual.getCanBuild(), "Incorrect canBuild");
     }
 
     private static void assertBomItemSubstituteEquals(JsonObject expected,
@@ -159,18 +159,17 @@ public class TestBomApi extends TestApi {
     }
 
     @Test
-    public void bomSubstituteList() throws ApiException {
+    void bomSubstituteList() throws ApiException {
         List<JsonObject> expectedList =
                 InventreeDemoDataset.getObjects(Model.BOM_ITEM_SUBSTITUTE, null);
-        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+        assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 10;
         int offset = 0;
 
         PaginatedBomItemSubstituteList actual =
                 api.bomSubstituteList(limit, null, offset, null, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount(),
-                "Incorrect total bom item count");
+        assertEquals(expectedList.size(), actual.getCount(), "Incorrect total bom item count");
         List<BomItemSubstitute> actualList = actual.getResults();
 
         // check items returned by key
@@ -178,7 +177,7 @@ public class TestBomApi extends TestApi {
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
                 .toList();
         List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
-        Assertions.assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
         BomItemSubstitute actualFirst = actualList.get(0);
@@ -189,7 +188,7 @@ public class TestBomApi extends TestApi {
 
     @ParameterizedTest
     @CsvSource({"1"})
-    public void bomSubstituteRetrieve(int pk) throws ApiException {
+    void bomSubstituteRetrieve(int pk) throws ApiException {
         BomItemSubstitute actual = api.bomSubstituteRetrieve(pk);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.BOM_ITEM_SUBSTITUTE, pk).get(0);
         assertBomItemSubstituteEquals(expected, actual);

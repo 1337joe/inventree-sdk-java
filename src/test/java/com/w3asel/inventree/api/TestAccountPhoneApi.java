@@ -9,19 +9,19 @@ public class TestAccountPhoneApi extends TestApi {
     private AccountPhoneApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AccountPhoneApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAccountPhonePost(null);
     }
 
     @Disabled("500: No attribute AuthenticationResponse")
     @Test
-    public void allauthAccountPhoneGet() throws ApiException {
+    void allauthAccountPhoneGet() throws ApiException {
         api.allauthAccountPhoneGet();
     }
 }

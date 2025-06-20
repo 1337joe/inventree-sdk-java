@@ -9,13 +9,13 @@ public class TestAuthenticationAccountApi extends TestApi {
     private AuthenticationAccountApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AuthenticationAccountApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAuthEmailVerifyGet(null);
         api.allauthAuthEmailVerifyPost(null);
         api.allauthAuthEmailVerifyResendPost();

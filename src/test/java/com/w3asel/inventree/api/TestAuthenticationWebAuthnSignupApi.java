@@ -9,20 +9,20 @@ public class TestAuthenticationWebAuthnSignupApi extends TestApi {
     private AuthenticationWebAuthnSignupApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AuthenticationWebAuthnSignupApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAuthWebauthnSignupPost(null);
         api.allauthAuthWebauthnSignupPut(null);
     }
 
     @Disabled("API endpoint not found")
     @Test
-    public void allauthAuthWebauthnSignupGet() throws ApiException {
+    void allauthAuthWebauthnSignupGet() throws ApiException {
         api.allauthAuthWebauthnSignupGet();
     }
 }

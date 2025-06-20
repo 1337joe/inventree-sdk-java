@@ -1,8 +1,8 @@
 package com.w3asel.inventree.api;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.Part;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -11,13 +11,13 @@ public class TestPartApi extends TestApi {
     private PartApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new PartApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.partBomCopyCreate(null, null);
         api.partBomValidatePartialUpdate(null, null);
         api.partBomValidateRetrieve(null);
@@ -37,10 +37,10 @@ public class TestPartApi extends TestApi {
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         Part actual = api.partRetrieve(1);
-        Assertions.assertNotNull(actual);
+        assertNotNull(actual);
 
         int limit = 1000;
         api.partList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
@@ -76,7 +76,7 @@ public class TestPartApi extends TestApi {
     }
 
     @Test
-    public void partInternalPriceList() throws ApiException {
+    void partInternalPriceList() throws ApiException {
         int limit = 1;
         api.partInternalPriceList(limit, null, null, null, null);
     }

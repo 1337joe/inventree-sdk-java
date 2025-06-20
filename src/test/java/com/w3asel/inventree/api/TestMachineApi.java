@@ -9,13 +9,13 @@ public class TestMachineApi extends TestApi {
     private MachineApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new MachineApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.machineCreate(null);
         api.machineDestroy(null);
         api.machineDriversList();
@@ -33,7 +33,7 @@ public class TestMachineApi extends TestApi {
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
         api.machineDriversList();

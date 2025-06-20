@@ -1,5 +1,10 @@
 package com.w3asel.inventree.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,7 +17,6 @@ import com.w3asel.inventree.model.PaginatedStockItemList;
 import com.w3asel.inventree.model.PaginatedStockTrackingList;
 import com.w3asel.inventree.model.StockItem;
 import com.w3asel.inventree.model.StockTracking;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -30,13 +34,13 @@ public class TestStockApi extends TestApi {
     private StockApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new StockApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.stockAddCreate(null);
         api.stockAssignCreate(null);
         api.stockChangeStatusCreate(null);
@@ -103,7 +107,7 @@ public class TestStockApi extends TestApi {
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
         api.stockLocationList(limit, null, null, null, null, null, null, null, null, null, null,
@@ -124,7 +128,7 @@ public class TestStockApi extends TestApi {
         OffsetDateTime expectedUpdated = fields.get("updated").isJsonNull() ? null
                 : InventreeDemoDataset.parseOffsetDateTime(fields.get("updated").getAsString())
                         .truncatedTo(ChronoUnit.MINUTES);
-        Assertions.assertEquals(expectedUpdated, actual.getUpdated(), "Incorrect date");
+        assertEquals(expectedUpdated, actual.getUpdated(), "Incorrect date");
 
         InventreeDemoDataset.assertNullableEquals(Integer.class, "parent", fields,
                 actual.getParent());
@@ -206,9 +210,9 @@ public class TestStockApi extends TestApi {
     }
 
     @Test
-    public void stockList() throws ApiException {
+    void stockList() throws ApiException {
         List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.STOCK_ITEM, null);
-        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+        assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 10;
         int offset = 0;
@@ -218,8 +222,7 @@ public class TestStockApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, offset, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount(),
-                "Incorrect total stock item count");
+        assertEquals(expectedList.size(), actual.getCount(), "Incorrect total stock item count");
         List<StockItem> actualList = actual.getResults();
 
         // check items returned by key
@@ -227,7 +230,7 @@ public class TestStockApi extends TestApi {
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
                 .toList();
         List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
-        Assertions.assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
         StockItem actualFirst = actualList.get(0);
@@ -238,7 +241,7 @@ public class TestStockApi extends TestApi {
 
     @ParameterizedTest
     @CsvSource({"2", "220"})
-    public void stockRetrieve(int pk) throws ApiException {
+    void stockRetrieve(int pk) throws ApiException {
         StockItem actual = api.stockRetrieve(pk);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.STOCK_ITEM, pk).get(0);
         assertStockItemEquals(expected, actual);
@@ -247,24 +250,22 @@ public class TestStockApi extends TestApi {
     }
 
     @Test
-    public void stockStatusRetrieve() throws ApiException {
+    void stockStatusRetrieve() throws ApiException {
         GenericStateClass actual = api.stockStatusRetrieve();
-        Assertions.assertEquals("StockStatus", actual.getStatusClass(), "Incorrect status class");
+        assertEquals("StockStatus", actual.getStatusClass(), "Incorrect status class");
 
         Map<String, GenericStateValue> actualValues = actual.getValues();
-        Assertions.assertFalse(actualValues.isEmpty(), "Missing stock status values");
+        assertFalse(actualValues.isEmpty(), "Missing stock status values");
 
         // values
         String name = "ATTENTION";
-        Assertions.assertTrue(actualValues.containsKey(name), "Missing " + name + " stock status");
+        assertTrue(actualValues.containsKey(name), "Missing " + name + " stock status");
         GenericStateValue actualValue = actualValues.get(name);
-        Assertions.assertNull(actualValue.getCustom(),
-                "Non-custom value should not be marked custom");
-        Assertions.assertEquals(50, actualValue.getKey(), "Incorrect status code key");
-        Assertions.assertNull(actualValue.getLogicalKey(), "Incorrect status code logical key");
-        Assertions.assertEquals(name, actualValue.getName(), "Incorrect status code name");
-        Assertions.assertEquals("Attention needed", actualValue.getLabel(),
-                "Incorrect status code label");
+        assertNull(actualValue.getCustom(), "Non-custom value should not be marked custom");
+        assertEquals(50, actualValue.getKey(), "Incorrect status code key");
+        assertNull(actualValue.getLogicalKey(), "Incorrect status code logical key");
+        assertEquals(name, actualValue.getName(), "Incorrect status code name");
+        assertEquals("Attention needed", actualValue.getLabel(), "Incorrect status code label");
 
         // check for custom values
         List<JsonObject> customList =
@@ -283,16 +284,16 @@ public class TestStockApi extends TestApi {
             }
             customListIterator.remove();
         }
-        Assertions.assertTrue(customList.size() > 0, "Expected custom user states: " + targetModel);
+        assertTrue(customList.size() > 0, "Expected custom user states: " + targetModel);
 
         JsonObject expectedCustom = InventreeDemoDataset.getFields(customList.get(0));
 
         String customName = expectedCustom.get("name").getAsString();
-        Assertions.assertTrue(actualValues.containsKey(customName),
+        assertTrue(actualValues.containsKey(customName),
                 "Missing " + customName + " custom stock status");
         GenericStateValue customActual = actualValues.get(customName);
 
-        Assertions.assertTrue(customActual.getCustom(), "Custom value should be marked custom");
+        assertTrue(customActual.getCustom(), "Custom value should be marked custom");
         InventreeDemoDataset.assertEquals("key", expectedCustom, customActual.getKey());
 
         // TODO is it intended that logical_key come back as null?
@@ -316,15 +317,15 @@ public class TestStockApi extends TestApi {
 
         // user given as name in demo dataset file, just verify null state matches
         if (fields.get("user").isJsonNull()) {
-            Assertions.assertNull(actual.getUser(), "Expected null user");
+            assertNull(actual.getUser(), "Expected null user");
         } else {
-            Assertions.assertNotNull(actual.getUser(), "Expected non-null user");
+            assertNotNull(actual.getUser(), "Expected non-null user");
         }
 
         OffsetDateTime expectedDate = fields.get("date").isJsonNull() ? null
                 : InventreeDemoDataset.parseOffsetDateTime(fields.get("date").getAsString())
                         .truncatedTo(ChronoUnit.MINUTES);
-        Assertions.assertEquals(expectedDate, actual.getDate(), "Incorrect date");
+        assertEquals(expectedDate, actual.getDate(), "Incorrect date");
 
         JsonObject expectedDeltas = fields.get("deltas").getAsJsonObject();
         // TODO can this be strongly typed in the schema?
@@ -332,11 +333,11 @@ public class TestStockApi extends TestApi {
         Map<String, Object> actualDeltas = (Map<String, Object>) actual.getDeltas();
         for (String key : expectedDeltas.keySet()) {
             if (actualDeltas.get(key) instanceof Double) {
-                Assertions.assertEquals(expectedDeltas.get(key).getAsDouble(),
-                        actualDeltas.get(key), "Deltas mismatch on key: " + key);
+                assertEquals(expectedDeltas.get(key).getAsDouble(), actualDeltas.get(key),
+                        "Deltas mismatch on key: " + key);
             } else {
-                Assertions.assertEquals(expectedDeltas.get(key).getAsString(),
-                        actualDeltas.get(key), "Deltas mismatch on key: " + key);
+                assertEquals(expectedDeltas.get(key).getAsString(), actualDeltas.get(key),
+                        "Deltas mismatch on key: " + key);
             }
         }
 
@@ -345,21 +346,21 @@ public class TestStockApi extends TestApi {
         // actual.getUser()
 
         // not available through schema-mapped API:
-        Assertions.assertNull(actual.getItemDetail(), "Expected null item details");
-        Assertions.assertNull(actual.getUserDetail(), "Expected null user details");
+        assertNull(actual.getItemDetail(), "Expected null item details");
+        assertNull(actual.getUserDetail(), "Expected null user details");
     }
 
     @Test
-    public void stockTrackList() throws ApiException {
+    void stockTrackList() throws ApiException {
         List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.STOCK_TRACKING, null);
-        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+        assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 10;
         int offset = 0;
 
         PaginatedStockTrackingList actual =
                 api.stockTrackList(limit, null, offset, null, null, null);
-        Assertions.assertEquals(expectedList.size(), actual.getCount(),
+        assertEquals(expectedList.size(), actual.getCount(),
                 "Incorrect total stock tracking count");
         List<StockTracking> actualList = actual.getResults();
 
@@ -368,7 +369,7 @@ public class TestStockApi extends TestApi {
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
                 .toList();
         List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
-        Assertions.assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
         StockTracking actualFirst = actualList.get(0);
@@ -379,7 +380,7 @@ public class TestStockApi extends TestApi {
 
     @ParameterizedTest
     @CsvSource({"285", "1356", "1357"})
-    public void stockTrackRetrieve(int stockTrack) throws ApiException {
+    void stockTrackRetrieve(int stockTrack) throws ApiException {
         StockTracking actual = api.stockTrackRetrieve(stockTrack);
         JsonObject expected =
                 InventreeDemoDataset.getObjects(Model.STOCK_TRACKING, stockTrack).get(0);
@@ -405,26 +406,24 @@ public class TestStockApi extends TestApi {
                 expectedUser = null;
                 expectedLabel = null;
         }
-        Assertions.assertEquals(expectedLabel, actual.getLabel(), "Incorrect label");
-        Assertions.assertEquals(expectedUser, actual.getUser(), "Incorrect user");
+        assertEquals(expectedLabel, actual.getLabel(), "Incorrect label");
+        assertEquals(expectedUser, actual.getUser(), "Incorrect user");
     }
 
     @Test
-    public void stockTrackStatusRetrieve() throws ApiException {
+    void stockTrackStatusRetrieve() throws ApiException {
         GenericStateClass actual = api.stockTrackStatusRetrieve();
-        Assertions.assertEquals("StockHistoryCode", actual.getStatusClass(),
-                "Incorrect status class");
+        assertEquals("StockHistoryCode", actual.getStatusClass(), "Incorrect status class");
 
         Map<String, GenericStateValue> actualValues = actual.getValues();
-        Assertions.assertFalse(actualValues.isEmpty(), "Missing stock history values");
+        assertFalse(actualValues.isEmpty(), "Missing stock history values");
 
         // values
         String name = "CREATED";
-        Assertions.assertTrue(actualValues.containsKey(name), "Missing " + name + " stock history");
+        assertTrue(actualValues.containsKey(name), "Missing " + name + " stock history");
         GenericStateValue actualValue = actualValues.get(name);
-        Assertions.assertEquals(1, actualValue.getKey(), "Incorrect history code key");
-        Assertions.assertEquals(name, actualValue.getName(), "Incorrect history code name");
-        Assertions.assertEquals("Stock item created", actualValue.getLabel(),
-                "Incorrect history code label");
+        assertEquals(1, actualValue.getKey(), "Incorrect history code key");
+        assertEquals(name, actualValue.getName(), "Incorrect history code name");
+        assertEquals("Stock item created", actualValue.getLabel(), "Incorrect history code label");
     }
 }

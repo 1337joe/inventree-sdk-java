@@ -1,5 +1,8 @@
 package com.w3asel.inventree.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
@@ -11,7 +14,6 @@ import com.w3asel.inventree.model.Owner;
 import com.w3asel.inventree.model.PaginatedUserCreateList;
 import com.w3asel.inventree.model.Role;
 import com.w3asel.inventree.model.UserCreate;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -25,13 +27,13 @@ public class TestUserApi extends TestApi {
     private UserApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new UserApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.userCreate(null);
         api.userDestroy(null);
         api.userGroupCreate(null);
@@ -69,7 +71,7 @@ public class TestUserApi extends TestApi {
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
         api.userGroupList(limit, null, null, null);
@@ -79,26 +81,24 @@ public class TestUserApi extends TestApi {
     }
 
     @Test
-    public void userGroupRetrieve_readers() throws ApiException {
+    void userGroupRetrieve_readers() throws ApiException {
         Group actual = api.userGroupRetrieve(1);
-        Assertions.assertNotNull(actual);
+        assertNotNull(actual);
     }
 
     @Test
-    public void userMeRetrieve_admin() throws ApiException {
+    void userMeRetrieve_admin() throws ApiException {
         MeUser actual = api.userMeRetrieve();
-        Assertions.assertNotNull(actual);
-        Assertions.assertEquals(1, actual.getPk(), "Incorrect pk returned");
-        Assertions.assertEquals("admin", actual.getUsername(), "Incorrect username returned");
-        Assertions.assertEquals("Adam", actual.getFirstName(), "Incorrect first name returned");
-        Assertions.assertEquals("Administrator", actual.getLastName(),
-                "Incorrect last name returned");
-        Assertions.assertEquals("admin@demo.inventree.org", actual.getEmail(),
-                "Incorrect email returned");
-        Assertions.assertEquals(0, actual.getGroups().size(), "Incorrect groups returned");
-        Assertions.assertTrue(actual.getIsStaff(), "Incorrect isStaff returned");
-        Assertions.assertTrue(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
-        Assertions.assertTrue(actual.getIsActive(), "Incorrect isActive returned");
+        assertNotNull(actual);
+        assertEquals(1, actual.getPk(), "Incorrect pk returned");
+        assertEquals("admin", actual.getUsername(), "Incorrect username returned");
+        assertEquals("Adam", actual.getFirstName(), "Incorrect first name returned");
+        assertEquals("Administrator", actual.getLastName(), "Incorrect last name returned");
+        assertEquals("admin@demo.inventree.org", actual.getEmail(), "Incorrect email returned");
+        assertEquals(0, actual.getGroups().size(), "Incorrect groups returned");
+        assertTrue(actual.getIsStaff(), "Incorrect isStaff returned");
+        assertTrue(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
+        assertTrue(actual.getIsActive(), "Incorrect isActive returned");
     }
 
     private static void assertExtendedUserEquals(JsonObject expected, ExtendedUser actual) {
@@ -131,17 +131,16 @@ public class TestUserApi extends TestApi {
     }
 
     @Test
-    public void userList() throws ApiException {
+    void userList() throws ApiException {
         List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.USER, null);
-        Assertions.assertTrue(expectedList.size() > 0, "Expected demo data");
+        assertTrue(expectedList.size() > 0, "Expected demo data");
 
         int limit = 10;
         int offset = 0;
 
         PaginatedUserCreateList actual = api.userList(limit, null, null, null, offset, null, null);
         // add one for automatically created root@localhost user
-        Assertions.assertEquals(expectedList.size(), actual.getCount(),
-                "Incorrect total user count");
+        assertEquals(expectedList.size(), actual.getCount(), "Incorrect total user count");
         List<UserCreate> actualList = actual.getResults();
 
         // check items returned by key
@@ -149,7 +148,7 @@ public class TestUserApi extends TestApi {
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
                 .toList();
         List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
-        Assertions.assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // TODO validate - type is UserCreate, not ExtendedUser for some reason
 
@@ -161,27 +160,27 @@ public class TestUserApi extends TestApi {
     }
 
     @Test
-    public void userOwnerRetrieve_readersGroup() throws ApiException {
+    void userOwnerRetrieve_readersGroup() throws ApiException {
         Owner actual = api.userOwnerRetrieve(1);
-        Assertions.assertNotNull(actual);
+        assertNotNull(actual);
     }
 
     @ParameterizedTest
     @CsvSource({"1", "2"})
-    public void userRetrieve(int pk) throws ApiException {
+    void userRetrieve(int pk) throws ApiException {
         ExtendedUser actual = api.userRetrieve(pk);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.USER, pk).get(0);
         assertExtendedUserEquals(expected, actual);
     }
 
     @Test
-    public void userRolesRetrieve_root() throws ApiException {
+    void userRolesRetrieve_root() throws ApiException {
         Role actual = api.userRolesRetrieve();
-        Assertions.assertNotNull(actual);
+        assertNotNull(actual);
     }
 
     @Test
-    public void userTokenList() throws ApiException {
+    void userTokenList() throws ApiException {
         int limit = 100;
         api.userTokensList(limit, null, null, null, null, null);
     }

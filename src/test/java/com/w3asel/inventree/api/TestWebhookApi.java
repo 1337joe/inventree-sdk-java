@@ -9,13 +9,14 @@ public class TestWebhookApi extends TestApi {
     private WebhookApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new WebhookApi(apiClient);
     }
 
-    @Disabled
+    @Disabled("API endpoint not found")
     @Test
-    public void todo() throws ApiException {
-        api.webhookCreate(null);
+    void webhookCreate() throws ApiException {
+        String endpoint = "test";
+        api.webhookCreate(endpoint);
     }
 }

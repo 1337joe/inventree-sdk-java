@@ -9,13 +9,13 @@ public class TestAuthentication2FaApi extends TestApi {
     private Authentication2FaApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new Authentication2FaApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAuth2faAuthenticatePost(null);
         api.allauthAuth2faReauthenticatePost();
         api.allauthAuth2faTrustPost(null);

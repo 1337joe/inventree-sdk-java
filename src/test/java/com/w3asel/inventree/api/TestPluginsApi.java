@@ -9,12 +9,12 @@ public class TestPluginsApi extends TestApi {
     private PluginsApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new PluginsApi(apiClient);
     }
 
     @Test
-    public void test() throws ApiException {
+    void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
         PaginatedPluginConfigList actual =

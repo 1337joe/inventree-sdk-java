@@ -9,19 +9,19 @@ public class TestAccountProvidersApi extends TestApi {
     private AccountProvidersApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new AccountProvidersApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAccountProvidersDelete(null);
     }
 
     @Disabled("Unauthorized")
     @Test
-    public void allauthAccountProvidersGet() throws ApiException {
+    void allauthAccountProvidersGet() throws ApiException {
         api.allauthAccountProvidersGet();
     }
 }

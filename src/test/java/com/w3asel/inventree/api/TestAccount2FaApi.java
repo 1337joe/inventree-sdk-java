@@ -9,13 +9,13 @@ public class TestAccount2FaApi extends TestApi {
     private Account2FaApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new Account2FaApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.allauthAccountAuthenticatorsGet();
         api.allauthAccountAuthenticatorsRecoveryCodesGet();
         api.allauthAccountAuthenticatorsRecoveryCodesPost();
@@ -26,7 +26,7 @@ public class TestAccount2FaApi extends TestApi {
 
     @Disabled("Unauthorized")
     @Test
-    public void allauthAccountAuthenticatorsGet() throws ApiException {
+    void allauthAccountAuthenticatorsGet() throws ApiException {
         api.allauthAccountAuthenticatorsGet();
     }
 }

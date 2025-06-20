@@ -9,13 +9,13 @@ public class TestBarcodeApi extends TestApi {
     private BarcodeApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new BarcodeApi(apiClient);
     }
 
     @Disabled
     @Test
-    public void todo() throws ApiException {
+    void todo() throws ApiException {
         api.barcodeCreate(null);
         api.barcodeGenerateCreate(null);
         api.barcodeHistoryBulkDestroy(null);
@@ -31,7 +31,7 @@ public class TestBarcodeApi extends TestApi {
 
     @Disabled("No data")
     @Test
-    public void barcodeHistoryList() throws ApiException {
+    void barcodeHistoryList() throws ApiException {
         int limit = 1000;
         api.barcodeHistoryList(limit, null, null, null, null, null);
     }

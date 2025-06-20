@@ -1,6 +1,7 @@
 package com.w3asel.inventree.api;
 
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.ActionPlugin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -9,13 +10,14 @@ public class TestActionApi extends TestApi {
     private ActionApi api;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         api = new ActionApi(apiClient);
     }
 
-    @Disabled
+    @Disabled("response contains unmapped 'error' field")
     @Test
-    public void todo() throws ApiException {
-        api.actionCreate(null);
+    void actionCreate() throws ApiException {
+        ActionPlugin input = new ActionPlugin().action("Unmatched Action");
+        ActionPlugin result = api.actionCreate(input);
     }
 }
