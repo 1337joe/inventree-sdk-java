@@ -48,8 +48,6 @@ jobs:
     name: Run InvenTree server and tests
     runs-on: ubuntu-latest
     needs: compile-with-test
-    permissions:
-      pull-requests: write
 
     env:
       python_version: 3.9

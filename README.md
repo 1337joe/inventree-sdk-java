@@ -15,7 +15,7 @@ This library is published to [Maven Central](https://central.sonatype.com/artifa
 <dependency>
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
-    <version>0.17.294.3</version>
+    <version>0.17.294.4</version>
 </dependency>
 ```
 
