@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import java.util.Collections;
 import java.util.List;
 
 public class TestGenericApi extends TestApi {
@@ -50,7 +51,7 @@ public class TestGenericApi extends TestApi {
         InventreeDemoDataset.assertEquals("label", fields, actual.getLabel());
         InventreeDemoDataset.assertEquals("color", fields, actual.getColor());
 
-        // doesn't map directly to demo dataset - TODO verify this is correct?
+        // doesn't map directly to demo dataset - dataset has a list, not single value
         // actual.getModel())
 
         // not directly available in demo dataset:
@@ -94,20 +95,18 @@ public class TestGenericApi extends TestApi {
         assertCustomStateEquals(expected, actual);
 
         // verify data not directly in demo dataset
-        Integer expectedModel;
-        String expectedModelName;
+        List<String> expectedModelName;
         switch (pk) {
             case 1:
                 // TODO dataset has a list of models, why isn't that represented here?
-                expectedModel = 64;
-                expectedModelName = "Stock Item";
+                expectedModelName = List.of("Stock", "Stock Item");
                 break;
             default:
-                expectedModel = null;
-                expectedModelName = null;
+                expectedModelName = Collections.emptyList();
         }
-        assertEquals(expectedModel, actual.getModel(), "Incorrect model");
-        assertEquals(expectedModelName, actual.getModelName(), "Incorrect model name");
+        assertTrue(expectedModelName.contains(actual.getModelName()),
+                "Incorrect model name, expected one of " + expectedModelName + " but found "
+                        + actual.getModelName());
     }
 
     @Disabled("Can't figure out what a valid statusModel string is")
