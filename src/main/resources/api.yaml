@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '352'
+  version: '353'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -93,6 +93,109 @@ paths:
       responses:
         '200':
           description: No response body
+  /api/admin/email/:
+    get:
+      operationId: admin_email_list
+      description: List view for email objects.
+      parameters:
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: 'Which field to use when ordering the results. Possible fields:
+          created, subject, to, sender, status, timestamp, direction.'
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:superuser
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEmailMessageList'
+          description: ''
+  /api/admin/email/{global_id}/:
+    get:
+      operationId: admin_email_retrieve
+      description: Detail view for an email object.
+      parameters:
+      - in: path
+        name: global_id
+        schema:
+          type: string
+          format: uuid
+          description: Unique identifier for this message
+        required: true
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:superuser
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailMessage'
+          description: ''
+  /api/admin/email/test/:
+    post:
+      operationId: admin_email_test_create
+      description: Send a test email.
+      tags:
+      - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TestEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TestEmail'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:superuser
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestEmail'
+          description: ''
   /api/attachment/:
     get:
       operationId: attachment_list
@@ -25609,6 +25712,9 @@ components:
           type: integer
           nullable: true
           title: Stock Location
+    BlankEnum:
+      enum:
+      - ''
     BomItem:
       type: object
       description: Serializer for BomItem object.
@@ -27290,6 +27396,14 @@ components:
       required:
       - name
       - pk
+    DirectionEnum:
+      enum:
+      - I
+      - O
+      type: string
+      description: |-
+        * `I` - Inbound
+        * `O` - Outbound
     DuplicateOrder:
       type: object
       description: Serializer for specifying options when duplicating an order.
@@ -27340,6 +27454,116 @@ components:
           description: Copy test templates from original part
       required:
       - part
+    EmailMessage:
+      type: object
+      description: Serializer for the EmailMessage model.
+      properties:
+        pk:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Global ID
+          description: Unique identifier for this message
+        global_id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Unique identifier for this message
+        message_id_key:
+          type: string
+          nullable: true
+          title: Message ID
+          description: Identifier for this message (might be supplied by external
+            system)
+          maxLength: 250
+        thread_id_key:
+          type: string
+          nullable: true
+          title: Thread ID
+          description: Identifier for this message thread (might be supplied by external
+            system)
+          maxLength: 250
+        thread:
+          type: string
+          format: uuid
+          description: Linked thread for this message
+          nullable: true
+        subject:
+          type: string
+          maxLength: 250
+        body:
+          type: string
+        to:
+          type: string
+          format: email
+          maxLength: 254
+        sender:
+          type: string
+          format: email
+          maxLength: 254
+        status:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/EmailMessageStatusEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        headers:
+          nullable: true
+        full_message:
+          type: string
+          nullable: true
+        direction:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/DirectionEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        priority:
+          allOf:
+          - $ref: '#/components/schemas/PriorityEnum'
+          title: Prioriy
+        error_code:
+          type: string
+          nullable: true
+          maxLength: 50
+        error_message:
+          type: string
+          nullable: true
+        error_timestamp:
+          type: string
+          format: date-time
+          nullable: true
+        delivery_options:
+          nullable: true
+      required:
+      - body
+      - global_id
+      - pk
+      - priority
+      - sender
+      - subject
+      - timestamp
+      - to
+    EmailMessageStatusEnum:
+      enum:
+      - A
+      - S
+      - F
+      - D
+      - R
+      - C
+      type: string
+      description: |-
+        * `A` - Announced
+        * `S` - Sent
+        * `F` - Failed
+        * `D` - Delivered
+        * `R` - Read
+        * `C` - Confirmed
     ErrorMessage:
       type: object
       description: DRF serializer for server error messages.
@@ -28839,6 +29063,9 @@ components:
       - typ
       - type
       - value
+    NullEnum:
+      enum:
+      - null
     OutcomeEnum:
       enum:
       - 10
@@ -29375,6 +29602,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DataOutput'
+    PaginatedEmailMessageList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailMessage'
     PaginatedErrorMessageList:
       type: object
       required:
@@ -36543,6 +36793,22 @@ components:
           default: true
           title: Delete configuration
           description: Delete the plugin configuration from the database
+    PriorityEnum:
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      type: integer
+      description: |-
+        * `0` - None
+        * `1` - Very High
+        * `2` - High
+        * `3` - Normal
+        * `4` - Low
+        * `5` - Very Low
     ProjectCode:
       type: object
       description: Serializer for the ProjectCode model.
@@ -39354,6 +39620,15 @@ components:
         * `part` - Part
         * `stockitem` - Stock Item
         * `stocklocation` - Stock Location
+    TestEmail:
+      type: object
+      description: Serializer to send a test email.
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
     UnauthorizedStatus:
       type: integer
       enum:
