@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '355'
+  version: '356'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -7094,6 +7094,7 @@ paths:
           enum:
           - build
           - buildline
+          - company
           - part
           - purchaseorder
           - returnorder
@@ -7106,6 +7107,7 @@ paths:
 
           * `build` - Build Order
           * `buildline` - Build Order Line Item
+          * `company` - Company
           * `purchaseorder` - Purchase Order
           * `salesorder` - Sales Order
           * `salesordershipment` - Sales Order Shipment
@@ -17847,6 +17849,7 @@ paths:
           enum:
           - build
           - buildline
+          - company
           - part
           - purchaseorder
           - returnorder
@@ -17859,6 +17862,7 @@ paths:
 
           * `build` - Build Order
           * `buildline` - Build Order Line Item
+          * `company` - Company
           * `purchaseorder` - Purchase Order
           * `salesorder` - Sales Order
           * `salesordershipment` - Sales Order Shipment
@@ -39545,6 +39549,7 @@ components:
       enum:
       - build
       - buildline
+      - company
       - purchaseorder
       - salesorder
       - salesordershipment
@@ -39556,6 +39561,7 @@ components:
       description: |-
         * `build` - Build Order
         * `buildline` - Build Order Line Item
+        * `company` - Company
         * `purchaseorder` - Purchase Order
         * `salesorder` - Sales Order
         * `salesordershipment` - Sales Order Shipment
