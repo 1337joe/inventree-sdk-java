@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import java.util.Collections;
 import java.util.List;
 
 public class TestGenericApi extends TestApi {
@@ -51,10 +50,9 @@ public class TestGenericApi extends TestApi {
         assertFieldEquals("label", fields, actual.getLabel());
         assertFieldEquals("color", fields, actual.getColor());
 
-        // doesn't map directly to demo dataset - dataset has a list, not single value
+        // doesn't map directly to demo dataset - dataset has a ContentType appLabel/model pair, not
+        // pk/modelName
         // actual.getModel())
-
-        // not directly available in demo dataset:
         // actual.getModelName();
     }
 
@@ -95,24 +93,23 @@ public class TestGenericApi extends TestApi {
         assertCustomStateEquals(expected, actual);
 
         // verify data not directly in demo dataset
-        List<String> expectedModelName;
+        // model pk may change and can't be determined from the demoData, just check name that
+        // matches the ContentType appLabel/model pair
+        String expectedModelName;
         switch (pk) {
             case 1:
-                // TODO dataset has a list of models, why isn't that represented here?
-                expectedModelName = List.of("Stock", "Stock Item");
+                expectedModelName = "Stock Item";
                 break;
             default:
-                expectedModelName = Collections.emptyList();
+                expectedModelName = null;
         }
-        assertTrue(expectedModelName.contains(actual.getModelName()),
-                "Incorrect model name, expected one of " + expectedModelName + " but found "
-                        + actual.getModelName());
+        assertEquals(expectedModelName, actual.getModelName(), "Incorrect model name");
     }
 
     @Disabled("Can't figure out what a valid statusModel string is")
     @ParameterizedTest
     @CsvSource({"InvenTree.build.status_codes.BuildStatus"/* , "stock", "stockitem" */})
-    void genericStatusRetrieve2(String statusModel) throws ApiException {
+    void genericStatusRetrieve(String statusModel) throws ApiException {
         // TODO statusModel must be a valid class, should restrict to enum
         GenericStateClass actual = api.genericStatusRetrieve(statusModel);
     }
