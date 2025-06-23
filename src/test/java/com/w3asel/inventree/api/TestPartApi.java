@@ -1,11 +1,26 @@
 package com.w3asel.inventree.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.google.gson.JsonObject;
+import com.w3asel.inventree.InventreeDemoDataset;
+import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.Category;
+import com.w3asel.inventree.model.CategoryTree;
+import com.w3asel.inventree.model.PaginatedCategoryList;
+import com.w3asel.inventree.model.PaginatedCategoryTreeList;
+import com.w3asel.inventree.model.PaginatedPartInternalPriceList;
 import com.w3asel.inventree.model.Part;
+import com.w3asel.inventree.model.PartInternalPrice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import java.util.List;
 
 public class TestPartApi extends TestApi {
     private PartApi api;
@@ -28,12 +43,102 @@ public class TestPartApi extends TestApi {
         api.partCategoryBulkUpdate(null);
         api.partCategoryCreate(null);
         api.partCategoryDestroy(null);
-        api.partCategoryList(null, null, null, null, null, null, null, null, null, null, null,
-                null);
+        // api.partCategoryList(null, null, null, null, null, null, null, null, null, null, null,
+        // null);
         api.partCategoryMetadataPartialUpdate(null, null);
         api.partCategoryMetadataRetrieve(null);
         api.partCategoryMetadataRetrieve(null);
-        // ... TODO
+        api.partCategoryParametersCreate(null);
+        api.partCategoryParametersDestroy(null);
+        api.partCategoryParametersList(null, null);
+        api.partCategoryParametersMetadataPartialUpdate(null, null);
+        api.partCategoryParametersMetadataRetrieve(null);
+        api.partCategoryParametersMetadataUpdate(null, null);
+        api.partCategoryParametersPartialUpdate(null, null);
+        api.partCategoryParametersRetrieve(null);
+        api.partCategoryParametersUpdate(null, null);
+        api.partCategoryPartialUpdate(null, null);
+        // api.partCategoryRetrieve(null);
+        // api.partCategoryTreeList(null, null, null);
+        api.partCategoryUpdate(null, null);
+        api.partCreate(null);
+        api.partDestroy(null);
+        api.partInternalPriceCreate(null);
+        api.partInternalPriceDestroy(null);
+        // api.partInternalPriceList(null, null, null, null, null);
+        api.partInternalPricePartialUpdate(null, null);
+        // api.partInternalPriceRetrieve(null);
+        api.partInternalPriceUpdate(null, null);
+        api.partList(null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null);
+        api.partMetadataPartialUpdate(null, null);
+        api.partMetadataRetrieve(null);
+        api.partMetadataUpdate(null, null);
+        api.partParameterCreate(null);
+        api.partParameterDestroy(null);
+        api.partParameterList(null, null, null, null, null, null);
+        api.partParameterMetadataPartialUpdate(null, null);
+        api.partParameterMetadataRetrieve(null);
+        api.partParameterMetadataUpdate(null, null);
+        api.partParameterPartialUpdate(null, null);
+        api.partParameterRetrieve(null);
+        api.partParameterTemplateCreate(null);
+        api.partParameterTemplateDestroy(null);
+        api.partParameterTemplateList(null, null, null, null, null, null, null, null, null, null,
+                null);
+        api.partParameterTemplateMetadataPartialUpdate(null, null);
+        api.partParameterTemplateMetadataRetrieve(null);
+        api.partParameterTemplateMetadataUpdate(null, null);
+        api.partParameterUpdate(null, null);
+        api.partPartialUpdate(null, null);
+        api.partPricingPartialUpdate(null, null);
+        api.partPricingRetrieve(null);
+        api.partPricingUpdate(null, null);
+        api.partRelatedCreate(null);
+        api.partRelatedDestroy(null);
+        api.partRelatedList(null, null, null, null, null, null, null);
+        api.partRelatedMetadataPartialUpdate(null, null);
+        api.partRelatedMetadataRetrieve(null);
+        api.partRelatedMetadataUpdate(null, null);
+        api.partRelatedRetrieve(null);
+        api.partRelatedUpdate(null, null);
+        api.partRequirementsRetrieve(null);
+        api.partRetrieve(null);
+        api.partSalePriceCreate(null);
+        api.partSalePriceDestroy(null);
+        api.partSalePriceList(null, null, null, null, null);
+        api.partSalePricePartialUpdate(null, null);
+        api.partSalePriceRetrieve(null);
+        api.partSalePriceUpdate(null, null);
+        api.partSerialNumbersRetrieve(null);
+        api.partStocktakeCreate(null);
+        api.partStocktakeDestroy(null);
+        api.partStocktakeList(null, null, null, null, null);
+        api.partStocktakePartialUpdate(null, null);
+        api.partStocktakeReportDestroy(null);
+        api.partStocktakeReportGenerateCreate(null);
+        api.partStocktakeReportList(null, null, null);
+        api.partStocktakeReportPartialUpdate(null, null);
+        api.partStocktakeReportRetrieve(null);
+        api.partStocktakeReportUpdate(null, null);
+        api.partStocktakeRetrieve(null);
+        api.partStocktakeUpdate(null, null);
+        api.partTestTemplateCreate(null);
+        api.partTestTemplateDestroy(null);
+        api.partTestTemplateList(null, null, null, null, null, null, null, null, null, null, null);
+        api.partTestTemplateMetadataPartialUpdate(null, null);
+        api.partTestTemplateMetadataRetrieve(null);
+        api.partTestTemplateMetadataUpdate(null, null);
+        api.partTestTemplatePartialUpdate(null, null);
+        api.partTestTemplateRetrieve(null);
+        api.partTestTemplateUpdate(null, null);
+        api.partThumbsList(null, null, null);
+        api.partThumbsPartialUpdate(null, null);
+        api.partThumbsRetrieve(null);
+        api.partThumbsUpdate(null, null);
+        api.partUpdate(null, null);
     }
 
     @Test
@@ -47,11 +152,6 @@ public class TestPartApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null);
-
-        api.partCategoryList(limit, null, null, null, null, null, null, null, null, null, null,
-                null);
-
-        api.partCategoryTreeList(limit, null, null);
 
         api.partParameterList(limit, null, null, null, null, null);
 
@@ -70,14 +170,182 @@ public class TestPartApi extends TestApi {
 
         api.partCategoryParametersList(limit, null);
 
-        api.partInternalPriceList(limit, null, null, null, null);
-
         api.partStocktakeReportList(limit, null, null);
+    }
+
+    private void assertCategoryEquals(JsonObject expected, Category actual) {
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
+        InventreeDemoDataset.assertEquals("description", fields, actual.getDescription());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "parent", fields,
+                actual.getParent());
+        InventreeDemoDataset.assertEquals("pathstring", fields, actual.getPathstring());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "default_location", fields,
+                actual.getDefaultLocation());
+        InventreeDemoDataset.assertEquals("structural", fields, actual.getStructural());
+        InventreeDemoDataset.assertNullableEquals(String.class, "default_keywords", fields,
+                actual.getDefaultKeywords());
+        InventreeDemoDataset.assertEquals("_icon", fields, actual.getIcon());
+        InventreeDemoDataset.assertEquals("level", fields, actual.getLevel());
+
+        // in demo dataset but not directly available from class:
+        // metadata
+        // lft
+        // rght
+        // tree_id
+
+        // not directly available in demo dataset
+        // actual.getPath();
+        // actual.getParentDefaultLocation();
+        // actual.getPartCount();
+        // actual.getStarred();
+        // actual.getSubcategories();
+    }
+
+    @Test
+    void partCategoryList() throws ApiException {
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.PART_CATEGORY, null);
+        assertTrue(expectedList.size() > 0, "Expected demo data");
+
+        int limit = 5;
+        int offset = 0;
+        PaginatedCategoryList actual = api.partCategoryList(limit, null, null, null, null, offset,
+                null, null, null, null, null, null);
+        assertEquals(expectedList.size(), actual.getCount(), "Incorrect part category list count");
+        List<Category> actualList = actual.getResults();
+
+        // check items returned by key
+        List<Integer> expectedPks = expectedList.stream()
+                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
+                .toList();
+        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+        assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
+
+        // deep equals on first value
+        Category actualFirst = actualList.get(0);
+        JsonObject expectedFirst =
+                InventreeDemoDataset.getObjects(Model.PART_CATEGORY, actualFirst.getPk()).get(0);
+        assertCategoryEquals(expectedFirst, actualFirst);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1", "5"})
+    void partCategoryRetrieve(int pk) throws ApiException {
+        Category actual = api.partCategoryRetrieve(pk);
+        JsonObject expected = InventreeDemoDataset.getObjects(Model.PART_CATEGORY, pk).get(0);
+        assertCategoryEquals(expected, actual);
+
+        // TODO path_detail optional query parameter missing from API
+        assertEquals(null, actual.getPath(), "Incorrect path");
+
+        // verify data not directly in demo dataset
+        if (1 == pk) {
+            assertEquals(null, actual.getParentDefaultLocation(),
+                    "Incorrect parent default location");
+            assertEquals(135, actual.getPartCount(), "Incorrect part count");
+            assertFalse(actual.getStarred(), "Incorrect starred");
+            assertEquals(12, actual.getSubcategories(), "Incorrect subcategories");
+        } else if (5 == pk) {
+            assertEquals(null, actual.getParentDefaultLocation(),
+                    "Incorrect parent default location");
+            assertEquals(48, actual.getPartCount(), "Incorrect part count");
+            assertFalse(actual.getStarred(), "Incorrect starred");
+            assertEquals(0, actual.getSubcategories(), "Incorrect subcategories");
+        }
+    }
+
+    private void assertCategoryTreeEquals(JsonObject expected, CategoryTree actual) {
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
+        InventreeDemoDataset.assertNullableEquals(Integer.class, "parent", fields,
+                actual.getParent());
+        InventreeDemoDataset.assertEquals("structural", fields, actual.getStructural());
+        InventreeDemoDataset.assertEquals("_icon", fields, actual.getIcon());
+
+        // not directly available in demo dataset
+        // actual.getSubcategories();
+    }
+
+    @Test
+    void partCategoryTreeList() throws ApiException {
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.PART_CATEGORY, null);
+        assertTrue(expectedList.size() > 0, "Expected demo data");
+
+        int limit = 5;
+        int offset = 0;
+        PaginatedCategoryTreeList actual = api.partCategoryTreeList(limit, offset, null);
+        assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect part category tree list count");
+        List<CategoryTree> actualList = actual.getResults();
+
+        // check items returned by key
+        List<Integer> expectedPks = expectedList.stream()
+                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
+                .toList();
+        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+        assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
+
+        // deep equals on first value
+        CategoryTree actualFirst = actualList.get(0);
+        JsonObject expectedFirst =
+                InventreeDemoDataset.getObjects(Model.PART_CATEGORY, actualFirst.getPk()).get(0);
+        assertCategoryTreeEquals(expectedFirst, actualFirst);
+    }
+
+    private void assertPartInternalPriceEquals(JsonObject expected, PartInternalPrice actual) {
+        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
+                actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
+        InventreeDemoDataset.assertEquals("price", fields, actual.getPrice());
+        InventreeDemoDataset.assertEquals("price_currency", fields, actual.getPriceCurrency());
+        InventreeDemoDataset.assertEquals("quantity", fields, actual.getQuantity());
     }
 
     @Test
     void partInternalPriceList() throws ApiException {
-        int limit = 1;
-        api.partInternalPriceList(limit, null, null, null, null);
+        List<JsonObject> expectedList =
+                InventreeDemoDataset.getObjects(Model.PART_INTERNAL_PRICE_BREAK, null);
+        assertTrue(expectedList.size() > 0, "Expected demo data");
+
+        int limit = 5;
+        int offset = 0;
+        PaginatedPartInternalPriceList actual =
+                api.partInternalPriceList(limit, offset, null, null, null);;
+        assertEquals(expectedList.size(), actual.getCount(),
+                "Incorrect part internal price list count");
+        List<PartInternalPrice> actualList = actual.getResults();
+
+        // check items returned by key
+        List<Integer> expectedPks = expectedList.stream()
+                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
+                .toList();
+        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+        assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
+
+        // deep equals on first value
+        PartInternalPrice actualFirst = actualList.get(0);
+        JsonObject expectedFirst = InventreeDemoDataset
+                .getObjects(Model.PART_INTERNAL_PRICE_BREAK, actualFirst.getPk()).get(0);
+        assertPartInternalPriceEquals(expectedFirst, actualFirst);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1"})
+    void partInternalPriceRetrieve(int pk) throws ApiException {
+        PartInternalPrice actual = api.partInternalPriceRetrieve(pk);
+        JsonObject expected =
+                InventreeDemoDataset.getObjects(Model.PART_INTERNAL_PRICE_BREAK, pk).get(0);
+        assertPartInternalPriceEquals(expected, actual);
     }
 }
