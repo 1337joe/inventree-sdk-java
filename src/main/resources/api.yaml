@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '353'
+  version: '354'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -34954,6 +34954,9 @@ components:
         landscape:
           type: boolean
           description: Render report in landscape orientation
+        merge:
+          type: boolean
+          description: Render a single report against selected items
     PatchedReturnOrder:
       type: object
       description: Serializer for the ReturnOrder model class.
@@ -37433,6 +37436,9 @@ components:
         landscape:
           type: boolean
           description: Render report in landscape orientation
+        merge:
+          type: boolean
+          description: Render a single report against selected items
       required:
       - description
       - model_type
