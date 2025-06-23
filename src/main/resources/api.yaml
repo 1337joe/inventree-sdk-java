@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '354'
+  version: '355'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -13524,40 +13524,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PartRequirements'
-          description: ''
-  /api/part/{id}/scheduling/:
-    get:
-      operationId: part_scheduling_retrieve
-      description: |-
-        API endpoint for delivering "scheduling" information about a given part via the API.
-
-        Returns a chronologically ordered list about future "scheduled" events,
-        concerning stock levels for the part:
-
-        - Purchase Orders (incoming stock)
-        - Sales Orders (outgoing stock)
-        - Build Orders (incoming completed stock)
-        - Build Orders (outgoing allocated stock)
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartScheduling'
           description: ''
   /api/part/{id}/serial-numbers/:
     get:
@@ -31749,35 +31715,6 @@ components:
       - part
       - pk
       - quantity
-    PartScheduling:
-      type: object
-      description: Serializer class for a PartScheduling entry.
-      properties:
-        date:
-          type: string
-          format: date
-          nullable: true
-        quantity:
-          type: number
-          format: double
-        speculative_quantity:
-          type: number
-          format: double
-        title:
-          type: string
-        label:
-          type: string
-        model:
-          type: string
-        model_id:
-          type: integer
-      required:
-      - date
-      - label
-      - model
-      - model_id
-      - quantity
-      - title
     PartStocktake:
       type: object
       description: Serializer for the PartStocktake model.
