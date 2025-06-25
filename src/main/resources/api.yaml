@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '356'
+  version: '357'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -28614,6 +28614,9 @@ components:
         typ:
           type: string
           readOnly: true
+        units:
+          type: string
+          readOnly: true
         required:
           type: boolean
           readOnly: true
@@ -28632,6 +28635,7 @@ components:
       - required
       - typ
       - type
+      - units
       - value
     MachineType:
       type: object
@@ -29015,6 +29019,9 @@ components:
         typ:
           type: string
           readOnly: true
+        units:
+          type: string
+          readOnly: true
         required:
           type: boolean
           readOnly: true
@@ -29032,6 +29039,7 @@ components:
       - required
       - typ
       - type
+      - units
       - value
     NullEnum:
       enum:
@@ -33330,6 +33338,9 @@ components:
         typ:
           type: string
           readOnly: true
+        units:
+          type: string
+          readOnly: true
         required:
           type: boolean
           readOnly: true
@@ -33591,6 +33602,9 @@ components:
           readOnly: true
           nullable: true
         typ:
+          type: string
+          readOnly: true
+        units:
           type: string
           readOnly: true
         required:
@@ -34408,6 +34422,9 @@ components:
           readOnly: true
           nullable: true
         typ:
+          type: string
+          readOnly: true
+        units:
           type: string
           readOnly: true
         required:
@@ -36675,6 +36692,9 @@ components:
         typ:
           type: string
           readOnly: true
+        units:
+          type: string
+          readOnly: true
         required:
           type: boolean
           readOnly: true
@@ -36692,6 +36712,7 @@ components:
       - required
       - typ
       - type
+      - units
       - value
     PluginUIFeature:
       type: object
