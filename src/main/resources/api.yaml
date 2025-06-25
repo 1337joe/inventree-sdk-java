@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '357'
+  version: '358'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2311,7 +2311,7 @@ paths:
         - Only looks at 'untracked' parts
         - If stock exists in a single location, easy!
         - If user decides that stock items are "fungible", allocate against multiple stock items
-        - If the user wants to, allocate substite parts if the primary parts are not available.
+        - If the user wants to, allocate substitute parts if the primary parts are not available.
       parameters:
       - in: path
         name: id
