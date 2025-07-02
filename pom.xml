@@ -59,7 +59,7 @@
         <plugin-javadoc.version>3.11.2</plugin-javadoc.version>
         <plugin-jacoco.version>0.8.13</plugin-jacoco.version>
         <plugin-source.version>3.3.1</plugin-source.version>
-        <plugin-gpg.version>3.2.7</plugin-gpg.version>
+        <plugin-gpg.version>3.2.8</plugin-gpg.version>
         <plugin-central-publishing.version>0.8.0</plugin-central-publishing.version>
     </properties>
 
