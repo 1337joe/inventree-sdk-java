@@ -168,6 +168,7 @@ public class InventreeDemoDataset {
     public enum Model {
         BOM_ITEM("part.bomitem"),
         BOM_ITEM_SUBSTITUTE("part.bomitemsubstitute"),
+        BUILD("build.build"),
         PART_CATEGORY("part.partcategory"),
         PART_INTERNAL_PRICE_BREAK("part.partinternalpricebreak"),
         GLOBAL_SETTING("common.inventreesetting"),
