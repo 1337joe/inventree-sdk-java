@@ -1,5 +1,7 @@
 package com.w3asel.inventree.api;
 
+import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
+import static com.w3asel.inventree.InventreeDemoDataset.assertNullableFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -117,62 +119,50 @@ public class TestStockApi extends TestApi {
     }
 
     private static void assertStockItemEquals(JsonObject expected, StockItem actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertNullableEquals(String.class, "notes", fields, actual.getNotes());
-        InventreeDemoDataset.assertEquals("barcode_hash", fields, actual.getBarcodeHash());
+        assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
+        assertFieldEquals("barcode_hash", fields, actual.getBarcodeHash());
 
         OffsetDateTime expectedUpdated = fields.get("updated").isJsonNull() ? null
                 : InventreeDemoDataset.parseOffsetDateTime(fields.get("updated").getAsString())
                         .truncatedTo(ChronoUnit.MINUTES);
         assertEquals(expectedUpdated, actual.getUpdated(), "Incorrect date");
 
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "parent", fields,
-                actual.getParent());
-        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
-        InventreeDemoDataset.assertEquals("supplier_part", fields, actual.getSupplierPart());
-        InventreeDemoDataset.assertEquals("location", fields, actual.getLocation());
-        InventreeDemoDataset.assertEquals("packaging", fields, actual.getPackaging());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "belongs_to", fields,
-                actual.getBelongsTo());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "customer", fields,
-                actual.getCustomer());
-        InventreeDemoDataset.assertNullableEquals(String.class, "serial", fields,
-                actual.getSerial());
-        InventreeDemoDataset.assertEquals("link", fields, actual.getLink());
-        InventreeDemoDataset.assertNullableEquals(String.class, "batch", fields, actual.getBatch());
-        InventreeDemoDataset.assertEquals("quantity", fields, actual.getQuantity());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "build", fields,
-                actual.getBuild());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "consumed_by", fields,
-                actual.getConsumedBy());
-        InventreeDemoDataset.assertEquals("is_building", fields, actual.getIsBuilding());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "purchase_order", fields,
+        assertNullableFieldEquals(Integer.class, "parent", fields, actual.getParent());
+        assertFieldEquals("part", fields, actual.getPart());
+        assertFieldEquals("supplier_part", fields, actual.getSupplierPart());
+        assertFieldEquals("location", fields, actual.getLocation());
+        assertFieldEquals("packaging", fields, actual.getPackaging());
+        assertNullableFieldEquals(Integer.class, "belongs_to", fields, actual.getBelongsTo());
+        assertNullableFieldEquals(Integer.class, "customer", fields, actual.getCustomer());
+        assertNullableFieldEquals(String.class, "serial", fields, actual.getSerial());
+        assertFieldEquals("link", fields, actual.getLink());
+        assertNullableFieldEquals(String.class, "batch", fields, actual.getBatch());
+        assertFieldEquals("quantity", fields, actual.getQuantity());
+        assertNullableFieldEquals(Integer.class, "build", fields, actual.getBuild());
+        assertNullableFieldEquals(Integer.class, "consumed_by", fields, actual.getConsumedBy());
+        assertFieldEquals("is_building", fields, actual.getIsBuilding());
+        assertNullableFieldEquals(Integer.class, "purchase_order", fields,
                 actual.getPurchaseOrder());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "sales_order", fields,
-                actual.getSalesOrder());
-        InventreeDemoDataset.assertNullableEquals(LocalDate.class, "expiry_date", fields,
-                actual.getExpiryDate());
-        InventreeDemoDataset.assertNullableEquals(LocalDate.class, "stocktake_date", fields,
+        assertNullableFieldEquals(Integer.class, "sales_order", fields, actual.getSalesOrder());
+        assertNullableFieldEquals(LocalDate.class, "expiry_date", fields, actual.getExpiryDate());
+        assertNullableFieldEquals(LocalDate.class, "stocktake_date", fields,
                 actual.getStocktakeDate());
-        InventreeDemoDataset.assertEquals("delete_on_deplete", fields, actual.getDeleteOnDeplete());
-        InventreeDemoDataset.assertEquals("status", fields, actual.getStatus());
-        InventreeDemoDataset.assertEquals("purchase_price_currency", fields,
-                actual.getPurchasePriceCurrency());
-        InventreeDemoDataset.assertNullableEquals(BigDecimal.class, "purchase_price", fields,
+        assertFieldEquals("delete_on_deplete", fields, actual.getDeleteOnDeplete());
+        assertFieldEquals("status", fields, actual.getStatus());
+        assertFieldEquals("purchase_price_currency", fields, actual.getPurchasePriceCurrency());
+        assertNullableFieldEquals(BigDecimal.class, "purchase_price", fields,
                 actual.getPurchasePrice());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "owner", fields,
-                actual.getOwner());
+        assertNullableFieldEquals(Integer.class, "owner", fields, actual.getOwner());
 
         // inherits status value if null
         if (fields.get("status_custom_key").isJsonNull()) {
-            InventreeDemoDataset.assertEquals("status", fields, actual.getStatusCustomKey());
+            assertFieldEquals("status", fields, actual.getStatusCustomKey());
         } else {
-            InventreeDemoDataset.assertEquals("status_custom_key", fields,
-                    actual.getStatusCustomKey());
+            assertFieldEquals("status_custom_key", fields, actual.getStatusCustomKey());
         }
 
         // not directly available in demo dataset:
@@ -294,26 +284,25 @@ public class TestStockApi extends TestApi {
         GenericStateValue customActual = actualValues.get(customName);
 
         assertTrue(customActual.getCustom(), "Custom value should be marked custom");
-        InventreeDemoDataset.assertEquals("key", expectedCustom, customActual.getKey());
+        assertFieldEquals("key", expectedCustom, customActual.getKey());
 
         // TODO is it intended that logical_key come back as null?
-        // InventreeDemoDataset.assertEquals("logical_key", expectedCustom,
+        // assertEquals("logical_key", expectedCustom,
         // customActual.getLogicalKey());
 
-        InventreeDemoDataset.assertEquals("name", expectedCustom, customActual.getName());
-        InventreeDemoDataset.assertEquals("label", expectedCustom, customActual.getLabel());
-        InventreeDemoDataset.assertEquals("color", expectedCustom, customActual.getColor());
+        assertFieldEquals("name", expectedCustom, customActual.getName());
+        assertFieldEquals("label", expectedCustom, customActual.getLabel());
+        assertFieldEquals("color", expectedCustom, customActual.getColor());
     }
 
     private static void assertStockTrackingEquals(JsonObject expected, StockTracking actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("tracking_type", fields, actual.getTrackingType());
-        InventreeDemoDataset.assertEquals("item", fields, actual.getItem());
-        InventreeDemoDataset.assertNullableEquals(String.class, "notes", fields, actual.getNotes());
+        assertFieldEquals("tracking_type", fields, actual.getTrackingType());
+        assertFieldEquals("item", fields, actual.getItem());
+        assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
 
         // user given as name in demo dataset file, just verify null state matches
         if (fields.get("user").isJsonNull()) {

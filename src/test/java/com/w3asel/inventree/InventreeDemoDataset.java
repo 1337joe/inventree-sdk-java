@@ -1,5 +1,6 @@
 package com.w3asel.inventree;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -10,7 +11,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,7 +70,7 @@ public class InventreeDemoDataset {
      * @param expected    The object containing the expected value.
      * @param actualValue The actual test result value.
      */
-    public static <T> void assertEquals(String field, JsonObject expected, T actualValue) {
+    public static <T> void assertFieldEquals(String field, JsonObject expected, T actualValue) {
         assertNotNull(actualValue,
                 "actualValue is null and cannot be used for type determination, use assertNullableEquals on field "
                         + field);
@@ -78,7 +78,7 @@ public class InventreeDemoDataset {
         @SuppressWarnings("unchecked")
         Class<T> type = (Class<T>) actualValue.getClass();
 
-        assertNullableEquals(type, field, expected, actualValue);
+        assertNullableFieldEquals(type, field, expected, actualValue);
     }
 
 
@@ -91,9 +91,9 @@ public class InventreeDemoDataset {
      * @param actualValue The actual test result value.
      * @param delta       The allowable difference between values to count as equal.
      */
-    public static void assertEquals(String field, JsonObject expected, Double actualValue,
+    public static void assertFieldEquals(String field, JsonObject expected, Double actualValue,
             Double delta) {
-        assertNullableEquals(Double.class, field, expected, actualValue);
+        assertNullableFieldEquals(Double.class, field, expected, actualValue);
     }
 
     /**
@@ -107,12 +107,12 @@ public class InventreeDemoDataset {
      * @param expected    The object containing the expected value.
      * @param actualValue The actual test result value.
      */
-    public static <T> void assertNullableEquals(Class<T> type, String field, JsonObject expected,
-            T actualValue) {
-        assertEquals(type, field, expected, actualValue, 0);
+    public static <T> void assertNullableFieldEquals(Class<T> type, String field,
+            JsonObject expected, T actualValue) {
+        assertFieldEquals(type, field, expected, actualValue, 0);
     }
 
-    private static <T> void assertEquals(Class<T> type, String field, JsonObject expected,
+    private static <T> void assertFieldEquals(Class<T> type, String field, JsonObject expected,
             T actualValue, double delta) {
         JsonElement fieldValue = expected.get(field);
         String message = "Incorrect " + field;
@@ -120,31 +120,31 @@ public class InventreeDemoDataset {
         if (fieldValue.isJsonNull()) {
             assertNull(actualValue, message);
         } else if (type == Boolean.class) {
-            Assertions.assertEquals(fieldValue.getAsBoolean(), actualValue, message);
+            assertEquals(fieldValue.getAsBoolean(), actualValue, message);
         } else if (type == Double.class) {
-            Assertions.assertEquals(fieldValue.getAsDouble(), (Double) actualValue, delta, message);
+            assertEquals(fieldValue.getAsDouble(), (Double) actualValue, delta, message);
         } else if (type == BigDecimal.class) {
-            Assertions.assertEquals(fieldValue.getAsDouble(),
-                    ((BigDecimal) actualValue).doubleValue(), delta, message);
+            assertEquals(fieldValue.getAsDouble(), ((BigDecimal) actualValue).doubleValue(), delta,
+                    message);
         } else if (type == Integer.class) {
-            Assertions.assertEquals(fieldValue.getAsInt(), actualValue, message);
+            assertEquals(fieldValue.getAsInt(), actualValue, message);
         } else if (type == String.class) {
-            Assertions.assertEquals(fieldValue.getAsString(), actualValue, message);
+            assertEquals(fieldValue.getAsString(), actualValue, message);
         } else if (type == URI.class) {
             String uriString = fieldValue.getAsString();
             try {
-                Assertions.assertEquals(new URI(uriString), actualValue, message);
+                assertEquals(new URI(uriString), actualValue, message);
             } catch (URISyntaxException e) {
                 fail("Unable to create URI from " + uriString);
             }
         } else if (Enum.class.isAssignableFrom(type)) {
-            Assertions.assertEquals(fieldValue.getAsString(), actualValue.toString(), message);
+            assertEquals(fieldValue.getAsString(), actualValue.toString(), message);
         } else if (type == Iterable.class) {
             assertIterableEquals(fieldValue.getAsJsonArray().asList().stream()
                     .map(JsonElement::getAsString).toList(), (Iterable<?>) actualValue, message);
         } else if (type == LocalDate.class) {
-            Assertions.assertEquals(LocalDate.from(DATE_FORMAT.parse(fieldValue.getAsString())),
-                    actualValue, message);
+            assertEquals(LocalDate.from(DATE_FORMAT.parse(fieldValue.getAsString())), actualValue,
+                    message);
 
         } else {
             fail("Unsupported type: " + type.getName());
@@ -207,7 +207,6 @@ public class InventreeDemoDataset {
         List<JsonObject> actual = getObjects(Model.COMPANY_SUPPLIER_PRICE_BREAK, expected);
         assertTrue(actual.size() == 1);
         JsonObject object = actual.get(0);
-        Assertions.assertEquals(expected, object.get(PRIMARY_KEY_KEY).getAsInt(),
-                "Incorrect primary key");
+        assertEquals(expected, object.get(PRIMARY_KEY_KEY).getAsInt(), "Incorrect primary key");
     }
 }

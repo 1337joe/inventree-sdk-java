@@ -1,5 +1,6 @@
 package com.w3asel.inventree.api;
 
+import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
@@ -53,22 +54,21 @@ public class TestBomApi extends TestApi {
     }
 
     private static void assertBomItemEquals(JsonObject expected, BomItem actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
-        InventreeDemoDataset.assertEquals("sub_part", fields, actual.getSubPart());
-        InventreeDemoDataset.assertEquals("quantity", fields, actual.getQuantity());
-        InventreeDemoDataset.assertEquals("optional", fields, actual.getOptional());
-        InventreeDemoDataset.assertEquals("consumable", fields, actual.getConsumable());
-        InventreeDemoDataset.assertEquals("overage", fields, actual.getOverage());
-        InventreeDemoDataset.assertEquals("reference", fields, actual.getReference());
-        InventreeDemoDataset.assertEquals("note", fields, actual.getNote());
-        InventreeDemoDataset.assertEquals("validated", fields, actual.getValidated());
-        InventreeDemoDataset.assertEquals("inherited", fields, actual.getInherited());
-        InventreeDemoDataset.assertEquals("allow_variants", fields, actual.getAllowVariants());
+        assertFieldEquals("part", fields, actual.getPart());
+        assertFieldEquals("sub_part", fields, actual.getSubPart());
+        assertFieldEquals("quantity", fields, actual.getQuantity());
+        assertFieldEquals("optional", fields, actual.getOptional());
+        assertFieldEquals("consumable", fields, actual.getConsumable());
+        assertFieldEquals("overage", fields, actual.getOverage());
+        assertFieldEquals("reference", fields, actual.getReference());
+        assertFieldEquals("note", fields, actual.getNote());
+        assertFieldEquals("validated", fields, actual.getValidated());
+        assertFieldEquals("inherited", fields, actual.getInherited());
+        assertFieldEquals("allow_variants", fields, actual.getAllowVariants());
 
         // not directly available in demo dataset:
         // actual.getAvailableStock()
@@ -143,13 +143,12 @@ public class TestBomApi extends TestApi {
 
     private static void assertBomItemSubstituteEquals(JsonObject expected,
             BomItemSubstitute actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("bom_item", fields, actual.getBomItem());
-        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
+        assertFieldEquals("bom_item", fields, actual.getBomItem());
+        assertFieldEquals("part", fields, actual.getPart());
 
         // not directly available in demo dataset:
         // actual.getPartDetail();

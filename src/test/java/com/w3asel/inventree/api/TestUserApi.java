@@ -1,5 +1,7 @@
 package com.w3asel.inventree.api;
 
+import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
+import static com.w3asel.inventree.InventreeDemoDataset.assertNullableFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -102,24 +104,22 @@ public class TestUserApi extends TestApi {
     }
 
     private static void assertExtendedUserEquals(JsonObject expected, ExtendedUser actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("is_superuser", fields, actual.getIsSuperuser());
-        InventreeDemoDataset.assertEquals("username", fields, actual.getUsername());
-        InventreeDemoDataset.assertEquals("first_name", fields, actual.getFirstName());
-        InventreeDemoDataset.assertEquals("last_name", fields, actual.getLastName());
-        InventreeDemoDataset.assertEquals("email", fields, actual.getEmail());
-        InventreeDemoDataset.assertEquals("is_staff", fields, actual.getIsStaff());
-        InventreeDemoDataset.assertEquals("is_active", fields, actual.getIsActive());
+        assertFieldEquals("is_superuser", fields, actual.getIsSuperuser());
+        assertFieldEquals("username", fields, actual.getUsername());
+        assertFieldEquals("first_name", fields, actual.getFirstName());
+        assertFieldEquals("last_name", fields, actual.getLastName());
+        assertFieldEquals("email", fields, actual.getEmail());
+        assertFieldEquals("is_staff", fields, actual.getIsStaff());
+        assertFieldEquals("is_active", fields, actual.getIsActive());
 
         List<Group> groups = actual.getGroups();
         List<String> actualGroupNames =
                 groups.stream().map(Group::getName).collect(Collectors.toList());
-        InventreeDemoDataset.assertNullableEquals(Iterable.class, "groups", fields,
-                actualGroupNames);
+        assertNullableFieldEquals(Iterable.class, "groups", fields, actualGroupNames);
 
         // not directly available in demo dataset:
         // actual.getProfile()

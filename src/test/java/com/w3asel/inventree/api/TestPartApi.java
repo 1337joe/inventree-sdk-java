@@ -1,5 +1,7 @@
 package com.w3asel.inventree.api;
 
+import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
+import static com.w3asel.inventree.InventreeDemoDataset.assertNullableFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -174,23 +176,21 @@ public class TestPartApi extends TestApi {
     }
 
     private void assertCategoryEquals(JsonObject expected, Category actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
-        InventreeDemoDataset.assertEquals("description", fields, actual.getDescription());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "parent", fields,
-                actual.getParent());
-        InventreeDemoDataset.assertEquals("pathstring", fields, actual.getPathstring());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "default_location", fields,
+        assertFieldEquals("name", fields, actual.getName());
+        assertFieldEquals("description", fields, actual.getDescription());
+        assertNullableFieldEquals(Integer.class, "parent", fields, actual.getParent());
+        assertFieldEquals("pathstring", fields, actual.getPathstring());
+        assertNullableFieldEquals(Integer.class, "default_location", fields,
                 actual.getDefaultLocation());
-        InventreeDemoDataset.assertEquals("structural", fields, actual.getStructural());
-        InventreeDemoDataset.assertNullableEquals(String.class, "default_keywords", fields,
+        assertFieldEquals("structural", fields, actual.getStructural());
+        assertNullableFieldEquals(String.class, "default_keywords", fields,
                 actual.getDefaultKeywords());
-        InventreeDemoDataset.assertEquals("_icon", fields, actual.getIcon());
-        InventreeDemoDataset.assertEquals("level", fields, actual.getLevel());
+        assertFieldEquals("_icon", fields, actual.getIcon());
+        assertFieldEquals("level", fields, actual.getLevel());
 
         // in demo dataset but not directly available from class:
         // metadata
@@ -259,16 +259,14 @@ public class TestPartApi extends TestApi {
     }
 
     private void assertCategoryTreeEquals(JsonObject expected, CategoryTree actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
-        InventreeDemoDataset.assertNullableEquals(Integer.class, "parent", fields,
-                actual.getParent());
-        InventreeDemoDataset.assertEquals("structural", fields, actual.getStructural());
-        InventreeDemoDataset.assertEquals("_icon", fields, actual.getIcon());
+        assertFieldEquals("name", fields, actual.getName());
+        assertNullableFieldEquals(Integer.class, "parent", fields, actual.getParent());
+        assertFieldEquals("structural", fields, actual.getStructural());
+        assertFieldEquals("_icon", fields, actual.getIcon());
 
         // not directly available in demo dataset
         // actual.getSubcategories();
@@ -301,15 +299,14 @@ public class TestPartApi extends TestApi {
     }
 
     private void assertPartInternalPriceEquals(JsonObject expected, PartInternalPrice actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
-        InventreeDemoDataset.assertEquals("price", fields, actual.getPrice());
-        InventreeDemoDataset.assertEquals("price_currency", fields, actual.getPriceCurrency());
-        InventreeDemoDataset.assertEquals("quantity", fields, actual.getQuantity());
+        assertFieldEquals("part", fields, actual.getPart());
+        assertFieldEquals("price", fields, actual.getPrice());
+        assertFieldEquals("price_currency", fields, actual.getPriceCurrency());
+        assertFieldEquals("quantity", fields, actual.getQuantity());
     }
 
     @Test

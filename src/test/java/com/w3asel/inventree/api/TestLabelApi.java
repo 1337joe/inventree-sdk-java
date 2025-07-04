@@ -1,5 +1,6 @@
 package com.w3asel.inventree.api;
 
+import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -43,20 +44,19 @@ public class TestLabelApi extends TestApi {
 
 
     private static void assertLabelTemplateEquals(JsonObject expected, LabelTemplate actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
-        InventreeDemoDataset.assertEquals("description", fields, actual.getDescription());
-        InventreeDemoDataset.assertEquals("revision", fields, actual.getRevision());
-        InventreeDemoDataset.assertEquals("attach_to_model", fields, actual.getAttachToModel());
-        InventreeDemoDataset.assertEquals("filename_pattern", fields, actual.getFilenamePattern());
-        InventreeDemoDataset.assertEquals("enabled", fields, actual.getEnabled());
+        assertFieldEquals("name", fields, actual.getName());
+        assertFieldEquals("description", fields, actual.getDescription());
+        assertFieldEquals("revision", fields, actual.getRevision());
+        assertFieldEquals("attach_to_model", fields, actual.getAttachToModel());
+        assertFieldEquals("filename_pattern", fields, actual.getFilenamePattern());
+        assertFieldEquals("enabled", fields, actual.getEnabled());
         // TODO requires proper enum naming
-        // InventreeDemoDataset.assertEquals("model_type", fields, actual.getModelType());
-        InventreeDemoDataset.assertEquals("filters", fields, actual.getFilters());
+        // assertEquals("model_type", fields, actual.getModelType());
+        assertFieldEquals("filters", fields, actual.getFilters());
 
         String mediaPrefix = "/media/";
         String imageString = mediaPrefix + fields.get("template").getAsString();
@@ -66,8 +66,8 @@ public class TestLabelApi extends TestApi {
             fail("Unable to create URI from " + imageString);
         }
 
-        InventreeDemoDataset.assertEquals("width", fields, actual.getWidth());
-        InventreeDemoDataset.assertEquals("height", fields, actual.getHeight());
+        assertFieldEquals("width", fields, actual.getWidth());
+        assertFieldEquals("height", fields, actual.getHeight());
     }
 
     @Test

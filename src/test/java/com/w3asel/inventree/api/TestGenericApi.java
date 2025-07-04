@@ -1,5 +1,6 @@
 package com.w3asel.inventree.api;
 
+import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
@@ -39,17 +40,16 @@ public class TestGenericApi extends TestApi {
     }
 
     public static void assertCustomStateEquals(JsonObject expected, CustomState actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("reference_status", fields, actual.getReferenceStatus());
-        InventreeDemoDataset.assertEquals("logical_key", fields, actual.getLogicalKey());
-        InventreeDemoDataset.assertEquals("key", fields, actual.getKey());
-        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
-        InventreeDemoDataset.assertEquals("label", fields, actual.getLabel());
-        InventreeDemoDataset.assertEquals("color", fields, actual.getColor());
+        assertFieldEquals("reference_status", fields, actual.getReferenceStatus());
+        assertFieldEquals("logical_key", fields, actual.getLogicalKey());
+        assertFieldEquals("key", fields, actual.getKey());
+        assertFieldEquals("name", fields, actual.getName());
+        assertFieldEquals("label", fields, actual.getLabel());
+        assertFieldEquals("color", fields, actual.getColor());
 
         // doesn't map directly to demo dataset - dataset has a list, not single value
         // actual.getModel())

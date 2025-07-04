@@ -1,5 +1,6 @@
 package com.w3asel.inventree.api;
 
+import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -108,14 +109,13 @@ public class TestUnitsApi extends TestApi {
     }
 
     private void assertCustomUnitEquals(JsonObject expected, CustomUnit actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
-        InventreeDemoDataset.assertEquals("symbol", fields, actual.getSymbol());
-        InventreeDemoDataset.assertEquals("definition", fields, actual.getDefinition());
+        assertFieldEquals("name", fields, actual.getName());
+        assertFieldEquals("symbol", fields, actual.getSymbol());
+        assertFieldEquals("definition", fields, actual.getDefinition());
     }
 
     @Test

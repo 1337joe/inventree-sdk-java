@@ -1,5 +1,7 @@
 package com.w3asel.inventree.api;
 
+import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
+import static com.w3asel.inventree.InventreeDemoDataset.assertNullableFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -115,18 +117,17 @@ public class TestCompanyApi extends TestApi {
     }
 
     private static void assertCompanyEquals(JsonObject expected, Company actual, boolean detail) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
-        InventreeDemoDataset.assertEquals("description", fields, actual.getDescription());
-        InventreeDemoDataset.assertEquals("website", fields, actual.getWebsite());
-        InventreeDemoDataset.assertEquals("phone", fields, actual.getPhone());
-        InventreeDemoDataset.assertNullableEquals(String.class, "email", fields, actual.getEmail());
-        InventreeDemoDataset.assertEquals("contact", fields, actual.getContact());
-        InventreeDemoDataset.assertEquals("link", fields, actual.getLink());
+        assertFieldEquals("name", fields, actual.getName());
+        assertFieldEquals("description", fields, actual.getDescription());
+        assertFieldEquals("website", fields, actual.getWebsite());
+        assertFieldEquals("phone", fields, actual.getPhone());
+        assertNullableFieldEquals(String.class, "email", fields, actual.getEmail());
+        assertFieldEquals("contact", fields, actual.getContact());
+        assertFieldEquals("link", fields, actual.getLink());
 
         String mediaPrefix = "/media/";
 
@@ -137,14 +138,14 @@ public class TestCompanyApi extends TestApi {
             fail("Unable to create URI from " + imageString);
         }
 
-        InventreeDemoDataset.assertEquals("active", fields, actual.getActive());
-        InventreeDemoDataset.assertEquals("is_customer", fields, actual.getIsCustomer());
-        InventreeDemoDataset.assertEquals("is_supplier", fields, actual.getIsSupplier());
-        InventreeDemoDataset.assertEquals("is_manufacturer", fields, actual.getIsManufacturer());
-        InventreeDemoDataset.assertEquals("currency", fields, actual.getCurrency());
+        assertFieldEquals("active", fields, actual.getActive());
+        assertFieldEquals("is_customer", fields, actual.getIsCustomer());
+        assertFieldEquals("is_supplier", fields, actual.getIsSupplier());
+        assertFieldEquals("is_manufacturer", fields, actual.getIsManufacturer());
+        assertFieldEquals("currency", fields, actual.getCurrency());
 
         if (detail) {
-            InventreeDemoDataset.assertEquals("notes", fields, actual.getNotes());
+            assertFieldEquals("notes", fields, actual.getNotes());
         } else {
             assertNull(actual.getNotes(), "Expect null notes on non-detail calls");
         }
@@ -213,24 +214,22 @@ public class TestCompanyApi extends TestApi {
     }
 
     private static void assertAddressEquals(JsonObject expected, Address actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("company", fields, actual.getCompany());
-        InventreeDemoDataset.assertEquals("title", fields, actual.getTitle());
-        InventreeDemoDataset.assertEquals("primary", fields, actual.getPrimary());
-        InventreeDemoDataset.assertEquals("line1", fields, actual.getLine1());
-        InventreeDemoDataset.assertEquals("line2", fields, actual.getLine2());
-        InventreeDemoDataset.assertEquals("postal_code", fields, actual.getPostalCode());
-        InventreeDemoDataset.assertEquals("postal_city", fields, actual.getPostalCity());
-        InventreeDemoDataset.assertEquals("province", fields, actual.getProvince());
-        InventreeDemoDataset.assertEquals("country", fields, actual.getCountry());
-        InventreeDemoDataset.assertEquals("shipping_notes", fields, actual.getShippingNotes());
-        InventreeDemoDataset.assertEquals("internal_shipping_notes", fields,
-                actual.getInternalShippingNotes());
-        InventreeDemoDataset.assertEquals("link", fields, actual.getLink());
+        assertFieldEquals("company", fields, actual.getCompany());
+        assertFieldEquals("title", fields, actual.getTitle());
+        assertFieldEquals("primary", fields, actual.getPrimary());
+        assertFieldEquals("line1", fields, actual.getLine1());
+        assertFieldEquals("line2", fields, actual.getLine2());
+        assertFieldEquals("postal_code", fields, actual.getPostalCode());
+        assertFieldEquals("postal_city", fields, actual.getPostalCity());
+        assertFieldEquals("province", fields, actual.getProvince());
+        assertFieldEquals("country", fields, actual.getCountry());
+        assertFieldEquals("shipping_notes", fields, actual.getShippingNotes());
+        assertFieldEquals("internal_shipping_notes", fields, actual.getInternalShippingNotes());
+        assertFieldEquals("link", fields, actual.getLink());
     }
 
     @Test
@@ -315,16 +314,15 @@ public class TestCompanyApi extends TestApi {
     }
 
     private static void assertContactEquals(JsonObject expected, Contact actual) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("company", fields, actual.getCompany());
-        InventreeDemoDataset.assertEquals("name", fields, actual.getName());
-        InventreeDemoDataset.assertEquals("phone", fields, actual.getPhone());
-        InventreeDemoDataset.assertEquals("email", fields, actual.getEmail());
-        InventreeDemoDataset.assertEquals("role", fields, actual.getRole());
+        assertFieldEquals("company", fields, actual.getCompany());
+        assertFieldEquals("name", fields, actual.getName());
+        assertFieldEquals("phone", fields, actual.getPhone());
+        assertFieldEquals("email", fields, actual.getEmail());
+        assertFieldEquals("role", fields, actual.getRole());
 
         // not directly available in demo dataset:
         // actual.getCompanyName()
@@ -464,33 +462,29 @@ public class TestCompanyApi extends TestApi {
 
     private static void assertSupplierPartEquals(JsonObject expected, SupplierPart actual,
             boolean detail) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("barcode_hash", fields, actual.getBarcodeHash());
+        assertFieldEquals("barcode_hash", fields, actual.getBarcodeHash());
 
         OffsetDateTime expectedUpdated = fields.get("updated").isJsonNull() ? null
                 : InventreeDemoDataset.parseOffsetDateTime(fields.get("updated").getAsString())
                         .truncatedTo(ChronoUnit.MINUTES);
         assertEquals(expectedUpdated, actual.getUpdated(), "Incorrect updated");
 
-        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
-        InventreeDemoDataset.assertEquals("supplier", fields, actual.getSupplier());
-        InventreeDemoDataset.assertEquals("SKU", fields, actual.getSKU());
-        InventreeDemoDataset.assertEquals("active", fields, actual.getActive());
-        InventreeDemoDataset.assertEquals("manufacturer_part", fields,
-                actual.getManufacturerPart());
-        InventreeDemoDataset.assertEquals("description", fields, actual.getDescription());
-        InventreeDemoDataset.assertNullableEquals(String.class, "note", fields, actual.getNote());
-        InventreeDemoDataset.assertEquals("link", fields, actual.getLink());
-        InventreeDemoDataset.assertNullableEquals(String.class, "packaging", fields,
-                actual.getPackaging());
-        InventreeDemoDataset.assertEquals("pack_quantity", fields, actual.getPackQuantity());
-        InventreeDemoDataset.assertEquals("pack_quantity_native", fields,
-                actual.getPackQuantityNative());
-        InventreeDemoDataset.assertEquals("available", fields, actual.getAvailable());
+        assertFieldEquals("part", fields, actual.getPart());
+        assertFieldEquals("supplier", fields, actual.getSupplier());
+        assertFieldEquals("SKU", fields, actual.getSKU());
+        assertFieldEquals("active", fields, actual.getActive());
+        assertFieldEquals("manufacturer_part", fields, actual.getManufacturerPart());
+        assertFieldEquals("description", fields, actual.getDescription());
+        assertNullableFieldEquals(String.class, "note", fields, actual.getNote());
+        assertFieldEquals("link", fields, actual.getLink());
+        assertNullableFieldEquals(String.class, "packaging", fields, actual.getPackaging());
+        assertFieldEquals("pack_quantity", fields, actual.getPackQuantity());
+        assertFieldEquals("pack_quantity_native", fields, actual.getPackQuantityNative());
+        assertFieldEquals("available", fields, actual.getAvailable());
 
         OffsetDateTime expectedAvailabilityUpdated = InventreeDemoDataset
                 .parseOffsetDateTime(fields.get("availability_updated").getAsString())
@@ -499,8 +493,7 @@ public class TestCompanyApi extends TestApi {
                 "Incorrect availability updated");
 
         if (detail) {
-            InventreeDemoDataset.assertNullableEquals(String.class, "notes", fields,
-                    actual.getNotes());
+            assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
         } else {
             assertNull(actual.getNotes(), "Expect null notes on non-detail calls");
 
@@ -591,22 +584,19 @@ public class TestCompanyApi extends TestApi {
 
     private static void assertManufacturerPartEquals(JsonObject expected, ManufacturerPart actual,
             boolean detail) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
-        InventreeDemoDataset.assertEquals("barcode_hash", fields, actual.getBarcodeHash());
-        InventreeDemoDataset.assertEquals("manufacturer", fields, actual.getManufacturer());
-        InventreeDemoDataset.assertEquals("MPN", fields, actual.getMPN());
-        InventreeDemoDataset.assertNullableEquals(String.class, "description", fields,
-                actual.getDescription());
-        InventreeDemoDataset.assertNullableEquals(URI.class, "link", fields, actual.getLink());
+        assertFieldEquals("part", fields, actual.getPart());
+        assertFieldEquals("barcode_hash", fields, actual.getBarcodeHash());
+        assertFieldEquals("manufacturer", fields, actual.getManufacturer());
+        assertFieldEquals("MPN", fields, actual.getMPN());
+        assertNullableFieldEquals(String.class, "description", fields, actual.getDescription());
+        assertNullableFieldEquals(URI.class, "link", fields, actual.getLink());
 
         if (detail) {
-            InventreeDemoDataset.assertNullableEquals(String.class, "notes", fields,
-                    actual.getNotes());
+            assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
         } else {
             assertNull(actual.getNotes(), "Expect null notes on list calls");
 
@@ -682,8 +672,7 @@ public class TestCompanyApi extends TestApi {
 
     private static void assertSupplierPriceBreakEquals(JsonObject expected,
             SupplierPriceBreak actual, boolean detail) {
-        InventreeDemoDataset.assertEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected,
-                actual.getPk());
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
@@ -692,10 +681,10 @@ public class TestCompanyApi extends TestApi {
                         .truncatedTo(ChronoUnit.MINUTES);
         assertEquals(expectedUpdate, actual.getUpdated(), "Incorrect updated time");
 
-        InventreeDemoDataset.assertEquals("quantity", fields, actual.getQuantity());
-        InventreeDemoDataset.assertEquals("price_currency", fields, actual.getPriceCurrency());
-        InventreeDemoDataset.assertEquals("price", fields, actual.getPrice().doubleValue());
-        InventreeDemoDataset.assertEquals("part", fields, actual.getPart());
+        assertFieldEquals("quantity", fields, actual.getQuantity());
+        assertFieldEquals("price_currency", fields, actual.getPriceCurrency());
+        assertFieldEquals("price", fields, actual.getPrice().doubleValue());
+        assertFieldEquals("part", fields, actual.getPart());
 
         if (!detail) {
             assertNull(actual.getPartDetail(), "Expect null part detail on list calls");
