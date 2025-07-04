@@ -46,7 +46,7 @@ public class TestClient {
     }
 
     @Test
-    public void fetchSalesOrder() throws ApiException {
+    void fetchSalesOrder() throws ApiException {
         ApiClient client = initializeClient();
 
         // Configure date time format to match what's returned by InvenTree

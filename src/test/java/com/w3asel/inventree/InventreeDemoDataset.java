@@ -1,5 +1,10 @@
 package com.w3asel.inventree;
 
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -66,7 +71,7 @@ public class InventreeDemoDataset {
      * @param actualValue The actual test result value.
      */
     public static <T> void assertEquals(String field, JsonObject expected, T actualValue) {
-        Assertions.assertNotNull(actualValue,
+        assertNotNull(actualValue,
                 "actualValue is null and cannot be used for type determination, use assertNullableEquals on field "
                         + field);
 
@@ -113,7 +118,7 @@ public class InventreeDemoDataset {
         String message = "Incorrect " + field;
 
         if (fieldValue.isJsonNull()) {
-            Assertions.assertNull(actualValue, message);
+            assertNull(actualValue, message);
         } else if (type == Boolean.class) {
             Assertions.assertEquals(fieldValue.getAsBoolean(), actualValue, message);
         } else if (type == Double.class) {
@@ -130,19 +135,19 @@ public class InventreeDemoDataset {
             try {
                 Assertions.assertEquals(new URI(uriString), actualValue, message);
             } catch (URISyntaxException e) {
-                Assertions.fail("Unable to create URI from " + uriString);
+                fail("Unable to create URI from " + uriString);
             }
         } else if (Enum.class.isAssignableFrom(type)) {
             Assertions.assertEquals(fieldValue.getAsString(), actualValue.toString(), message);
         } else if (type == Iterable.class) {
-            Assertions.assertIterableEquals(fieldValue.getAsJsonArray().asList().stream()
+            assertIterableEquals(fieldValue.getAsJsonArray().asList().stream()
                     .map(JsonElement::getAsString).toList(), (Iterable<?>) actualValue, message);
         } else if (type == LocalDate.class) {
             Assertions.assertEquals(LocalDate.from(DATE_FORMAT.parse(fieldValue.getAsString())),
                     actualValue, message);
 
         } else {
-            Assertions.fail("Unsupported type: " + type.getName());
+            fail("Unsupported type: " + type.getName());
         }
     }
 
@@ -190,16 +195,16 @@ public class InventreeDemoDataset {
     }
 
     @Test
-    public void getObjects_model() {
+    void getObjects_model() {
         List<JsonObject> actual = getObjects(Model.COMPANY_SUPPLIER_PRICE_BREAK, null);
-        Assertions.assertTrue(actual.size() > 1);
+        assertTrue(actual.size() > 1);
     }
 
     @Test
-    public void getObjects_model_pk() {
+    void getObjects_model_pk() {
         int expected = 2;
         List<JsonObject> actual = getObjects(Model.COMPANY_SUPPLIER_PRICE_BREAK, expected);
-        Assertions.assertTrue(actual.size() == 1);
+        assertTrue(actual.size() == 1);
         JsonObject object = actual.get(0);
         Assertions.assertEquals(expected, object.get(PRIMARY_KEY_KEY).getAsInt(),
                 "Incorrect primary key");
