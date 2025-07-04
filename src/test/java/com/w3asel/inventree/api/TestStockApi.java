@@ -17,6 +17,7 @@ import com.w3asel.inventree.model.GenericStateClass;
 import com.w3asel.inventree.model.GenericStateValue;
 import com.w3asel.inventree.model.PaginatedStockItemList;
 import com.w3asel.inventree.model.PaginatedStockTrackingList;
+import com.w3asel.inventree.model.SerializeStockItem;
 import com.w3asel.inventree.model.StockItem;
 import com.w3asel.inventree.model.StockTracking;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,16 +49,15 @@ public class TestStockApi extends TestApi {
         api.stockChangeStatusCreate(null);
         api.stockConvertCreate(null, null);
         api.stockCountCreate(null);
-        api.stockCreate(null);
+        // api.stockCreate(null);
         api.stockBulkDestroy(null);
         api.stockDestroy(null);
         api.stockInstallCreate(null, null);
         // api.stockList(null, null, null, null, null, null, null, null, null, null, null, null,
-        // null,
-        // null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-        // null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-        // null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-        // null, null, null, null, null, null, null);
+        // null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+        // null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+        // null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+        // null, null, null, null, null);
         api.stockLocationCreate(null);
         api.stockLocationDestroy(null);
         api.stockLocationList(null, null, null, null, null, null, null, null, null, null, null,
@@ -86,7 +86,7 @@ public class TestStockApi extends TestApi {
         api.stockRemoveCreate(null);
         // api.stockRetrieve(null);
         api.stockReturnCreate(null, null);
-        api.stockSerializeCreate(null, null);
+        // api.stockSerializeCreate(null, null);
         api.stockSerialNumbersRetrieve(null);
         // api.stockStatusRetrieve();
         api.stockTestCreate(null);
@@ -117,6 +117,50 @@ public class TestStockApi extends TestApi {
         api.stockTestList(limit, null, null, null, null, null, null, null, null, null, null, null,
                 null);
     }
+
+    @Test
+    void stockCreate_Single() throws ApiException {
+        int partPk = 1;
+        double expectedQuantity = 2;
+
+        StockItem createInput = new StockItem();
+        createInput.setPart(partPk);
+        createInput.setQuantity(expectedQuantity);
+
+        StockItem createResult = api.stockCreate(createInput);
+        try {
+            assertNotNull(createResult.getPk(), "Created item must have PK set");
+            assertEquals(expectedQuantity, createResult.getQuantity(),
+                    "Incorrect created quantity");
+
+        } finally {
+            // clean up database
+            api.stockDestroy(createResult.getPk());
+        }
+    }
+
+    @Disabled("Missing serial_numbers field for creating with serial numbers set")
+    @Test
+    void stockCreate_Serialized() throws ApiException {
+        // trackable part
+        int partPk = 77;
+
+        StockItem createInput = new StockItem();
+        createInput.setPart(partPk);
+        createInput.setQuantity(2d);
+        // createInput.setSerialNumbers("400,401");
+
+        StockItem createResult = api.stockCreate(createInput);
+        try {
+            assertNotNull(createResult.getPk(), "Created item must have PK set");
+            assertNotNull(createResult.getSerial(), "Serial numbers should be set");
+
+        } finally {
+            // clean up database
+            api.stockDestroy(createResult.getPk());
+        }
+    }
+
 
     private static void assertStockItemEquals(JsonObject expected, StockItem actual) {
         assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
@@ -237,6 +281,43 @@ public class TestStockApi extends TestApi {
         assertStockItemEquals(expected, actual);
 
         // TODO verify non-demo dataset fields?
+    }
+
+    @Disabled("stockSerializeCreate response type needs to be List<StockItem>")
+    @Test
+    void stockSerializeCreate() throws ApiException {
+        // serializable part
+        int partPk = 77;
+        // arbitrary location
+        int location = 11;
+
+        StockItem createInput = new StockItem();
+        createInput.setPart(partPk);
+        createInput.setQuantity(2d);
+        createInput.setSerial(null);
+
+        StockItem createResult = api.stockCreate(createInput);
+        boolean bulkDeleted = false;
+        try {
+            assertNotNull(createResult.getPk(), "Created item must have PK set");
+
+            SerializeStockItem serializeCreateInput = new SerializeStockItem();
+            serializeCreateInput.setQuantity(2);
+            serializeCreateInput.setSerialNumbers("500,501");
+            serializeCreateInput.setDestination(location);
+            // List<StockItem> serializeCreateResult =
+            api.stockSerializeCreate(createResult.getPk(), serializeCreateInput);
+
+            // List<Integer> itemPks =
+            // serializeCreateResult.stream().map(StockItem::getPk).toList();
+            // api.stockBulkDestroy(new BulkRequest().items(itemPks));
+            bulkDeleted = true;
+        } finally {
+            if (!bulkDeleted) {
+                // clean up database
+                api.stockDestroy(createResult.getPk());
+            }
+        }
     }
 
     @Test
