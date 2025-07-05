@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '361'
+  version: '362'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2772,6 +2772,11 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: location
+        schema:
+          type: integer
+        description: Location
       - name: offset
         required: false
         in: query
@@ -11117,6 +11122,11 @@ paths:
         name: line
         schema:
           type: integer
+      - in: query
+        name: location
+        schema:
+          type: integer
+        description: Location
       - name: offset
         required: false
         in: query
