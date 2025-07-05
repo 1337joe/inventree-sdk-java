@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '359'
+  version: '360'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26240,7 +26240,7 @@ components:
           title: Part
         stock_item_detail:
           allOf:
-          - $ref: '#/components/schemas/StockItemSerializerBrief'
+          - $ref: '#/components/schemas/StockItem'
           readOnly: true
           nullable: true
           title: Stock Item
@@ -32447,7 +32447,7 @@ components:
           title: Part
         stock_item_detail:
           allOf:
-          - $ref: '#/components/schemas/StockItemSerializerBrief'
+          - $ref: '#/components/schemas/StockItem'
           readOnly: true
           nullable: true
           title: Stock Item
@@ -35494,7 +35494,7 @@ components:
           readOnly: true
         item_detail:
           allOf:
-          - $ref: '#/components/schemas/StockItemSerializerBrief'
+          - $ref: '#/components/schemas/StockItem'
           readOnly: true
           nullable: true
         part_detail:
@@ -38120,7 +38120,7 @@ components:
           readOnly: true
         item_detail:
           allOf:
-          - $ref: '#/components/schemas/StockItemSerializerBrief'
+          - $ref: '#/components/schemas/StockItem'
           readOnly: true
           nullable: true
         part_detail:
@@ -39101,55 +39101,6 @@ components:
       required:
       - next
       - previous
-    StockItemSerializerBrief:
-      type: object
-      description: Brief serializers for a StockItem.
-      properties:
-        part:
-          type: integer
-          title: Base Part
-          description: Base part
-        part_name:
-          type: string
-          readOnly: true
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        location:
-          type: integer
-          nullable: true
-          title: Stock Location
-          description: Where is this stock item located?
-        quantity:
-          type: number
-          format: double
-        serial:
-          type: string
-          nullable: true
-          title: Serial Number
-          description: Serial number for this item
-          maxLength: 100
-        batch:
-          type: string
-          nullable: true
-          title: Batch Code
-          description: Batch code for this stock item
-          maxLength: 100
-        supplier_part:
-          type: integer
-          nullable: true
-          description: Select a matching supplier part for this stock item
-        barcode_hash:
-          type: string
-          readOnly: true
-          description: Unique hash of barcode data
-      required:
-      - barcode_hash
-      - part
-      - part_name
-      - pk
-      - quantity
     StockItemStatusEnum:
       enum:
       - 10
@@ -39326,7 +39277,7 @@ components:
           type: integer
         item_detail:
           allOf:
-          - $ref: '#/components/schemas/StockItemSerializerBrief'
+          - $ref: '#/components/schemas/StockItem'
           readOnly: true
           nullable: true
         date:
