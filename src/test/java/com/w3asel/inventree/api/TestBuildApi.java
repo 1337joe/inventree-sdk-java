@@ -260,8 +260,8 @@ public class TestBuildApi extends TestApi {
         int limit = 10;
         int offset = 0;
 
-        PaginatedBuildItemList actual = api.buildItemList(limit, null, null, null, null, offset,
-                null, null, null, null, null);
+        PaginatedBuildItemList actual = api.buildItemList(limit, null, null, null, null, null,
+                offset, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total build item count");
         List<BuildItem> actualList = actual.getResults();
 

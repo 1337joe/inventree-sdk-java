@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '361'
+  version: '363'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2772,6 +2772,11 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: location
+        schema:
+          type: integer
+        description: Location
       - name: offset
         required: false
         in: query
@@ -11117,6 +11122,11 @@ paths:
         name: line
         schema:
           type: integer
+      - in: query
+        name: location
+        schema:
+          type: integer
+        description: Location
       - name: offset
         required: false
         in: query
@@ -25333,6 +25343,10 @@ components:
           description: Token has been revoked
         user:
           type: integer
+        user_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
         in_use:
           type: boolean
           description: Return True if the token is currently used to call the endpoint.
@@ -25343,6 +25357,7 @@ components:
       - id
       - in_use
       - token
+      - user_detail
     Attachment:
       type: object
       description: Serializer class for the Attachment model.
