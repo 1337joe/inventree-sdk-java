@@ -11,8 +11,12 @@ import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.Build;
+import com.w3asel.inventree.model.BuildItem;
+import com.w3asel.inventree.model.BuildLine;
 import com.w3asel.inventree.model.BuildOutputCreate;
 import com.w3asel.inventree.model.BulkRequest;
+import com.w3asel.inventree.model.PaginatedBuildItemList;
+import com.w3asel.inventree.model.PaginatedBuildLineList;
 import com.w3asel.inventree.model.PaginatedBuildList;
 import com.w3asel.inventree.model.PaginatedStockItemList;
 import com.w3asel.inventree.model.StockItem;
@@ -50,19 +54,19 @@ public class TestBuildApi extends TestApi {
         api.buildItemBulkDestroy(null);
         api.buildItemCreate(null);
         api.buildItemDestroy(null);
-        api.buildItemList(null, null, null, null, null, null, null, null, null, null, null);
+        // api.buildItemList(null, null, null, null, null, null, null, null, null, null, null);
         api.buildItemMetadataPartialUpdate(null, null);
         api.buildItemMetadataRetrieve(null);
         api.buildItemMetadataUpdate(null, null);
         api.buildItemPartialUpdate(null, null);
-        api.buildItemRetrieve(null);
+        // api.buildItemRetrieve(null);
         api.buildItemUpdate(null, null);
         api.buildLineCreate(null);
         api.buildLineDestroy(null);
-        api.buildLineList(null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null);
+        // api.buildLineList(null, null, null, null, null, null, null, null, null, null, null, null,
+        // null, null, null);
         api.buildLinePartialUpdate(null, null);
-        api.buildLineRetrieve(null);
+        // api.buildLineRetrieve(null);
         api.buildLineUpdate(null, null);
         // api.buildList(null, null, null, null, null, null, null, null, null, null, null, null,
         // null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
@@ -76,20 +80,6 @@ public class TestBuildApi extends TestApi {
         api.buildStatusRetrieve();
         api.buildUnallocateCreate(null, null);
         api.buildUpdate(null, null);
-    }
-
-    @Test
-    void test() throws ApiException {
-        // TODO verify results
-        Build actual = api.buildRetrieve(1);
-        assertNotNull(actual);
-
-        int limit = 1000;
-
-        api.buildItemList(limit, null, null, null, null, null, null, null, null, null, null);
-
-        api.buildLineList(limit, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null);
     }
 
     @Disabled("outputCreate response type needs to be List<StockItem>")
@@ -189,8 +179,6 @@ public class TestBuildApi extends TestApi {
         }
         assertFieldEquals("level", fields, actual.getLevel());
 
-
-
         // not directly available in demo dataset:
         // actual.getIssuedByDetail();
         // actual.getOverdue();
@@ -237,6 +225,249 @@ public class TestBuildApi extends TestApi {
         JsonObject expectedFirst =
                 InventreeDemoDataset.getObjects(Model.BUILD, actualFirst.getPk()).get(0);
         assertBuildEquals(expectedFirst, actualFirst, true);
+    }
+
+    private static void assertBuildItemEquals(JsonObject expected, BuildItem actual) {
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        assertFieldEquals("build_line", fields, actual.getBuildLine());
+        assertFieldEquals("stock_item", fields, actual.getStockItem());
+        assertFieldEquals("quantity", fields, actual.getQuantity());
+        assertNullableFieldEquals(Integer.class, "install_into", fields, actual.getInstallInto());
+
+        // not directly available in demo dataset:
+        // actual.getBomReference();
+        // actual.getBuild();
+        // actual.getBuildDetail();
+        // actual.getLocation();
+        // actual.getLocationDetail();
+        // actual.getPartDetail();
+        // actual.getStockItem();
+        // actual.getStockItemDetail();
+        // actual.getSupplierPartDetail();
+
+        // not directly available in Build object
+        // metadata
+    }
+
+    @Test
+    void buildItemList() throws ApiException {
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.BUILD_ITEM, null);
+        assertTrue(expectedList.size() > 0, "Expected demo data");
+
+        int limit = 10;
+        int offset = 0;
+
+        PaginatedBuildItemList actual = api.buildItemList(limit, null, null, null, null, offset,
+                null, null, null, null, null);
+        assertEquals(expectedList.size(), actual.getCount(), "Incorrect total build item count");
+        List<BuildItem> actualList = actual.getResults();
+
+        // check items returned by key
+        List<Integer> expectedPks = expectedList.stream()
+                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
+                .toList();
+        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+
+        // deep equals on first value
+        BuildItem actualFirst = actualList.get(0);
+        JsonObject expectedFirst =
+                InventreeDemoDataset.getObjects(Model.BUILD_ITEM, actualFirst.getPk()).get(0);
+        assertBuildItemEquals(expectedFirst, actualFirst);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"267"})
+    void buildItemRetrieve(int pk) throws ApiException {
+        BuildItem actual = api.buildItemRetrieve(pk);
+        JsonObject expected = InventreeDemoDataset.getObjects(Model.BUILD_ITEM, pk).get(0);
+        assertBuildItemEquals(expected, actual);
+
+        // verify data not directly in demo dataset
+
+        String expectedBomReference;
+        Integer expectedBuild;
+        Integer expectedLocation;
+        Integer expectedStockItem;
+        switch (pk) {
+            case 267:
+                expectedBomReference = "PCB1";
+                expectedBuild = 26;
+                expectedLocation = 7;
+                expectedStockItem = 329;
+                break;
+            default:
+                expectedBomReference = null;
+                expectedBuild = null;
+                expectedLocation = null;
+                expectedStockItem = null;
+                break;
+        }
+        assertEquals(expectedBomReference, actual.getBomReference(), "Incorrect BOM reference");
+        assertEquals(expectedBuild, actual.getBuild(), "Incorrect build");
+        assertEquals(expectedLocation, actual.getLocation(), "Incorrect location");
+        assertEquals(expectedStockItem, actual.getStockItem(), "Incorrect stock item");
+
+        // skipping:
+        // actual.getBuildDetail();
+        // actual.getLocationDetail();
+        // actual.getPartDetail();
+        // actual.getStockItemDetail();
+        // actual.getSupplierPartDetail();
+    }
+
+    private static void assertBuildLineEquals(JsonObject expected, BuildLine actual) {
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        assertFieldEquals("build", fields, actual.getBuild());
+        assertFieldEquals("bom_item", fields, actual.getBomItem());
+        assertFieldEquals("quantity", fields, actual.getQuantity());
+
+        // not directly available in demo dataset:
+        // actual.getAllocated();
+        // actual.getAllocations();
+        // actual.getAllowVariants();
+        // actual.getAvailableStock();
+        // actual.getAvailableSubstituteStock();
+        // actual.getAvailableVariantStock();
+        // actual.getBomItemDetail();
+        // actual.getBuildDetail();
+        // actual.getBuildReference();
+        // actual.getConsumable();
+        // actual.getExternalStock();
+        // actual.getInherited();
+        // actual.getInProduction();
+        // actual.getOnOrder();
+        // actual.getOptional();
+        // actual.getPart();
+        // actual.getPartDetail();
+        // actual.getReference();
+        // actual.getTestable();
+        // actual.getTrackable();
+    }
+
+    @Test
+    void buildLineList() throws ApiException {
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.BUILD_LINE, null);
+        assertTrue(expectedList.size() > 0, "Expected demo data");
+
+        int limit = 10;
+        int offset = 0;
+
+        PaginatedBuildLineList actual = api.buildLineList(limit, null, null, null, null, null, null,
+                offset, null, null, null, null, null, null, null);
+        assertEquals(expectedList.size(), actual.getCount(), "Incorrect total build line count");
+        List<BuildLine> actualList = actual.getResults();
+
+        // check items returned by key
+        List<Integer> expectedPks = expectedList.stream()
+                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
+                .toList();
+        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+
+        // deep equals on first value
+        BuildLine actualFirst = actualList.get(0);
+        JsonObject expectedFirst =
+                InventreeDemoDataset.getObjects(Model.BUILD_LINE, actualFirst.getPk()).get(0);
+        assertBuildLineEquals(expectedFirst, actualFirst);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"410"})
+    void buildLineRetrieve(int pk) throws ApiException {
+        BuildLine actual = api.buildLineRetrieve(pk);
+        JsonObject expected = InventreeDemoDataset.getObjects(Model.BUILD_LINE, pk).get(0);
+        assertBuildLineEquals(expected, actual);
+
+        // verify data not directly in demo dataset
+        Double expectedAllocated;
+        Boolean expectedAllowVariants;
+        Double expectedAvailableStock;
+        Double expectedAvailableSubstituteStock;
+        Double expectedAvailableVariantStock;
+        String expectedBuildReference;
+        Boolean expectedConsumable;
+        Double expectedExternalStock;
+        Boolean expectedInherited;
+        Double expectedInProduction;
+        Double expectedOnOrder;
+        Boolean expectedOptional;
+        Integer expectedPart;
+        String expectedReference;
+        Boolean expectedTestable;
+        Boolean expectedTrackable;
+
+        switch (pk) {
+            case 410:
+                expectedAllocated = 100d;
+                expectedAllowVariants = false;
+                expectedAvailableStock = 0d;
+                expectedAvailableSubstituteStock = 0d;
+                expectedAvailableVariantStock = 0d;
+                expectedBuildReference = "BO0026";
+                expectedConsumable = false;
+                expectedExternalStock = 0d;
+                expectedInherited = false;
+                expectedInProduction = 0d;
+                expectedOnOrder = 1800d;
+                expectedOptional = false;
+                expectedPart = 68;
+                expectedReference = "PCB1";
+                expectedTestable = false;
+                expectedTrackable = false;
+                break;
+            default:
+                expectedAllocated = null;
+                expectedAllowVariants = null;
+                expectedAvailableStock = null;
+                expectedAvailableSubstituteStock = null;
+                expectedAvailableVariantStock = null;
+                expectedBuildReference = null;
+                expectedConsumable = null;
+                expectedExternalStock = null;
+                expectedInherited = null;
+                expectedInProduction = null;
+                expectedOnOrder = null;
+                expectedOptional = null;
+                expectedPart = null;
+                expectedReference = null;
+                expectedTestable = null;
+                expectedTrackable = null;
+                break;
+        }
+
+        assertEquals(expectedAllocated, actual.getAllocated(), "Incorrect allocated");
+        assertEquals(expectedAllowVariants, actual.getAllowVariants(), "Incorrect allow variants");
+        assertEquals(expectedAvailableStock, actual.getAvailableStock(),
+                "Incorrect available stock");
+        assertEquals(expectedAvailableSubstituteStock, actual.getAvailableSubstituteStock(),
+                "Incorrect available substitute stock");
+        assertEquals(expectedAvailableVariantStock, actual.getAvailableVariantStock(),
+                "Incorrect available variant stock");
+        assertEquals(expectedBuildReference, actual.getBuildReference(),
+                "Incorrect build reference");
+        assertEquals(expectedConsumable, actual.getConsumable(), "Incorrect consumable");
+        assertEquals(expectedExternalStock, actual.getExternalStock(), "Incorrect external stock");
+        assertEquals(expectedInherited, actual.getInherited(), "Incorrect inherited");
+        assertEquals(expectedInProduction, actual.getInProduction(), "Incorrect in production");
+        assertEquals(expectedOnOrder, actual.getOnOrder(), "Incorrect on order");
+        assertEquals(expectedOptional, actual.getOptional(), "Incorrect optional");
+        assertEquals(expectedPart, actual.getPart(), "Incorrect part");
+        assertEquals(expectedReference, actual.getReference(), "Incorrect reference");
+        assertEquals(expectedTestable, actual.getTestable(), "Incorrect testable");
+        assertEquals(expectedTrackable, actual.getTrackable(), "Incorrect trackable");
+
+        // skipping:
+        actual.getAllocations();
+        // actual.getBomItemDetail();
+        // actual.getBuildDetail();
+        // actual.getPartDetail();
     }
 
     @ParameterizedTest

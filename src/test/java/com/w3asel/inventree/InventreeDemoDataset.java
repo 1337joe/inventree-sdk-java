@@ -169,6 +169,8 @@ public class InventreeDemoDataset {
         BOM_ITEM("part.bomitem"),
         BOM_ITEM_SUBSTITUTE("part.bomitemsubstitute"),
         BUILD("build.build"),
+        BUILD_LINE("build.buildline"),
+        BUILD_ITEM("build.builditem"),
         PART_CATEGORY("part.partcategory"),
         PART_INTERNAL_PRICE_BREAK("part.partinternalpricebreak"),
         GLOBAL_SETTING("common.inventreesetting"),
