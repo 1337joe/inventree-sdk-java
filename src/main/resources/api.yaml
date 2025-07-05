@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '360'
+  version: '361'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -11132,7 +11132,7 @@ paths:
         required: false
         in: query
         description: 'Which field to use when ordering the results. Possible fields:
-          quantity, part, serial, batch, location, order, shipment_date.'
+          quantity, part, serial, IPN, batch, location, order, shipment_date.'
         schema:
           type: string
       - in: query
