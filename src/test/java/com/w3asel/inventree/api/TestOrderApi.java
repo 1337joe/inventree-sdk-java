@@ -162,7 +162,7 @@ public class TestOrderApi extends TestApi {
         // int limit = 1;
 
         int soAllocationPk = api.orderSoAllocationList(limit, null, null, null, null, null, null,
-                null, null, null, null, null).getResults().get(0).getPk();
+                null, null, null, null, null, null).getResults().get(0).getPk();
         api.orderSoAllocationRetrieve(soAllocationPk);
     }
 
