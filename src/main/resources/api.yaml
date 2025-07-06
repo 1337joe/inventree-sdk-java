@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '363'
+  version: '364'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -6794,8 +6794,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '200':
           content:
@@ -6824,8 +6822,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '201':
           content:
@@ -6846,8 +6842,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '204':
           description: No response body
@@ -6879,8 +6873,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '200':
           content:
@@ -6915,8 +6907,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '200':
           content:
@@ -6950,8 +6940,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '200':
           content:
@@ -6974,8 +6962,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '204':
           description: No response body
