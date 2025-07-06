@@ -3,22 +3,28 @@ package com.w3asel.inventree.api;
 import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
 import static com.w3asel.inventree.InventreeDemoDataset.assertNullableFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.ApiToken;
 import com.w3asel.inventree.model.ExtendedUser;
+import com.w3asel.inventree.model.GetAuthToken;
 import com.w3asel.inventree.model.Group;
 import com.w3asel.inventree.model.MeUser;
 import com.w3asel.inventree.model.Owner;
+import com.w3asel.inventree.model.PaginatedApiTokenList;
 import com.w3asel.inventree.model.PaginatedUserCreateList;
 import com.w3asel.inventree.model.Role;
 import com.w3asel.inventree.model.UserCreate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import java.util.List;
@@ -64,11 +70,11 @@ public class TestUserApi extends TestApi {
         api.userRulesetUpdate(null, null);
         api.userSetPasswordPartialUpdate(null, null);
         api.userSetPasswordUpdate(null, null);
-        api.userTokenRetrieve(null);
-        api.userTokensCreate(null);
-        api.userTokensDestroy(null);
-        api.userTokensList(null, null, null, null, null, null);
-        api.userTokensRetrieve(null, null);
+        // api.userTokenRetrieve(null);
+        // api.userTokensCreate(null);
+        // api.userTokensDestroy(null);
+        // api.userTokensList(null, null, null, null, null, null);
+        // api.userTokensRetrieve(null, null);
         api.userUpdate(null, null);
     }
 
@@ -79,7 +85,6 @@ public class TestUserApi extends TestApi {
         api.userGroupList(limit, null, null, null);
         api.userOwnerList(limit, null);
         api.userRulesetList(limit, null, null, null, null, null);
-        api.userTokensList(limit, null, null, null, null, null);
     }
 
     @Test
@@ -139,7 +144,6 @@ public class TestUserApi extends TestApi {
         int offset = 0;
 
         PaginatedUserCreateList actual = api.userList(limit, null, null, null, offset, null, null);
-        // add one for automatically created root@localhost user
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total user count");
         List<UserCreate> actualList = actual.getResults();
 
@@ -179,9 +183,68 @@ public class TestUserApi extends TestApi {
         assertNotNull(actual);
     }
 
+    @ResourceLock("userTokens")
     @Test
-    void userTokenList() throws ApiException {
-        int limit = 100;
-        api.userTokensList(limit, null, null, null, null, null);
+    void userTokenRetrieve() throws ApiException {
+        String tokenName = "test-token-retrieve";
+
+        int limit = 10;
+        int offset = 0;
+
+        PaginatedApiTokenList tokenList;
+        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        assertEquals(0, tokenList.getCount(), "Expect initial state of no (unrevoked) user tokens");
+
+        GetAuthToken actual = api.userTokenRetrieve(tokenName);
+        assertEquals(tokenName, actual.getName(), "Incorrect name");
+        // unchecked:
+        // actual.getExpiry();
+        // actual.getToken();
+
+        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        assertEquals(1, tokenList.getCount(), "Expect newly created token");
+
+        api.userTokensDestroy(tokenList.getResults().get(0).getId());
+
+        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        assertEquals(0, tokenList.getCount(), "Expect token deleted");
+    }
+
+    @ResourceLock("userTokens")
+    @Test
+    void userTokenCreate() throws ApiException {
+        String tokenName = "test-token-create";
+        ApiToken tokenInput = new ApiToken().name(tokenName);
+
+        int limit = 10;
+        int offset = 0;
+
+        PaginatedApiTokenList tokenList;
+        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        assertEquals(0, tokenList.getCount(), "Expect initial state of no (unrevoked) user tokens");
+
+        ApiToken actual = api.userTokensCreate(tokenInput);
+        assertTrue(actual.getActive(), "Incorrect active state");
+        assertNull(actual.getLastSeen(), "Incorrect last seen");
+        assertEquals(tokenName, actual.getName(), "Incorrect name");
+        assertFalse(actual.getRevoked(), "Incorrect revoked state");
+        assertEquals("admin", actual.getUserDetail().getUsername(), "Incorrect username");
+        // unchecked:
+        // actual.getCreated();
+        // actual.getExpiry();
+        // actual.getId();
+        // actual.getInUse();
+        // actual.getToken();
+        // actual.getUser();
+
+        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        assertEquals(1, tokenList.getCount(), "Expect newly created token");
+        assertEquals(actual.getId(), tokenList.getResults().get(0).getId(),
+                "Expected created token");
+
+        api.userTokensDestroy(actual.getId());
+
+        ApiToken deleted = api.userTokensRetrieve(actual.getId(), false);
+        assertTrue(deleted.getRevoked(), "Incorrect revoked");
     }
 }
