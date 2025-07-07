@@ -13,6 +13,8 @@ import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.Build;
 import com.w3asel.inventree.model.BuildItem;
 import com.w3asel.inventree.model.BuildLine;
+import com.w3asel.inventree.model.BuildOutput;
+import com.w3asel.inventree.model.BuildOutputComplete;
 import com.w3asel.inventree.model.BuildOutputCreate;
 import com.w3asel.inventree.model.BulkRequest;
 import com.w3asel.inventree.model.PaginatedBuildItemList;
@@ -82,7 +84,6 @@ public class TestBuildApi extends TestApi {
         api.buildUpdate(null, null);
     }
 
-    @Disabled("outputCreate response type needs to be List<StockItem>")
     @Test
     void buildCreateOutputCreate_buildCompleteCreate() throws ApiException {
         // no outputs in default dataset
@@ -102,14 +103,14 @@ public class TestBuildApi extends TestApi {
 
         try {
             BuildOutputCreate outputCreate = new BuildOutputCreate().quantity(BigDecimal.ONE);
-            // List<StockItem> outputResponse = api.buildCreateOutputCreate(buildPk, outputCreate);
-            //
-            // List<BuildOutput> buildOutputs =
-            // outputResponse.stream().map(s -> new BuildOutput().output(s.getPk())).toList();
-            //
-            // BuildOutputComplete outputComplete =
-            // new BuildOutputComplete().location(locationId).outputs(buildOutputs);
-            // api.buildCompleteCreate(buildPk, outputComplete);
+            List<StockItem> outputResponse = api.buildCreateOutputCreate(buildPk, outputCreate);
+
+            List<BuildOutput> buildOutputs =
+                    outputResponse.stream().map(s -> new BuildOutput().output(s.getPk())).toList();
+
+            BuildOutputComplete outputComplete =
+                    new BuildOutputComplete().location(locationId).outputs(buildOutputs);
+            api.buildCompleteCreate(buildPk, outputComplete);
 
         } finally {
             // ensure any created items are cleaned up

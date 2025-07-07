@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.BulkRequest;
 import com.w3asel.inventree.model.GenericStateClass;
 import com.w3asel.inventree.model.GenericStateValue;
 import com.w3asel.inventree.model.PaginatedStockItemList;
@@ -29,9 +30,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class TestStockApi extends TestApi {
     private StockApi api;
@@ -127,7 +130,9 @@ public class TestStockApi extends TestApi {
         createInput.setPart(partPk);
         createInput.setQuantity(expectedQuantity);
 
-        StockItem createResult = api.stockCreate(createInput).get(0);
+        List<StockItem> createResultList = api.stockCreate(createInput);
+        assertEquals(1, createResultList.size(), "Expected single result");
+        StockItem createResult = createResultList.get(0);
         try {
             assertNotNull(createResult.getPk(), "Created item must have PK set");
             assertEquals(expectedQuantity, createResult.getQuantity(),
@@ -139,28 +144,33 @@ public class TestStockApi extends TestApi {
         }
     }
 
-    @Disabled("Missing serial_numbers field for creating with serial numbers set")
     @Test
     void stockCreate_Serialized() throws ApiException {
         // trackable part
         int partPk = 77;
+        Set<String> serialNumbers = new HashSet<>(Set.of("400", "401"));
 
         StockItem createInput = new StockItem();
         createInput.setPart(partPk);
         createInput.setQuantity(2d);
-        // createInput.setSerialNumbers("400,401");
+        createInput.setSerialNumbers(String.join(",", serialNumbers));
 
-        StockItem createResult = api.stockCreate(createInput).get(0);
+        List<StockItem> createResultList = api.stockCreate(createInput);
+        assertEquals(2, createResultList.size(), "Expected two, serialized results");
         try {
-            assertNotNull(createResult.getPk(), "Created item must have PK set");
-            assertNotNull(createResult.getSerial(), "Serial numbers should be set");
+            for (StockItem createResult : createResultList) {
+                assertNotNull(createResult.getPk(), "Created item must have PK set");
+                assertTrue(serialNumbers.remove(createResult.getSerial()),
+                        "Unexpected serial number <" + createResult.getSerial() + "> (remaining: "
+                                + serialNumbers + ")");
+            }
 
         } finally {
             // clean up database
-            api.stockDestroy(createResult.getPk());
+            List<Integer> itemPks = createResultList.stream().map(StockItem::getPk).toList();
+            api.stockBulkDestroy(new BulkRequest().items(itemPks));
         }
     }
-
 
     private static void assertStockItemEquals(JsonObject expected, StockItem actual) {
         assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
@@ -283,7 +293,6 @@ public class TestStockApi extends TestApi {
         // TODO verify non-demo dataset fields?
     }
 
-    @Disabled("stockSerializeCreate response type needs to be List<StockItem>")
     @Test
     void stockSerializeCreate() throws ApiException {
         // serializable part
@@ -296,7 +305,10 @@ public class TestStockApi extends TestApi {
         createInput.setQuantity(2d);
         createInput.setSerial(null);
 
-        StockItem createResult = api.stockCreate(createInput).get(0);
+        List<StockItem> createResultList = api.stockCreate(createInput);
+        assertEquals(1, createResultList.size(), "Expected single result");
+        StockItem createResult = createResultList.get(0);
+
         boolean bulkDeleted = false;
         try {
             assertNotNull(createResult.getPk(), "Created item must have PK set");
@@ -305,12 +317,11 @@ public class TestStockApi extends TestApi {
             serializeCreateInput.setQuantity(2);
             serializeCreateInput.setSerialNumbers("500,501");
             serializeCreateInput.setDestination(location);
-            // List<StockItem> serializeCreateResult =
-            api.stockSerializeCreate(createResult.getPk(), serializeCreateInput);
+            List<StockItem> serializeCreateResult =
+                    api.stockSerializeCreate(createResult.getPk(), serializeCreateInput);
 
-            // List<Integer> itemPks =
-            // serializeCreateResult.stream().map(StockItem::getPk).toList();
-            // api.stockBulkDestroy(new BulkRequest().items(itemPks));
+            List<Integer> itemPks = serializeCreateResult.stream().map(StockItem::getPk).toList();
+            api.stockBulkDestroy(new BulkRequest().items(itemPks));
             bulkDeleted = true;
         } finally {
             if (!bulkDeleted) {
