@@ -17,6 +17,7 @@ public class TestDataOutputApi extends TestApi {
     @Test
     void todo() throws ApiException {
         api.dataOutputBulkDestroy(null);
+        api.dataOutputDestroy(null);
         // api.dataOutputList(null, null, null, null);
         api.dataOutputRetrieve(null);
     }
@@ -25,6 +26,6 @@ public class TestDataOutputApi extends TestApi {
     @Test
     void dataOutputList() throws ApiException {
         int limit = 1000;
-        api.dataOutputList(limit, null, null, null);
+        api.dataOutputList(limit, null, null, null, null);
     }
 }

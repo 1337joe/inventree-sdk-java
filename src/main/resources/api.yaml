@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '364'
+  version: '365'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -5695,6 +5695,10 @@ paths:
         description: A search term.
         schema:
           type: string
+      - in: query
+        name: user
+        schema:
+          type: integer
       tags:
       - data-output
       security:
@@ -5765,6 +5769,26 @@ paths:
               schema:
                 $ref: '#/components/schemas/DataOutput'
           description: ''
+    delete:
+      operationId: data_output_destroy
+      description: Detail view for a DataOutput object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - data-output
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '204':
+          description: No response body
   /api/email/generate/:
     post:
       operationId: email_generate_create
