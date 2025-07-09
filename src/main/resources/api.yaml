@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '365'
+  version: '366'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1137,6 +1137,10 @@ paths:
           type: boolean
         description: Has available stock
       - in: query
+        name: category
+        schema:
+          type: integer
+      - in: query
         name: consumable
         schema:
           type: boolean
@@ -1183,7 +1187,6 @@ paths:
         name: part
         schema:
           type: integer
-        description: Part
       - in: query
         name: part_active
         schema:

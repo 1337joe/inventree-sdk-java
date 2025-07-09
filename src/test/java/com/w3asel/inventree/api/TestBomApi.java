@@ -100,8 +100,8 @@ public class TestBomApi extends TestApi {
         int limit = 10;
         int offset = 0;
 
-        PaginatedBomItemList actual = api.bomList(limit, null, null, null, null, null, offset, null,
-                null, null, null, null, null, null, null, null, null, null, null, null);
+        PaginatedBomItemList actual = api.bomList(limit, null, null, null, null, null, null, offset,
+                null, null, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total bom item count");
         List<BomItem> actualList = actual.getResults();
 
