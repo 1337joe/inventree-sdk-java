@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '367'
+  version: '368'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26896,6 +26896,10 @@ components:
           - $ref: '#/components/schemas/Address'
           readOnly: true
           nullable: true
+        tax_id:
+          type: string
+          description: Company Tax ID
+          maxLength: 50
       required:
       - address_count
       - currency
@@ -26935,6 +26939,10 @@ components:
           type: string
           readOnly: true
           description: Default currency used for this company
+        tax_id:
+          type: string
+          description: Company Tax ID
+          maxLength: 50
       required:
       - currency
       - image
@@ -32840,6 +32848,10 @@ components:
           - $ref: '#/components/schemas/Address'
           readOnly: true
           nullable: true
+        tax_id:
+          type: string
+          description: Company Tax ID
+          maxLength: 50
     PatchedContact:
       type: object
       description: Serializer class for the Contact model.

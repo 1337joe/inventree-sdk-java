@@ -157,6 +157,7 @@ public class TestCompanyApi extends TestApi {
         // actual.getPartsManufactured()
         // actual.getPartsSupplied()
         // actual.getRemoteImage()
+        // actual.getTaxId()
     }
 
     @Test
