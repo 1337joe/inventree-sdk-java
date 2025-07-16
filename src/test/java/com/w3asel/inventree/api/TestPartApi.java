@@ -80,7 +80,7 @@ public class TestPartApi extends TestApi {
         api.partMetadataUpdate(null, null);
         api.partParameterCreate(null);
         api.partParameterDestroy(null);
-        api.partParameterList(null, null, null, null, null, null);
+        api.partParameterList(null, null, null, null, null, null, null);
         api.partParameterMetadataPartialUpdate(null, null);
         api.partParameterMetadataRetrieve(null);
         api.partParameterMetadataUpdate(null, null);
@@ -155,7 +155,7 @@ public class TestPartApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null);
 
-        api.partParameterList(limit, null, null, null, null, null);
+        api.partParameterList(limit, null, null, null, null, null, null);
 
         api.partParameterTemplateList(limit, null, null, null, null, null, null, null, null, null,
                 null);

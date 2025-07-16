@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '368'
+  version: '369'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -14570,7 +14570,7 @@ paths:
         required: false
         in: query
         description: 'Which field to use when ordering the results. Possible fields:
-          name, data, part, template.'
+          name, data, part, template, updated, updated_by.'
         schema:
           type: string
       - in: query
@@ -14585,6 +14585,10 @@ paths:
           type: string
       - in: query
         name: template
+        schema:
+          type: integer
+      - in: query
+        name: updated_by
         schema:
           type: integer
       tags:
@@ -31495,11 +31499,32 @@ components:
           type: number
           format: double
           nullable: true
+        note:
+          type: string
+          description: Optional note field
+          maxLength: 500
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
       required:
       - data
       - part
       - pk
       - template
+      - updated_by_detail
     PartParameterTemplate:
       type: object
       description: JSON serializer for the PartParameterTemplate model.
@@ -34072,6 +34097,26 @@ components:
           type: number
           format: double
           nullable: true
+        note:
+          type: string
+          description: Optional note field
+          maxLength: 500
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
     PatchedPartParameterTemplate:
       type: object
       description: JSON serializer for the PartParameterTemplate model.
