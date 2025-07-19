@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '369'
+  version: '370'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -11789,7 +11789,6 @@ paths:
         name: part
         schema:
           type: integer
-        description: Part
       - name: search
         required: false
         in: query
@@ -26435,6 +26434,11 @@ components:
           - $ref: '#/components/schemas/BomItem'
           readOnly: true
           title: BOM Item
+        assembly_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          title: Assembly
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
@@ -26450,6 +26454,7 @@ components:
       - allocated
       - allocations
       - allow_variants
+      - assembly_detail
       - available_stock
       - available_substitute_stock
       - available_variant_stock
@@ -32664,6 +32669,11 @@ components:
           - $ref: '#/components/schemas/BomItem'
           readOnly: true
           title: BOM Item
+        assembly_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          title: Assembly
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'

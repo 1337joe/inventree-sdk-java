@@ -332,6 +332,7 @@ public class TestBuildApi extends TestApi {
         // actual.getAllocated();
         // actual.getAllocations();
         // actual.getAllowVariants();
+        // actual.getAssemblyDetail();
         // actual.getAvailableStock();
         // actual.getAvailableSubstituteStock();
         // actual.getAvailableVariantStock();
