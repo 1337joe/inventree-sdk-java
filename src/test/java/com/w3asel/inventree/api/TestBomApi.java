@@ -1,6 +1,7 @@
 package com.w3asel.inventree.api;
 
 import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
+import static com.w3asel.inventree.InventreeDemoDataset.assertNullableFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
@@ -63,7 +64,10 @@ public class TestBomApi extends TestApi {
         assertFieldEquals("quantity", fields, actual.getQuantity());
         assertFieldEquals("optional", fields, actual.getOptional());
         assertFieldEquals("consumable", fields, actual.getConsumable());
-        // assertFieldEquals("overage", fields, actual.getOverage());
+        assertFieldEquals("setup_quantity", fields, actual.getSetupQuantity());
+        assertFieldEquals("attrition", fields, actual.getAttrition());
+        assertNullableFieldEquals(Double.class, "rounding_multiple", fields,
+                actual.getRoundingMultiple());
         assertFieldEquals("reference", fields, actual.getReference());
         assertFieldEquals("note", fields, actual.getNote());
         assertFieldEquals("validated", fields, actual.getValidated());

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '370'
+  version: '371'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1178,9 +1178,10 @@ paths:
         required: false
         in: query
         description: 'Which field to use when ordering the results. Possible fields:
-          can_build, quantity, sub_part, available_stock, allow_variants, inherited,
-          optional, consumable, reference, validated, pricing_min, pricing_max, pricing_min_total,
-          pricing_max_total, pricing_updated.'
+          can_build, quantity, setup_quantity, attrition, rounding_multiple, sub_part,
+          available_stock, allow_variants, inherited, optional, consumable, reference,
+          validated, pricing_min, pricing_max, pricing_min_total, pricing_max_total,
+          pricing_updated.'
         schema:
           type: string
       - in: query
@@ -25794,10 +25795,6 @@ components:
         quantity:
           type: number
           format: double
-        overage:
-          type: string
-          description: Estimated build wastage quantity (absolute or percentage)
-          maxLength: 24
         allow_variants:
           type: boolean
           description: Stock items for variant parts can be used for this BOM item
@@ -25811,6 +25808,16 @@ components:
         consumable:
           type: boolean
           description: This BOM item is consumable (it is not tracked in build orders)
+        setup_quantity:
+          type: number
+          format: double
+        attrition:
+          type: number
+          format: double
+        rounding_multiple:
+          type: number
+          format: double
+          nullable: true
         note:
           type: string
           description: BOM item notes
@@ -32214,10 +32221,6 @@ components:
         quantity:
           type: number
           format: double
-        overage:
-          type: string
-          description: Estimated build wastage quantity (absolute or percentage)
-          maxLength: 24
         allow_variants:
           type: boolean
           description: Stock items for variant parts can be used for this BOM item
@@ -32231,6 +32234,16 @@ components:
         consumable:
           type: boolean
           description: This BOM item is consumable (it is not tracked in build orders)
+        setup_quantity:
+          type: number
+          format: double
+        attrition:
+          type: number
+          format: double
+        rounding_multiple:
+          type: number
+          format: double
+          nullable: true
         note:
           type: string
           description: BOM item notes
