@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '371'
+  version: '372'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -13305,7 +13305,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BOMValidate'
+                $ref: '#/components/schemas/PartBomValidate'
           description: ''
     put:
       operationId: part_bom_validate_update
@@ -13322,13 +13322,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BOMValidate'
+              $ref: '#/components/schemas/PartBomValidate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/BOMValidate'
+              $ref: '#/components/schemas/PartBomValidate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/BOMValidate'
+              $ref: '#/components/schemas/PartBomValidate'
       security:
       - tokenAuth: []
       - basicAuth: []
@@ -13341,7 +13341,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BOMValidate'
+                $ref: '#/components/schemas/PartBomValidate'
           description: ''
     patch:
       operationId: part_bom_validate_partial_update
@@ -13358,13 +13358,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedBOMValidate'
+              $ref: '#/components/schemas/PatchedPartBomValidate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedBOMValidate'
+              $ref: '#/components/schemas/PatchedPartBomValidate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedBOMValidate'
+              $ref: '#/components/schemas/PatchedPartBomValidate'
       security:
       - tokenAuth: []
       - basicAuth: []
@@ -13377,7 +13377,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BOMValidate'
+                $ref: '#/components/schemas/PartBomValidate'
           description: ''
   /api/part/{id}/metadata/:
     get:
@@ -25513,20 +25513,6 @@ components:
         * `returnorder` - Return Order
         * `part` - Part
         * `stockitem` - Stock Item
-    BOMValidate:
-      type: object
-      description: Simple serializer class for validating a single BomItem instance.
-      properties:
-        checksum:
-          type: string
-          readOnly: true
-        valid:
-          type: boolean
-          writeOnly: true
-          default: false
-          description: Validate entire Bill of Materials
-      required:
-      - checksum
     Barcode:
       type: object
       description: Generic serializer for receiving barcode data.
@@ -31308,6 +31294,45 @@ components:
       - pk
       - starred
       - thumbnail
+    PartBomValidate:
+      type: object
+      description: Serializer for Part BOM information.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        bom_validated:
+          type: boolean
+          readOnly: true
+          description: Is the BOM for this part valid?
+        bom_checksum:
+          type: string
+          readOnly: true
+          description: Stored BOM checksum
+        bom_checked_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        bom_checked_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
+        bom_checked_date:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+        valid:
+          type: boolean
+          writeOnly: true
+          default: false
+          description: Validate entire Bill of Materials
+      required:
+      - bom_checksum
+      - bom_validated
+      - pk
     PartBrief:
       type: object
       description: Serializer for Part (brief detail).
@@ -32190,18 +32215,6 @@ components:
           type: array
           items:
             type: string
-    PatchedBOMValidate:
-      type: object
-      description: Simple serializer class for validating a single BomItem instance.
-      properties:
-        checksum:
-          type: string
-          readOnly: true
-        valid:
-          type: boolean
-          writeOnly: true
-          default: false
-          description: Validate entire Bill of Materials
     PatchedBomItem:
       type: object
       description: Serializer for BomItem object.
@@ -34057,6 +34070,41 @@ components:
           type: array
           items:
             type: string
+    PatchedPartBomValidate:
+      type: object
+      description: Serializer for Part BOM information.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        bom_validated:
+          type: boolean
+          readOnly: true
+          description: Is the BOM for this part valid?
+        bom_checksum:
+          type: string
+          readOnly: true
+          description: Stored BOM checksum
+        bom_checked_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        bom_checked_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
+        bom_checked_date:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+        valid:
+          type: boolean
+          writeOnly: true
+          default: false
+          description: Validate entire Bill of Materials
     PatchedPartInternalPrice:
       type: object
       description: Serializer for internal prices for Part model.
