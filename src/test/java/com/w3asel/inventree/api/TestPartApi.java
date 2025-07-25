@@ -5,6 +5,7 @@ import static com.w3asel.inventree.InventreeDemoDataset.assertNullableFieldEqual
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
@@ -16,12 +17,14 @@ import com.w3asel.inventree.model.PaginatedCategoryList;
 import com.w3asel.inventree.model.PaginatedCategoryTreeList;
 import com.w3asel.inventree.model.PaginatedPartInternalPriceList;
 import com.w3asel.inventree.model.Part;
+import com.w3asel.inventree.model.PartBomValidate;
 import com.w3asel.inventree.model.PartInternalPrice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TestPartApi extends TestApi {
@@ -37,7 +40,7 @@ public class TestPartApi extends TestApi {
     void todo() throws ApiException {
         api.partBomCopyCreate(null, null);
         api.partBomValidatePartialUpdate(null, null);
-        api.partBomValidateRetrieve(null);
+        // api.partBomValidateRetrieve(null);
         api.partBomValidateUpdate(null, null);
         api.partBulkPartialUpdate(null);
         api.partBulkUpdate(null);
@@ -173,6 +176,34 @@ public class TestPartApi extends TestApi {
         api.partCategoryParametersList(limit, null);
 
         api.partStocktakeReportList(limit, null, null);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"911", "912"})
+    void partBomValidateRetrieve(int pk) throws ApiException {
+        PartBomValidate actual = api.partBomValidateRetrieve(pk);
+        assertEquals(pk, actual.getPk(), "Incorrect PK");
+
+        JsonObject expected = InventreeDemoDataset.getObjects(Model.PART, pk).get(0);
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        assertFieldEquals("bom_validated", fields, actual.getBomValidated());
+        assertFieldEquals("bom_checksum", fields, actual.getBomChecksum());
+        assertNullableFieldEquals(LocalDate.class, "bom_checked_date", fields,
+                actual.getBomCheckedDate());
+
+        // verify data not directly in demo dataset
+        if (911 == pk) {
+            assertEquals(5, actual.getBomCheckedBy(), "Incorrect checked by");
+            assertNotNull(actual.getBomCheckedByDetail(), "Missing checked by detail");
+            assertFalse(actual.getValid(), "Incorrect valid");
+        } else if (912 == pk) {
+            assertNull(actual.getBomCheckedBy(), "Incorrect checked by");
+            assertNull(actual.getBomCheckedByDetail(), "Missing checked by detail");
+            assertFalse(actual.getValid(), "Incorrect valid");
+        }
     }
 
     private void assertCategoryEquals(JsonObject expected, Category actual) {
