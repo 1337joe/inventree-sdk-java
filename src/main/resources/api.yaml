@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '373'
+  version: '374'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -120,7 +120,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: subject, to, sender, global_id,
+          message_id_key, thread_id_key.'
         schema:
           type: string
       tags:
@@ -241,7 +242,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: comment, model_id, model_type.'
         schema:
           type: string
       - in: query
@@ -578,7 +579,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: func.'
         schema:
           type: string
       tags:
@@ -715,7 +716,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: func.'
         schema:
           type: string
       tags:
@@ -836,7 +837,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: plugin.'
         schema:
           type: string
       - in: query
@@ -1206,7 +1207,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: reference, sub_part__name, sub_part__description,
+          sub_part__IPN, sub_part__revision, sub_part__keywords, sub_part__category__name.'
         schema:
           type: string
       - in: query
@@ -2064,7 +2066,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: reference, title, part__name,
+          part__IPN, part__description, project_code__code, priority.'
         schema:
           type: string
       - in: query
@@ -2802,7 +2805,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: stock_item__supplier_part__SKU,
+          stock_item__part__name, stock_item__part__IPN, build_line__bom_item__reference.'
         schema:
           type: string
       - in: query
@@ -3176,7 +3180,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: bom_item__sub_part__name, bom_item__sub_part__IPN,
+          bom_item__sub_part__description, bom_item__reference.'
         schema:
           type: string
       - in: query
@@ -3418,7 +3423,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, description, website,
+          tax_id.'
         schema:
           type: string
       tags:
@@ -3972,7 +3978,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: company__name, name.'
         schema:
           type: string
       tags:
@@ -4352,7 +4358,9 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: SKU, supplier__name, manufacturer_part__manufacturer__name,
+          description, manufacturer_part__MPN, part__IPN, part__name, part__description,
+          part__keywords, tags__name, tags__slug.'
         schema:
           type: string
       - in: query
@@ -4741,7 +4749,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: manufacturer__name, description,
+          MPN, part__IPN, part__name, part__description, tags__name, tags__slug.'
         schema:
           type: string
       - in: query
@@ -5115,7 +5124,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, value, units.'
         schema:
           type: string
       - in: query
@@ -5368,7 +5377,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: part__SKU, part__supplier__name.'
         schema:
           type: string
       - in: query
@@ -5567,7 +5576,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: app_label, model.'
         schema:
           type: string
       tags:
@@ -5849,7 +5858,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: info, data.'
         schema:
           type: string
       tags:
@@ -6198,7 +6207,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: key, name, label, reference_status.'
         schema:
           type: string
       tags:
@@ -7202,7 +7211,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, description.'
         schema:
           type: string
       tags:
@@ -7555,7 +7564,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name.'
         schema:
           type: string
       tags:
@@ -8237,7 +8246,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: user, model_type, model_id.'
         schema:
           type: string
       tags:
@@ -8320,7 +8329,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, message.'
         schema:
           type: string
       tags:
@@ -8639,7 +8648,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: reference, supplier__name, supplier_reference,
+          project_code__code, description.'
         schema:
           type: string
       - in: query
@@ -8760,7 +8770,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: quantity, notes, reference,
+          description.'
         schema:
           type: string
       tags:
@@ -9093,7 +9104,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: part__part__name, part__part__description,
+          part__manufacturer_part__MPN, part__SKU, reference.'
         schema:
           type: string
       tags:
@@ -9899,7 +9911,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: customer__name, reference, description,
+          customer_reference, project_code__code.'
         schema:
           type: string
       - in: query
@@ -10007,7 +10020,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: quantity, notes, reference,
+          description.'
         schema:
           type: string
       tags:
@@ -10322,7 +10336,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: item_serial, item__part__name,
+          item__part__description, reference.'
         schema:
           type: string
       tags:
@@ -11085,7 +11100,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: customer__name, reference, description,
+          customer_reference, project_code__code.'
         schema:
           type: string
       - in: query
@@ -11231,7 +11247,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: item__part__name, item__part__IPN,
+          item__batch, item__serial.'
         schema:
           type: string
       - in: query
@@ -11466,7 +11483,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: quantity, notes, reference,
+          description.'
         schema:
           type: string
       tags:
@@ -11793,7 +11811,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: part__name, quantity, reference.'
         schema:
           type: string
       tags:
@@ -12479,7 +12497,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: order__reference, reference,
+          tracking_number, invoice_number.'
         schema:
           type: string
       - in: query
@@ -12960,7 +12979,9 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, description, IPN, revision,
+          keywords, category__name, manufacturer_parts__MPN, supplier_parts__SKU,
+          tags__name, tags__slug.'
         schema:
           type: string
       - in: query
@@ -13681,7 +13702,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, description, pathstring.'
         schema:
           type: string
       - in: query
@@ -14580,7 +14601,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: data, template__name, template__description,
+          template__units.'
         schema:
           type: string
       - in: query
@@ -14905,7 +14927,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, description.'
         schema:
           type: string
       - in: query
@@ -15216,7 +15238,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: part_1__name, part_2__name.'
         schema:
           type: string
       tags:
@@ -16117,7 +16139,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: test_name, description.'
         schema:
           type: string
       tags:
@@ -16397,7 +16419,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, description, IPN, revision,
+          keywords, category__name.'
         schema:
           type: string
       tags:
@@ -16573,7 +16596,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: key, name.'
         schema:
           type: string
       tags:
@@ -17389,7 +17412,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: code, description.'
         schema:
           type: string
       tags:
@@ -18097,7 +18120,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, description.'
         schema:
           type: string
       tags:
@@ -18802,7 +18825,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: key.'
         schema:
           type: string
       tags:
@@ -18955,7 +18978,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: key.'
         schema:
           type: string
       tags:
@@ -19309,7 +19332,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: serial, batch, part__name, part__IPN,
+          part__description, location__name, tags__name, tags__slug.'
         schema:
           type: string
       - in: query
@@ -20098,7 +20122,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, description, pathstring,
+          tags__name, tags__slug.'
         schema:
           type: string
       - in: query
@@ -20260,7 +20285,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name.'
         schema:
           type: string
       tags:
@@ -21280,7 +21305,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: notes.'
         schema:
           type: string
       - in: query
@@ -21632,7 +21657,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: first_name, last_name, username.'
         schema:
           type: string
       tags:
@@ -21920,7 +21945,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name.'
         schema:
           type: string
       tags:
@@ -22430,7 +22455,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name.'
         schema:
           type: string
       tags:
@@ -22624,7 +22649,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: name, key.'
         schema:
           type: string
       - in: query
@@ -26412,6 +26437,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Assembly
         part_detail:
           allOf:
@@ -26428,7 +26454,6 @@ components:
       - allocated
       - allocations
       - allow_variants
-      - assembly_detail
       - available_stock
       - available_substitute_stock
       - available_variant_stock
@@ -31449,12 +31474,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
       required:
       - data
       - part
       - pk
       - template
-      - updated_by_detail
     PartParameterTemplate:
       type: object
       description: JSON serializer for the PartParameterTemplate model.
@@ -32592,6 +32617,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Assembly
         part_detail:
           allOf:
@@ -34029,6 +34055,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
     PatchedPartParameterTemplate:
       type: object
       description: JSON serializer for the PartParameterTemplate model.
@@ -35633,6 +35660,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SalesOrderShipment'
           readOnly: true
+          nullable: true
     PatchedSalesOrderExtraLine:
       type: object
       description: Serializer for a SalesOrderExtraLine object.
@@ -38329,6 +38357,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SalesOrderShipment'
           readOnly: true
+          nullable: true
       required:
       - item
       - line
@@ -38337,7 +38366,6 @@ components:
       - part
       - pk
       - quantity
-      - shipment_detail
     SalesOrderComplete:
       type: object
       description: DRF serializer for manually marking a sales order as complete.
