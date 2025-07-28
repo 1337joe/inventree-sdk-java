@@ -10,9 +10,7 @@ import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.GlobalSettings;
-import com.w3asel.inventree.model.NotificationUserSetting;
 import com.w3asel.inventree.model.PaginatedGlobalSettingsList;
-import com.w3asel.inventree.model.PaginatedNotificationUserSettingList;
 import com.w3asel.inventree.model.PaginatedUserSettingsList;
 import com.w3asel.inventree.model.UserSettings;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,10 +35,6 @@ public class TestSettingsApi extends TestApi {
         api.settingsGlobalPartialUpdate(null, null);
         // api.settingsGlobalRetrieve(null);
         api.settingsGlobalUpdate(null, null);
-        // api.settingsNotificationList(null, null, null, null);
-        api.settingsNotificationPartialUpdate(null, null);
-        api.settingsNotificationRetrieve(null);
-        api.settingsNotificationUpdate(null, null);
         // api.settingsUserList(null, null, null, null);
         api.settingsUserPartialUpdate(null, null);
         api.settingsUserRetrieve(null);
@@ -121,45 +115,6 @@ public class TestSettingsApi extends TestApi {
         assertEquals(targetSetting, actual.getKey(), "Incorrect key");
 
         assertTypedEquals(type, expectedValue, actual.getType(), actual.getValue());
-    }
-
-    @Test
-    void settingsNotificationList() throws ApiException {
-        String user = "admin";
-        List<JsonObject> expectedList =
-                InventreeDemoDataset.getObjects(Model.NOTIFICATION_SETTING, null);
-        // expect only settings for current user
-        expectedList.removeIf(
-                jo -> !InventreeDemoDataset.getFields(jo).get("user").getAsString().contains(user));
-        assertTrue(expectedList.size() > 0, "Expected demo data");
-
-        int limit = 10;
-        int offset = 0;
-        PaginatedNotificationUserSettingList actual =
-                api.settingsNotificationList(limit, offset, null, null);
-        assertEquals(expectedList.size(), actual.getCount(),
-                "Incorrect admin notification settings count");
-        List<NotificationUserSetting> actualList = actual.getResults();
-
-        // check items returned by key
-        List<Integer> expectedPks = expectedList.stream()
-                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
-        assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
-
-        // deep equals on first value
-        NotificationUserSetting actualFirst = actualList.get(0);
-        JsonObject expectedFirst = InventreeDemoDataset
-                .getObjects(Model.NOTIFICATION_SETTING, actualFirst.getPk()).get(0);
-
-        JsonObject fields = InventreeDemoDataset.getFields(expectedFirst);
-        assertEquals(fields.get("key").getAsString(), actualFirst.getKey(),
-                "Incorrect notification setting key");
-        assertEquals(fields.get("value").getAsString(), actualFirst.getValue(),
-                "Incorrect notification setting value");
-        assertEquals(fields.get("method").getAsString(), actualFirst.getMethod(),
-                "Incorrect notification setting method");
     }
 
     @Test
