@@ -8,6 +8,7 @@ import com.w3asel.inventree.model.PaginatedPluginSettingList;
 import com.w3asel.inventree.model.PluginConfig;
 import com.w3asel.inventree.model.PluginRegistryStatus;
 import com.w3asel.inventree.model.PluginSetting;
+import com.w3asel.inventree.model.PluginUIFeature;
 import com.w3asel.inventree.model.PluginUserSetting;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -62,14 +64,6 @@ public class TestPluginsApi extends TestApi {
         api.pluginsUserSettingsPartialUpdate(null, null, null);
         // api.pluginsUserSettingsRetrieve(null, null);
         api.pluginsUserSettingsUpdate(null, null, null);
-    }
-
-    @Test
-    void test() throws ApiException {
-        // TODO verify results
-        int limit = 1000;
-        api.pluginsList(limit, null, null, null, null, null, null, null, null, null);
-        // api.pluginsUiFeaturesList(null);
     }
 
     @Test
@@ -252,6 +246,15 @@ public class TestPluginsApi extends TestApi {
         PluginRegistryStatus actual = api.pluginsStatusRetrieve();
         assertTrue(actual.getActivePlugins() >= 3, "Unexpected at least 3 active plugins");
         assertEquals(0, actual.getRegistryErrors().size(), "Expected no errors");
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+            strings = {"dashboard", "panel", "template_editor", "template_preview", "navigation"})
+    void pluginsUiFeaturesList(String feature) throws ApiException {
+        List<PluginUIFeature> actual = api.pluginsUiFeaturesList(feature);
+        // no results found, but the parameter list contains the valid feature types
+        assertEquals(0, actual.size());
     }
 
     private static void assertPluginUserSettingEquals(PluginUserSetting expected,
