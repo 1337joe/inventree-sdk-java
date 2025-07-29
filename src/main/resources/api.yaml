@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '374'
+  version: '375'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -120,8 +120,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: subject, to, sender, global_id,
-          message_id_key, thread_id_key.'
+        description: 'A search term. Searched fields: global_id, message_id_key, sender,
+          subject, thread_id_key, to.'
         schema:
           type: string
       tags:
@@ -1207,8 +1207,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: reference, sub_part__name, sub_part__description,
-          sub_part__IPN, sub_part__revision, sub_part__keywords, sub_part__category__name.'
+        description: 'A search term. Searched fields: reference, sub_part__IPN, sub_part__category__name,
+          sub_part__description, sub_part__keywords, sub_part__name, sub_part__revision.'
         schema:
           type: string
       - in: query
@@ -2066,8 +2066,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: reference, title, part__name,
-          part__IPN, part__description, project_code__code, priority.'
+        description: 'A search term. Searched fields: part__IPN, part__description,
+          part__name, priority, project_code__code, reference, title.'
         schema:
           type: string
       - in: query
@@ -2805,8 +2805,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: stock_item__supplier_part__SKU,
-          stock_item__part__name, stock_item__part__IPN, build_line__bom_item__reference.'
+        description: 'A search term. Searched fields: build_line__bom_item__reference,
+          stock_item__part__IPN, stock_item__part__name, stock_item__supplier_part__SKU.'
         schema:
           type: string
       - in: query
@@ -3180,8 +3180,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: bom_item__sub_part__name, bom_item__sub_part__IPN,
-          bom_item__sub_part__description, bom_item__reference.'
+        description: 'A search term. Searched fields: bom_item__reference, bom_item__sub_part__IPN,
+          bom_item__sub_part__description, bom_item__sub_part__name.'
         schema:
           type: string
       - in: query
@@ -3423,8 +3423,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, description, website,
-          tax_id.'
+        description: 'A search term. Searched fields: description, name, tax_id, website.'
         schema:
           type: string
       tags:
@@ -4358,9 +4357,9 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: SKU, supplier__name, manufacturer_part__manufacturer__name,
-          description, manufacturer_part__MPN, part__IPN, part__name, part__description,
-          part__keywords, tags__name, tags__slug.'
+        description: 'A search term. Searched fields: SKU, description, manufacturer_part__MPN,
+          manufacturer_part__manufacturer__name, part__IPN, part__description, part__keywords,
+          part__name, supplier__name, tags__name, tags__slug.'
         schema:
           type: string
       - in: query
@@ -4749,8 +4748,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: manufacturer__name, description,
-          MPN, part__IPN, part__name, part__description, tags__name, tags__slug.'
+        description: 'A search term. Searched fields: MPN, description, manufacturer__name,
+          part__IPN, part__description, part__name, tags__name, tags__slug.'
         schema:
           type: string
       - in: query
@@ -5124,7 +5123,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, value, units.'
+        description: 'A search term. Searched fields: name, units, value.'
         schema:
           type: string
       - in: query
@@ -5858,7 +5857,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: info, data.'
+        description: 'A search term. Searched fields: data, info.'
         schema:
           type: string
       tags:
@@ -6207,7 +6206,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: key, name, label, reference_status.'
+        description: 'A search term. Searched fields: key, label, name, reference_status.'
         schema:
           type: string
       tags:
@@ -7211,7 +7210,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, description.'
+        description: 'A search term. Searched fields: description, name.'
         schema:
           type: string
       tags:
@@ -8246,7 +8245,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: user, model_type, model_id.'
+        description: 'A search term. Searched fields: model_id, model_type, user.'
         schema:
           type: string
       tags:
@@ -8329,7 +8328,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, message.'
+        description: 'A search term. Searched fields: message, name.'
         schema:
           type: string
       tags:
@@ -8648,8 +8647,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: reference, supplier__name, supplier_reference,
-          project_code__code, description.'
+        description: 'A search term. Searched fields: description, project_code__code,
+          reference, supplier__name, supplier_reference.'
         schema:
           type: string
       - in: query
@@ -8770,8 +8769,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: quantity, notes, reference,
-          description.'
+        description: 'A search term. Searched fields: description, notes, quantity,
+          reference.'
         schema:
           type: string
       tags:
@@ -9104,8 +9103,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: part__part__name, part__part__description,
-          part__manufacturer_part__MPN, part__SKU, reference.'
+        description: 'A search term. Searched fields: part__SKU, part__manufacturer_part__MPN,
+          part__part__description, part__part__name, reference.'
         schema:
           type: string
       tags:
@@ -9911,8 +9910,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: customer__name, reference, description,
-          customer_reference, project_code__code.'
+        description: 'A search term. Searched fields: customer__name, customer_reference,
+          description, project_code__code, reference.'
         schema:
           type: string
       - in: query
@@ -10020,8 +10019,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: quantity, notes, reference,
-          description.'
+        description: 'A search term. Searched fields: description, notes, quantity,
+          reference.'
         schema:
           type: string
       tags:
@@ -10336,8 +10335,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: item_serial, item__part__name,
-          item__part__description, reference.'
+        description: 'A search term. Searched fields: item__part__description, item__part__name,
+          item_serial, reference.'
         schema:
           type: string
       tags:
@@ -11100,8 +11099,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: customer__name, reference, description,
-          customer_reference, project_code__code.'
+        description: 'A search term. Searched fields: customer__name, customer_reference,
+          description, project_code__code, reference.'
         schema:
           type: string
       - in: query
@@ -11247,8 +11246,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: item__part__name, item__part__IPN,
-          item__batch, item__serial.'
+        description: 'A search term. Searched fields: item__batch, item__part__IPN,
+          item__part__name, item__serial.'
         schema:
           type: string
       - in: query
@@ -11483,8 +11482,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: quantity, notes, reference,
-          description.'
+        description: 'A search term. Searched fields: description, notes, quantity,
+          reference.'
         schema:
           type: string
       tags:
@@ -12497,8 +12496,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: order__reference, reference,
-          tracking_number, invoice_number.'
+        description: 'A search term. Searched fields: invoice_number, order__reference,
+          reference, tracking_number.'
         schema:
           type: string
       - in: query
@@ -12979,8 +12978,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, description, IPN, revision,
-          keywords, category__name, manufacturer_parts__MPN, supplier_parts__SKU,
+        description: 'A search term. Searched fields: IPN, category__name, description,
+          keywords, manufacturer_parts__MPN, name, revision, supplier_parts__SKU,
           tags__name, tags__slug.'
         schema:
           type: string
@@ -13702,7 +13701,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, description, pathstring.'
+        description: 'A search term. Searched fields: description, name, pathstring.'
         schema:
           type: string
       - in: query
@@ -14601,8 +14600,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: data, template__name, template__description,
-          template__units.'
+        description: 'A search term. Searched fields: data, template__description,
+          template__name, template__units.'
         schema:
           type: string
       - in: query
@@ -14927,7 +14926,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, description.'
+        description: 'A search term. Searched fields: description, name.'
         schema:
           type: string
       - in: query
@@ -16139,7 +16138,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: test_name, description.'
+        description: 'A search term. Searched fields: description, test_name.'
         schema:
           type: string
       tags:
@@ -16419,8 +16418,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, description, IPN, revision,
-          keywords, category__name.'
+        description: 'A search term. Searched fields: IPN, category__name, description,
+          keywords, name, revision.'
         schema:
           type: string
       tags:
@@ -18120,7 +18119,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, description.'
+        description: 'A search term. Searched fields: description, name.'
         schema:
           type: string
       tags:
@@ -19332,8 +19331,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: serial, batch, part__name, part__IPN,
-          part__description, location__name, tags__name, tags__slug.'
+        description: 'A search term. Searched fields: batch, location__name, part__IPN,
+          part__description, part__name, serial, tags__name, tags__slug.'
         schema:
           type: string
       - in: query
@@ -20122,7 +20121,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, description, pathstring,
+        description: 'A search term. Searched fields: description, name, pathstring,
           tags__name, tags__slug.'
         schema:
           type: string
@@ -22649,7 +22648,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, key.'
+        description: 'A search term. Searched fields: key, name.'
         schema:
           type: string
       - in: query
