@@ -348,6 +348,7 @@ public class TestBuildApi extends TestApi {
         // actual.getPart();
         // actual.getPartDetail();
         // actual.getReference();
+        // actual.getScheduledToBuild();
         // actual.getTestable();
         // actual.getTrackable();
     }
@@ -401,6 +402,7 @@ public class TestBuildApi extends TestApi {
         Boolean expectedOptional;
         Integer expectedPart;
         String expectedReference;
+        Double expectedScheduledToBuild;
         Boolean expectedTestable;
         Boolean expectedTrackable;
 
@@ -420,6 +422,7 @@ public class TestBuildApi extends TestApi {
                 expectedOptional = false;
                 expectedPart = 68;
                 expectedReference = "PCB1";
+                expectedScheduledToBuild = 0d;
                 expectedTestable = false;
                 expectedTrackable = false;
                 break;
@@ -438,6 +441,7 @@ public class TestBuildApi extends TestApi {
                 expectedOptional = null;
                 expectedPart = null;
                 expectedReference = null;
+                expectedScheduledToBuild = 0d;
                 expectedTestable = null;
                 expectedTrackable = null;
                 break;
@@ -461,6 +465,8 @@ public class TestBuildApi extends TestApi {
         assertEquals(expectedOptional, actual.getOptional(), "Incorrect optional");
         assertEquals(expectedPart, actual.getPart(), "Incorrect part");
         assertEquals(expectedReference, actual.getReference(), "Incorrect reference");
+        assertEquals(expectedScheduledToBuild, actual.getScheduledToBuild(),
+                "Incorrect scheduled to build");
         assertEquals(expectedTestable, actual.getTestable(), "Incorrect testable");
         assertEquals(expectedTrackable, actual.getTrackable(), "Incorrect trackable");
 

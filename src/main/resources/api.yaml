@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '377'
+  version: '378'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26454,6 +26454,10 @@ components:
           type: number
           format: double
           readOnly: true
+        scheduled_to_build:
+          type: number
+          format: double
+          readOnly: true
         on_order:
           type: number
           format: double
@@ -26523,6 +26527,7 @@ components:
       - pk
       - quantity
       - reference
+      - scheduled_to_build
       - testable
       - trackable
     BuildOutput:
@@ -32631,6 +32636,10 @@ components:
           readOnly: true
           title: Allocated Stock
         in_production:
+          type: number
+          format: double
+          readOnly: true
+        scheduled_to_build:
           type: number
           format: double
           readOnly: true
