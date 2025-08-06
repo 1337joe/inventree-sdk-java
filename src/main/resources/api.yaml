@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '379'
+  version: '380'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2048,7 +2048,6 @@ paths:
         name: issued_by
         schema:
           type: integer
-        description: Issued By
       - name: limit
         required: true
         in: query
