@@ -76,8 +76,7 @@ public class TestPartApi extends TestApi {
         api.partInternalPriceUpdate(null, null);
         api.partList(null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         api.partMetadataPartialUpdate(null, null);
         api.partMetadataRetrieve(null);
         api.partMetadataUpdate(null, null);
@@ -118,16 +117,11 @@ public class TestPartApi extends TestApi {
         api.partSalePriceRetrieve(null);
         api.partSalePriceUpdate(null, null);
         api.partSerialNumbersRetrieve(null);
+        api.partStocktakeBulkDestroy(null);
         api.partStocktakeCreate(null);
         api.partStocktakeDestroy(null);
-        api.partStocktakeList(null, null, null, null, null);
+        api.partStocktakeList(null, null, null, null);
         api.partStocktakePartialUpdate(null, null);
-        api.partStocktakeReportDestroy(null);
-        api.partStocktakeReportGenerateCreate(null);
-        api.partStocktakeReportList(null, null, null);
-        api.partStocktakeReportPartialUpdate(null, null);
-        api.partStocktakeReportRetrieve(null);
-        api.partStocktakeReportUpdate(null, null);
         api.partStocktakeRetrieve(null);
         api.partStocktakeUpdate(null, null);
         api.partTestTemplateCreate(null);
@@ -155,8 +149,7 @@ public class TestPartApi extends TestApi {
         int limit = 1000;
         api.partList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         api.partParameterList(limit, null, null, null, null, null, null);
 
@@ -167,15 +160,13 @@ public class TestPartApi extends TestApi {
 
         api.partSalePriceList(limit, null, null, null, null);
 
-        api.partStocktakeList(limit, null, null, null, null);
+        api.partStocktakeList(limit, null, null, null);
 
         api.partTestTemplateList(limit, null, null, null, null, null, null, null, null, null, null);
 
         api.partThumbsList(limit, null, null);
 
         api.partCategoryParametersList(limit, null);
-
-        api.partStocktakeReportList(limit, null, null);
     }
 
     @ParameterizedTest

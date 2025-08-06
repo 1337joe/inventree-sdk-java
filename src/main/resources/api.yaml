@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '378'
+  version: '379'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -6916,7 +6916,6 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
-        - r:change:stocktake
         - r:change:stock_location
         - r:change:stock
         - r:change:build
@@ -6947,7 +6946,6 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
-        - r:change:stocktake
         - r:change:stock_location
         - r:change:stock
         - r:change:build
@@ -7025,7 +7023,6 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
-        - r:change:stocktake
         - r:change:stock_location
         - r:change:stock
         - r:change:build
@@ -7069,7 +7066,6 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
-        - r:change:stocktake
         - r:change:stock_location
         - r:change:stock
         - r:change:build
@@ -7102,7 +7098,6 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
-        - r:change:stocktake
         - r:change:stock_location
         - r:change:stock
         - r:change:build
@@ -13011,8 +13006,8 @@ paths:
         in: query
         description: 'Which field to use when ordering the results. Possible fields:
           name, creation_date, IPN, in_stock, total_in_stock, unallocated_stock, category,
-          default_location, last_stocktake, units, pricing_min, pricing_max, pricing_updated,
-          revision, revision_count.'
+          default_location, units, pricing_min, pricing_max, pricing_updated, revision,
+          revision_count.'
         schema:
           type: string
       - in: query
@@ -13045,11 +13040,6 @@ paths:
         schema:
           type: boolean
         description: Required for Build Order
-      - in: query
-        name: stocktake
-        schema:
-          type: boolean
-        description: Has stocktake
       - in: query
         name: tags_name
         schema:
@@ -15772,10 +15762,6 @@ paths:
         name: part
         schema:
           type: integer
-      - in: query
-        name: user
-        schema:
-          type: integer
       tags:
       - part
       security:
@@ -15783,7 +15769,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:stocktake
+        - r:view:part
       responses:
         '200':
           content:
@@ -15813,7 +15799,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:add:stocktake
+        - r:add:part
       responses:
         '201':
           content:
@@ -15821,6 +15807,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/PartStocktake'
           description: ''
+    delete:
+      operationId: part_stocktake_bulk_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - part
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:part
+      responses:
+        '204':
+          description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/part/stocktake/{id}/:
     get:
       operationId: part_stocktake_retrieve
@@ -15841,7 +15857,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:stocktake
+        - r:view:part
       responses:
         '200':
           content:
@@ -15880,7 +15896,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stocktake
+        - r:change:part
       responses:
         '200':
           content:
@@ -15918,7 +15934,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stocktake
+        - r:change:part
       responses:
         '200':
           content:
@@ -15945,194 +15961,10 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:delete:stocktake
+        - r:delete:part
       responses:
         '204':
           description: No response body
-  /api/part/stocktake/report/:
-    get:
-      operationId: part_stocktake_report_list
-      description: API endpoint for listing part stocktake report information.
-      parameters:
-      - name: limit
-        required: true
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          date, pk.'
-        schema:
-          type: string
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:stocktake
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedPartStocktakeReportList'
-          description: ''
-  /api/part/stocktake/report/{id}/:
-    get:
-      operationId: part_stocktake_report_retrieve
-      description: API endpoint for detail view of a single PartStocktakeReport object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:stocktake
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartStocktakeReport'
-          description: ''
-    put:
-      operationId: part_stocktake_report_update
-      description: API endpoint for detail view of a single PartStocktakeReport object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartStocktakeReport'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartStocktakeReport'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartStocktakeReport'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stocktake
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartStocktakeReport'
-          description: ''
-    patch:
-      operationId: part_stocktake_report_partial_update
-      description: API endpoint for detail view of a single PartStocktakeReport object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedPartStocktakeReport'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedPartStocktakeReport'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedPartStocktakeReport'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stocktake
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartStocktakeReport'
-          description: ''
-    delete:
-      operationId: part_stocktake_report_destroy
-      description: API endpoint for detail view of a single PartStocktakeReport object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:delete:stocktake
-      responses:
-        '204':
-          description: No response body
-  /api/part/stocktake/report/generate/:
-    post:
-      operationId: part_stocktake_report_generate_create
-      description: API endpoint for manually generating a new PartStocktakeReport.
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartStocktakeReportGenerate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartStocktakeReportGenerate'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartStocktakeReportGenerate'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartStocktakeReportGenerate'
-          description: ''
   /api/part/test-template/:
     get:
       operationId: part_test_template_list
@@ -22476,14 +22308,12 @@ paths:
           - sales_order
           - stock
           - stock_location
-          - stocktake
         description: |-
           Permission set
 
           * `admin` - Admin
           * `part_category` - Part Categories
           * `part` - Parts
-          * `stocktake` - Stocktake
           * `stock_location` - Stock Locations
           * `stock` - Stock Items
           * `build` - Build Orders
@@ -28989,7 +28819,6 @@ components:
       - admin
       - part_category
       - part
-      - stocktake
       - stock_location
       - stock
       - build
@@ -29001,7 +28830,6 @@ components:
         * `admin` - Admin
         * `part_category` - Part Categories
         * `part` - Parts
-        * `stocktake` - Stocktake
         * `stock_location` - Stock Locations
         * `stock` - Stock Items
         * `build` - Build Orders
@@ -30203,29 +30031,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PartStocktake'
-    PaginatedPartStocktakeReportList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/PartStocktakeReport'
     PaginatedPartTestTemplateList:
       type: object
       required:
@@ -31059,10 +30864,6 @@ components:
           nullable: true
           description: Part keywords to improve visibility in search results
           maxLength: 250
-        last_stocktake:
-          type: string
-          format: date
-          nullable: true
         link:
           type: string
           format: uri
@@ -31913,94 +31714,11 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        note:
-          type: string
-          title: Notes
-          description: Additional notes
-          maxLength: 250
-        user:
-          type: integer
-          readOnly: true
-          nullable: true
-          description: User who performed this stocktake
-        user_detail:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
       required:
       - date
       - part
       - pk
       - quantity
-      - user_detail
-    PartStocktakeReport:
-      type: object
-      description: Serializer for stocktake report class.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        date:
-          type: string
-          format: date
-          readOnly: true
-        report:
-          type: string
-          format: uri
-          readOnly: true
-        part_count:
-          type: integer
-          readOnly: true
-          description: Number of parts covered by stocktake
-        user:
-          type: integer
-          readOnly: true
-          nullable: true
-          description: User who requested this stocktake report
-        user_detail:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
-      required:
-      - date
-      - part_count
-      - pk
-      - report
-      - user_detail
-    PartStocktakeReportGenerate:
-      type: object
-      description: Serializer class for manually generating a new PartStocktakeReport
-        via the API.
-      properties:
-        part:
-          type: integer
-          nullable: true
-          description: Limit stocktake report to a particular part, and any variant
-            parts
-        category:
-          type: integer
-          nullable: true
-          description: Limit stocktake report to a particular part category, and any
-            child categories
-        location:
-          type: integer
-          nullable: true
-          description: Limit stocktake report to a particular stock location, and
-            any child locations
-        exclude_external:
-          type: boolean
-          default: true
-          title: Exclude External Stock
-          description: Exclude stock items in external locations
-        generate_report:
-          type: boolean
-          default: true
-          description: Generate report file containing calculated stocktake data
-        update_parts:
-          type: boolean
-          default: true
-          description: Update specified parts with calculated stocktake data
     PartTestTemplate:
       type: object
       description: Serializer for the PartTestTemplate class.
@@ -33796,10 +33514,6 @@ components:
           nullable: true
           description: Part keywords to improve visibility in search results
           maxLength: 250
-        last_stocktake:
-          type: string
-          format: date
-          nullable: true
         link:
           type: string
           format: uri
@@ -34420,49 +34134,6 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        note:
-          type: string
-          title: Notes
-          description: Additional notes
-          maxLength: 250
-        user:
-          type: integer
-          readOnly: true
-          nullable: true
-          description: User who performed this stocktake
-        user_detail:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
-    PatchedPartStocktakeReport:
-      type: object
-      description: Serializer for stocktake report class.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        date:
-          type: string
-          format: date
-          readOnly: true
-        report:
-          type: string
-          format: uri
-          readOnly: true
-        part_count:
-          type: integer
-          readOnly: true
-          description: Number of parts covered by stocktake
-        user:
-          type: integer
-          readOnly: true
-          nullable: true
-          description: User who requested this stocktake report
-        user_detail:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
     PatchedPartTestTemplate:
       type: object
       description: Serializer for the PartTestTemplate class.
@@ -35442,7 +35113,6 @@ components:
             * `admin` - Admin
             * `part_category` - Part Categories
             * `part` - Parts
-            * `stocktake` - Stocktake
             * `stock_location` - Stock Locations
             * `stock` - Stock Items
             * `build` - Build Orders
@@ -38127,7 +37797,6 @@ components:
             * `admin` - Admin
             * `part_category` - Part Categories
             * `part` - Parts
-            * `stocktake` - Stocktake
             * `stock_location` - Stock Locations
             * `stock` - Stock Items
             * `build` - Build Orders
@@ -41122,7 +40791,6 @@ components:
             r:view:admin: GET for Role Admin
             r:view:part_category: GET for Role Part Categories
             r:view:part: GET for Role Parts
-            r:view:stocktake: GET for Role Stocktake
             r:view:stock_location: GET for Role Stock Locations
             r:view:stock: GET for Role Stock Items
             r:view:build: GET for Role Build Orders
@@ -41132,7 +40800,6 @@ components:
             r:add:admin: POST for Role Admin
             r:add:part_category: POST for Role Part Categories
             r:add:part: POST for Role Parts
-            r:add:stocktake: POST for Role Stocktake
             r:add:stock_location: POST for Role Stock Locations
             r:add:stock: POST for Role Stock Items
             r:add:build: POST for Role Build Orders
@@ -41142,7 +40809,6 @@ components:
             r:change:admin: PUT / PATCH for Role Admin
             r:change:part_category: PUT / PATCH for Role Part Categories
             r:change:part: PUT / PATCH for Role Parts
-            r:change:stocktake: PUT / PATCH for Role Stocktake
             r:change:stock_location: PUT / PATCH for Role Stock Locations
             r:change:stock: PUT / PATCH for Role Stock Items
             r:change:build: PUT / PATCH for Role Build Orders
@@ -41152,7 +40818,6 @@ components:
             r:delete:admin: DELETE for Role Admin
             r:delete:part_category: DELETE for Role Part Categories
             r:delete:part: DELETE for Role Parts
-            r:delete:stocktake: DELETE for Role Stocktake
             r:delete:stock_location: DELETE for Role Stock Locations
             r:delete:stock: DELETE for Role Stock Items
             r:delete:build: DELETE for Role Build Orders
@@ -41170,7 +40835,6 @@ components:
             r:view:admin: GET for Role Admin
             r:view:part_category: GET for Role Part Categories
             r:view:part: GET for Role Parts
-            r:view:stocktake: GET for Role Stocktake
             r:view:stock_location: GET for Role Stock Locations
             r:view:stock: GET for Role Stock Items
             r:view:build: GET for Role Build Orders
@@ -41180,7 +40844,6 @@ components:
             r:add:admin: POST for Role Admin
             r:add:part_category: POST for Role Part Categories
             r:add:part: POST for Role Parts
-            r:add:stocktake: POST for Role Stocktake
             r:add:stock_location: POST for Role Stock Locations
             r:add:stock: POST for Role Stock Items
             r:add:build: POST for Role Build Orders
@@ -41190,7 +40853,6 @@ components:
             r:change:admin: PUT / PATCH for Role Admin
             r:change:part_category: PUT / PATCH for Role Part Categories
             r:change:part: PUT / PATCH for Role Parts
-            r:change:stocktake: PUT / PATCH for Role Stocktake
             r:change:stock_location: PUT / PATCH for Role Stock Locations
             r:change:stock: PUT / PATCH for Role Stock Items
             r:change:build: PUT / PATCH for Role Build Orders
@@ -41200,7 +40862,6 @@ components:
             r:delete:admin: DELETE for Role Admin
             r:delete:part_category: DELETE for Role Part Categories
             r:delete:part: DELETE for Role Parts
-            r:delete:stocktake: DELETE for Role Stocktake
             r:delete:stock_location: DELETE for Role Stock Locations
             r:delete:stock: DELETE for Role Stock Items
             r:delete:build: DELETE for Role Build Orders
