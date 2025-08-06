@@ -36,6 +36,18 @@ public class TestAdminApi extends TestApi {
         api.adminConfigRetrieve(key);
     }
 
+    @Disabled("No way to create email to destroy")
+    @Test
+    void adminEmailBulkDestroy() throws ApiException {
+        api.adminEmailBulkDestroy(null);
+    }
+
+    @Disabled("No way to create email to destroy")
+    @Test
+    void adminEmailDestroy() throws ApiException {
+        api.adminEmailDestroy(null);
+    }
+
     @Disabled("No data")
     @Test
     void adminEmailList() throws ApiException {
@@ -79,6 +91,5 @@ public class TestAdminApi extends TestApi {
         assertEquals(400, thrown.getCode(), "Expected HTTP 400 Bad Request");
         assertTrue(thrown.getMessage().contains("Email server not configured"),
                 "Should contain Email server not configured: " + thrown.getMessage());
-
     }
 }
