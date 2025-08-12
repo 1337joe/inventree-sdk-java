@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '380'
+  version: '381'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -19680,43 +19680,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Metadata'
           description: ''
-  /api/stock/{id}/return/:
-    post:
-      operationId: stock_return_create
-      description: API endpoint for returning a stock item from a customer.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ReturnStockItem'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ReturnStockItem'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ReturnStockItem'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReturnStockItem'
-          description: ''
   /api/stock/{id}/serial-numbers/:
     get:
       operationId: stock_serial_numbers_retrieve
@@ -20776,6 +20739,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StockRemove'
+          description: ''
+  /api/stock/return/:
+    post:
+      operationId: stock_return_create
+      description: |-
+        API endpoint for returning items into stock.
+
+        This API endpoint is for items that are initially considered "not in stock",
+        and the user wants to return them to stock, marking them as
+        "available" for further consumption or sale.
+      tags:
+      - stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockReturn'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StockReturn'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StockReturn'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockReturn'
           description: ''
   /api/stock/status/:
     get:
@@ -37715,33 +37714,6 @@ components:
       required:
       - items
       - location
-    ReturnStockItem:
-      type: object
-      description: DRF serializer for returning a stock item from a customer.
-      properties:
-        location:
-          type: integer
-          description: Destination location for returned item
-        status:
-          type: integer
-          description: |-
-            Stock item status code
-
-            * `10` - OK
-            * `50` - Attention needed
-            * `55` - Damaged
-            * `60` - Destroyed
-            * `65` - Rejected
-            * `70` - Lost
-            * `75` - Quarantined
-            * `85` - Returned
-
-            Additional custom status keys may be retrieved from the 'stock_status_retrieve' call.
-        notes:
-          type: string
-          description: Add transaction note (optional)
-      required:
-      - location
     Role:
       type: object
       description: Serializer for a roles associated with a given user.
@@ -39203,6 +39175,28 @@ components:
           description: Stock transaction notes
       required:
       - items
+    StockReturn:
+      type: object
+      description: Serializer class for returning stock item(s) into stock.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockAdjustmentItem'
+        notes:
+          type: string
+          description: Stock transaction notes
+        location:
+          type: integer
+          description: Destination stock location
+        merge:
+          type: boolean
+          default: false
+          title: Merge into existing stock
+          description: Merge returned items into existing stock items if possible
+      required:
+      - items
+      - location
     StockTracking:
       type: object
       description: Serializer for StockItemTracking model.
