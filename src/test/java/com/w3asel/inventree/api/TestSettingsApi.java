@@ -55,23 +55,35 @@ public class TestSettingsApi extends TestApi {
     }
 
     private void assertTypedEquals(String expectedType, JsonElement expectedValue,
-            String actualType, String actualValue) {
-        assertEquals(expectedValue.getAsString(), actualValue, "Incorrect value");
-        assertEquals(expectedType, actualType, "Incorrect type");
+            String actualType, String actualValue, String settingKey) {
+        assertEquals(expectedType, actualType, settingKey + ": Incorrect type");
 
         switch (expectedType) {
             default:
             case "string":
-                // already tested by string comparison
+                assertEquals(expectedValue.getAsString(), actualValue,
+                        settingKey + ": Incorrect parsed value");
                 break;
             case "boolean":
                 assertEquals(expectedValue.getAsBoolean(), Boolean.parseBoolean(actualValue),
-                        "Incorrect parsed value");
+                        settingKey + ": Incorrect parsed value");
                 break;
             case "integer":
                 assertEquals(expectedValue.getAsInt(), Integer.parseInt(actualValue),
-                        "Incorrect parsed value");
+                        settingKey + ": Incorrect parsed value");
                 break;
+        }
+    }
+
+    /** Value equals check that allows case mismatch for booleans. */
+    public static void assertSettingValueEquals(String type, String expectedValue,
+            String actualValue, String messagePrefix) {
+        if (type.equals("boolean") && expectedValue != null) {
+            assertTrue(expectedValue.equalsIgnoreCase(actualValue),
+                    messagePrefix + "Incorrect value ==> expected <" + expectedValue
+                            + "> but was: <" + actualValue + ">");
+        } else {
+            assertEquals(expectedValue, actualValue, messagePrefix + "Incorrect value");
         }
     }
 
@@ -90,12 +102,13 @@ public class TestSettingsApi extends TestApi {
         // demo data is minimal, just verify that we find key/value pairs that match
         boolean foundNonNull = false;
         for (GlobalSettings actualSetting : actualList) {
+
             JsonElement expectedValue =
                     getExpectedValue(Model.GLOBAL_SETTING, actualSetting.getKey(), null);
             if (expectedValue != null) {
                 foundNonNull = true;
-                assertEquals(expectedValue.getAsString(), actualSetting.getValue(),
-                        "Incorrect value for " + actualSetting.getKey());
+                assertSettingValueEquals(actualSetting.getType(), expectedValue.getAsString(),
+                        actualSetting.getValue(), actualSetting.getKey() + ": ");
             }
         }
         if (!foundNonNull) {
@@ -114,7 +127,7 @@ public class TestSettingsApi extends TestApi {
         assertNotNull(actual);
         assertEquals(targetSetting, actual.getKey(), "Incorrect key");
 
-        assertTypedEquals(type, expectedValue, actual.getType(), actual.getValue());
+        assertTypedEquals(type, expectedValue, actual.getType(), actual.getValue(), targetSetting);
     }
 
     @Test
@@ -140,8 +153,8 @@ public class TestSettingsApi extends TestApi {
                     getExpectedValue(Model.USER_SETTING, actualSetting.getKey(), user);
             if (expectedValue != null) {
                 foundNonNull = true;
-                assertEquals(expectedValue.getAsString(), actualSetting.getValue(),
-                        "Incorrect value for " + actualSetting.getKey());
+                assertSettingValueEquals(actualSetting.getType(), expectedValue.getAsString(),
+                        actualSetting.getValue(), actualSetting.getKey() + ": ");
             }
         }
         if (!foundNonNull) {
@@ -160,6 +173,6 @@ public class TestSettingsApi extends TestApi {
         assertNotNull(actual);
         assertEquals(targetSetting, actual.getKey(), "Incorrect key");
 
-        assertTypedEquals(type, expectedValue, actual.getType(), actual.getValue());
+        assertTypedEquals(type, expectedValue, actual.getType(), actual.getValue(), targetSetting);
     }
 }

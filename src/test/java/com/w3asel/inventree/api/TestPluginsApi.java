@@ -147,7 +147,9 @@ public class TestPluginsApi extends TestApi {
         assertEquals(expected.getUnits(), actual.getUnits(), messagePrefix + "Incorrect units");
         assertEquals(expected.getRequired(), actual.getRequired(),
                 messagePrefix + "Incorrect required");
-        assertEquals(expected.getValue(), actual.getValue(), messagePrefix + "Incorrect value");
+
+        TestSettingsApi.assertSettingValueEquals(expected.getType(), expected.getValue(),
+                actual.getValue(), messagePrefix);
     }
 
     private static Map<String, Map<String, PluginSetting>> getDefaultSettings() {
@@ -280,7 +282,9 @@ public class TestPluginsApi extends TestApi {
         assertEquals(expected.getUnits(), actual.getUnits(), messagePrefix + "Incorrect units");
         assertEquals(expected.getRequired(), actual.getRequired(),
                 messagePrefix + "Incorrect required");
-        assertEquals(expected.getValue(), actual.getValue(), messagePrefix + "Incorrect value");
+
+        TestSettingsApi.assertSettingValueEquals(expected.getType(), expected.getValue(),
+                actual.getValue(), messagePrefix);
     }
 
     private static Map<String, Map<String, PluginUserSetting>> getDefaultUserSettings() {
