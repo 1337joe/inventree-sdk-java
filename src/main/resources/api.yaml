@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '382'
+  version: '383'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2510,7 +2510,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BuildOutputCreate'
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockItem'
           description: ''
   /api/build/{id}/delete-outputs/:
     post:
@@ -19349,7 +19351,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockItem'
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockItem'
           description: ''
     delete:
       operationId: stock_bulk_destroy
@@ -19745,7 +19749,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SerializeStockItem'
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockItem'
           description: ''
   /api/stock/{id}/uninstall/:
     post:
@@ -35870,6 +35876,11 @@ components:
           nullable: true
           description: 'Use pack size when adding: the quantity defined is the number
             of packs'
+        serial_numbers:
+          type: string
+          writeOnly: true
+          nullable: true
+          description: Enter serial numbers for new items
         tests:
           type: array
           items:
@@ -38925,6 +38936,11 @@ components:
           nullable: true
           description: 'Use pack size when adding: the quantity defined is the number
             of packs'
+        serial_numbers:
+          type: string
+          writeOnly: true
+          nullable: true
+          description: Enter serial numbers for new items
         tests:
           type: array
           items:

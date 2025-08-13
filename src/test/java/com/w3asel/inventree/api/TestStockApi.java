@@ -127,7 +127,7 @@ public class TestStockApi extends TestApi {
         createInput.setPart(partPk);
         createInput.setQuantity(expectedQuantity);
 
-        StockItem createResult = api.stockCreate(createInput);
+        StockItem createResult = api.stockCreate(createInput).get(0);
         try {
             assertNotNull(createResult.getPk(), "Created item must have PK set");
             assertEquals(expectedQuantity, createResult.getQuantity(),
@@ -150,7 +150,7 @@ public class TestStockApi extends TestApi {
         createInput.setQuantity(2d);
         // createInput.setSerialNumbers("400,401");
 
-        StockItem createResult = api.stockCreate(createInput);
+        StockItem createResult = api.stockCreate(createInput).get(0);
         try {
             assertNotNull(createResult.getPk(), "Created item must have PK set");
             assertNotNull(createResult.getSerial(), "Serial numbers should be set");
@@ -296,7 +296,7 @@ public class TestStockApi extends TestApi {
         createInput.setQuantity(2d);
         createInput.setSerial(null);
 
-        StockItem createResult = api.stockCreate(createInput);
+        StockItem createResult = api.stockCreate(createInput).get(0);
         boolean bulkDeleted = false;
         try {
             assertNotNull(createResult.getPk(), "Created item must have PK set");
