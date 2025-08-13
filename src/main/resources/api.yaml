@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '383'
+  version: '384'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -39919,6 +39919,48 @@ components:
         required:
         - method
         - at
+      - type: object
+        title: |
+          Authenticated after password reset
+        properties:
+          method:
+            $ref: '#/components/schemas/Allauth.AuthenticationMethodMethodEnum'
+          at:
+            $ref: '#/components/schemas/allauth.Timestamp'
+          email:
+            $ref: '#/components/schemas/allauth.Email'
+        required:
+        - at
+        - email
+        - method
+      - type: object
+        title: |
+          Authenticated by confirming a code sent by email.
+        properties:
+          method:
+            $ref: '#/components/schemas/Allauth.AuthenticationMethodMethodEnum'
+          at:
+            $ref: '#/components/schemas/allauth.Timestamp'
+          email:
+            $ref: '#/components/schemas/allauth.Email'
+        required:
+        - at
+        - email
+        - method
+      - type: object
+        title: |
+          Authenticated by confirming a code sent by phone.
+        properties:
+          method:
+            $ref: '#/components/schemas/Allauth.AuthenticationMethodMethodEnum'
+          at:
+            $ref: '#/components/schemas/allauth.Timestamp'
+          phone:
+            $ref: '#/components/schemas/allauth.Phone'
+        required:
+        - at
+        - method
+        - phone
       - type: object
         title: |
           Reauthenticated by password
