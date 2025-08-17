@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '384'
+  version: '385'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -9783,6 +9783,18 @@ paths:
         schema:
           type: integer
         required: true
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - order
       requestBody:
@@ -9808,7 +9820,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PurchaseOrderReceive'
+                $ref: '#/components/schemas/PaginatedStockItemList'
           description: ''
   /api/order/po/status/:
     get:
