@@ -363,7 +363,7 @@ public class TestBuildApi extends TestApi {
         int offset = 0;
 
         PaginatedBuildLineList actual = api.buildLineList(limit, null, null, null, null, null, null,
-                offset, null, null, null, null, null, null, null);
+                null, offset, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total build line count");
         List<BuildLine> actualList = actual.getResults();
 

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '385'
+  version: '386'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2475,6 +2475,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/BuildOutputComplete'
           description: ''
+  /api/build/{id}/consume/:
+    post:
+      operationId: build_consume_create
+      description: API endpoint to consume stock against a build order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - build
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildConsume'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BuildConsume'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BuildConsume'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildConsume'
+          description: ''
   /api/build/{id}/create-output/:
     post:
       operationId: build_create_output_create
@@ -3195,6 +3231,11 @@ paths:
         schema:
           type: boolean
         description: Consumable
+      - in: query
+        name: consumed
+        schema:
+          type: boolean
+        description: Consumed
       - name: limit
         required: true
         in: query
@@ -3221,7 +3262,7 @@ paths:
         required: false
         in: query
         description: 'Which field to use when ordering the results. Possible fields:
-          part, allocated, reference, quantity, consumable, optional, unit_quantity,
+          part, allocated, consumed, reference, quantity, consumable, optional, unit_quantity,
           available_stock, trackable, allow_variants, inherited.'
         schema:
           type: string
@@ -26079,7 +26120,7 @@ components:
       - status_text
     BuildAllocation:
       type: object
-      description: DRF serializer for allocation stock items against a build order.
+      description: Serializer for allocating stock items against a build order.
       properties:
         items:
           type: array
@@ -26177,6 +26218,48 @@ components:
           default: false
           description: Accept that the required number of build outputs have not been
             completed
+    BuildConsume:
+      type: object
+      description: |-
+        Serializer for consuming allocations against a BuildOrder.
+
+        - Consumes allocated stock items, increasing the 'consumed' field for each BuildLine.
+        - Stock can be consumed by passing either a list of BuildItem objects, or a list of BuildLine objects.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuildConsumeAllocation'
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuildConsumeLineItem'
+        notes:
+          type: string
+          description: Optional notes for the stock consumption
+    BuildConsumeAllocation:
+      type: object
+      description: Serializer for an individual BuildItem to be consumed against a
+        BuildOrder.
+      properties:
+        build_item:
+          type: integer
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,5})?$
+      required:
+      - build_item
+      - quantity
+    BuildConsumeLineItem:
+      type: object
+      description: Serializer for an individual BuildLine to be consumed against a
+        BuildOrder.
+      properties:
+        build_line:
+          type: integer
+      required:
+      - build_line
     BuildItem:
       type: object
       description: Serializes a BuildItem object, which is an allocation of a stock
@@ -26264,6 +26347,14 @@ components:
         quantity:
           type: number
           format: double
+        consumed:
+          type: number
+          format: double
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuildItem'
+          readOnly: true
         part:
           type: integer
           readOnly: true
@@ -26295,7 +26386,6 @@ components:
           type: number
           format: double
           readOnly: true
-          title: Allocated Stock
         in_production:
           type: number
           format: double
@@ -26323,11 +26413,6 @@ components:
         external_stock:
           type: number
           format: double
-          readOnly: true
-        allocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/BuildItem'
           readOnly: true
         bom_item_detail:
           allOf:
@@ -26363,6 +26448,7 @@ components:
       - build
       - build_reference
       - consumable
+      - consumed
       - external_stock
       - in_production
       - inherited
@@ -32337,6 +32423,14 @@ components:
         quantity:
           type: number
           format: double
+        consumed:
+          type: number
+          format: double
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuildItem'
+          readOnly: true
         part:
           type: integer
           readOnly: true
@@ -32368,7 +32462,6 @@ components:
           type: number
           format: double
           readOnly: true
-          title: Allocated Stock
         in_production:
           type: number
           format: double
@@ -32396,11 +32489,6 @@ components:
         external_stock:
           type: number
           format: double
-          readOnly: true
-        allocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/BuildItem'
           readOnly: true
         bom_item_detail:
           allOf:
