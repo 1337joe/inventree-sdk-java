@@ -42,10 +42,12 @@ public class TestBuildApi extends TestApi {
     @Disabled
     @Test
     void todo() throws ApiException {
+
         api.buildAllocateCreate(null, null);
         api.buildAutoAllocateCreate(null, null);
         api.buildCancelCreate(null, null);
         // api.buildCompleteCreate(null, null);
+        api.buildConsumeCreate(null, null);
         api.buildCreate(null);
         // api.buildCreateOutputCreate(null, null);
         api.buildDeleteOutputsCreate(null, null);
@@ -329,6 +331,7 @@ public class TestBuildApi extends TestApi {
         assertFieldEquals("bom_item", fields, actual.getBomItem());
         assertFieldEquals("quantity", fields, actual.getQuantity());
 
+
         // not directly available in demo dataset:
         // actual.getAllocated();
         // actual.getAllocations();
@@ -341,6 +344,7 @@ public class TestBuildApi extends TestApi {
         // actual.getBuildDetail();
         // actual.getBuildReference();
         // actual.getConsumable();
+        // actual.getConsumed();
         // actual.getExternalStock();
         // actual.getInherited();
         // actual.getInProduction();
@@ -363,7 +367,7 @@ public class TestBuildApi extends TestApi {
         int offset = 0;
 
         PaginatedBuildLineList actual = api.buildLineList(limit, null, null, null, null, null, null,
-                offset, null, null, null, null, null, null, null);
+                null, offset, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total build line count");
         List<BuildLine> actualList = actual.getResults();
 
