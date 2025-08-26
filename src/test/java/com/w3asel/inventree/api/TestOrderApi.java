@@ -60,7 +60,7 @@ public class TestOrderApi extends TestApi {
         api.orderPoMetadataRetrieve(null);
         api.orderPoMetadataUpdate(null, null);
         api.orderPoPartialUpdate(null, null);
-        api.orderPoReceiveCreate(null, null, null, null);
+        api.orderPoReceiveCreate(null, null);
         api.orderPoRetrieve(null);
         api.orderPoStatusRetrieve();
         api.orderPoUpdate(null, null);
