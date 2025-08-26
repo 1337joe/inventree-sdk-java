@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '386'
+  version: '387'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27233,6 +27233,10 @@ components:
         data_file:
           type: string
           format: uri
+        update_records:
+          type: boolean
+          title: Update Existing Records
+          description: If enabled, existing records will be updated with new data
         model_type:
           $ref: '#/components/schemas/DataImportSessionModelTypeEnum'
         available_fields:
@@ -32875,6 +32879,10 @@ components:
         data_file:
           type: string
           format: uri
+        update_records:
+          type: boolean
+          title: Update Existing Records
+          description: If enabled, existing records will be updated with new data
         model_type:
           $ref: '#/components/schemas/DataImportSessionModelTypeEnum'
         available_fields:
