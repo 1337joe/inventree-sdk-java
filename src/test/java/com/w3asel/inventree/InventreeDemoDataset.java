@@ -22,7 +22,9 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /** Simple class to read and parse the demo dataset. */
 public class InventreeDemoDataset {
@@ -165,31 +167,74 @@ public class InventreeDemoDataset {
         return OffsetDateTime.from(DATETIME_FORMAT_SECONDS.parse(field));
     }
 
+    @Test
+    void verifyModels() {
+        Set<String> foundModels = new HashSet<>();
+        for (JsonElement element : rootElements) {
+            JsonObject object = element.getAsJsonObject();
+            foundModels.add(object.get(MODEL_KEY).getAsString());
+        }
+        assertTrue(foundModels.size() > 0, "Found no models in demo dataset");
+
+        for (Model model : Model.values()) {
+            assertTrue(foundModels.remove(model.key), "Demo dataset missing model: " + model.key);
+        }
+        assertEquals(0, foundModels.size(), "Demo dataset contains extra models: " + foundModels);
+    }
+
     public enum Model {
-        BOM_ITEM("part.bomitem"),
-        BOM_ITEM_SUBSTITUTE("part.bomitemsubstitute"),
+        GROUP("auth.group"),
+        USER("auth.user"),
         BUILD("build.build"),
-        BUILD_LINE("build.buildline"),
         BUILD_ITEM("build.builditem"),
-        PART("part.part"),
-        PART_CATEGORY("part.partcategory"),
-        PART_INTERNAL_PRICE_BREAK("part.partinternalpricebreak"),
-        GLOBAL_SETTING("common.inventreesetting"),
-        NOTIFICATION_SETTING("plugin.notificationusersetting"),
-        USER_SETTING("common.inventreeusersetting"),
-        COMPANY("company.company"),
-        COMPANY_ADDRESS("company.address"),
-        COMPANY_CONTACT("company.contact"),
-        COMPANY_MANUFACTURER_PART("company.manufacturerpart"),
-        COMPANY_SUPPLIER_PRICE_BREAK("company.supplierpricebreak"),
-        COMPANY_SUPPLIER_PART("company.supplierpart"),
+        BUILD_LINE("build.buildline"),
         CUSTOM_UNIT("common.customunit"),
         CUSTOM_USER_STATE("common.inventreecustomuserstatemodel"),
+        GLOBAL_SETTING("common.inventreesetting"),
+        USER_SETTING("common.inventreeusersetting"),
+        NOTES_IMAGE("common.notesimage"),
+        PROJECT_CODE("common.projectcode"),
+        COMPANY_ADDRESS("company.address"),
+        COMPANY("company.company"),
+        COMPANY_CONTACT("company.contact"),
+        COMPANY_MANUFACTURER_PART("company.manufacturerpart"),
+        COMPANY_SUPPLIER_PART("company.supplierpart"),
+        COMPANY_SUPPLIER_PRICE_BREAK("company.supplierpricebreak"),
+        ORDER_PURCHASE("order.purchaseorder"),
+        ORDER_PURCHASE_EXTRA_LINE("order.purchaseorderextraline"),
+        ORDER_PURCHASE_LINE_ITEM("order.purchaseorderlineitem"),
+        ORDER_RETURN("order.returnorder"),
+        ORDER_RETURN_EXTRA_LINE("order.returnorderextraline"),
+        ORDER_RETURN_LINE_ITEM("order.returnorderlineitem"),
         ORDER_SALES("order.salesorder"),
+        ORDER_SALES_ALLOCATION("order.salesorderallocation"),
+        ORDER_SALES_EXTRA_LINE("order.salesorderextraline"),
+        ORDER_SALES_LINE_ITEM("order.salesorderlineitem"),
+        ORDER_SALES_SHIPMENT("order.salesordershipment"),
+        BOM_ITEM("part.bomitem"),
+        BOM_ITEM_SUBSTITUTE("part.bomitemsubstitute"),
+        PART("part.part"),
+        PART_CATEGORY("part.partcategory"),
+        PART_CATEGORY_PARAMETER_TEMPLATE("part.partcategoryparametertemplate"),
+        PART_INTERNAL_PRICE_BREAK("part.partinternalpricebreak"),
+        PART_PARAMETER("part.partparameter"),
+        PART_PARAMETER_TEMPLATE("part.partparametertemplate"),
+        PART_PRICING("part.partpricing"),
+        PART_RELATED("part.partrelated"),
+        PART_SELL_PRICE_BREAK("part.partsellpricebreak"),
+        PART_START("part.partstar"),
+        PART_STOCKTAKE("part.partstocktake"),
+        PART_TEST_TEMPLATE("part.parttesttemplate"),
         REPORT_LABEL_TEMPLATE("report.labeltemplate"),
+        REPORT_TEMPLATE("report.reporttemplate"),
         STOCK_ITEM("stock.stockitem"),
+        STOCK_TEST_RESULT("stock.stockitemtestresult"),
         STOCK_TRACKING("stock.stockitemtracking"),
-        USER("auth.user");
+        STOCK_LOCATION("stock.stocklocation"),
+        STOCK_LOCATION_TYPE("stock.stocklocationtype"),
+        USERS_OWNER("users.owner"),
+        USERS_RULESET("users.ruleset"),
+        USERS_PROFILE("users.userprofile");
 
         private final String key;
 
