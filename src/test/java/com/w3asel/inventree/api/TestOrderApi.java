@@ -7,11 +7,16 @@ import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.BulkRequest;
 import com.w3asel.inventree.model.PaginatedSalesOrderList;
+import com.w3asel.inventree.model.PurchaseOrderLineItemReceive;
+import com.w3asel.inventree.model.PurchaseOrderReceive;
 import com.w3asel.inventree.model.SalesOrder;
+import com.w3asel.inventree.model.StockItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class TestOrderApi extends TestApi {
@@ -60,7 +65,7 @@ public class TestOrderApi extends TestApi {
         api.orderPoMetadataRetrieve(null);
         api.orderPoMetadataUpdate(null, null);
         api.orderPoPartialUpdate(null, null);
-        api.orderPoReceiveCreate(null, null);
+        // api.orderPoReceiveCreate(null, null);
         api.orderPoRetrieve(null);
         api.orderPoStatusRetrieve();
         api.orderPoUpdate(null, null);
@@ -93,6 +98,36 @@ public class TestOrderApi extends TestApi {
         int poLinePk = api.orderPoLineList(limit, null, null, null, null, null, null, null, null,
                 null, null, null, null).getResults().get(0).getPk();
         api.orderPoLineRetrieve(poLinePk);
+    }
+
+    @Test
+    void orderPoReceiveCreate() throws ApiException {
+        int order = 16;
+        int lineItem = 38;
+        int location = 1;
+        String[] serialNumbers = {"100", "101"};
+
+        PurchaseOrderLineItemReceive lineReceive =
+                new PurchaseOrderLineItemReceive().location(location);
+        lineReceive.setLineItem(lineItem);
+        lineReceive.setQuantity(BigDecimal.valueOf(serialNumbers.length));
+        lineReceive.setSerialNumbers(String.join(",", serialNumbers));
+
+        List<PurchaseOrderLineItemReceive> items = List.of(lineReceive);
+
+        PurchaseOrderReceive receive = new PurchaseOrderReceive().items(items);
+
+        // Note: This causes the received counter on the purchase order line to increase even after
+        // the stock items are deleted
+        List<StockItem> result = api.orderPoReceiveCreate(order, receive);
+        try {
+            assertEquals(serialNumbers.length, result.size(),
+                    "Expected serialized items to be created");
+        } finally {
+            StockApi stockApi = new StockApi(apiClient);
+            List<Integer> itemPks = result.stream().map(StockItem::getPk).toList();
+            stockApi.stockBulkDestroy(new BulkRequest().items(itemPks));
+        }
     }
 
     @Test
