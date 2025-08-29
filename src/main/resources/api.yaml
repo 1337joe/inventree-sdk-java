@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '388'
+  version: '389'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2886,6 +2886,12 @@ paths:
           part, sku, quantity, location, reference, IPN.'
         schema:
           type: string
+      - in: query
+        name: output
+        schema:
+          type: integer
+        description: Filter by output stock item ID. Use 'null' to find uninstalled
+          build items.
       - in: query
         name: part
         schema:
