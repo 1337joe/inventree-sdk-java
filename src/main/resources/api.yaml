@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '390'
+  version: '391'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -19109,6 +19109,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: cascade
+        schema:
+          type: boolean
+        description: If true, include items in child locations of the given location
+      - in: query
         name: category
         schema:
           type: integer
@@ -19134,6 +19139,11 @@ paths:
         schema:
           type: boolean
         description: Depleted
+      - in: query
+        name: exclude_tree
+        schema:
+          type: number
+        description: Provide a StockItem PK to exclude that item and all its descendants
       - in: query
         name: expired
         schema:
@@ -19202,6 +19212,11 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: location
+        schema:
+          type: integer
+        description: Filter by numeric Location ID or the literal 'null'
       - in: query
         name: manufacturer
         schema:
