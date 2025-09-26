@@ -104,7 +104,7 @@ public class TestCompanyApi extends TestApi {
         api.companyPartMetadataRetrieve(null);
         api.companyPartMetadataUpdate(null, null);
         api.companyPartPartialUpdate(null, null);
-        api.companyPartRetrieve(null);
+        api.companyPartRetrieve(null, null, null, null, null);
         api.companyPartUpdate(null, null);
         api.companyPriceBreakCreate(null);
         api.companyPriceBreakDestroy(null);
@@ -537,8 +537,9 @@ public class TestCompanyApi extends TestApi {
 
         int limit = 5;
         int offset = 0;
-        PaginatedSupplierPartList actual = api.companyPartList(limit, null, null, null, company,
-                null, null, null, offset, null, null, null, null, null, null, null, null);
+        PaginatedSupplierPartList actual =
+                api.companyPartList(limit, null, null, null, company, null, null, null, null,
+                        offset, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect part list count");
         List<SupplierPart> actualList = actual.getResults();
 
@@ -559,7 +560,7 @@ public class TestCompanyApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"11"})
     void companyPartRetrieve(int supplierPart) throws ApiException {
-        SupplierPart actual = api.companyPartRetrieve(supplierPart);
+        SupplierPart actual = api.companyPartRetrieve(supplierPart, null, null, null, null);
         JsonObject expected =
                 InventreeDemoDataset.getObjects(Model.COMPANY_SUPPLIER_PART, supplierPart).get(0);
         assertSupplierPartEquals(expected, actual, true);

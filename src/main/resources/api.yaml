@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '391'
+  version: '392'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -4433,6 +4433,12 @@ paths:
           type: integer
         description: Manufacturer
       - in: query
+        name: manufacturer_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the Manufacturer in the response
+      - in: query
         name: manufacturer_part
         schema:
           type: integer
@@ -4459,6 +4465,18 @@ paths:
         schema:
           type: boolean
         description: Internal Part is Active
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the linked Part in the response
+      - in: query
+        name: pretty
+        schema:
+          type: boolean
+          default: false
+        description: Format the output with a more readable (pretty) name
       - name: search
         required: false
         in: query
@@ -4476,6 +4494,12 @@ paths:
         schema:
           type: boolean
         description: Supplier is Active
+      - in: query
+        name: supplier_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include detailed information about the Supplier in the response
       - in: query
         name: tags__name
         schema:
@@ -4581,6 +4605,30 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: manufacturer_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the Manufacturer in the response
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the linked Part in the response
+      - in: query
+        name: pretty
+        schema:
+          type: boolean
+          default: false
+        description: Format the output with a more readable (pretty) name
+      - in: query
+        name: supplier_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include detailed information about the Supplier in the response
       tags:
       - company
       security:
