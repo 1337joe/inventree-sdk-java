@@ -18,6 +18,7 @@ import com.w3asel.inventree.model.Group;
 import com.w3asel.inventree.model.MeUser;
 import com.w3asel.inventree.model.Owner;
 import com.w3asel.inventree.model.PaginatedApiTokenList;
+import com.w3asel.inventree.model.PaginatedGroupList;
 import com.w3asel.inventree.model.PaginatedUserCreateList;
 import com.w3asel.inventree.model.Role;
 import com.w3asel.inventree.model.UserCreate;
@@ -27,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,9 +48,9 @@ public class TestUserApi extends TestApi {
         api.userDestroy(null);
         api.userGroupCreate(null);
         api.userGroupDestroy(null);
-        api.userGroupList(null, null, null, null, null, null, null);
+        // api.userGroupList(null, null, null, null, null, null, null);
         api.userGroupPartialUpdate(null, null);
-        api.userGroupRetrieve(null, null, null, null);
+        // api.userGroupRetrieve(null, null, null, null);
         api.userGroupUpdate(null, null);
         // api.userList(null, null, null, null, null, null, null);
         api.userMeDestroy();
@@ -82,15 +84,100 @@ public class TestUserApi extends TestApi {
     void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
-        api.userGroupList(limit, null, null, null, null, null, null);
         api.userOwnerList(limit, null, limit, null, null);
         api.userRulesetList(limit, null, null, null, null, null);
     }
 
+    private static void assertGroupEquals(JsonObject expected, Group actual) {
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        assertNullableFieldEquals(String.class, "name", fields, actual.getName());
+
+        // availability depends on query flags, also not directly available from demo dataset
+        // actual.getPermissions();
+        // actual.getRoles();
+        // actual.getUsers();
+    }
+
     @Test
-    void userGroupRetrieve_readers() throws ApiException {
-        Group actual = api.userGroupRetrieve(1, null, null, null);
-        assertNotNull(actual);
+    void userGroupList() throws ApiException {
+        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.GROUP, null);
+        assertTrue(expectedList.size() > 0, "Expected demo data");
+
+        int limit = 10;
+        int offset = 0;
+        Boolean permissionDetail = true;
+        Boolean roleDetail = true;
+        Boolean userDetail = true;
+
+        PaginatedGroupList actual = api.userGroupList(limit, offset, null, permissionDetail,
+                roleDetail, null, userDetail);
+        assertEquals(expectedList.size(), actual.getCount(), "Incorrect total stock item count");
+        List<Group> actualList = actual.getResults();
+
+        // check items returned by key
+        List<Integer> expectedPks = expectedList.stream()
+                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
+                .toList();
+        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
+
+        // deep equals on first value
+        Group actualFirst = actualList.get(0);
+        JsonObject expectedFirst =
+                InventreeDemoDataset.getObjects(Model.GROUP, actualFirst.getPk()).get(0);
+        assertGroupEquals(expectedFirst, actualFirst);
+
+        // verify optional flags are respected
+        if (permissionDetail == null || !permissionDetail) {
+            assertNull(actualFirst.getPermissions());
+        } else {
+            assertNotNull(actualFirst.getPermissions());
+        }
+
+        // defaults to true
+        if (roleDetail == null || roleDetail) {
+            assertNotNull(actualFirst.getRoles());
+        } else {
+            assertNull(actualFirst.getRoles());
+        }
+
+        if (userDetail == null || !userDetail) {
+            assertNull(actualFirst.getUsers());
+        } else {
+            assertNotNull(actualFirst.getUsers());
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1,,,", "1,true,false,true", "1,false,true,false"})
+    void userGroupRetrieve(int pk, Boolean permissionDetail, Boolean roleDetail, Boolean userDetail)
+            throws ApiException {
+        Group actual = api.userGroupRetrieve(1, permissionDetail, roleDetail, userDetail);
+        JsonObject expected = InventreeDemoDataset.getObjects(Model.GROUP, pk).get(0);
+        assertGroupEquals(expected, actual);
+
+        // verify optional flags are respected
+        if (permissionDetail == null || !permissionDetail) {
+            assertNull(actual.getPermissions());
+        } else {
+            assertNotNull(actual.getPermissions());
+        }
+
+        // defaults to true
+        if (roleDetail == null || roleDetail) {
+            assertNotNull(actual.getRoles());
+        } else {
+            assertNull(actual.getRoles());
+        }
+
+        if (userDetail == null || !userDetail) {
+            assertNull(actual.getUsers());
+        } else {
+            assertNotNull(actual.getUsers());
+        }
     }
 
     @Test
@@ -170,7 +257,7 @@ public class TestUserApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"1", "2"})
+    @ValueSource(ints = {1, 2})
     void userRetrieve(int pk) throws ApiException {
         ExtendedUser actual = api.userRetrieve(pk);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.USER, pk).get(0);

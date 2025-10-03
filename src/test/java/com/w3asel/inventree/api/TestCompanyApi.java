@@ -27,6 +27,7 @@ import com.w3asel.inventree.model.PaginatedManufacturerPartList;
 import com.w3asel.inventree.model.PaginatedManufacturerPartParameterList;
 import com.w3asel.inventree.model.PaginatedSupplierPartList;
 import com.w3asel.inventree.model.PaginatedSupplierPriceBreakList;
+import com.w3asel.inventree.model.PartBrief;
 import com.w3asel.inventree.model.SupplierPart;
 import com.w3asel.inventree.model.SupplierPriceBreak;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
@@ -104,7 +106,7 @@ public class TestCompanyApi extends TestApi {
         api.companyPartMetadataRetrieve(null);
         api.companyPartMetadataUpdate(null, null);
         api.companyPartPartialUpdate(null, null);
-        api.companyPartRetrieve(null, null, null, null, null);
+        // api.companyPartRetrieve(null, null, null, null, null);
         api.companyPartUpdate(null, null);
         api.companyPriceBreakCreate(null);
         api.companyPriceBreakDestroy(null);
@@ -188,7 +190,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"1", "23"})
+    @ValueSource(ints = {1, 23})
     void companyRetrieve(int company) throws ApiException {
         JsonObject expected = InventreeDemoDataset.getObjects(Model.COMPANY, company).get(0);
         Company actual = api.companyRetrieve(company);
@@ -257,7 +259,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"54"})
+    @ValueSource(ints = {54})
     void companyAddressRetrieve(int address) throws ApiException {
         Address actual = api.companyAddressRetrieve(address);
         JsonObject expected =
@@ -362,7 +364,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"1"})
+    @ValueSource(ints = {1})
     void companyContactRetrieve(int contact) throws ApiException {
         Contact actual = api.companyContactRetrieve(contact);
         JsonObject expected =
@@ -558,30 +560,68 @@ public class TestCompanyApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"11"})
-    void companyPartRetrieve(int supplierPart) throws ApiException {
-        SupplierPart actual = api.companyPartRetrieve(supplierPart, null, null, null, null);
+    @CsvSource({"11,,,,", "11,false,true,false,true", "11,true,false,true,false"})
+    void companyPartRetrieve(int supplierPart, Boolean manufacturerDetail, Boolean partDetail,
+            Boolean pretty, Boolean supplierDetail) throws ApiException {
+        SupplierPart actual = api.companyPartRetrieve(supplierPart, manufacturerDetail, partDetail,
+                pretty, supplierDetail);
         JsonObject expected =
                 InventreeDemoDataset.getObjects(Model.COMPANY_SUPPLIER_PART, supplierPart).get(0);
         assertSupplierPartEquals(expected, actual, true);
 
         // verify data not directly in demo dataset
+        JsonObject expectedManufacturer = null;
+        String expectedPrettyName = null;
         if (11 == supplierPart) {
             assertEquals(0, actual.getInStock(), "Incorrect in stock");
-            assertEquals(null, actual.getManufacturerDetail(), "Incorrect manufacturer detail");
             assertEquals("RR0510P-104-D", actual.getMPN(), "Incorrect MPN");
             assertEquals(0, actual.getOnOrder(), "Incorrect on order");
-            assertEquals(null, actual.getPartDetail(), "Incorrect part detail");
+            assertEquals(0, actual.getTags().size(), "Incorrect tags");
 
+            expectedManufacturer = InventreeDemoDataset.getObjects(Model.COMPANY, 4).get(0);
+            expectedPrettyName = "DigiKey | RR05P100KDTR-ND | Susumu | RR0510P-104-D";
+        }
+
+        JsonObject expectedPart =
+                InventreeDemoDataset.getObjects(Model.PART, actual.getPart()).get(0);
+        JsonObject expectedSupplier =
+                InventreeDemoDataset.getObjects(Model.COMPANY, actual.getSupplier()).get(0);
+
+        // verify optional flags are respected
+        if (manufacturerDetail == null || !manufacturerDetail) {
+            assertNull(actual.getManufacturerDetail(), "Expected unpopulated manufacturer detail");
+        } else {
+            CompanyBrief actualManufacturerDetail = actual.getManufacturerDetail();
+            assertNotNull(actual.getManufacturerDetail(), "Expected populated manufacturer detail");
+            assertEquals(
+                    InventreeDemoDataset.getFields(expectedManufacturer).get("name").getAsString(),
+                    actualManufacturerDetail.getName(), "Incorrect manufacturer detail name");
+        }
+        if (partDetail == null || !partDetail) {
+            assertNull(actual.getPartDetail(), "Expected unpopulated part detail");
+        } else {
+            PartBrief actualPartDetail = actual.getPartDetail();
+            assertNotNull(actualPartDetail, "Expected populated part detail");
+            assertEquals(InventreeDemoDataset.getFields(expectedPart).get("name").getAsString(),
+                    actualPartDetail.getName(), "Incorrect part detail name");
+        }
+        if (pretty == null || !pretty) {
+            assertNull(actual.getPrettyName(), "Expected unpopulated pretty name");
+        } else {
+            assertEquals(expectedPrettyName, actual.getPrettyName(), "Incorrect pretty name");
+        }
+
+        // default true
+        if (supplierDetail == null || supplierDetail) {
             CompanyBrief actualSupplierDetail = actual.getSupplierDetail();
-            JsonObject expectedSupplier =
-                    InventreeDemoDataset.getObjects(Model.COMPANY, actual.getSupplier()).get(0);
+            assertNotNull(actualSupplierDetail, "Expected populated supplier detail");
             assertEquals(InventreeDemoDataset.getFields(expectedSupplier).get("name").getAsString(),
                     actualSupplierDetail.getName(), "Incorrect supplier detail name");
-
-            assertEquals(null, actual.getPrettyName(), "Incorrect pretty name");
-            assertEquals(0, actual.getTags().size(), "Incorrect tags");
+        } else {
+            assertNull(actual.getSupplierDetail(), "Expected unpopulated supplier detail");
         }
+
+
     }
 
     private static void assertManufacturerPartEquals(JsonObject expected, ManufacturerPart actual,
@@ -646,7 +686,7 @@ public class TestCompanyApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"1"})
+    @ValueSource(ints = {1})
     void companyPartManufacturerRetrieve(int manufacturerPart) throws ApiException {
         ManufacturerPart actual = api.companyPartManufacturerRetrieve(manufacturerPart);
         JsonObject expected = InventreeDemoDataset
