@@ -161,22 +161,22 @@ public class TestUserApi extends TestApi {
 
         // verify optional flags are respected
         if (permissionDetail == null || !permissionDetail) {
-            assertNull(actual.getPermissions());
+            assertNull(actual.getPermissions(), "Expected unpopulated permissions");
         } else {
-            assertNotNull(actual.getPermissions());
+            assertNotNull(actual.getPermissions(), "Expected populated permissions");
         }
 
         // defaults to true
         if (roleDetail == null || roleDetail) {
-            assertNotNull(actual.getRoles());
+            assertNotNull(actual.getRoles(), "Expected populated roles");
         } else {
-            assertNull(actual.getRoles());
+            assertNull(actual.getRoles(), "Expected unpopulated roles");
         }
 
         if (userDetail == null || !userDetail) {
-            assertNull(actual.getUsers());
+            assertNull(actual.getUsers(), "Expected unpopulated users");
         } else {
-            assertNotNull(actual.getUsers());
+            assertNotNull(actual.getUsers(), "Expected populated users");
         }
     }
 

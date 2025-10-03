@@ -76,7 +76,8 @@ public class TestPartApi extends TestApi {
         api.partInternalPriceUpdate(null, null);
         api.partList(null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null);
         api.partMetadataPartialUpdate(null, null);
         api.partMetadataRetrieve(null);
         api.partMetadataUpdate(null, null);
@@ -109,7 +110,7 @@ public class TestPartApi extends TestApi {
         api.partRelatedRetrieve(null);
         api.partRelatedUpdate(null, null);
         api.partRequirementsRetrieve(null);
-        api.partRetrieve(null);
+        api.partRetrieve(null, null, null, null, null);
         api.partSalePriceCreate(null);
         api.partSalePriceDestroy(null);
         api.partSalePriceList(null, null, null, null, null);
@@ -143,13 +144,14 @@ public class TestPartApi extends TestApi {
     @Test
     void test() throws ApiException {
         // TODO verify results
-        Part actual = api.partRetrieve(1);
+        Part actual = api.partRetrieve(1, null, null, null, null);
         assertNotNull(actual);
 
         int limit = 1000;
         api.partList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null);
 
         api.partParameterList(limit, null, null, null, null, null, null);
 
@@ -236,7 +238,7 @@ public class TestPartApi extends TestApi {
         int limit = 5;
         int offset = 0;
         PaginatedCategoryList actual = api.partCategoryList(limit, null, null, null, null, offset,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect part category list count");
         List<Category> actualList = actual.getResults();
 
@@ -255,14 +257,17 @@ public class TestPartApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"1", "5"})
-    void partCategoryRetrieve(int pk) throws ApiException {
-        Category actual = api.partCategoryRetrieve(pk);
+    @CsvSource({"1,", "5,true"})
+    void partCategoryRetrieve(int pk, Boolean pathDetail) throws ApiException {
+        Category actual = api.partCategoryRetrieve(pk, pathDetail);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.PART_CATEGORY, pk).get(0);
         assertCategoryEquals(expected, actual);
 
-        // TODO path_detail optional query parameter missing from API
-        assertEquals(null, actual.getPath(), "Incorrect path");
+        if (pathDetail == null || !pathDetail) {
+            assertNull(actual.getPath(), "Expected unpopulated path detail");
+        } else {
+            assertNotNull(actual.getPath(), "Expected populated path detail");
+        }
 
         // verify data not directly in demo dataset
         if (1 == pk) {

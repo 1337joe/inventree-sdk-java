@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '394'
+  version: '395'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1190,6 +1190,11 @@ paths:
           type: boolean
         description: Has available stock
       - in: query
+        name: can_build
+        schema:
+          type: boolean
+          default: true
+      - in: query
         name: category
         schema:
           type: integer
@@ -1247,6 +1252,11 @@ paths:
           type: boolean
         description: Assembly part is active
       - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: part_testable
         schema:
           type: boolean
@@ -1268,6 +1278,11 @@ paths:
         schema:
           type: boolean
         description: Component part is an assembly
+      - in: query
+        name: sub_part_detail
+        schema:
+          type: boolean
+          default: false
       - in: query
         name: sub_part_testable
         schema:
@@ -1378,11 +1393,26 @@ paths:
       operationId: bom_retrieve
       description: API endpoint for detail view of a single BomItem object.
       parameters:
+      - in: query
+        name: can_build
+        schema:
+          type: boolean
+          default: true
       - in: path
         name: id
         schema:
           type: integer
         required: true
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: sub_part_detail
+        schema:
+          type: boolean
+          default: false
       tags:
       - bom
       security:
@@ -13090,6 +13120,21 @@ paths:
           type: boolean
         description: BOM Valid
       - in: query
+        name: cascade
+        schema:
+          type: boolean
+        description: If true, include items in child categories of the given category
+      - in: query
+        name: category
+        schema:
+          type: integer
+        description: Filter by numeric category ID or the literal 'null'
+      - in: query
+        name: category_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: component
         schema:
           type: boolean
@@ -13119,6 +13164,20 @@ paths:
         schema:
           type: boolean
         description: Depleted Stock
+      - in: query
+        name: exclude_id
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Exclude parts with these IDs (comma-separated)
+        explode: false
+        style: form
+      - in: query
+        name: exclude_related
+        schema:
+          type: number
+        description: Exclude parts related to this part ID
       - in: query
         name: exclude_tree
         schema:
@@ -13173,6 +13232,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: location_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: locked
         schema:
           type: boolean
@@ -13202,9 +13266,25 @@ paths:
         schema:
           type: string
       - in: query
+        name: parameters
+        schema:
+          type: boolean
+          default: false
+        description: Include part parameters in response
+      - in: query
+        name: path_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: purchaseable
         schema:
           type: boolean
+      - in: query
+        name: related
+        schema:
+          type: number
+        description: Show parts related to this part ID
       - in: query
         name: revision_of
         schema:
@@ -13382,11 +13462,32 @@ paths:
       operationId: part_retrieve
       description: API endpoint for detail view of a single Part object.
       parameters:
+      - in: query
+        name: category_detail
+        schema:
+          type: boolean
+          default: false
       - in: path
         name: id
         schema:
           type: integer
         required: true
+      - in: query
+        name: location_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: parameters
+        schema:
+          type: boolean
+          default: false
+        description: Include part parameters in response
+      - in: query
+        name: path_detail
+        schema:
+          type: boolean
+          default: false
       tags:
       - part
       security:
@@ -13931,6 +14032,11 @@ paths:
         schema:
           type: integer
         description: Filter by parent category
+      - in: query
+        name: path_detail
+        schema:
+          type: boolean
+          default: false
       - name: search
         required: false
         in: query
@@ -14080,6 +14186,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: path_detail
+        schema:
+          type: boolean
+          default: false
       tags:
       - part
       security:

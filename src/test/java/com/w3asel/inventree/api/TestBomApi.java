@@ -3,6 +3,8 @@ package com.w3asel.inventree.api;
 import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
 import static com.w3asel.inventree.InventreeDemoDataset.assertNullableFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
@@ -104,8 +106,9 @@ public class TestBomApi extends TestApi {
         int limit = 10;
         int offset = 0;
 
-        PaginatedBomItemList actual = api.bomList(limit, null, null, null, null, null, null, offset,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        PaginatedBomItemList actual = api.bomList(limit, null, null, null, null, null, null, null,
+                offset, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total bom item count");
         List<BomItem> actualList = actual.getResults();
 
@@ -124,9 +127,11 @@ public class TestBomApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"1", "375"})
-    void bomRetrieve(int pk) throws ApiException {
-        BomItem actual = api.bomRetrieve(pk);
+    @CsvSource({"1,,,", "375,true,false,false", "1,false,true,true"})
+    void bomRetrieve(int pk, Boolean requestCanBuild, Boolean requestPartDetail,
+            Boolean requestSubPartDetail) throws ApiException {
+        BomItem actual =
+                api.bomRetrieve(pk, requestCanBuild, requestPartDetail, requestSubPartDetail);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.BOM_ITEM, pk).get(0);
         assertBomItemEquals(expected, actual);
 
@@ -142,7 +147,28 @@ public class TestBomApi extends TestApi {
             default:
                 canBuild = null;
         }
-        assertEquals(canBuild, actual.getCanBuild(), "Incorrect canBuild");
+
+        // defaults to true
+        if (requestCanBuild == null || requestCanBuild) {
+            assertEquals(canBuild, actual.getCanBuild(), "Incorrect canBuild");
+        } else {
+            assertNull(actual.getCanBuild(), "Expected unpopulated canBuild");
+        }
+
+        if (requestPartDetail == null || !requestPartDetail) {
+            assertNull(actual.getPartDetail(), "Expected unpopulated part details");
+        } else {
+            assertNotNull(actual.getPartDetail(), "Expected populated part details");
+            assertEquals(actual.getPart(), actual.getPartDetail().getPk(),
+                    "Incorrect part details");
+        }
+        if (requestSubPartDetail == null || !requestSubPartDetail) {
+            assertNull(actual.getPartDetail(), "Expected unpopulated sub-part details");
+        } else {
+            assertNotNull(actual.getSubPartDetail(), "Expected populated sub-part details");
+            assertEquals(actual.getSubPart(), actual.getSubPartDetail().getPk(),
+                    "Incorrect sub-part details");
+        }
     }
 
     private static void assertBomItemSubstituteEquals(JsonObject expected,
