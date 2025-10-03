@@ -46,16 +46,16 @@ public class TestUserApi extends TestApi {
         api.userDestroy(null);
         api.userGroupCreate(null);
         api.userGroupDestroy(null);
-        api.userGroupList(null, null, null, null);
+        api.userGroupList(null, null, null, null, null, null, null);
         api.userGroupPartialUpdate(null, null);
-        api.userGroupRetrieve(null);
+        api.userGroupRetrieve(null, null, null, null);
         api.userGroupUpdate(null, null);
         // api.userList(null, null, null, null, null, null, null);
         api.userMeDestroy();
         api.userMePartialUpdate(null);
         // api.userMeRetrieve();
         api.userMeUpdate(null);
-        api.userOwnerList(null, null);
+        api.userOwnerList(null, null, null, null, null);
         api.userOwnerRetrieve(null);
         api.userPartialUpdate(null, null);
         api.userProfilePartialUpdate(null);
@@ -82,14 +82,14 @@ public class TestUserApi extends TestApi {
     void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
-        api.userGroupList(limit, null, null, null);
-        api.userOwnerList(limit, null);
+        api.userGroupList(limit, null, null, null, null, null, null);
+        api.userOwnerList(limit, null, limit, null, null);
         api.userRulesetList(limit, null, null, null, null, null);
     }
 
     @Test
     void userGroupRetrieve_readers() throws ApiException {
-        Group actual = api.userGroupRetrieve(1);
+        Group actual = api.userGroupRetrieve(1, null, null, null);
         assertNotNull(actual);
     }
 

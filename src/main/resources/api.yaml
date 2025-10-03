@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '392'
+  version: '393'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -21946,12 +21946,30 @@ paths:
           name.'
         schema:
           type: string
+      - in: query
+        name: permission_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include permission details
+      - in: query
+        name: role_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include role details
       - name: search
         required: false
         in: query
         description: 'A search term. Searched fields: name.'
         schema:
           type: string
+      - in: query
+        name: user_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include user details
       tags:
       - user
       security:
@@ -22007,6 +22025,24 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: permission_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include permission details
+      - in: query
+        name: role_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include role details
+      - in: query
+        name: user_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include user details
       tags:
       - user
       security:
@@ -22233,6 +22269,10 @@ paths:
 
         Cannot create a new Owner object via the API, but can view existing instances.
       parameters:
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
       - name: limit
         required: true
         in: query
@@ -22245,6 +22285,18 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
       tags:
       - user
       security:
