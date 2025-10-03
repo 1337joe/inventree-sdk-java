@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '393'
+  version: '394'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2855,6 +2855,11 @@ paths:
           type: integer
         description: Build Order
       - in: query
+        name: build_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: build_line
         schema:
           type: integer
@@ -2878,6 +2883,11 @@ paths:
         schema:
           type: integer
         description: Location
+      - in: query
+        name: location_detail
+        schema:
+          type: boolean
+          default: false
       - name: offset
         required: false
         in: query
@@ -2902,6 +2912,11 @@ paths:
         schema:
           type: integer
         description: Part
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
       - name: search
         required: false
         in: query
@@ -2909,6 +2924,11 @@ paths:
           stock_item__part__IPN, stock_item__part__name, stock_item__supplier_part__SKU.'
         schema:
           type: string
+      - in: query
+        name: stock_detail
+        schema:
+          type: boolean
+          default: false
       - in: query
         name: stock_item
         schema:
@@ -3220,10 +3240,24 @@ paths:
           type: boolean
         description: Allocated
       - in: query
+        name: allocations
+        schema:
+          type: boolean
+          default: true
+        description: Include allocation details showing which stock items are allocated
+          to this build line.
+      - in: query
         name: assembly
         schema:
           type: boolean
         description: Assembly
+      - in: query
+        name: assembly_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include brief details of the assembly (parent part) related to
+          the BOM item in this build line.
       - in: query
         name: available
         schema:
@@ -3234,9 +3268,22 @@ paths:
         schema:
           type: integer
       - in: query
+        name: bom_item_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include detailed information about the BOM item linked to this
+          build line.
+      - in: query
         name: build
         schema:
           type: integer
+      - in: query
+        name: build_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the associated build order.
       - in: query
         name: consumable
         schema:
@@ -3282,6 +3329,13 @@ paths:
         schema:
           type: integer
         description: Part
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include detailed information about the specific part being built
+          or consumed in this build line.
       - name: search
         required: false
         in: query
@@ -3349,11 +3403,45 @@ paths:
       operationId: build_line_retrieve
       description: API endpoint for detail view of a BuildLine object.
       parameters:
+      - in: query
+        name: allocations
+        schema:
+          type: boolean
+          default: true
+        description: Include allocation details showing which stock items are allocated
+          to this build line.
+      - in: query
+        name: assembly_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include brief details of the assembly (parent part) related to
+          the BOM item in this build line.
+      - in: query
+        name: bom_item_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include detailed information about the BOM item linked to this
+          build line.
+      - in: query
+        name: build_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the associated build order.
       - in: path
         name: id
         schema:
           type: integer
         required: true
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include detailed information about the specific part being built
+          or consumed in this build line.
       tags:
       - build
       security:

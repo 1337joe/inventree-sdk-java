@@ -263,8 +263,8 @@ public class TestBuildApi extends TestApi {
         int limit = 10;
         int offset = 0;
 
-        PaginatedBuildItemList actual = api.buildItemList(limit, null, null, null, null, null,
-                offset, null, null, null, null, null, null);
+        PaginatedBuildItemList actual = api.buildItemList(limit, null, null, null, null, null, null,
+                null, offset, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total build item count");
         List<BuildItem> actualList = actual.getResults();
 
@@ -366,8 +366,9 @@ public class TestBuildApi extends TestApi {
         int limit = 10;
         int offset = 0;
 
-        PaginatedBuildLineList actual = api.buildLineList(limit, null, null, null, null, null, null,
-                null, offset, null, null, null, null, null, null, null);
+        PaginatedBuildLineList actual =
+                api.buildLineList(limit, null, null, null, null, null, null, null, null, null, null,
+                        null, offset, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total build line count");
         List<BuildLine> actualList = actual.getResults();
 
@@ -388,7 +389,7 @@ public class TestBuildApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"410"})
     void buildLineRetrieve(int pk) throws ApiException {
-        BuildLine actual = api.buildLineRetrieve(pk);
+        BuildLine actual = api.buildLineRetrieve(pk, null, null, null, null, null);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.BUILD_LINE, pk).get(0);
         assertBuildLineEquals(expected, actual);
 
