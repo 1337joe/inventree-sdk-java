@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '395'
+  version: '396'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -4995,6 +4995,12 @@ paths:
         schema:
           type: boolean
         description: Manufacturer is Active
+      - in: query
+        name: manufacturer_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the Manufacturer in the response
       - name: offset
         required: false
         in: query
@@ -5016,6 +5022,18 @@ paths:
         schema:
           type: boolean
         description: Part is Active
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the linked Part in the response
+      - in: query
+        name: pretty
+        schema:
+          type: boolean
+          default: false
+        description: Format the output with a more readable (pretty) name
       - name: search
         required: false
         in: query
@@ -5372,6 +5390,13 @@ paths:
         schema:
           type: integer
       - in: query
+        name: manufacturer_part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the linked ManufacturerPart
+          in the response
+      - in: query
         name: name
         schema:
           type: string
@@ -5641,6 +5666,12 @@ paths:
         schema:
           type: integer
       - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the linked Part in the response
+      - in: query
         name: quantity
         schema:
           type: number
@@ -5655,6 +5686,12 @@ paths:
         schema:
           type: integer
         description: Supplier
+      - in: query
+        name: supplier_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the Supplier in the response
       tags:
       - company
       security:

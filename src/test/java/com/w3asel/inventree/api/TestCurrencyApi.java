@@ -23,7 +23,7 @@ public class TestCurrencyApi extends TestApi {
         new SettingsApi(apiClient).settingsGlobalRetrieve("CURRENCY_CODES").getValue();
         // needs to not break on CAD (which isn't in the default list)
         new CompanyApi(apiClient).companyPriceBreakList(100, null, null, null, null, null, null,
-                null);
+                null, null, null);
     }
 
     @Test

@@ -667,7 +667,7 @@ public class TestCompanyApi extends TestApi {
         int limit = 5;
         int offset = 0;
         PaginatedManufacturerPartList actual = api.companyPartManufacturerList(limit, null, null,
-                null, offset, null, null, null, null, null, null);
+                null, null, offset, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect manufacturer list count");
         List<ManufacturerPart> actualList = actual.getResults();
 
@@ -700,7 +700,7 @@ public class TestCompanyApi extends TestApi {
         int limit = 5;
         int offset = 0;
         PaginatedManufacturerPartParameterList actual = api.companyPartManufacturerParameterList(
-                limit, null, null, null, offset, null, null, null, null, null);
+                limit, null, null, null, null, offset, null, null, null, null, null);
         assertEquals(0, actual.getCount());
         List<ManufacturerPartParameter> actualList = actual.getResults();
         // TODO validate, no results?
@@ -752,8 +752,8 @@ public class TestCompanyApi extends TestApi {
 
         int limit = 5;
         int offset = 0;
-        PaginatedSupplierPriceBreakList actual =
-                api.companyPriceBreakList(limit, null, offset, null, part, null, null, null);
+        PaginatedSupplierPriceBreakList actual = api.companyPriceBreakList(limit, null, offset,
+                null, part, null, null, null, null, null);
         assertEquals(2, actual.getCount(), "Incorrect price break list count");
         List<SupplierPriceBreak> actualList = actual.getResults();
 
