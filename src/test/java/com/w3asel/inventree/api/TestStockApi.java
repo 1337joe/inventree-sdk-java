@@ -64,13 +64,13 @@ public class TestStockApi extends TestApi {
         api.stockLocationCreate(null);
         api.stockLocationDestroy(null);
         api.stockLocationList(null, null, null, null, null, null, null, null, null, null, null,
-                null, null);
+                null, null, null);
         api.stockLocationMetadataPartialUpdate(null, null);
         api.stockLocationMetadataRetrieve(null);
         api.stockLocationMetadataUpdate(null, null);
         api.stockLocationPartialUpdate(null, null);
         api.stockLocationBulkPartialUpdate(null);
-        api.stockLocationRetrieve(null);
+        api.stockLocationRetrieve(null, null);
         api.stockLocationTreeList(null, null, null);
         api.stockLocationTypeCreate(null);
         api.stockLocationTypeDestroy(null);
@@ -96,12 +96,12 @@ public class TestStockApi extends TestApi {
         api.stockTestBulkDestroy(null);
         api.stockTestDestroy(null);
         api.stockTestList(null, null, null, null, null, null, null, null, null, null, null, null,
-                null);
+                null, null, null, null, null);
         api.stockTestMetadataPartialUpdate(null, null);
         api.stockTestMetadataRetrieve(null);
         api.stockTestMetadataUpdate(null, null);
         api.stockTestPartialUpdate(null, null);
-        api.stockTestRetrieve(null);
+        api.stockTestRetrieve(null, null, null);
         api.stockTestUpdate(null, null);
         // api.stockTrackList(null, null, null, null, null, null);
         // api.stockTrackRetrieve(null);
@@ -116,9 +116,9 @@ public class TestStockApi extends TestApi {
         // TODO verify results
         int limit = 1000;
         api.stockLocationList(limit, null, null, null, null, null, null, null, null, null, null,
-                null, null);
+                null, null, null);
         api.stockTestList(limit, null, null, null, null, null, null, null, null, null, null, null,
-                null);
+                null, null, null, null, null);
     }
 
     @Test
@@ -441,7 +441,7 @@ public class TestStockApi extends TestApi {
         int offset = 0;
 
         PaginatedStockTrackingList actual =
-                api.stockTrackList(limit, null, offset, null, null, null);
+                api.stockTrackList(limit, null, null, offset, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(),
                 "Incorrect total stock tracking count");
         List<StockTracking> actualList = actual.getResults();

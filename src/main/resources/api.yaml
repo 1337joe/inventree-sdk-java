@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '396'
+  version: '397'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -20323,6 +20323,13 @@ paths:
         schema:
           type: integer
         description: Filter by parent location
+      - in: query
+        name: path_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the BOM item linked to this
+          build line.
       - name: search
         required: false
         in: query
@@ -20787,6 +20794,13 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: path_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the BOM item linked to this
+          build line.
       tags:
       - stock
       security:
@@ -21171,6 +21185,12 @@ paths:
         schema:
           type: boolean
         description: Enabled
+      - in: query
+        name: include_installed
+        schema:
+          type: boolean
+        description: If true, include test results for items installed underneath
+          the given stock item
       - name: limit
         required: true
         in: query
@@ -21211,9 +21231,19 @@ paths:
         schema:
           type: string
       - in: query
+        name: stock_item
+        schema:
+          type: integer
+        description: Filter by numeric Stock Item ID
+      - in: query
         name: template
         schema:
           type: integer
+      - in: query
+        name: template_detail
+        schema:
+          type: boolean
+          default: false
       - in: query
         name: test
         schema:
@@ -21223,6 +21253,11 @@ paths:
         name: user
         schema:
           type: integer
+      - in: query
+        name: user_detail
+        schema:
+          type: boolean
+          default: false
       - in: query
         name: value
         schema:
@@ -21312,6 +21347,16 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: template_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: user_detail
+        schema:
+          type: boolean
+          default: false
       tags:
       - stock
       security:
@@ -21523,6 +21568,11 @@ paths:
         name: item
         schema:
           type: integer
+      - in: query
+        name: item_detail
+        schema:
+          type: boolean
+          default: false
       - name: limit
         required: true
         in: query
@@ -21552,6 +21602,11 @@ paths:
         name: user
         schema:
           type: integer
+      - in: query
+        name: user_detail
+        schema:
+          type: boolean
+          default: false
       tags:
       - stock
       security:
