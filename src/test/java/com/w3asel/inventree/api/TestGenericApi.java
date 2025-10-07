@@ -2,6 +2,7 @@ package com.w3asel.inventree.api;
 
 import static com.w3asel.inventree.InventreeDemoDataset.assertFieldEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import java.util.List;
+import java.util.Map;
 
 public class TestGenericApi extends TestApi {
     private GenericApi api;
@@ -106,17 +108,16 @@ public class TestGenericApi extends TestApi {
         assertEquals(expectedModelName, actual.getModelName(), "Incorrect model name");
     }
 
-    @Disabled("Can't figure out what a valid statusModel string is")
     @ParameterizedTest
-    @CsvSource({"InvenTree.build.status_codes.BuildStatus"/* , "stock", "stockitem" */})
+    @CsvSource({"BuildStatus"})
     void genericStatusRetrieve(String statusModel) throws ApiException {
-        // TODO statusModel must be a valid class, should restrict to enum
         GenericStateClass actual = api.genericStatusRetrieve(statusModel);
+        assertEquals(statusModel, actual.getStatusClass(), "Incorrect status model");
     }
 
-    @Disabled("Void return")
     @Test
     void genericStatusRetrieveAll() throws ApiException {
-        api.genericStatusRetrieveAll();
+        Map<String, Object> actual = api.genericStatusRetrieveAll();
+        assertFalse(actual.isEmpty(), "Expected populated map of states");
     }
 }
