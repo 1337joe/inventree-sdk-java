@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '399'
+  version: '400'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -71,7 +71,13 @@ paths:
         - a:superuser
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Config'
+          description: ''
   /api/admin/config/{key}/:
     get:
       operationId: admin_config_retrieve
@@ -92,7 +98,11 @@ paths:
         - a:superuser
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config'
+          description: ''
   /api/admin/email/:
     get:
       operationId: admin_email_list
@@ -6332,19 +6342,6 @@ paths:
     get:
       operationId: flags_list
       description: List view for feature flags.
-      parameters:
-      - name: limit
-        required: true
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
       tags:
       - flags
       security:
@@ -6355,7 +6352,13 @@ paths:
         - g:read
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flag'
+          description: ''
   /api/flags/{key}/:
     get:
       operationId: flags_retrieve
@@ -6376,7 +6379,11 @@ paths:
         - g:read
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flag'
+          description: ''
   /api/generate/batch-code/:
     post:
       operationId: generate_batch_code_create
@@ -27537,6 +27544,35 @@ components:
       - name
       - pk
       - thumbnail
+    Config:
+      type: object
+      description: |-
+        Serializer for the InvenTree configuration.
+
+        This is a read-only serializer.
+      properties:
+        key:
+          type: string
+          readOnly: true
+        env_var:
+          type: string
+          readOnly: true
+          nullable: true
+        config_key:
+          type: string
+          readOnly: true
+          nullable: true
+        source:
+          type: string
+          readOnly: true
+        accessed:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - accessed
+      - key
+      - source
     ConfigTypeEnum:
       enum:
       - M
@@ -28346,6 +28382,26 @@ components:
       - result
       - started
       - stopped
+    Flag:
+      type: object
+      description: Serializer for feature flags.
+      properties:
+        key:
+          type: string
+          readOnly: true
+        state:
+          type: string
+          readOnly: true
+        conditions:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          readOnly: true
+          nullable: true
+      required:
+      - key
+      - state
     FlowsEnum:
       type: string
       enum:

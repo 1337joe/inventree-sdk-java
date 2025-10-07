@@ -18,10 +18,7 @@ public class TestFlagsApi extends TestApi {
     @Disabled("void response")
     @Test
     void flagsList() throws ApiException {
-        int limit = 10;
-        int offset = 0;
-
-        api.flagsList(limit, offset);
+        api.flagsList();
     }
 
     @Disabled("void response")
