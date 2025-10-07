@@ -60,8 +60,8 @@ public class TestClient {
         int limit = 1;
         int offset = 0;
         PaginatedSalesOrderList salesOrders = api.orderSoList(limit, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, offset, null, null, null,
-                null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, offset, null, null,
+                null, null, null, null, null, null, null, null, null, null);
         System.out.printf("Fetched %d of %d sales orders%n", salesOrders.getResults().size(),
                 salesOrders.getCount());
 
@@ -71,8 +71,8 @@ public class TestClient {
         try {
             PaginatedSalesOrderLineItemList lineItemPage;
             do {
-                lineItemPage = api.orderSoLineList(limit, null, null, null, lineItems.size(),
-                        targetOrder, null, null, null, null, null, null);
+                lineItemPage = api.orderSoLineList(limit, null, null, null, null, lineItems.size(),
+                        targetOrder, null, null, null, null, null, null, null, null);
                 lineItems.addAll(lineItemPage.getResults());
             } while (lineItemPage.getCount() > lineItems.size());
         } catch (ApiException e) {

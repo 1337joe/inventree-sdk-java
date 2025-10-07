@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '398'
+  version: '399'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -8976,6 +8976,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: supplier_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: supplier_part
         schema:
           type: integer
@@ -9376,6 +9381,11 @@ paths:
           type: boolean
         description: Order Complete
       - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: order_status
         schema:
           type: integer
@@ -9393,6 +9403,11 @@ paths:
         schema:
           type: integer
         description: Supplier Part
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
       - in: query
         name: pending
         schema:
@@ -9499,6 +9514,16 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
       tags:
       - order
       security:
@@ -9711,6 +9736,11 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: supplier_detail
+        schema:
+          type: boolean
+          default: false
       tags:
       - order
       security:
@@ -10136,6 +10166,11 @@ paths:
         name: customer
         schema:
           type: integer
+      - in: query
+        name: customer_detail
+        schema:
+          type: boolean
+          default: false
       - in: query
         name: has_project_code
         schema:
@@ -10599,6 +10634,11 @@ paths:
         name: item
         schema:
           type: integer
+      - in: query
+        name: item_detail
+        schema:
+          type: boolean
+          default: true
       - name: limit
         required: true
         in: query
@@ -10616,6 +10656,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: order_status
         schema:
           type: integer
@@ -10632,6 +10677,11 @@ paths:
         schema:
           type: integer
         description: outcome
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
       - in: query
         name: received
         schema:
@@ -10699,6 +10749,21 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: item_detail
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
       tags:
       - order
       security:
@@ -10927,6 +10992,11 @@ paths:
       operationId: order_ro_retrieve
       description: API endpoint for detail view of a single ReturnOrder object.
       parameters:
+      - in: query
+        name: customer_detail
+        schema:
+          type: boolean
+          default: false
       - in: path
         name: id
         schema:
@@ -11325,6 +11395,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: customer_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: has_project_code
         schema:
           type: boolean
@@ -11497,6 +11572,11 @@ paths:
           type: boolean
         description: Has Shipment
       - in: query
+        name: customer_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: include_variants
         schema:
           type: boolean
@@ -11505,6 +11585,11 @@ paths:
         name: item
         schema:
           type: integer
+      - in: query
+        name: item_detail
+        schema:
+          type: boolean
+          default: false
       - name: limit
         required: true
         in: query
@@ -11520,6 +11605,11 @@ paths:
         schema:
           type: integer
         description: Location
+      - in: query
+        name: location_detail
+        schema:
+          type: boolean
+          default: false
       - name: offset
         required: false
         in: query
@@ -11531,6 +11621,11 @@ paths:
         schema:
           type: integer
         description: Order
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
       - name: ordering
         required: false
         in: query
@@ -11548,6 +11643,11 @@ paths:
         schema:
           type: integer
         description: Part
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
       - name: search
         required: false
         in: query
@@ -12064,6 +12164,11 @@ paths:
           type: boolean
         description: Completed
       - in: query
+        name: customer_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: has_pricing
         schema:
           type: boolean
@@ -12091,6 +12196,11 @@ paths:
           type: boolean
         description: Order Complete
       - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: order_outstanding
         schema:
           type: boolean
@@ -12112,6 +12222,11 @@ paths:
         name: part
         schema:
           type: integer
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
       - name: search
         required: false
         in: query
@@ -12168,11 +12283,26 @@ paths:
       operationId: order_so_line_retrieve
       description: API endpoint for detail view of a SalesOrderLineItem object.
       parameters:
+      - in: query
+        name: customer_detail
+        schema:
+          type: boolean
+          default: false
       - in: path
         name: id
         schema:
           type: integer
         required: true
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
       tags:
       - order
       security:
@@ -12380,6 +12510,11 @@ paths:
       operationId: order_so_retrieve
       description: API endpoint for detail view of a SalesOrder object.
       parameters:
+      - in: query
+        name: customer_detail
+        schema:
+          type: boolean
+          default: false
       - in: path
         name: id
         schema:
