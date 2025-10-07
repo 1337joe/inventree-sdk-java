@@ -41,7 +41,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <gson-fire-version>1.9.0</gson-fire-version>
-        <okhttp-version>5.1.0</okhttp-version>
+        <okhttp-version>5.2.0</okhttp-version>
         <gson-version>2.13.2</gson-version>
         <commons-lang3-version>3.19.0</commons-lang3-version>
         <jackson-databind-nullable-version>0.2.7</jackson-databind-nullable-version>
