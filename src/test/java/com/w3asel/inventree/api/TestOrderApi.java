@@ -38,7 +38,7 @@ public class TestOrderApi extends TestApi {
         api.orderPoDestroy(null);
         api.orderPoExtraLineCreate(null);
         api.orderPoExtraLineDestroy(null);
-        api.orderPoExtraLineList(null, null, null, null, null);
+        api.orderPoExtraLineList(null, null, null, null, null, null);
         api.orderPoExtraLineMetadataPartialUpdate(null, null);
         api.orderPoExtraLineMetadataRetrieve(null);
         api.orderPoExtraLineMetadataUpdate(null, null);
@@ -86,8 +86,8 @@ public class TestOrderApi extends TestApi {
     void orderPoExtraLineList() throws ApiException {
         // int limit = 1;
 
-        int poExtraPk =
-                api.orderPoExtraLineList(limit, null, null, null, null).getResults().get(0).getPk();
+        int poExtraPk = api.orderPoExtraLineList(limit, null, null, null, null, null).getResults()
+                .get(0).getPk();
         api.orderPoExtraLineRetrieve(poExtraPk);
     }
 
@@ -144,8 +144,8 @@ public class TestOrderApi extends TestApi {
     void testRoExtraLine() throws ApiException {
         // int limit = 1;
 
-        int roExtraPk =
-                api.orderRoExtraLineList(limit, null, null, null, null).getResults().get(0).getPk();
+        int roExtraPk = api.orderRoExtraLineList(limit, null, null, null, null, null).getResults()
+                .get(0).getPk();
         api.orderRoExtraLineRetrieve(roExtraPk);
     }
 
@@ -175,11 +175,11 @@ public class TestOrderApi extends TestApi {
     void testSoExtraLine() throws ApiException {
         // int limit = 1;
 
-        int soExtraPk =
-                api.orderSoExtraLineList(limit, null, null, null, null).getResults().get(0).getPk();
+        int soExtraPk = api.orderSoExtraLineList(limit, null, null, null, null, null).getResults()
+                .get(0).getPk();
         api.orderSoExtraLineRetrieve(soExtraPk);
 
-        api.orderSoExtraLineList(limit, null, null, null, "Coupon");
+        api.orderSoExtraLineList(limit, null, null, null, null, "Coupon");
     }
 
     @Test

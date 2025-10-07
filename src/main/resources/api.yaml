@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '401'
+  version: '402'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1266,6 +1266,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       - in: query
         name: part_testable
         schema:
@@ -1418,6 +1419,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       - in: query
         name: sub_part_detail
         schema:
@@ -2146,6 +2148,12 @@ paths:
         schema:
           type: integer
         description: Part
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include detailed information about the related part in the response
       - in: query
         name: project_code
         schema:
@@ -2928,6 +2936,8 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the stock location in the
+          response
       - name: offset
         required: false
         in: query
@@ -2957,6 +2967,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       - name: search
         required: false
         in: query
@@ -8987,6 +8998,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the supplier in the response
       - in: query
         name: supplier_part
         schema:
@@ -9074,6 +9086,12 @@ paths:
         name: order
         schema:
           type: integer
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the sales order in the response
       - name: ordering
         required: false
         in: query
@@ -9392,6 +9410,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the sales order in the response
       - in: query
         name: order_status
         schema:
@@ -9415,6 +9434,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       - in: query
         name: pending
         schema:
@@ -9526,11 +9546,13 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the sales order in the response
       - in: query
         name: part_detail
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       tags:
       - order
       security:
@@ -9748,6 +9770,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the supplier in the response
       tags:
       - order
       security:
@@ -10178,6 +10201,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the customer in the response
       - in: query
         name: has_project_code
         schema:
@@ -10356,6 +10380,12 @@ paths:
         name: order
         schema:
           type: integer
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the sales order in the response
       - name: ordering
         required: false
         in: query
@@ -10646,6 +10676,7 @@ paths:
         schema:
           type: boolean
           default: true
+        description: Include detailed information about the item in the response
       - name: limit
         required: true
         in: query
@@ -10667,6 +10698,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the sales order in the response
       - in: query
         name: order_status
         schema:
@@ -10689,6 +10721,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       - in: query
         name: received
         schema:
@@ -10761,16 +10794,19 @@ paths:
         schema:
           type: boolean
           default: true
+        description: Include detailed information about the item in the response
       - in: query
         name: order_detail
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the sales order in the response
       - in: query
         name: part_detail
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       tags:
       - order
       security:
@@ -11004,6 +11040,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the customer in the response
       - in: path
         name: id
         schema:
@@ -11406,6 +11443,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the customer in the response
       - in: query
         name: has_project_code
         schema:
@@ -11583,6 +11621,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the customer in the response
       - in: query
         name: include_variants
         schema:
@@ -11597,6 +11636,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the item in the response
       - name: limit
         required: true
         in: query
@@ -11617,6 +11657,8 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the stock location in the
+          response
       - name: offset
         required: false
         in: query
@@ -11633,6 +11675,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the sales order in the response
       - name: ordering
         required: false
         in: query
@@ -11655,6 +11698,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       - name: search
         required: false
         in: query
@@ -11884,6 +11928,12 @@ paths:
         name: order
         schema:
           type: integer
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the sales order in the response
       - name: ordering
         required: false
         in: query
@@ -12175,6 +12225,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the customer in the response
       - in: query
         name: has_pricing
         schema:
@@ -12207,6 +12258,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the sales order in the response
       - in: query
         name: order_outstanding
         schema:
@@ -12234,6 +12286,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       - name: search
         required: false
         in: query
@@ -12295,6 +12348,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the customer in the response
       - in: path
         name: id
         schema:
@@ -12305,11 +12359,13 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the sales order in the response
       - in: query
         name: part_detail
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the related part in the response
       tags:
       - order
       security:
@@ -12522,6 +12578,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the customer in the response
       - in: path
         name: id
         schema:
@@ -13415,6 +13472,8 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the stock location in the
+          response
       - in: query
         name: locked
         schema:
@@ -13656,6 +13715,8 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the stock location in the
+          response
       - in: query
         name: parameters
         schema:
@@ -15120,6 +15181,12 @@ paths:
         name: part
         schema:
           type: integer
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the related part in the response
       - name: search
         required: false
         in: query
@@ -15131,6 +15198,12 @@ paths:
         name: template
         schema:
           type: integer
+      - in: query
+        name: template_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include detailed information about the part parameter template.
       - in: query
         name: updated_by
         schema:
@@ -15194,6 +15267,18 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the related part in the response
+      - in: query
+        name: template_detail
+        schema:
+          type: boolean
+          default: true
+        description: Include detailed information about the part parameter template.
       tags:
       - part
       security:
@@ -19648,6 +19733,8 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the stock location in the
+          response
       - in: query
         name: manufacturer
         schema:
@@ -19701,6 +19788,7 @@ paths:
         schema:
           type: boolean
           default: true
+        description: Include detailed information about the related part in the response
       - in: query
         name: part_tree
         schema:
@@ -19921,11 +20009,14 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the stock location in the
+          response
       - in: query
         name: part_detail
         schema:
           type: boolean
           default: true
+        description: Include detailed information about the related part in the response
       - in: query
         name: path_detail
         schema:
@@ -21765,6 +21856,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the item in the response
       - name: limit
         required: true
         in: query
