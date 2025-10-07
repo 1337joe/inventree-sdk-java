@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '402'
+  version: '403'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27172,7 +27172,7 @@ components:
         outputs:
           type: array
           items:
-            $ref: '#/components/schemas/BuildOutput'
+            $ref: '#/components/schemas/BuildOutputQuantity'
         location:
           type: integer
           description: Location for completed build outputs
@@ -27259,7 +27259,6 @@ components:
           description: Enter quantity for build output
       required:
       - output
-      - quantity
     BuildOutputScrap:
       type: object
       description: Scrapping one or more build outputs.

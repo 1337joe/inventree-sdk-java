@@ -13,9 +13,9 @@ import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.Build;
 import com.w3asel.inventree.model.BuildItem;
 import com.w3asel.inventree.model.BuildLine;
-import com.w3asel.inventree.model.BuildOutput;
 import com.w3asel.inventree.model.BuildOutputComplete;
 import com.w3asel.inventree.model.BuildOutputCreate;
+import com.w3asel.inventree.model.BuildOutputQuantity;
 import com.w3asel.inventree.model.BulkRequest;
 import com.w3asel.inventree.model.PaginatedBuildItemList;
 import com.w3asel.inventree.model.PaginatedBuildLineList;
@@ -105,11 +105,13 @@ public class TestBuildApi extends TestApi {
         assertEquals(0, previousBuildItems.getCount(), "Expected no existing outputs");
 
         try {
-            BuildOutputCreate outputCreate = new BuildOutputCreate().quantity(BigDecimal.ONE);
+            BigDecimal quantity = BigDecimal.ONE;
+            BuildOutputCreate outputCreate = new BuildOutputCreate().quantity(quantity);
             List<StockItem> outputResponse = api.buildCreateOutputCreate(buildPk, outputCreate);
 
-            List<BuildOutput> buildOutputs =
-                    outputResponse.stream().map(s -> new BuildOutput().output(s.getPk())).toList();
+            List<BuildOutputQuantity> buildOutputs = outputResponse.stream()
+                    .map(s -> new BuildOutputQuantity().output(s.getPk()).quantity(quantity))
+                    .toList();
 
             BuildOutputComplete outputComplete =
                     new BuildOutputComplete().location(locationId).outputs(buildOutputs);
