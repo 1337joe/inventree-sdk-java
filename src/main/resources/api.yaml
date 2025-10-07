@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '403'
+  version: '404'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -32054,6 +32054,11 @@ components:
         component:
           type: boolean
           description: Can this part be used to build other parts?
+        minimum_stock:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          description: Minimum allowed stock level
         is_template:
           type: boolean
           description: Is this part a template part?
