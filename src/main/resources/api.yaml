@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '400'
+  version: '401'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -29168,6 +29168,12 @@ components:
           type: boolean
           description: Serializer method for the restart_required field.
           readOnly: true
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/MachineProperty'
+          readOnly: true
+          default: []
       required:
       - driver
       - initialized
@@ -29176,6 +29182,7 @@ components:
       - machine_type
       - name
       - pk
+      - properties
       - restart_required
       - status
       - status_text
@@ -29234,6 +29241,12 @@ components:
           type: boolean
           description: Serializer method for the restart_required field.
           readOnly: true
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/MachineProperty'
+          readOnly: true
+          default: []
       required:
       - driver
       - initialized
@@ -29242,6 +29255,7 @@ components:
       - machine_type
       - name
       - pk
+      - properties
       - restart_required
       - status
       - status_text
@@ -29288,6 +29302,26 @@ components:
       - name
       - provider_file
       - slug
+    MachineProperty:
+      type: object
+      description: Serializer for a MachineProperty.
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        group:
+          type: string
+        type:
+          type: string
+        max_progress:
+          type: integer
+      required:
+      - group
+      - key
+      - max_progress
+      - type
+      - value
     MachineRegistryError:
       type: object
       description: Serializer for a machine registry error.
@@ -33911,6 +33945,12 @@ components:
           type: boolean
           description: Serializer method for the restart_required field.
           readOnly: true
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/MachineProperty'
+          readOnly: true
+          default: []
     PatchedMachineSetting:
       type: object
       description: Serializer for the MachineSetting model.
