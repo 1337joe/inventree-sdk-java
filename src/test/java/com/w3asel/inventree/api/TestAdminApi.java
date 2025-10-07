@@ -1,9 +1,12 @@
 package com.w3asel.inventree.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.Config;
 import com.w3asel.inventree.model.EmailMessage;
 import com.w3asel.inventree.model.PaginatedEmailMessageList;
 import com.w3asel.inventree.model.TestEmail;
@@ -12,6 +15,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,19 +26,23 @@ public class TestAdminApi extends TestApi {
     @BeforeEach
     void setup() {
         api = new AdminApi(apiClient);
+        // TODO why is this not the same format as elsewhere?
+        apiClient.setOffsetDateTimeFormat(DateTimeFormatter
+                .ofPattern("yyyy-MM-dd'T'HH:mm:ss.nnnnnn").withZone(ZoneOffset.UTC));
     }
 
-    @Disabled("void response")
     @Test
     void adminConfigList() throws ApiException {
-        api.adminConfigList();
+        List<Config> actual = api.adminConfigList();
+        assertFalse(actual.isEmpty(), "Expected list of configs");
     }
 
-    @Disabled("void response")
     @ParameterizedTest
-    @CsvSource({"key"})
+    @CsvSource({"INVENTREE_LOG_LEVEL", "INVENTREE_FLAGS"})
     void adminConfigRetrieve(String key) throws ApiException {
-        api.adminConfigRetrieve(key);
+        Config actual = api.adminConfigRetrieve(key);
+        assertNotNull(actual, "Missing config response");
+        assertEquals(key, actual.getKey(), "Incorrect key");
     }
 
     @Disabled("No way to create email to destroy")
