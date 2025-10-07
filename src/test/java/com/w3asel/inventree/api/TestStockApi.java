@@ -264,9 +264,9 @@ public class TestStockApi extends TestApi {
         PaginatedStockItemList actual = api.stockList(limit, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, offset, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, offset, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null);
+                null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total stock item count");
         List<StockItem> actualList = actual.getResults();
 
@@ -287,7 +287,7 @@ public class TestStockApi extends TestApi {
     @ParameterizedTest
     @CsvSource({"2", "220"})
     void stockRetrieve(int pk) throws ApiException {
-        StockItem actual = api.stockRetrieve(pk);
+        StockItem actual = api.stockRetrieve(pk, null, null, null, null, null);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.STOCK_ITEM, pk).get(0);
         assertStockItemEquals(expected, actual);
 
