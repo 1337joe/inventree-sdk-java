@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '404'
+  version: '405'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -6469,7 +6469,12 @@ paths:
         - g:read
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: Mapping from class name to GenericStateClass data
   /api/generic/status/{statusmodel}/:
     get:
       operationId: generic_status_retrieve
