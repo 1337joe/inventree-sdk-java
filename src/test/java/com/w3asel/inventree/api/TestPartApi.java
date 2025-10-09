@@ -19,11 +19,14 @@ import com.w3asel.inventree.model.PaginatedPartInternalPriceList;
 import com.w3asel.inventree.model.Part;
 import com.w3asel.inventree.model.PartBomValidate;
 import com.w3asel.inventree.model.PartInternalPrice;
+import com.w3asel.inventree.model.PartSerialNumber;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -117,7 +120,7 @@ public class TestPartApi extends TestApi {
         api.partSalePricePartialUpdate(null, null);
         api.partSalePriceRetrieve(null);
         api.partSalePriceUpdate(null, null);
-        api.partSerialNumbersRetrieve(null);
+        // api.partSerialNumbersRetrieve(null);
         api.partStocktakeBulkDestroy(null);
         api.partStocktakeCreate(null);
         api.partStocktakeDestroy(null);
@@ -172,7 +175,7 @@ public class TestPartApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"911", "912"})
+    @ValueSource(ints = {911, 912})
     void partBomValidateRetrieve(int pk) throws ApiException {
         PartBomValidate actual = api.partBomValidateRetrieve(pk);
         assertEquals(pk, actual.getPk(), "Incorrect PK");
@@ -365,11 +368,32 @@ public class TestPartApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"1"})
+    @ValueSource(ints = {1})
     void partInternalPriceRetrieve(int pk) throws ApiException {
         PartInternalPrice actual = api.partInternalPriceRetrieve(pk);
         JsonObject expected =
                 InventreeDemoDataset.getObjects(Model.PART_INTERNAL_PRICE_BREAK, pk).get(0);
         assertPartInternalPriceEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 87})
+    void partSerialNumbersRetrieve(int pk) throws ApiException {
+        PartSerialNumber actual = api.partSerialNumbersRetrieve(pk);
+
+        String expectedLatest = null;
+        String expectedNext = null;
+
+        if (pk == 1) {
+            expectedNext = "1";
+        } else if (pk == 87) {
+            expectedLatest = "29";
+            expectedNext = "30";
+        } else {
+            Assertions.fail("Expected values not set.");
+        }
+
+        assertEquals(expectedLatest, actual.getLatest(), "Incorrect latest serial number");
+        assertEquals(expectedNext, actual.getNext(), "Incorrect next serial number");
     }
 }
