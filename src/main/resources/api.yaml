@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '405'
+  version: '406'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -613,7 +613,11 @@ paths:
         - g:read
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskOverview'
+          description: ''
   /api/background-task/failed/:
     get:
       operationId: background_task_failed_list
@@ -14226,10 +14230,15 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:view:part
+        - r:view:build
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartSerialNumber'
+          description: ''
   /api/part/category/:
     get:
       operationId: part_category_list
@@ -32547,6 +32556,19 @@ components:
       - part
       - pk
       - quantity
+    PartSerialNumber:
+      type: object
+      description: Serializer for Part serial number information.
+      properties:
+        latest:
+          type: string
+          readOnly: true
+          nullable: true
+        next:
+          type: string
+          readOnly: true
+      required:
+      - next
     PartStocktake:
       type: object
       description: Serializer for the PartStocktake model.
@@ -40361,6 +40383,32 @@ components:
       - price
       - quantity
       - supplier
+    TaskOverview:
+      type: object
+      description: Serializer for background task overview.
+      properties:
+        is_running:
+          type: boolean
+          readOnly: true
+          description: Boolean value to indicate if the background worker process
+            is running.
+        pending_tasks:
+          type: integer
+          readOnly: true
+          description: Number of active background tasks
+        scheduled_tasks:
+          type: integer
+          readOnly: true
+          description: Number of scheduled background tasks
+        failed_tasks:
+          type: integer
+          readOnly: true
+          description: Number of failed background tasks
+      required:
+      - failed_tasks
+      - is_running
+      - pending_tasks
+      - scheduled_tasks
     TemplateModelTypeEnum:
       enum:
       - build
