@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '406'
+  version: '407'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -57,6 +57,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/ActionPlugin'
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionPluginError'
+          description: No action specified
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionPluginError'
+          description: No matching action found
   /api/admin/config/:
     get:
       operationId: admin_config_list
@@ -25863,6 +25875,16 @@ components:
       required:
       - action
       - data
+    ActionPluginError:
+      type: object
+      description: Serializer for the ActionPluginView error responses.
+      properties:
+        error:
+          type: string
+        action:
+          type: string
+      required:
+      - error
     Address:
       type: object
       description: Serializer for the Address Model.
