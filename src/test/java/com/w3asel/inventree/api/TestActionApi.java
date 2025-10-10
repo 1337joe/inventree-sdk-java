@@ -1,9 +1,10 @@
 package com.w3asel.inventree.api;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.ActionPlugin;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class TestActionApi extends TestApi {
@@ -14,10 +15,10 @@ public class TestActionApi extends TestApi {
         api = new ActionApi(apiClient);
     }
 
-    @Disabled("response contains unmapped 'error' field")
     @Test
-    void actionCreate() throws ApiException {
+    void actionCreate_unmatched() {
         ActionPlugin input = new ActionPlugin().action("Unmatched Action");
-        ActionPlugin result = api.actionCreate(input);
+        ApiException actual = assertThrows(ApiException.class, () -> api.actionCreate(input));
+        assertEquals(404, actual.getCode(), "Incorrect error code");
     }
 }
