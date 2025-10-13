@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '407'
+  version: '408'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1296,7 +1296,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: reference, sub_part__IPN, sub_part__category__name,
+        description: 'A search term. Searched fields: part__IPN, part__description,
+          part__keywords, part__name, part__revision, reference, sub_part__IPN, sub_part__category__name,
           sub_part__description, sub_part__keywords, sub_part__name, sub_part__revision.'
         schema:
           type: string
