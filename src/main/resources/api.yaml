@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '409'
+  version: '410'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -22015,6 +22015,98 @@ paths:
               schema:
                 $ref: '#/components/schemas/StockTransfer'
           description: ''
+  /api/supplier/import/:
+    post:
+      operationId: supplier_import_create
+      description: Import a part by supplier.
+      tags:
+      - supplier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ImportRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImportRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportResult'
+          description: ''
+  /api/supplier/list/:
+    get:
+      operationId: supplier_list_list
+      description: List all available supplier plugins.
+      tags:
+      - supplier
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupplierList'
+          description: ''
+  /api/supplier/search/:
+    get:
+      operationId: supplier_search_list
+      description: Search parts by supplier.
+      parameters:
+      - in: query
+        name: plugin
+        schema:
+          type: string
+        description: Plugin slug
+        required: true
+      - in: query
+        name: supplier
+        schema:
+          type: string
+        description: Supplier slug
+        required: true
+      - in: query
+        name: term
+        schema:
+          type: string
+        description: Search term
+        required: true
+      tags:
+      - supplier
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchResult'
+          description: ''
   /api/units/:
     get:
       operationId: units_list
@@ -28808,6 +28900,79 @@ components:
       - signup
       - verify_email
       - verify_phone
+    ImportParameter:
+      type: object
+      description: Serializer for a ImportParameter.
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        parameter_template:
+          type: integer
+          nullable: true
+          description: Return the ID of the parameter template if available.
+          readOnly: true
+        on_category:
+          type: boolean
+      required:
+      - name
+      - on_category
+      - value
+    ImportRequest:
+      type: object
+      description: Serializer for the import request.
+      properties:
+        plugin:
+          type: string
+        supplier:
+          type: string
+        part_import_id:
+          type: string
+        category_id:
+          type: integer
+          nullable: true
+        part_id:
+          type: integer
+          nullable: true
+      required:
+      - part_import_id
+      - plugin
+      - supplier
+    ImportResult:
+      type: object
+      description: Serializer for the import result.
+      properties:
+        part_id:
+          type: integer
+        part_detail:
+          $ref: '#/components/schemas/Part'
+        manufacturer_part_id:
+          type: integer
+        supplier_part_id:
+          type: integer
+        pricing:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+              format: double
+            minLength: 2
+            maxLength: 2
+          description: Return the pricing data as a dictionary.
+          readOnly: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportParameter'
+      required:
+      - manufacturer_part_id
+      - parameters
+      - part_detail
+      - part_id
+      - pricing
+      - supplier_part_id
     InfoApi:
       type: object
       description: InvenTree server information - some information might be blanked
@@ -39417,6 +39582,40 @@ components:
       - last_run
       - pk
       - success
+    SearchResult:
+      type: object
+      description: Serializer for a search result.
+      properties:
+        id:
+          type: string
+        sku:
+          type: string
+        name:
+          type: string
+        exact:
+          type: boolean
+        description:
+          type: string
+        price:
+          type: string
+        link:
+          type: string
+        image_url:
+          type: string
+        existing_part_id:
+          type: integer
+          nullable: true
+          description: Return the ID of the existing part if available.
+          readOnly: true
+      required:
+      - description
+      - exact
+      - id
+      - image_url
+      - link
+      - name
+      - price
+      - sku
     SelectionEntry:
       type: object
       description: Serializer for a selection entry.
@@ -40225,6 +40424,20 @@ components:
       required:
       - items
       - location
+    SupplierList:
+      type: object
+      description: Serializer for a supplier plugin.
+      properties:
+        plugin_slug:
+          type: string
+        supplier_slug:
+          type: string
+        supplier_name:
+          type: string
+      required:
+      - plugin_slug
+      - supplier_name
+      - supplier_slug
     SupplierPart:
       type: object
       description: Serializer for SupplierPart object.
