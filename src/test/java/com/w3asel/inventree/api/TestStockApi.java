@@ -264,9 +264,9 @@ public class TestStockApi extends TestApi {
         PaginatedStockItemList actual = api.stockList(limit, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, offset, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, offset, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total stock item count");
         List<StockItem> actualList = actual.getResults();
 

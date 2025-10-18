@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '408'
+  version: '409'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -19766,6 +19766,11 @@ paths:
         name: manufacturer
         schema:
           type: integer
+      - in: query
+        name: manufacturer_part
+        schema:
+          type: integer
+        description: Manufacturer Part
       - in: query
         name: max_stock
         schema:
