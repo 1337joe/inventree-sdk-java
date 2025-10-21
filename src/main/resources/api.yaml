@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '410'
+  version: '411'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -8355,7 +8355,7 @@ paths:
   /api/machine/types/:
     get:
       operationId: machine_types_list
-      description: List all machine types.
+      description: List of all machine types.
       tags:
       - machine
       security:
@@ -29434,37 +29434,37 @@ components:
           description: Driver used for the machine
         initialized:
           type: boolean
-          description: Serializer method for the initialized field.
+          description: Indicator if machine is initialized.
           readOnly: true
         active:
           type: boolean
           description: Machines can be disabled
         status:
           type: integer
-          description: Serializer method for the status field.
+          description: Numerical machine status if available, else -1.
           readOnly: true
         status_model:
           type: string
           nullable: true
-          description: Serializer method for the status model field.
+          description: Textual machine status name if available, else None.
           readOnly: true
         status_text:
           type: string
-          description: Serializer method for the status text field.
+          description: Current status text for machine.
           readOnly: true
         machine_errors:
           type: array
           items:
             type: string
-          description: Serializer method for the errors field.
+          description: List of machine errors.
           readOnly: true
         is_driver_available:
           type: boolean
-          description: Serializer method for the is_driver_available field.
+          description: Indicator if driver for machine is available.
           readOnly: true
         restart_required:
           type: boolean
-          description: Serializer method for the restart_required field.
+          description: Indicator if machine restart is required.
           readOnly: true
         properties:
           type: array
@@ -29507,37 +29507,37 @@ components:
           maxLength: 255
         initialized:
           type: boolean
-          description: Serializer method for the initialized field.
+          description: Indicator if machine is initialized.
           readOnly: true
         active:
           type: boolean
           description: Machines can be disabled
         status:
           type: integer
-          description: Serializer method for the status field.
+          description: Numerical machine status if available, else -1.
           readOnly: true
         status_model:
           type: string
           nullable: true
-          description: Serializer method for the status model field.
+          description: Textual machine status name if available, else None.
           readOnly: true
         status_text:
           type: string
-          description: Serializer method for the status text field.
+          description: Current status text for machine.
           readOnly: true
         machine_errors:
           type: array
           items:
             type: string
-          description: Serializer method for the errors field.
+          description: List of machine errors.
           readOnly: true
         is_driver_available:
           type: boolean
-          description: Serializer method for the is_driver_available field.
+          description: Indicator if driver for machine is available.
           readOnly: true
         restart_required:
           type: boolean
-          description: Serializer method for the restart_required field.
+          description: Indicator if machine restart is required.
           readOnly: true
         properties:
           type: array
@@ -29559,7 +29559,7 @@ components:
       - status_text
     MachineDriver:
       type: object
-      description: Serializer for a BaseMachineDriver class.
+      description: Machine drivers.
       properties:
         slug:
           type: string
@@ -29570,17 +29570,18 @@ components:
           type: string
         provider_file:
           type: string
-          description: Serializer method for the provider_file field.
+          description: File that contains the class definition.
           readOnly: true
         provider_plugin:
           type: object
           additionalProperties: {}
           nullable: true
-          description: Serializer method for the provider_plugin field.
+          description: Plugin(s) that contain(s) the class definition.
           readOnly: true
         is_builtin:
           type: boolean
-          description: Serializer method for the is_builtin field.
+          description: Indicates if the machine type is build into the InvenTree source
+            code.
           readOnly: true
         machine_type:
           type: string
@@ -29590,7 +29591,7 @@ components:
           type: array
           items:
             type: string
-          description: Serializer method for the errors field.
+          description: Errors registered against driver.
           readOnly: true
       required:
       - description
@@ -29602,27 +29603,54 @@ components:
       - slug
     MachineProperty:
       type: object
-      description: Serializer for a MachineProperty.
+      description: Machine Properties are set by the driver/machine to represent specific
+        state.
       properties:
         key:
           type: string
+          description: Key of the property
         value:
           type: string
+          description: Value of the property
         group:
           type: string
+          description: Grouping of the property
         type:
-          type: string
+          allOf:
+          - $ref: '#/components/schemas/MachinePropertyTypeEnum'
+          default: str
+          description: |-
+            Type of the property
+
+            * `str` - str
+            * `bool` - bool
+            * `progress` - progress
+            * `int` - int
+            * `float` - float
         max_progress:
           type: integer
+          nullable: true
+          description: Maximum value for progress type, required if type=progress
       required:
-      - group
       - key
-      - max_progress
-      - type
       - value
+    MachinePropertyTypeEnum:
+      enum:
+      - str
+      - bool
+      - progress
+      - int
+      - float
+      type: string
+      description: |-
+        * `str` - str
+        * `bool` - bool
+        * `progress` - progress
+        * `int` - int
+        * `float` - float
     MachineRegistryError:
       type: object
-      description: Serializer for a machine registry error.
+      description: Machine registry error.
       properties:
         message:
           type: string
@@ -29630,7 +29658,7 @@ components:
       - message
     MachineRegistryStatus:
       type: object
-      description: Serializer for machine registry status.
+      description: Machine registry status, showing all errors that were registered.
       properties:
         registry_errors:
           type: array
@@ -29714,7 +29742,7 @@ components:
       - value
     MachineType:
       type: object
-      description: Serializer for a BaseMachineType class.
+      description: Available machine types.
       properties:
         slug:
           type: string
@@ -29725,17 +29753,18 @@ components:
           type: string
         provider_file:
           type: string
-          description: Serializer method for the provider_file field.
+          description: File that contains the class definition.
           readOnly: true
         provider_plugin:
           type: object
           additionalProperties: {}
           nullable: true
-          description: Serializer method for the provider_plugin field.
+          description: Plugin(s) that contain(s) the class definition.
           readOnly: true
         is_builtin:
           type: boolean
-          description: Serializer method for the is_builtin field.
+          description: Indicates if the machine type is build into the InvenTree source
+            code.
           readOnly: true
       required:
       - description
@@ -34229,37 +34258,37 @@ components:
           description: Driver used for the machine
         initialized:
           type: boolean
-          description: Serializer method for the initialized field.
+          description: Indicator if machine is initialized.
           readOnly: true
         active:
           type: boolean
           description: Machines can be disabled
         status:
           type: integer
-          description: Serializer method for the status field.
+          description: Numerical machine status if available, else -1.
           readOnly: true
         status_model:
           type: string
           nullable: true
-          description: Serializer method for the status model field.
+          description: Textual machine status name if available, else None.
           readOnly: true
         status_text:
           type: string
-          description: Serializer method for the status text field.
+          description: Current status text for machine.
           readOnly: true
         machine_errors:
           type: array
           items:
             type: string
-          description: Serializer method for the errors field.
+          description: List of machine errors.
           readOnly: true
         is_driver_available:
           type: boolean
-          description: Serializer method for the is_driver_available field.
+          description: Indicator if driver for machine is available.
           readOnly: true
         restart_required:
           type: boolean
-          description: Serializer method for the restart_required field.
+          description: Indicator if machine restart is required.
           readOnly: true
         properties:
           type: array
