@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '412'
+  version: '413'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -24158,6 +24158,8 @@ paths:
         authenticator code (e.g. TOTP or recovery code). This is the endpoint
         related towards that flow.
       parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/allauth.MFAAuthenticate'
       responses:
         '200':
           $ref: '#/components/responses/allauth.AuthenticatedByPasswordAnd2FA'
@@ -24313,7 +24315,7 @@ paths:
         You initiate the passkey signup flow by inputting (`POST`) the required properties (e.g. email)
         similar to the regular account signup, except that the `password` is to be left out.
         The user will then be required to verify the email address, after which WebAuthn credential
-        creation options can be retrieved (`GET`) and used to actualy complete (`PUT`) the flow.
+        creation options can be retrieved (`GET`) and used to actually complete (`PUT`) the flow.
       requestBody:
         $ref: '#/components/requestBodies/allauth.PasskeySignup'
       responses:
@@ -24522,7 +24524,7 @@ paths:
       - 'Account: Email'
       summary: List email addresses
       description: |
-        Retrieves the list of email addreses of the account.
+        Retrieves the list of email addresses of the account.
       parameters: []
       responses:
         '200':
@@ -24754,6 +24756,8 @@ paths:
               examples:
                 invalid_code:
                   $ref: '#/components/examples/allauth.InvalidAuthenticatorCode'
+        '401':
+          $ref: '#/components/responses/allauth.ReauthenticationRequired'
         '409':
           $ref: '#/components/responses/allauth.AddAuthenticatorConflict'
       operationId: allauth_account_authenticators_totp_post
@@ -24811,7 +24815,8 @@ paths:
       - 'Account: WebAuthn'
       summary: |
         Get WebAuthn credential creation options
-      parameters: []
+      parameters:
+      - $ref: '#/components/parameters/allauth.PasswordLess'
       description: |
         Returns the WebAuthn credential creation options, that can be
         processed using `parseCreationOptionsFromJSON()` on the frontend.
@@ -25241,6 +25246,16 @@ components:
         type: string
       required: true
       description: The email verification key
+    allauth.PasswordLess:
+      in: query
+      name: passwordless
+      required: false
+      schema:
+        type: boolean
+      allowEmptyValue: true
+      description: |
+        When present (regardless of its value), enables passwordless sign-in via a WebAuthn credential (Passkey),
+        but may enforce additional multi-factor authentication (MFA) requirements. Omit the parameter to disable.
     allauth.PasswordResetKey:
       in: header
       name: X-Password-Reset-Key
@@ -25316,10 +25331,7 @@ components:
             type: object
             properties:
               email:
-                type: string
-                description: |
-                  An email address.
-                example: email@domain.org
+                $ref: '#/components/schemas/allauth.Email'
             required:
             - email
     allauth.EndSessions:
@@ -25745,6 +25757,17 @@ components:
         The response indicates reauthentication is required.
       content:
         application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/allauth.ReauthenticationResponse'
+              status:
+                type: integer
+                example: 200
+            required:
+            - data
+            - status
           examples:
             reauthentication_required:
               summary: |
@@ -25835,6 +25858,12 @@ components:
             properties:
               status:
                 $ref: '#/components/schemas/allauth.StatusOK'
+              meta:
+                properties:
+                  recovery_codes_generated:
+                    description: Whether or not recovery codes where generated automatically.
+                    type: boolean
+                type: object
               data:
                 $ref: '#/components/schemas/allauth.TOTPAuthenticator'
             required:
@@ -28901,6 +28930,7 @@ components:
       type: string
       enum:
       - login
+      - login_by_code
       - mfa_authenticate
       - mfa_reauthenticate
       - provider_redirect
@@ -41289,6 +41319,7 @@ components:
       enum:
       - recovery_codes
       - totp
+      - webauthn
       description: |
         The type of authenticator.
     allauth.BaseAuthenticationMeta:
@@ -41485,6 +41516,11 @@ components:
           $ref: '#/components/schemas/allauth.Provider'
         is_pending:
           $ref: '#/components/schemas/IsTrueEnum'
+        types:
+          type: array
+          description: Matches `settings.MFA_SUPPORTED_TYPES`.
+          items:
+            $ref: '#/components/schemas/allauth.AuthenticatorType'
       required:
       - id
     allauth.ForbiddenResponse:
@@ -41765,6 +41801,25 @@ components:
           $ref: '#/components/schemas/allauth.Password'
       required:
       - password
+    allauth.ReauthenticationRequired:
+      properties:
+        flows:
+          type: array
+          items:
+            $ref: '#/components/schemas/allauth.Flow'
+        user:
+          $ref: '#/components/schemas/allauth.User'
+        methods:
+          type: array
+          description: |
+            A list of methods used to authenticate.
+          items:
+            $ref: '#/components/schemas/allauth.AuthenticationMethod'
+      required:
+      - flows
+      - user
+      - methods
+      type: object
     allauth.ReauthenticationResponse:
       type: object
       description: |
@@ -41773,7 +41828,7 @@ components:
         status:
           $ref: '#/components/schemas/UnauthorizedStatus'
         data:
-          $ref: '#/components/schemas/allauth.Authenticated'
+          $ref: '#/components/schemas/allauth.ReauthenticationRequired'
         meta:
           $ref: '#/components/schemas/allauth.AuthenticatedMeta'
       required:

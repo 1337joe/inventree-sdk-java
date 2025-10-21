@@ -24,6 +24,6 @@ public class TestAccountWebAuthnApi extends TestApi {
     @Disabled("API endpoint not found")
     @Test
     void allauthAccountAuthenticatorsWebauthnGet() throws ApiException {
-        api.allauthAccountAuthenticatorsWebauthnGet();
+        api.allauthAccountAuthenticatorsWebauthnGet(null);
     }
 }

@@ -17,7 +17,7 @@ public class TestAuthentication2FaApi extends TestApi {
     @Test
     void todo() throws ApiException {
         api.allauthAuth2faAuthenticatePost(null);
-        api.allauthAuth2faReauthenticatePost();
+        api.allauthAuth2faReauthenticatePost(null);
         api.allauthAuth2faTrustPost(null);
     }
 }
