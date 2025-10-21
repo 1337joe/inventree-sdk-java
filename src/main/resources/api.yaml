@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '411'
+  version: '412'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -13537,6 +13537,11 @@ paths:
           type: boolean
           default: false
       - in: query
+        name: price_breaks
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: purchaseable
         schema:
           type: boolean
@@ -13747,6 +13752,11 @@ paths:
         description: Include part parameters in response
       - in: query
         name: path_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: price_breaks
         schema:
           type: boolean
           default: false
@@ -32076,6 +32086,11 @@ components:
         responsible:
           type: integer
           nullable: true
+        price_breaks:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartSalePrice'
+          readOnly: true
         allocated_to_build_orders:
           type: number
           format: double
@@ -32182,6 +32197,7 @@ components:
       - full_name
       - name
       - pk
+      - price_breaks
       - starred
       - thumbnail
     PartBomValidate:
@@ -34756,6 +34772,11 @@ components:
         responsible:
           type: integer
           nullable: true
+        price_breaks:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartSalePrice'
+          readOnly: true
         allocated_to_build_orders:
           type: number
           format: double
