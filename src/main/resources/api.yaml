@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '413'
+  version: '414'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -135,10 +135,24 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          created, subject, to, sender, status, timestamp, direction.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - created
+          - -created
+          - subject
+          - -subject
+          - to
+          - -to
+          - sender
+          - -sender
+          - status
+          - -status
+          - timestamp
+          - -timestamp
+          - direction
+          - -direction
       - name: search
         required: false
         in: query
@@ -309,10 +323,18 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          model_id, model_type, upload_date, file_size.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - model_id
+          - -model_id
+          - model_type
+          - -model_type
+          - upload_date
+          - -upload_date
+          - file_size
+          - -file_size
       - name: search
         required: false
         in: query
@@ -650,10 +672,18 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          pk, func, started, stopped.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - pk
+          - -pk
+          - func
+          - -func
+          - started
+          - -started
+          - stopped
+          - -stopped
       - name: search
         required: false
         in: query
@@ -787,10 +817,18 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          pk, func, last_run, next_run.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - pk
+          - -pk
+          - func
+          - -func
+          - last_run
+          - -last_run
+          - next_run
+          - -next_run
       - name: search
         required: false
         in: query
@@ -904,10 +942,20 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          user, plugin, timestamp, endpoint, result.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - user
+          - -user
+          - plugin
+          - -plugin
+          - timestamp
+          - -timestamp
+          - endpoint
+          - -endpoint
+          - result
+          - -result
       - in: query
         name: result
         schema:
@@ -1261,13 +1309,46 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          can_build, quantity, setup_quantity, attrition, rounding_multiple, sub_part,
-          available_stock, allow_variants, inherited, optional, consumable, reference,
-          validated, pricing_min, pricing_max, pricing_min_total, pricing_max_total,
-          pricing_updated.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - can_build
+          - -can_build
+          - quantity
+          - -quantity
+          - setup_quantity
+          - -setup_quantity
+          - attrition
+          - -attrition
+          - rounding_multiple
+          - -rounding_multiple
+          - sub_part
+          - -sub_part
+          - available_stock
+          - -available_stock
+          - allow_variants
+          - -allow_variants
+          - inherited
+          - -inherited
+          - optional
+          - -optional
+          - consumable
+          - -consumable
+          - reference
+          - -reference
+          - validated
+          - -validated
+          - pricing_min
+          - -pricing_min
+          - pricing_max
+          - -pricing_max
+          - pricing_min_total
+          - -pricing_min_total
+          - pricing_max_total
+          - -pricing_max_total
+          - pricing_updated
+          - -pricing_updated
       - in: query
         name: part
         schema:
@@ -2139,12 +2220,40 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          reference, part__name, status, creation_date, start_date, target_date, completion_date,
-          quantity, completed, issued_by, responsible, project_code, priority, level,
-          external.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - reference
+          - -reference
+          - part__name
+          - -part__name
+          - status
+          - -status
+          - creation_date
+          - -creation_date
+          - start_date
+          - -start_date
+          - target_date
+          - -target_date
+          - completion_date
+          - -completion_date
+          - quantity
+          - -quantity
+          - completed
+          - -completed
+          - issued_by
+          - -issued_by
+          - responsible
+          - -responsible
+          - project_code
+          - -project_code
+          - priority
+          - -priority
+          - level
+          - -level
+          - external
+          - -external
       - in: query
         name: outstanding
         schema:
@@ -2964,10 +3073,22 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          part, sku, quantity, location, reference, IPN.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - part
+          - -part
+          - sku
+          - -sku
+          - quantity
+          - -quantity
+          - location
+          - -location
+          - reference
+          - -reference
+          - IPN
+          - -IPN
       - in: query
         name: output
         schema:
@@ -3387,11 +3508,34 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          part, allocated, consumed, reference, quantity, consumable, optional, unit_quantity,
-          available_stock, trackable, allow_variants, inherited.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - part
+          - -part
+          - allocated
+          - -allocated
+          - consumed
+          - -consumed
+          - reference
+          - -reference
+          - quantity
+          - -quantity
+          - consumable
+          - -consumable
+          - optional
+          - -optional
+          - unit_quantity
+          - -unit_quantity
+          - available_stock
+          - -available_stock
+          - trackable
+          - -trackable
+          - allow_variants
+          - -allow_variants
+          - inherited
+          - -inherited
       - in: query
         name: part
         schema:
@@ -3677,10 +3821,18 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          active, name, parts_supplied, parts_manufactured.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - active
+          - -active
+          - name
+          - -name
+          - parts_supplied
+          - -parts_supplied
+          - parts_manufactured
+          - -parts_manufactured
       - name: search
         required: false
         in: query
@@ -3992,10 +4144,12 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          title.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - title
+          - -title
       - name: search
         required: false
         in: query
@@ -4231,10 +4385,12 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
       - name: search
         required: false
         in: query
@@ -4607,11 +4763,30 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          SKU, part, supplier, manufacturer, active, MPN, packaging, pack_quantity,
-          in_stock, updated.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - SKU
+          - -SKU
+          - part
+          - -part
+          - supplier
+          - -supplier
+          - manufacturer
+          - -manufacturer
+          - active
+          - -active
+          - MPN
+          - -MPN
+          - packaging
+          - -packaging
+          - pack_quantity
+          - -pack_quantity
+          - in_stock
+          - -in_stock
+          - updated
+          - -updated
       - in: query
         name: part
         schema:
@@ -5695,10 +5870,18 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          quantity, supplier, SKU, price.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - quantity
+          - -quantity
+          - supplier
+          - -supplier
+          - SKU
+          - -SKU
+          - price
+          - -price
       - in: query
         name: part
         schema:
@@ -6043,10 +6226,20 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          pk, user, plugin, output_type, created.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - pk
+          - -pk
+          - user
+          - -user
+          - plugin
+          - -plugin
+          - output_type
+          - -output_type
+          - created
+          - -created
       - name: search
         required: false
         in: query
@@ -6196,10 +6389,14 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          when, info.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - when
+          - -when
+          - info
+          - -info
       - name: search
         required: false
         in: query
@@ -6543,10 +6740,12 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          key.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - key
+          - -key
       - in: query
         name: reference_status
         schema:
@@ -6938,10 +7137,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          pk, row_index, valid.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - pk
+          - -pk
+          - row_index
+          - -row_index
+          - valid
+          - -valid
       - name: search
         required: false
         in: query
@@ -7140,10 +7345,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          timestamp, status, model_type.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - timestamp
+          - -timestamp
+          - status
+          - -status
+          - model_type
+          - -model_type
       - name: search
         required: false
         in: query
@@ -7899,10 +8110,18 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name, machine_type, driver, active.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
+          - machine_type
+          - -machine_type
+          - driver
+          - -driver
+          - active
+          - -active
       - name: search
         required: false
         in: query
@@ -8393,10 +8612,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          published, author, read.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - published
+          - -published
+          - author
+          - -author
+          - read
+          - -read
       - in: query
         name: read
         schema:
@@ -8660,10 +8885,18 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          category, name, read, creation.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - category
+          - -category
+          - name
+          - -name
+          - read
+          - -read
+          - creation
+          - -creation
       - in: query
         name: read
         schema:
@@ -8957,11 +9190,34 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          creation_date, created_by, reference, supplier__name, start_date, target_date,
-          complete_date, line_items, status, responsible, total_price, project_code.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - creation_date
+          - -creation_date
+          - created_by
+          - -created_by
+          - reference
+          - -reference
+          - supplier__name
+          - -supplier__name
+          - start_date
+          - -start_date
+          - target_date
+          - -target_date
+          - complete_date
+          - -complete_date
+          - line_items
+          - -line_items
+          - status
+          - -status
+          - responsible
+          - -responsible
+          - total_price
+          - -total_price
+          - project_code
+          - -project_code
       - in: query
         name: outstanding
         schema:
@@ -9117,10 +9373,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          quantity, notes, reference.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - quantity
+          - -quantity
+          - notes
+          - -notes
+          - reference
+          - -reference
       - name: search
         required: false
         in: query
@@ -9441,11 +9703,36 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          MPN, part_name, purchase_price, quantity, received, reference, SKU, IPN,
-          total_price, target_date, order, status, complete_date.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - MPN
+          - -MPN
+          - part_name
+          - -part_name
+          - purchase_price
+          - -purchase_price
+          - quantity
+          - -quantity
+          - received
+          - -received
+          - reference
+          - -reference
+          - SKU
+          - -SKU
+          - IPN
+          - -IPN
+          - total_price
+          - -total_price
+          - target_date
+          - -target_date
+          - order
+          - -order
+          - status
+          - -status
+          - complete_date
+          - -complete_date
       - in: query
         name: part
         schema:
@@ -10271,11 +10558,32 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          creation_date, created_by, reference, customer__name, customer_reference,
-          line_items, status, start_date, target_date, complete_date, project_code.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - creation_date
+          - -creation_date
+          - created_by
+          - -created_by
+          - reference
+          - -reference
+          - customer__name
+          - -customer__name
+          - customer_reference
+          - -customer_reference
+          - line_items
+          - -line_items
+          - status
+          - -status
+          - start_date
+          - -start_date
+          - target_date
+          - -target_date
+          - complete_date
+          - -complete_date
+          - project_code
+          - -project_code
       - in: query
         name: outstanding
         schema:
@@ -10411,10 +10719,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          quantity, notes, reference.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - quantity
+          - -quantity
+          - notes
+          - -notes
+          - reference
+          - -reference
       - name: search
         required: false
         in: query
@@ -10729,10 +11043,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          reference, target_date, received_date.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - reference
+          - -reference
+          - target_date
+          - -target_date
+          - received_date
+          - -received_date
       - in: query
         name: outcome
         schema:
@@ -11513,12 +11833,34 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          creation_date, created_by, reference, customer__name, customer_reference,
-          status, start_date, target_date, line_items, shipment_date, total_price,
-          project_code.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - creation_date
+          - -creation_date
+          - created_by
+          - -created_by
+          - reference
+          - -reference
+          - customer__name
+          - -customer__name
+          - customer_reference
+          - -customer_reference
+          - status
+          - -status
+          - start_date
+          - -start_date
+          - target_date
+          - -target_date
+          - line_items
+          - -line_items
+          - shipment_date
+          - -shipment_date
+          - total_price
+          - -total_price
+          - project_code
+          - -project_code
       - in: query
         name: outstanding
         schema:
@@ -11701,10 +12043,26 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          quantity, part, serial, IPN, batch, location, order, shipment_date.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - quantity
+          - -quantity
+          - part
+          - -part
+          - serial
+          - -serial
+          - IPN
+          - -IPN
+          - batch
+          - -batch
+          - location
+          - -location
+          - order
+          - -order
+          - shipment_date
+          - -shipment_date
       - in: query
         name: outstanding
         schema:
@@ -11959,10 +12317,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          quantity, notes, reference.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - quantity
+          - -quantity
+          - notes
+          - -notes
+          - reference
+          - -reference
       - name: search
         required: false
         in: query
@@ -12294,11 +12658,30 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          customer, order, part, part__name, quantity, allocated, shipped, reference,
-          sale_price, target_date.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - customer
+          - -customer
+          - order
+          - -order
+          - part
+          - -part
+          - part__name
+          - -part__name
+          - quantity
+          - -quantity
+          - allocated
+          - -allocated
+          - shipped
+          - -shipped
+          - reference
+          - -reference
+          - sale_price
+          - -sale_price
+          - target_date
+          - -target_date
       - in: query
         name: part
         schema:
@@ -13015,10 +13398,18 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          reference, delivery_date, shipment_date, allocated_items.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - reference
+          - -reference
+          - delivery_date
+          - -delivery_date
+          - shipment_date
+          - -shipment_date
+          - allocated_items
+          - -allocated_items
       - name: search
         required: false
         in: query
@@ -13519,12 +13910,38 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name, creation_date, IPN, in_stock, total_in_stock, unallocated_stock, category,
-          default_location, units, pricing_min, pricing_max, pricing_updated, revision,
-          revision_count.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
+          - creation_date
+          - -creation_date
+          - IPN
+          - -IPN
+          - in_stock
+          - -in_stock
+          - total_in_stock
+          - -total_in_stock
+          - unallocated_stock
+          - -unallocated_stock
+          - category
+          - -category
+          - default_location
+          - -default_location
+          - units
+          - -units
+          - pricing_min
+          - -pricing_min
+          - pricing_max
+          - -pricing_max
+          - pricing_updated
+          - -pricing_updated
+          - revision
+          - -revision
+          - revision_count
+          - -revision_count
       - in: query
         name: parameters
         schema:
@@ -14300,10 +14717,22 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name, pathstring, level, tree_id, lft, part_count.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
+          - pathstring
+          - -pathstring
+          - level
+          - -level
+          - tree_id
+          - -tree_id
+          - lft
+          - -lft
+          - part_count
+          - -part_count
       - in: query
         name: parent
         schema:
@@ -14975,10 +15404,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          level, name, subcategories.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - level
+          - -level
+          - name
+          - -name
+          - subcategories
+          - -subcategories
       tags:
       - part
       security:
@@ -15015,10 +15450,14 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          quantity, price.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - quantity
+          - -quantity
+          - price
+          - -price
       - in: query
         name: part
         schema:
@@ -15210,10 +15649,22 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name, data, part, template, updated, updated_by.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
+          - data
+          - -data
+          - part
+          - -part
+          - template
+          - -template
+          - updated
+          - -updated
+          - updated_by
+          - -updated_by
       - in: query
         name: part
         schema:
@@ -15560,10 +16011,18 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name, units, checkbox, parts.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
+          - units
+          - -units
+          - checkbox
+          - -checkbox
+          - parts
+          - -parts
       - in: query
         name: part
         schema:
@@ -16162,10 +16621,14 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          quantity, price.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - quantity
+          - -quantity
+          - price
+          - -price
       - in: query
         name: part
         schema:
@@ -16357,10 +16820,22 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          part, item_count, quantity, date, user, pk.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - part
+          - -part
+          - item_count
+          - -item_count
+          - quantity
+          - -quantity
+          - date
+          - -date
+          - user
+          - -user
+          - pk
+          - -pk
       - in: query
         name: part
         schema:
@@ -16601,10 +17076,22 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          enabled, required, requires_value, requires_attachment, results, test_name.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - enabled
+          - -enabled
+          - required
+          - -required
+          - requires_value
+          - -requires_value
+          - requires_attachment
+          - -requires_attachment
+          - results
+          - -results
+          - test_name
+          - -test_name
       - in: query
         name: part
         schema:
@@ -17070,10 +17557,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          key, name, active.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - key
+          - -key
+          - name
+          - -name
+          - active
+          - -active
       - in: query
         name: sample
         schema:
@@ -17891,10 +18384,12 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          code.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - code
+          - -code
       - name: search
         required: false
         in: query
@@ -19304,10 +19799,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          pk, key, name.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - pk
+          - -pk
+          - key
+          - -key
+          - name
+          - -name
       - name: search
         required: false
         in: query
@@ -19457,10 +19958,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          pk, key, name.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - pk
+          - -pk
+          - key
+          - -key
+          - name
+          - -name
       - name: search
         required: false
         in: query
@@ -19815,11 +20322,36 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          batch, location, part__name, part__IPN, updated, stocktake_date, expiry_date,
-          packaging, quantity, stock, status, SKU, MPN.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - batch
+          - -batch
+          - location
+          - -location
+          - part__name
+          - -part__name
+          - part__IPN
+          - -part__IPN
+          - updated
+          - -updated
+          - stocktake_date
+          - -stocktake_date
+          - expiry_date
+          - -expiry_date
+          - packaging
+          - -packaging
+          - quantity
+          - -quantity
+          - stock
+          - -stock
+          - status
+          - -status
+          - SKU
+          - -SKU
+          - MPN
+          - -MPN
       - in: query
         name: part
         schema:
@@ -20639,10 +21171,22 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name, pathstring, items, level, tree_id, lft.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
+          - pathstring
+          - -pathstring
+          - items
+          - -items
+          - level
+          - -level
+          - tree_id
+          - -tree_id
+          - lft
+          - -lft
       - in: query
         name: parent
         schema:
@@ -20814,10 +21358,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name, location_count, icon.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
+          - location_count
+          - -location_count
+          - icon
+          - -icon
       - name: search
         required: false
         in: query
@@ -21356,10 +21906,16 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          level, name, sublocations.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - level
+          - -level
+          - name
+          - -name
+          - sublocations
+          - -sublocations
       tags:
       - stock
       security:
@@ -21531,10 +22087,14 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          date, result.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - date
+          - -date
+          - result
+          - -result
       - in: query
         name: part
         schema:
@@ -21914,10 +22474,12 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          date.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - date
+          - -date
       - name: search
         required: false
         in: query
@@ -22363,10 +22925,24 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          email, username, first_name, last_name, is_staff, is_superuser, is_active.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - email
+          - -email
+          - username
+          - -username
+          - first_name
+          - -first_name
+          - last_name
+          - -last_name
+          - is_staff
+          - -is_staff
+          - is_superuser
+          - -is_superuser
+          - is_active
+          - -is_active
       - name: search
         required: false
         in: query
@@ -22651,10 +23227,12 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
       - in: query
         name: permission_detail
         schema:
@@ -23211,10 +23789,12 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          name.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - name
+          - -name
       - name: search
         required: false
         in: query
@@ -23401,10 +23981,24 @@ paths:
       - name: ordering
         required: false
         in: query
-        description: 'Which field to use when ordering the results. Possible fields:
-          created, expiry, last_seen, user, name, revoked, revoked.'
+        description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - created
+          - -created
+          - expiry
+          - -expiry
+          - last_seen
+          - -last_seen
+          - user
+          - -user
+          - name
+          - -name
+          - revoked
+          - -revoked
+          - revoked
+          - -revoked
       - in: query
         name: revoked
         schema:
