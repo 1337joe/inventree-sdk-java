@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '415'
+  version: '416'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -32715,6 +32715,7 @@ components:
           items:
             $ref: '#/components/schemas/PartSalePrice'
           readOnly: true
+          nullable: true
         allocated_to_build_orders:
           type: number
           format: double
@@ -32821,7 +32822,6 @@ components:
       - full_name
       - name
       - pk
-      - price_breaks
       - starred
       - thumbnail
     PartBomValidate:
@@ -35401,6 +35401,7 @@ components:
           items:
             $ref: '#/components/schemas/PartSalePrice'
           readOnly: true
+          nullable: true
         allocated_to_build_orders:
           type: number
           format: double
