@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '414'
+  version: '415'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -37346,11 +37346,6 @@ components:
         order:
           type: integer
           description: Sales Order
-        order_detail:
-          allOf:
-          - $ref: '#/components/schemas/SalesOrder'
-          readOnly: true
-          nullable: true
         allocated_items:
           type: integer
           readOnly: true
@@ -37360,6 +37355,11 @@ components:
           format: date
           nullable: true
           description: Date of shipment
+        shipment_address:
+          type: integer
+          nullable: true
+          title: Address
+          description: Shipping address for this shipment
         delivery_date:
           type: string
           format: date
@@ -37397,6 +37397,21 @@ components:
           nullable: true
           description: Markdown notes (optional)
           maxLength: 50000
+        checked_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
+          nullable: true
+        shipment_address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
     PatchedSelectionEntry:
       type: object
       description: Serializer for a selection entry.
@@ -40070,11 +40085,6 @@ components:
         order:
           type: integer
           description: Sales Order
-        order_detail:
-          allOf:
-          - $ref: '#/components/schemas/SalesOrder'
-          readOnly: true
-          nullable: true
         allocated_items:
           type: integer
           readOnly: true
@@ -40084,6 +40094,11 @@ components:
           format: date
           nullable: true
           description: Date of shipment
+        shipment_address:
+          type: integer
+          nullable: true
+          title: Address
+          description: Shipping address for this shipment
         delivery_date:
           type: string
           format: date
@@ -40121,6 +40136,21 @@ components:
           nullable: true
           description: Markdown notes (optional)
           maxLength: 50000
+        checked_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
+          nullable: true
+        shipment_address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
       required:
       - order
       - pk
