@@ -205,8 +205,9 @@ public class TestOrderApi extends TestApi {
     void orderSoShipment() throws ApiException {
         // int limit = 1;
 
-        int soShipmentPk = api.orderSoShipmentList(limit, null, null, null, null, null, null)
-                .getResults().get(0).getPk();
+        int soShipmentPk =
+                api.orderSoShipmentList(limit, null, null, null, null, null, null, null, null, null)
+                        .getResults().get(0).getPk();
         api.orderSoShipmentRetrieve(soShipmentPk);
     }
 

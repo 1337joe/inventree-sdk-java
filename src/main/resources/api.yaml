@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '416'
+  version: '417'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -13375,6 +13375,11 @@ paths:
       description: API list endpoint for SalesOrderShipment model.
       parameters:
       - in: query
+        name: checked
+        schema:
+          type: boolean
+        description: checked
+      - in: query
         name: delivered
         schema:
           type: boolean
@@ -13395,6 +13400,16 @@ paths:
         name: order
         schema:
           type: integer
+      - in: query
+        name: order_outstanding
+        schema:
+          type: boolean
+        description: Order Outstanding
+      - in: query
+        name: order_status
+        schema:
+          type: number
+        description: Order Status
       - name: ordering
         required: false
         in: query
@@ -32715,7 +32730,6 @@ components:
           items:
             $ref: '#/components/schemas/PartSalePrice'
           readOnly: true
-          nullable: true
         allocated_to_build_orders:
           type: number
           format: double
@@ -32822,6 +32836,7 @@ components:
       - full_name
       - name
       - pk
+      - price_breaks
       - starred
       - thumbnail
     PartBomValidate:
@@ -35401,7 +35416,6 @@ components:
           items:
             $ref: '#/components/schemas/PartSalePrice'
           readOnly: true
-          nullable: true
         allocated_to_build_orders:
           type: number
           format: double
