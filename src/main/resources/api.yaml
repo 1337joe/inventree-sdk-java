@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '417'
+  version: '418'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -36196,44 +36196,20 @@ components:
           type: integer
           nullable: true
           description: Select project code for this order
-        project_code_label:
-          type: string
-          readOnly: true
-          nullable: true
-        project_code_detail:
-          allOf:
-          - $ref: '#/components/schemas/ProjectCode'
-          readOnly: true
-          nullable: true
         reference:
           type: string
         responsible:
           type: integer
           nullable: true
           description: User or group responsible for this order
-        responsible_detail:
-          allOf:
-          - $ref: '#/components/schemas/Owner'
-          readOnly: true
-          nullable: true
         contact:
           type: integer
           nullable: true
           description: Point of contact for this order
-        contact_detail:
-          allOf:
-          - $ref: '#/components/schemas/Contact'
-          readOnly: true
-          nullable: true
         address:
           type: integer
           nullable: true
           description: Company address for this order
-        address_detail:
-          allOf:
-          - $ref: '#/components/schemas/AddressBrief'
-          readOnly: true
-          nullable: true
         status:
           type: integer
           readOnly: true
@@ -36276,6 +36252,30 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
+        address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        responsible_detail:
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          readOnly: true
+          nullable: true
         complete_date:
           type: string
           format: date
@@ -36334,28 +36334,18 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
-        quantity:
-          type: number
-          format: double
-        reference:
+        link:
           type: string
-          description: Line item reference
-          maxLength: 100
+          format: uri
+          description: Link to external page
+          maxLength: 2000
         notes:
           type: string
           description: Line item notes
           maxLength: 500
-        context:
-          nullable: true
-          description: Additional context for this line
         order:
           type: integer
           description: Purchase Order
-        order_detail:
-          allOf:
-          - $ref: '#/components/schemas/PurchaseOrder'
-          readOnly: true
-          nullable: true
         price:
           type: string
           format: decimal
@@ -36373,11 +36363,37 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        link:
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
           type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
+          description: Target date for this line item (leave blank to use the target
+            date from the order)
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/PurchaseOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
     PatchedPurchaseOrderLineItem:
       type: object
       description: Serializer class for the PurchaseOrderLineItem model.
@@ -36386,10 +36402,22 @@ components:
           type: integer
           readOnly: true
           title: ID
-        part:
+        link:
+          type: string
+          format: uri
+          description: Link to external page
+          maxLength: 2000
+        notes:
+          type: string
+          description: Line item notes
+          maxLength: 500
+        order:
+          type: integer
+          description: Purchase Order
+        project_code:
           type: integer
           nullable: true
-          title: Supplier Part
+          description: Select project code for this order
         quantity:
           type: number
           format: double
@@ -36398,39 +36426,34 @@ components:
           type: string
           description: Line item reference
           maxLength: 100
-        notes:
+        target_date:
           type: string
-          description: Line item notes
-          maxLength: 500
-        order:
-          type: integer
-          description: Purchase Order
+          format: date
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/PurchaseOrder'
           readOnly: true
           nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        part:
+          type: integer
+          nullable: true
+          title: Supplier Part
         build_order:
           type: integer
           nullable: true
           description: External Build Order to be fulfilled by this line item
-        build_order_detail:
-          allOf:
-          - $ref: '#/components/schemas/Build'
-          readOnly: true
-          nullable: true
         overdue:
           type: boolean
-          readOnly: true
-          nullable: true
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-        supplier_part_detail:
-          allOf:
-          - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
           nullable: true
         received:
@@ -36464,26 +36487,10 @@ components:
           type: integer
           nullable: true
           description: Destination for received items
-        destination_detail:
-          allOf:
-          - $ref: '#/components/schemas/LocationBrief'
-          readOnly: true
-          nullable: true
-        target_date:
-          type: string
-          format: date
-          nullable: true
-          description: Target date for this line item (leave blank to use the target
-            date from the order)
         total_price:
           type: number
           format: double
           readOnly: true
-        link:
-          type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
         merge_items:
           type: boolean
           writeOnly: true
@@ -36509,6 +36516,26 @@ components:
         internal_part_name:
           type: string
           readOnly: true
+        build_order_detail:
+          allOf:
+          - $ref: '#/components/schemas/Build'
+          readOnly: true
+          nullable: true
+        destination_detail:
+          allOf:
+          - $ref: '#/components/schemas/LocationBrief'
+          readOnly: true
+          nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+        supplier_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
+          readOnly: true
+          nullable: true
     PatchedReportAsset:
       type: object
       description: Serializer class for the ReportAsset model.
@@ -36642,44 +36669,20 @@ components:
           type: integer
           nullable: true
           description: Select project code for this order
-        project_code_label:
-          type: string
-          readOnly: true
-          nullable: true
-        project_code_detail:
-          allOf:
-          - $ref: '#/components/schemas/ProjectCode'
-          readOnly: true
-          nullable: true
         reference:
           type: string
         responsible:
           type: integer
           nullable: true
           description: User or group responsible for this order
-        responsible_detail:
-          allOf:
-          - $ref: '#/components/schemas/Owner'
-          readOnly: true
-          nullable: true
         contact:
           type: integer
           nullable: true
           description: Point of contact for this order
-        contact_detail:
-          allOf:
-          - $ref: '#/components/schemas/Contact'
-          readOnly: true
-          nullable: true
         address:
           type: integer
           nullable: true
           description: Company address for this order
-        address_detail:
-          allOf:
-          - $ref: '#/components/schemas/AddressBrief'
-          readOnly: true
-          nullable: true
         status:
           type: integer
           readOnly: true
@@ -36720,6 +36723,30 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
+        address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        responsible_detail:
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          readOnly: true
+          nullable: true
         complete_date:
           type: string
           format: date
@@ -36770,28 +36797,18 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
-        quantity:
-          type: number
-          format: double
-        reference:
+        link:
           type: string
-          description: Line item reference
-          maxLength: 100
+          format: uri
+          description: Link to external page
+          maxLength: 2000
         notes:
           type: string
           description: Line item notes
           maxLength: 500
-        context:
-          nullable: true
-          description: Additional context for this line
         order:
           type: integer
           description: Return Order
-        order_detail:
-          allOf:
-          - $ref: '#/components/schemas/ReturnOrder'
-          readOnly: true
-          nullable: true
         price:
           type: string
           format: decimal
@@ -36809,11 +36826,37 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        link:
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
           type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
+          description: Target date for this line item (leave blank to use the target
+            date from the order)
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/ReturnOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
     PatchedReturnOrderLineItem:
       type: object
       description: Serializer for a ReturnOrderLineItem object.
@@ -36822,26 +36865,51 @@ components:
           type: integer
           readOnly: true
           title: ID
+        link:
+          type: string
+          format: uri
+          description: Link to external page
+          maxLength: 2000
+        notes:
+          type: string
+          description: Line item notes
+          maxLength: 500
         order:
           type: integer
           description: Return Order
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+          description: Quantity to return
+        reference:
+          type: string
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/ReturnOrder'
           readOnly: true
           nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
         item:
           type: integer
           description: Select item to return from customer
-        item_detail:
-          allOf:
-          - $ref: '#/components/schemas/StockItem'
-          readOnly: true
-          nullable: true
-        quantity:
-          type: number
-          format: double
-          description: Quantity to return
         received_date:
           type: string
           format: date
@@ -36859,11 +36927,6 @@ components:
             * `40` - Replace
             * `50` - Refund
             * `60` - Reject
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
         price:
           type: string
           format: decimal
@@ -36881,25 +36944,16 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        link:
-          type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
-        reference:
-          type: string
-          description: Line item reference
-          maxLength: 100
-        notes:
-          type: string
-          description: Line item notes
-          maxLength: 500
-        target_date:
-          type: string
-          format: date
+        item_detail:
+          allOf:
+          - $ref: '#/components/schemas/StockItem'
+          readOnly: true
           nullable: true
-          description: Target date for this line item (leave blank to use the target
-            date from the order)
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
     PatchedRuleSet:
       type: object
       description: Serializer for a RuleSet.
@@ -37001,44 +37055,20 @@ components:
           type: integer
           nullable: true
           description: Select project code for this order
-        project_code_label:
-          type: string
-          readOnly: true
-          nullable: true
-        project_code_detail:
-          allOf:
-          - $ref: '#/components/schemas/ProjectCode'
-          readOnly: true
-          nullable: true
         reference:
           type: string
         responsible:
           type: integer
           nullable: true
           description: User or group responsible for this order
-        responsible_detail:
-          allOf:
-          - $ref: '#/components/schemas/Owner'
-          readOnly: true
-          nullable: true
         contact:
           type: integer
           nullable: true
           description: Point of contact for this order
-        contact_detail:
-          allOf:
-          - $ref: '#/components/schemas/Contact'
-          readOnly: true
-          nullable: true
         address:
           type: integer
           nullable: true
           description: Company address for this order
-        address_detail:
-          allOf:
-          - $ref: '#/components/schemas/AddressBrief'
-          readOnly: true
-          nullable: true
         status:
           type: integer
           readOnly: true
@@ -37082,6 +37112,30 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
+        address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        responsible_detail:
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          readOnly: true
+          nullable: true
         customer:
           type: integer
           nullable: true
@@ -37208,28 +37262,18 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
-        quantity:
-          type: number
-          format: double
-        reference:
+        link:
           type: string
-          description: Line item reference
-          maxLength: 100
+          format: uri
+          description: Link to external page
+          maxLength: 2000
         notes:
           type: string
           description: Line item notes
           maxLength: 500
-        context:
-          nullable: true
-          description: Additional context for this line
         order:
           type: integer
           description: Sales Order
-        order_detail:
-          allOf:
-          - $ref: '#/components/schemas/SalesOrder'
-          readOnly: true
-          nullable: true
         price:
           type: string
           format: decimal
@@ -37247,11 +37291,37 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        link:
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
           type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
+          description: Target date for this line item (leave blank to use the target
+            date from the order)
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
     PatchedSalesOrderLineItem:
       type: object
       description: Serializer for a SalesOrderLineItem object.
@@ -37260,22 +37330,11 @@ components:
           type: integer
           readOnly: true
           title: ID
-        allocated:
-          type: number
-          format: double
-          readOnly: true
-        customer_detail:
-          allOf:
-          - $ref: '#/components/schemas/CompanyBrief'
-          readOnly: true
-          nullable: true
-        quantity:
-          type: number
-          format: double
-        reference:
+        link:
           type: string
-          description: Line item reference
-          maxLength: 100
+          format: uri
+          description: Link to external page
+          maxLength: 2000
         notes:
           type: string
           description: Line item notes
@@ -37283,9 +37342,42 @@ components:
         order:
           type: integer
           description: Sales Order
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
+          type: string
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        allocated:
+          type: number
+          format: double
+          readOnly: true
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
           nullable: true
         overdue:
@@ -37322,17 +37414,6 @@ components:
           type: number
           format: double
           readOnly: true
-        target_date:
-          type: string
-          format: date
-          nullable: true
-          description: Target date for this line item (leave blank to use the target
-            date from the order)
-        link:
-          type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
         available_stock:
           type: number
           format: double
@@ -38621,44 +38702,20 @@ components:
           type: integer
           nullable: true
           description: Select project code for this order
-        project_code_label:
-          type: string
-          readOnly: true
-          nullable: true
-        project_code_detail:
-          allOf:
-          - $ref: '#/components/schemas/ProjectCode'
-          readOnly: true
-          nullable: true
         reference:
           type: string
         responsible:
           type: integer
           nullable: true
           description: User or group responsible for this order
-        responsible_detail:
-          allOf:
-          - $ref: '#/components/schemas/Owner'
-          readOnly: true
-          nullable: true
         contact:
           type: integer
           nullable: true
           description: Point of contact for this order
-        contact_detail:
-          allOf:
-          - $ref: '#/components/schemas/Contact'
-          readOnly: true
-          nullable: true
         address:
           type: integer
           nullable: true
           description: Company address for this order
-        address_detail:
-          allOf:
-          - $ref: '#/components/schemas/AddressBrief'
-          readOnly: true
-          nullable: true
         status:
           type: integer
           readOnly: true
@@ -38701,6 +38758,30 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
+        address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        responsible_detail:
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          readOnly: true
+          nullable: true
         complete_date:
           type: string
           format: date
@@ -38776,28 +38857,18 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
-        quantity:
-          type: number
-          format: double
-        reference:
+        link:
           type: string
-          description: Line item reference
-          maxLength: 100
+          format: uri
+          description: Link to external page
+          maxLength: 2000
         notes:
           type: string
           description: Line item notes
           maxLength: 500
-        context:
-          nullable: true
-          description: Additional context for this line
         order:
           type: integer
           description: Purchase Order
-        order_detail:
-          allOf:
-          - $ref: '#/components/schemas/PurchaseOrder'
-          readOnly: true
-          nullable: true
         price:
           type: string
           format: decimal
@@ -38815,11 +38886,37 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        link:
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
           type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
+          description: Target date for this line item (leave blank to use the target
+            date from the order)
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/PurchaseOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
       required:
       - order
       - pk
@@ -38832,10 +38929,22 @@ components:
           type: integer
           readOnly: true
           title: ID
-        part:
+        link:
+          type: string
+          format: uri
+          description: Link to external page
+          maxLength: 2000
+        notes:
+          type: string
+          description: Line item notes
+          maxLength: 500
+        order:
+          type: integer
+          description: Purchase Order
+        project_code:
           type: integer
           nullable: true
-          title: Supplier Part
+          description: Select project code for this order
         quantity:
           type: number
           format: double
@@ -38844,39 +38953,34 @@ components:
           type: string
           description: Line item reference
           maxLength: 100
-        notes:
+        target_date:
           type: string
-          description: Line item notes
-          maxLength: 500
-        order:
-          type: integer
-          description: Purchase Order
+          format: date
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/PurchaseOrder'
           readOnly: true
           nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        part:
+          type: integer
+          nullable: true
+          title: Supplier Part
         build_order:
           type: integer
           nullable: true
           description: External Build Order to be fulfilled by this line item
-        build_order_detail:
-          allOf:
-          - $ref: '#/components/schemas/Build'
-          readOnly: true
-          nullable: true
         overdue:
           type: boolean
-          readOnly: true
-          nullable: true
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-        supplier_part_detail:
-          allOf:
-          - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
           nullable: true
         received:
@@ -38910,26 +39014,10 @@ components:
           type: integer
           nullable: true
           description: Destination for received items
-        destination_detail:
-          allOf:
-          - $ref: '#/components/schemas/LocationBrief'
-          readOnly: true
-          nullable: true
-        target_date:
-          type: string
-          format: date
-          nullable: true
-          description: Target date for this line item (leave blank to use the target
-            date from the order)
         total_price:
           type: number
           format: double
           readOnly: true
-        link:
-          type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
         merge_items:
           type: boolean
           writeOnly: true
@@ -38955,6 +39043,26 @@ components:
         internal_part_name:
           type: string
           readOnly: true
+        build_order_detail:
+          allOf:
+          - $ref: '#/components/schemas/Build'
+          readOnly: true
+          nullable: true
+        destination_detail:
+          allOf:
+          - $ref: '#/components/schemas/LocationBrief'
+          readOnly: true
+          nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+        supplier_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
+          readOnly: true
+          nullable: true
       required:
       - internal_part
       - internal_part_name
@@ -39225,44 +39333,20 @@ components:
           type: integer
           nullable: true
           description: Select project code for this order
-        project_code_label:
-          type: string
-          readOnly: true
-          nullable: true
-        project_code_detail:
-          allOf:
-          - $ref: '#/components/schemas/ProjectCode'
-          readOnly: true
-          nullable: true
         reference:
           type: string
         responsible:
           type: integer
           nullable: true
           description: User or group responsible for this order
-        responsible_detail:
-          allOf:
-          - $ref: '#/components/schemas/Owner'
-          readOnly: true
-          nullable: true
         contact:
           type: integer
           nullable: true
           description: Point of contact for this order
-        contact_detail:
-          allOf:
-          - $ref: '#/components/schemas/Contact'
-          readOnly: true
-          nullable: true
         address:
           type: integer
           nullable: true
           description: Company address for this order
-        address_detail:
-          allOf:
-          - $ref: '#/components/schemas/AddressBrief'
-          readOnly: true
-          nullable: true
         status:
           type: integer
           readOnly: true
@@ -39303,6 +39387,30 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
+        address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        responsible_detail:
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          readOnly: true
+          nullable: true
         complete_date:
           type: string
           format: date
@@ -39360,28 +39468,18 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
-        quantity:
-          type: number
-          format: double
-        reference:
+        link:
           type: string
-          description: Line item reference
-          maxLength: 100
+          format: uri
+          description: Link to external page
+          maxLength: 2000
         notes:
           type: string
           description: Line item notes
           maxLength: 500
-        context:
-          nullable: true
-          description: Additional context for this line
         order:
           type: integer
           description: Return Order
-        order_detail:
-          allOf:
-          - $ref: '#/components/schemas/ReturnOrder'
-          readOnly: true
-          nullable: true
         price:
           type: string
           format: decimal
@@ -39399,11 +39497,37 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        link:
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
           type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
+          description: Target date for this line item (leave blank to use the target
+            date from the order)
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/ReturnOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
       required:
       - order
       - pk
@@ -39416,26 +39540,51 @@ components:
           type: integer
           readOnly: true
           title: ID
+        link:
+          type: string
+          format: uri
+          description: Link to external page
+          maxLength: 2000
+        notes:
+          type: string
+          description: Line item notes
+          maxLength: 500
         order:
           type: integer
           description: Return Order
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+          description: Quantity to return
+        reference:
+          type: string
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/ReturnOrder'
           readOnly: true
           nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
         item:
           type: integer
           description: Select item to return from customer
-        item_detail:
-          allOf:
-          - $ref: '#/components/schemas/StockItem'
-          readOnly: true
-          nullable: true
-        quantity:
-          type: number
-          format: double
-          description: Quantity to return
         received_date:
           type: string
           format: date
@@ -39453,11 +39602,6 @@ components:
             * `40` - Replace
             * `50` - Refund
             * `60` - Reject
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
         price:
           type: string
           format: decimal
@@ -39475,25 +39619,16 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        link:
-          type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
-        reference:
-          type: string
-          description: Line item reference
-          maxLength: 100
-        notes:
-          type: string
-          description: Line item notes
-          maxLength: 500
-        target_date:
-          type: string
-          format: date
+        item_detail:
+          allOf:
+          - $ref: '#/components/schemas/StockItem'
+          readOnly: true
           nullable: true
-          description: Target date for this line item (leave blank to use the target
-            date from the order)
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
       required:
       - item
       - order
@@ -39683,44 +39818,20 @@ components:
           type: integer
           nullable: true
           description: Select project code for this order
-        project_code_label:
-          type: string
-          readOnly: true
-          nullable: true
-        project_code_detail:
-          allOf:
-          - $ref: '#/components/schemas/ProjectCode'
-          readOnly: true
-          nullable: true
         reference:
           type: string
         responsible:
           type: integer
           nullable: true
           description: User or group responsible for this order
-        responsible_detail:
-          allOf:
-          - $ref: '#/components/schemas/Owner'
-          readOnly: true
-          nullable: true
         contact:
           type: integer
           nullable: true
           description: Point of contact for this order
-        contact_detail:
-          allOf:
-          - $ref: '#/components/schemas/Contact'
-          readOnly: true
-          nullable: true
         address:
           type: integer
           nullable: true
           description: Company address for this order
-        address_detail:
-          allOf:
-          - $ref: '#/components/schemas/AddressBrief'
-          readOnly: true
-          nullable: true
         status:
           type: integer
           readOnly: true
@@ -39764,6 +39875,30 @@ components:
           writeOnly: true
           title: Duplicate Order
           description: Specify options for duplicating this order
+        address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        responsible_detail:
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          readOnly: true
+          nullable: true
         customer:
           type: integer
           nullable: true
@@ -39913,28 +40048,18 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
-        quantity:
-          type: number
-          format: double
-        reference:
+        link:
           type: string
-          description: Line item reference
-          maxLength: 100
+          format: uri
+          description: Link to external page
+          maxLength: 2000
         notes:
           type: string
           description: Line item notes
           maxLength: 500
-        context:
-          nullable: true
-          description: Additional context for this line
         order:
           type: integer
           description: Sales Order
-        order_detail:
-          allOf:
-          - $ref: '#/components/schemas/SalesOrder'
-          readOnly: true
-          nullable: true
         price:
           type: string
           format: decimal
@@ -39952,11 +40077,37 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-        link:
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
           type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
+          description: Target date for this line item (leave blank to use the target
+            date from the order)
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
       required:
       - order
       - pk
@@ -39969,22 +40120,11 @@ components:
           type: integer
           readOnly: true
           title: ID
-        allocated:
-          type: number
-          format: double
-          readOnly: true
-        customer_detail:
-          allOf:
-          - $ref: '#/components/schemas/CompanyBrief'
-          readOnly: true
-          nullable: true
-        quantity:
-          type: number
-          format: double
-        reference:
+        link:
           type: string
-          description: Line item reference
-          maxLength: 100
+          format: uri
+          description: Link to external page
+          maxLength: 2000
         notes:
           type: string
           description: Line item notes
@@ -39992,9 +40132,42 @@ components:
         order:
           type: integer
           description: Sales Order
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
+          type: string
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        allocated:
+          type: number
+          format: double
+          readOnly: true
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
           nullable: true
         overdue:
@@ -40031,17 +40204,6 @@ components:
           type: number
           format: double
           readOnly: true
-        target_date:
-          type: string
-          format: date
-          nullable: true
-          description: Target date for this line item (leave blank to use the target
-            date from the order)
-        link:
-          type: string
-          format: uri
-          description: Link to external page
-          maxLength: 2000
         available_stock:
           type: number
           format: double
