@@ -147,13 +147,13 @@ public class TestPartApi extends TestApi {
     @Test
     void test() throws ApiException {
         // TODO verify results
-        Part actual = api.partRetrieve(1, null, null, null, null, true);
+        Part actual = api.partRetrieve(1, null, null, null, null, null);
         assertNotNull(actual);
 
         int limit = 1000;
         api.partList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, true, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null);
 
         api.partParameterList(limit, null, null, null, null, null, null, null, null);
@@ -161,7 +161,7 @@ public class TestPartApi extends TestApi {
         api.partParameterTemplateList(limit, null, null, null, null, null, null, null, null, null,
                 null);
 
-        // api.partRelatedList(limit, null, null, null, null, null, null);
+        api.partRelatedList(limit, null, null, null, null, null, null);
 
         api.partSalePriceList(limit, null, null, null, null);
 
