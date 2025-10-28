@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '419'
+  version: '420'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -37499,6 +37499,11 @@ components:
           - $ref: '#/components/schemas/User'
           readOnly: true
           nullable: true
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
@@ -40317,6 +40322,11 @@ components:
         checked_by_detail:
           allOf:
           - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
+        customer_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
           nullable: true
         order_detail:
