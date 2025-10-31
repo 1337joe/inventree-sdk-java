@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '420'
+  version: '421'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26912,6 +26912,7 @@ components:
       enum:
       - build
       - company
+      - supplierpart
       - manufacturerpart
       - purchaseorder
       - salesorder
@@ -26923,6 +26924,7 @@ components:
       description: |-
         * `build` - Build Order
         * `company` - Company
+        * `supplierpart` - Supplier Part
         * `manufacturerpart` - Manufacturer Part
         * `purchaseorder` - Purchase Order
         * `salesorder` - Sales Order
