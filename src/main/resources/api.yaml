@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '422'
+  version: '423'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1315,6 +1315,8 @@ paths:
           enum:
           - can_build
           - -can_build
+          - category
+          - -category
           - quantity
           - -quantity
           - setup_quantity
@@ -3516,6 +3518,8 @@ paths:
           - -part
           - allocated
           - -allocated
+          - category
+          - -category
           - consumed
           - -consumed
           - reference
@@ -27233,12 +27237,6 @@ components:
           type: integer
           readOnly: true
           title: ID
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-          title: Assembly
         pricing_min:
           type: string
           format: decimal
@@ -27268,12 +27266,6 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-        sub_part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-          title: Component
         substitutes:
           type: array
           items:
@@ -27319,6 +27311,24 @@ components:
           format: double
           readOnly: true
           nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+          title: Assembly
+        sub_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+          title: Component
+        category_detail:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          readOnly: true
+          nullable: true
+          title: Category
       required:
       - part
       - pk
@@ -27907,6 +27917,12 @@ components:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
           title: Part
+        category_detail:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          readOnly: true
+          nullable: true
+          title: Category
         build_detail:
           allOf:
           - $ref: '#/components/schemas/Build'
@@ -33749,12 +33765,6 @@ components:
           type: integer
           readOnly: true
           title: ID
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-          title: Assembly
         pricing_min:
           type: string
           format: decimal
@@ -33784,12 +33794,6 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-        sub_part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-          title: Component
         substitutes:
           type: array
           items:
@@ -33835,6 +33839,24 @@ components:
           format: double
           readOnly: true
           nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+          title: Assembly
+        sub_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+          title: Component
+        category_detail:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          readOnly: true
+          nullable: true
+          title: Category
     PatchedBomItemSubstitute:
       type: object
       description: Serializer for the BomItemSubstitute class.
@@ -34196,6 +34218,12 @@ components:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
           title: Part
+        category_detail:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          readOnly: true
+          nullable: true
+          title: Category
         build_detail:
           allOf:
           - $ref: '#/components/schemas/Build'
