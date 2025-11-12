@@ -130,6 +130,8 @@ public class InventreeDemoDataset {
                     message);
         } else if (type == Integer.class) {
             assertEquals(fieldValue.getAsInt(), actualValue, message);
+        } else if (type == Long.class) {
+            assertEquals(fieldValue.getAsLong(), actualValue, message);
         } else if (type == String.class) {
             assertEquals(fieldValue.getAsString(), actualValue, message);
         } else if (type == URI.class) {

@@ -49,7 +49,7 @@ public class TestAttachmentApi extends TestApi {
                 api.attachmentList(1, null, null, null, null, null, null, null, null).getCount();
 
         // set only required fields
-        Attachment newItem = new Attachment().modelType(AttachmentModelTypeEnum.BUILD).modelId(0);
+        Attachment newItem = new Attachment().modelType(AttachmentModelTypeEnum.BUILD).modelId(0l);
         // file or link must be set as well
         newItem.setLink(URI.create("http://localhost:8000"));
         assertNull(newItem.getPk(), "Unsubmitted item should not have PK");

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '423'
+  version: '424'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26903,6 +26903,9 @@ components:
           $ref: '#/components/schemas/AttachmentModelTypeEnum'
         model_id:
           type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
         tags:
           type: array
           items:
@@ -27583,7 +27586,9 @@ components:
           nullable: true
         priority:
           type: integer
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           title: Build Priority
           description: Priority of this build order
         level:
@@ -28574,6 +28579,9 @@ components:
           title: ID
         key:
           type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
           title: Value
           description: Numerical value that will be saved in the models database
         name:
@@ -28599,6 +28607,9 @@ components:
             * `dark` - dark
         logical_key:
           type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
           description: State logical key that is equal to this custom state in business
             logic
         model:
@@ -28932,8 +28943,14 @@ components:
           readOnly: true
         total:
           type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
         progress:
           type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
         complete:
           type: boolean
         output_type:
@@ -29112,6 +29129,8 @@ components:
           allOf:
           - $ref: '#/components/schemas/PriorityEnum'
           title: Prioriy
+          minimum: -9223372036854775808
+          maximum: 9223372036854775807
         error_code:
           type: string
           nullable: true
@@ -29266,6 +29285,9 @@ components:
           readOnly: true
         attempt_count:
           type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
         result:
           type: string
       required:
@@ -30685,6 +30707,9 @@ components:
           maxLength: 100
         model_id:
           type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
           nullable: true
           description: Target model ID for this image
       required:
@@ -30776,6 +30801,9 @@ components:
           title: ID
         owner_id:
           type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
           nullable: true
         owner_model:
           type: string
@@ -32599,7 +32627,9 @@ components:
           nullable: true
         default_expiry:
           type: integer
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           description: Expiry time (in days) for stock items of this part
         default_location:
           type: integer
@@ -32925,7 +32955,9 @@ components:
           description: Where is this item normally stored?
         default_expiry:
           type: integer
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           description: Expiry time (in days) for stock items of this part
         name:
           type: string
@@ -33484,6 +33516,9 @@ components:
           description: Part for stocktake
         item_count:
           type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
           description: Number of individual stock entries at time of stocktake
         quantity:
           type: number
@@ -33711,6 +33746,9 @@ components:
           $ref: '#/components/schemas/AttachmentModelTypeEnum'
         model_id:
           type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
         tags:
           type: array
           items:
@@ -34048,7 +34086,9 @@ components:
           nullable: true
         priority:
           type: integer
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           title: Build Priority
           description: Priority of this build order
         level:
@@ -34468,6 +34508,9 @@ components:
           title: ID
         key:
           type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
           title: Value
           description: Numerical value that will be saved in the models database
         name:
@@ -34493,6 +34536,9 @@ components:
             * `dark` - dark
         logical_key:
           type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
           description: State logical key that is equal to this custom state in business
             logic
         model:
@@ -35297,7 +35343,9 @@ components:
           nullable: true
         default_expiry:
           type: integer
+          maximum: 9223372036854775807
           minimum: 0
+          format: int64
           description: Expiry time (in days) for stock items of this part
         default_location:
           type: integer
@@ -35934,6 +35982,9 @@ components:
           description: Part for stocktake
         item_count:
           type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
           description: Number of individual stock entries at time of stocktake
         quantity:
           type: number
@@ -36960,6 +37011,8 @@ components:
             * `40` - Replace
             * `50` - Refund
             * `60` - Reject
+          minimum: 0
+          maximum: 9223372036854775807
         price:
           type: string
           format: decimal
@@ -37737,6 +37790,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockItemStatusEnum'
           minimum: 0
+          maximum: 9223372036854775807
         status_text:
           type: string
           readOnly: true
@@ -39640,6 +39694,8 @@ components:
             * `40` - Replace
             * `50` - Refund
             * `60` - Reject
+          minimum: 0
+          maximum: 9223372036854775807
         price:
           type: string
           format: decimal
@@ -40487,6 +40543,9 @@ components:
           $ref: '#/components/schemas/ScheduleTypeEnum'
         repeats:
           type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
           description: n = n times, -1 = forever
         last_run:
           type: string
@@ -40932,6 +40991,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/StockItemStatusEnum'
           minimum: 0
+          maximum: 9223372036854775807
         status_text:
           type: string
           readOnly: true

@@ -50,7 +50,7 @@ jobs:
     needs: compile-with-test
 
     env:
-      python_version: 3.9
+      python_version: 3.11
       apt_dependency: gettext poppler-utils
       server_start_sleep: 60
       INVENTREE_DB_ENGINE: sqlite3

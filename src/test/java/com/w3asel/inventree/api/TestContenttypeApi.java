@@ -48,7 +48,7 @@ public class TestContenttypeApi extends TestApi {
         switch (model) {
             case "stockitem":
                 expected = new ContentType(actual.getPk(), "stock", "stockitem",
-                        "stock | Stock Item", false);
+                        "Stock | Stock Item", false);
                 break;
             default:
                 fail("Unspecified expected value");
