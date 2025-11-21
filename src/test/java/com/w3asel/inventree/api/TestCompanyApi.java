@@ -539,6 +539,7 @@ public class TestCompanyApi extends TestApi {
 
         int limit = 5;
         int offset = 0;
+        // TODO missing complex filter parameters on this query
         PaginatedSupplierPartList actual =
                 api.companyPartList(limit, null, null, null, company, null, null, null, null,
                         offset, null, null, null, null, null, null, null, null, null, null, null);

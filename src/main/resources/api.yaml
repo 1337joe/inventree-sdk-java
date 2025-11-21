@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '425'
+  version: '426'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -38117,12 +38117,6 @@ components:
           type: integer
           title: Base Part
           description: Select part
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-          title: Part
         pretty_name:
           type: string
           readOnly: true
@@ -38149,13 +38143,29 @@ components:
           nullable: true
           description: Markdown notes (optional)
           maxLength: 50000
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+          title: Part
         tags:
           type: array
           items:
             type: string
+        price_breaks:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupplierPriceBreakBrief'
+          readOnly: true
+          nullable: true
     PatchedSupplierPriceBreak:
       type: object
-      description: Serializer for SupplierPriceBreak object.
+      description: |-
+        Serializer for SupplierPriceBreak object.
+
+        Note that this inherits from the SupplierPriceBreakBriefSerializer,
+        and does so to prevent circular serializer import issues.
       properties:
         pk:
           type: integer
@@ -38163,11 +38173,6 @@ components:
           title: ID
         part:
           type: integer
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/SupplierPart'
-          readOnly: true
-          nullable: true
         quantity:
           type: number
           format: double
@@ -38191,17 +38196,22 @@ components:
         supplier:
           type: integer
           readOnly: true
-        supplier_detail:
-          allOf:
-          - $ref: '#/components/schemas/CompanyBrief'
-          readOnly: true
-          nullable: true
         updated:
           type: string
           format: date-time
           readOnly: true
           nullable: true
           description: Timestamp of last update
+        supplier_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
+          nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
+          readOnly: true
+          nullable: true
     PatchedUserProfile:
       type: object
       description: Serializer for the UserProfile model.
@@ -41519,12 +41529,6 @@ components:
           type: integer
           title: Base Part
           description: Select part
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-          title: Part
         pretty_name:
           type: string
           readOnly: true
@@ -41551,10 +41555,22 @@ components:
           nullable: true
           description: Markdown notes (optional)
           maxLength: 50000
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+          title: Part
         tags:
           type: array
           items:
             type: string
+        price_breaks:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupplierPriceBreakBrief'
+          readOnly: true
+          nullable: true
       required:
       - SKU
       - barcode_hash
@@ -41564,7 +41580,11 @@ components:
       - supplier
     SupplierPriceBreak:
       type: object
-      description: Serializer for SupplierPriceBreak object.
+      description: |-
+        Serializer for SupplierPriceBreak object.
+
+        Note that this inherits from the SupplierPriceBreakBriefSerializer,
+        and does so to prevent circular serializer import issues.
       properties:
         pk:
           type: integer
@@ -41572,11 +41592,6 @@ components:
           title: ID
         part:
           type: integer
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/SupplierPart'
-          readOnly: true
-          nullable: true
         quantity:
           type: number
           format: double
@@ -41600,11 +41615,64 @@ components:
         supplier:
           type: integer
           readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
         supplier_detail:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
           nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
+          readOnly: true
+          nullable: true
+      required:
+      - part
+      - pk
+      - price
+      - quantity
+      - supplier
+    SupplierPriceBreakBrief:
+      type: object
+      description: |-
+        Brief serializer for SupplierPriceBreak object.
+
+        Used to provide a list of price breaks against the SupplierPart object.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        part:
+          type: integer
+        quantity:
+          type: number
+          format: double
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          nullable: true
+        price_currency:
+          type: string
+          title: Currency
+          description: |-
+            Select currency from available options
+
+            * `AUD` - AUD - Australian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `USD` - USD - US Dollar
+
+            Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
+        supplier:
+          type: integer
+          readOnly: true
         updated:
           type: string
           format: date-time
