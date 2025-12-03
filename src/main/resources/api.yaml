@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '427'
+  version: '428'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -12187,7 +12187,7 @@ paths:
   /api/order/so-allocation/{id}/:
     get:
       operationId: order_so_allocation_retrieve
-      description: API endpoint for detali view of a SalesOrderAllocation object.
+      description: API endpoint for detail view of a SalesOrderAllocation object.
       parameters:
       - in: path
         name: id
@@ -12211,7 +12211,7 @@ paths:
           description: ''
     put:
       operationId: order_so_allocation_update
-      description: API endpoint for detali view of a SalesOrderAllocation object.
+      description: API endpoint for detail view of a SalesOrderAllocation object.
       parameters:
       - in: path
         name: id
@@ -12247,7 +12247,7 @@ paths:
           description: ''
     patch:
       operationId: order_so_allocation_partial_update
-      description: API endpoint for detali view of a SalesOrderAllocation object.
+      description: API endpoint for detail view of a SalesOrderAllocation object.
       parameters:
       - in: path
         name: id
@@ -12282,7 +12282,7 @@ paths:
           description: ''
     delete:
       operationId: order_so_allocation_destroy
-      description: API endpoint for detali view of a SalesOrderAllocation object.
+      description: API endpoint for detail view of a SalesOrderAllocation object.
       parameters:
       - in: path
         name: id
@@ -13498,7 +13498,7 @@ paths:
   /api/order/so/shipment/{id}/:
     get:
       operationId: order_so_shipment_retrieve
-      description: API detail endpooint for SalesOrderShipment model.
+      description: API detail endpoint for SalesOrderShipment model.
       parameters:
       - in: path
         name: id
@@ -13522,7 +13522,7 @@ paths:
           description: ''
     put:
       operationId: order_so_shipment_update
-      description: API detail endpooint for SalesOrderShipment model.
+      description: API detail endpoint for SalesOrderShipment model.
       parameters:
       - in: path
         name: id
@@ -13558,7 +13558,7 @@ paths:
           description: ''
     patch:
       operationId: order_so_shipment_partial_update
-      description: API detail endpooint for SalesOrderShipment model.
+      description: API detail endpoint for SalesOrderShipment model.
       parameters:
       - in: path
         name: id
@@ -13593,7 +13593,7 @@ paths:
           description: ''
     delete:
       operationId: order_so_shipment_destroy
-      description: API detail endpooint for SalesOrderShipment model.
+      description: API detail endpoint for SalesOrderShipment model.
       parameters:
       - in: path
         name: id
