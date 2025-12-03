@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '426'
+  version: '427'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -29137,7 +29137,6 @@ components:
         priority:
           allOf:
           - $ref: '#/components/schemas/PriorityEnum'
-          title: Prioriy
           minimum: -9223372036854775808
           maximum: 9223372036854775807
         error_code:
