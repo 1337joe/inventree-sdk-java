@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '428'
+  version: '429'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -28344,8 +28344,12 @@ components:
             Default currency used for this supplier
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33104,8 +33108,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33301,8 +33309,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33320,8 +33332,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33484,8 +33500,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33543,8 +33563,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33560,8 +33584,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -34422,8 +34450,12 @@ components:
             Default currency used for this supplier
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -35665,8 +35697,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -35850,8 +35886,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -35869,8 +35909,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -35967,8 +36011,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36009,8 +36057,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36026,8 +36078,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36405,8 +36461,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36450,8 +36510,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36565,8 +36629,12 @@ components:
             Purchase price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36866,8 +36934,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36913,8 +36985,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37033,8 +37109,12 @@ components:
             Line price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37262,8 +37342,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37380,8 +37464,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37499,8 +37587,12 @@ components:
             Sale price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37862,8 +37954,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -38187,8 +38283,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -38929,8 +39029,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -38991,8 +39095,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -39110,8 +39218,12 @@ components:
             Purchase price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -39548,8 +39660,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -39602,8 +39718,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -39726,8 +39846,12 @@ components:
             Line price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -40043,8 +40167,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -40184,8 +40312,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -40307,8 +40439,12 @@ components:
             Sale price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -41073,8 +41209,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -41606,8 +41746,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -41664,8 +41808,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
