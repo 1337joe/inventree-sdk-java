@@ -19,12 +19,10 @@ import com.w3asel.inventree.model.Company;
 import com.w3asel.inventree.model.CompanyBrief;
 import com.w3asel.inventree.model.Contact;
 import com.w3asel.inventree.model.ManufacturerPart;
-import com.w3asel.inventree.model.ManufacturerPartParameter;
 import com.w3asel.inventree.model.PaginatedAddressList;
 import com.w3asel.inventree.model.PaginatedCompanyList;
 import com.w3asel.inventree.model.PaginatedContactList;
 import com.w3asel.inventree.model.PaginatedManufacturerPartList;
-import com.w3asel.inventree.model.PaginatedManufacturerPartParameterList;
 import com.w3asel.inventree.model.PaginatedSupplierPartList;
 import com.w3asel.inventree.model.PaginatedSupplierPriceBreakList;
 import com.w3asel.inventree.model.PartBrief;
@@ -91,14 +89,6 @@ public class TestCompanyApi extends TestApi {
         api.companyPartManufacturerMetadataPartialUpdate(null, null);
         api.companyPartManufacturerMetadataRetrieve(null);
         api.companyPartManufacturerMetadataUpdate(null, null);
-        api.companyPartManufacturerParameterBulkDestroy(null);
-        api.companyPartManufacturerParameterCreate(null);
-        api.companyPartManufacturerParameterDestroy(null);
-        // api.companyPartManufacturerParameterList(null, null, null, null, null, null, null, null,
-        // null, null);
-        api.companyPartManufacturerParameterPartialUpdate(null, null);
-        // api.companyPartManufacturerParameterRetrieve(null);
-        api.companyPartManufacturerParameterUpdate(null, null);
         api.companyPartManufacturerPartialUpdate(null, null);
         // api.companyPartManufacturerRetrieve(null);
         api.companyPartManufacturerUpdate(null, null);
@@ -693,24 +683,6 @@ public class TestCompanyApi extends TestApi {
         JsonObject expected = InventreeDemoDataset
                 .getObjects(Model.COMPANY_MANUFACTURER_PART, manufacturerPart).get(0);
         assertManufacturerPartEquals(expected, actual, true);
-    }
-
-    @Disabled("No data in database")
-    @Test
-    void companyPartManufacturerParameterList() throws ApiException {
-        int limit = 5;
-        int offset = 0;
-        PaginatedManufacturerPartParameterList actual = api.companyPartManufacturerParameterList(
-                limit, null, null, null, null, offset, null, null, null, null, null);
-        assertEquals(0, actual.getCount());
-        List<ManufacturerPartParameter> actualList = actual.getResults();
-        // TODO validate, no results?
-    }
-
-    @Disabled("No demo data to find")
-    @Test
-    void companyPartManufacturerParameterRetrieve() throws ApiException {
-        api.companyPartManufacturerParameterRetrieve(1);
     }
 
     private static void assertSupplierPriceBreakEquals(JsonObject expected,

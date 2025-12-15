@@ -84,22 +84,6 @@ public class TestPartApi extends TestApi {
         api.partMetadataPartialUpdate(null, null);
         api.partMetadataRetrieve(null);
         api.partMetadataUpdate(null, null);
-        api.partParameterCreate(null);
-        api.partParameterDestroy(null);
-        api.partParameterList(null, null, null, null, null, null, null, null, null);
-        api.partParameterMetadataPartialUpdate(null, null);
-        api.partParameterMetadataRetrieve(null);
-        api.partParameterMetadataUpdate(null, null);
-        api.partParameterPartialUpdate(null, null);
-        api.partParameterRetrieve(null, null, null);
-        api.partParameterTemplateCreate(null);
-        api.partParameterTemplateDestroy(null);
-        api.partParameterTemplateList(null, null, null, null, null, null, null, null, null, null,
-                null);
-        api.partParameterTemplateMetadataPartialUpdate(null, null);
-        api.partParameterTemplateMetadataRetrieve(null);
-        api.partParameterTemplateMetadataUpdate(null, null);
-        api.partParameterUpdate(null, null);
         api.partPartialUpdate(null, null);
         api.partPricingPartialUpdate(null, null);
         api.partPricingRetrieve(null);
@@ -155,11 +139,6 @@ public class TestPartApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null);
-
-        api.partParameterList(limit, null, null, null, null, null, null, null, null);
-
-        api.partParameterTemplateList(limit, null, null, null, null, null, null, null, null, null,
-                null);
 
         api.partRelatedList(limit, null, null, null, null, null, null);
 

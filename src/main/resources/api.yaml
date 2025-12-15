@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '428'
+  version: '430'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -5200,7 +5200,11 @@ paths:
   /api/company/part/manufacturer/:
     get:
       operationId: company_part_manufacturer_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for list view of ManufacturerPart object.
+
+        - GET: Return list of ManufacturerPart objects
+        - POST: Create a new ManufacturerPart object
       parameters:
       - in: query
         name: MPN
@@ -5596,264 +5600,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Metadata'
           description: ''
-  /api/company/part/manufacturer/parameter/:
-    get:
-      operationId: company_part_manufacturer_parameter_list
-      description: API endpoint for list view of ManufacturerPartParamater model.
-      parameters:
-      - name: limit
-        required: true
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - in: query
-        name: manufacturer
-        schema:
-          type: integer
-      - in: query
-        name: manufacturer_part
-        schema:
-          type: integer
-      - in: query
-        name: manufacturer_part_detail
-        schema:
-          type: boolean
-          default: false
-        description: Include detailed information about the linked ManufacturerPart
-          in the response
-      - in: query
-        name: name
-        schema:
-          type: string
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - in: query
-        name: part
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: 'A search term. Searched fields: name, units, value.'
-        schema:
-          type: string
-      - in: query
-        name: units
-        schema:
-          type: string
-      - in: query
-        name: value
-        schema:
-          type: string
-      tags:
-      - company
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-        - r:view:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedManufacturerPartParameterList'
-          description: ''
-    post:
-      operationId: company_part_manufacturer_parameter_create
-      description: API endpoint for list view of ManufacturerPartParamater model.
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ManufacturerPartParameter'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ManufacturerPartParameter'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ManufacturerPartParameter'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:add:part
-        - r:add:purchase_order
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ManufacturerPartParameter'
-          description: ''
-    delete:
-      operationId: company_part_manufacturer_parameter_bulk_destroy
-      description: |-
-        Perform a DELETE operation against this list endpoint.
-
-        Note that the typical DRF list endpoint does not support DELETE,
-        so this method is provided as a custom implementation.
-      tags:
-      - company
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:delete:part
-        - r:delete:purchase_order
-      responses:
-        '204':
-          description: No response body
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BulkRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BulkRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BulkRequest'
-        required: true
-  /api/company/part/manufacturer/parameter/{id}/:
-    get:
-      operationId: company_part_manufacturer_parameter_retrieve
-      description: API endpoint for detail view of ManufacturerPartParameter model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-        - r:view:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ManufacturerPartParameter'
-          description: ''
-    put:
-      operationId: company_part_manufacturer_parameter_update
-      description: API endpoint for detail view of ManufacturerPartParameter model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ManufacturerPartParameter'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ManufacturerPartParameter'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ManufacturerPartParameter'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ManufacturerPartParameter'
-          description: ''
-    patch:
-      operationId: company_part_manufacturer_parameter_partial_update
-      description: API endpoint for detail view of ManufacturerPartParameter model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedManufacturerPartParameter'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedManufacturerPartParameter'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedManufacturerPartParameter'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ManufacturerPartParameter'
-          description: ''
-    delete:
-      operationId: company_part_manufacturer_parameter_destroy
-      description: API endpoint for detail view of ManufacturerPartParameter model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:delete:part
-        - r:delete:purchase_order
-      responses:
-        '204':
-          description: No response body
   /api/company/price-break/:
     get:
       operationId: company_price_break_list
@@ -7758,6 +7504,7 @@ paths:
         description: |-
           Model Type
 
+          * `part` - Part
           * `build` - Build Order
           * `buildline` - Build Order Line Item
           * `company` - Company
@@ -7765,7 +7512,6 @@ paths:
           * `salesorder` - Sales Order
           * `salesordershipment` - Sales Order Shipment
           * `returnorder` - Return Order
-          * `part` - Part
           * `stockitem` - Stock Item
           * `stocklocation` - Stock Location
       - name: offset
@@ -13764,6 +13510,692 @@ paths:
           description: ''
         '400':
           description: Invalid request
+  /api/parameter/:
+    get:
+      operationId: parameter_list
+      description: Override the GET method to determine export options.
+      parameters:
+      - in: query
+        name: enabled
+        schema:
+          type: boolean
+        description: Template Enabled
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: model_id
+        schema:
+          type: integer
+      - in: query
+        name: model_type
+        schema:
+          type: string
+        description: Model Type
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - name
+          - -name
+          - data
+          - -data
+          - units
+          - -units
+          - template
+          - -template
+          - updated
+          - -updated
+          - updated_by
+          - -updated_by
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: data, template__description,
+          template__name, template__units.'
+        schema:
+          type: string
+      - in: query
+        name: template
+        schema:
+          type: integer
+      - in: query
+        name: updated_by
+        schema:
+          type: integer
+      tags:
+      - parameter
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedParameterList'
+          description: ''
+    post:
+      operationId: parameter_create
+      description: List API endpoint for Parameter objects.
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parameter'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Parameter'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Parameter'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parameter'
+          description: ''
+    delete:
+      operationId: parameter_bulk_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - parameter
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '204':
+          description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
+  /api/parameter/{id}/:
+    get:
+      operationId: parameter_retrieve
+      description: Detail API endpoint for Parameter objects.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parameter'
+          description: ''
+    put:
+      operationId: parameter_update
+      description: Detail API endpoint for Parameter objects.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parameter'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Parameter'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Parameter'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parameter'
+          description: ''
+    patch:
+      operationId: parameter_partial_update
+      description: Detail API endpoint for Parameter objects.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedParameter'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedParameter'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedParameter'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parameter'
+          description: ''
+    delete:
+      operationId: parameter_destroy
+      description: Detail API endpoint for Parameter objects.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '204':
+          description: No response body
+  /api/parameter/{id}/metadata/:
+    get:
+      operationId: parameter_metadata_retrieve
+      description: Generic API endpoint for reading and editing metadata for a model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+    put:
+      operationId: parameter_metadata_update
+      description: Generic API endpoint for reading and editing metadata for a model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+    patch:
+      operationId: parameter_metadata_partial_update
+      description: Generic API endpoint for reading and editing metadata for a model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+  /api/parameter/template/:
+    get:
+      operationId: parameter_template_list
+      description: Override the GET method to determine export options.
+      parameters:
+      - in: query
+        name: checkbox
+        schema:
+          type: boolean
+      - in: query
+        name: enabled
+        schema:
+          type: boolean
+      - in: query
+        name: exists_for_model
+        schema:
+          type: string
+        description: Exists For Model
+      - in: query
+        name: for_model
+        schema:
+          type: string
+        description: For Model
+      - in: query
+        name: has_choices
+        schema:
+          type: boolean
+        description: Has Choice
+      - in: query
+        name: has_units
+        schema:
+          type: boolean
+        description: Has Units
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: model_type
+        schema:
+          type: string
+        description: Model Type
+      - in: query
+        name: name
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - name
+          - -name
+          - units
+          - -units
+          - checkbox
+          - -checkbox
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: description, name.'
+        schema:
+          type: string
+      - in: query
+        name: units
+        schema:
+          type: string
+      tags:
+      - parameter
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedParameterTemplateList'
+          description: ''
+    post:
+      operationId: parameter_template_create
+      description: List view for ParameterTemplate objects.
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParameterTemplate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ParameterTemplate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ParameterTemplate'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParameterTemplate'
+          description: ''
+  /api/parameter/template/{id}/:
+    get:
+      operationId: parameter_template_retrieve
+      description: Detail view for a ParameterTemplate object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParameterTemplate'
+          description: ''
+    put:
+      operationId: parameter_template_update
+      description: Detail view for a ParameterTemplate object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParameterTemplate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ParameterTemplate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ParameterTemplate'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParameterTemplate'
+          description: ''
+    patch:
+      operationId: parameter_template_partial_update
+      description: Detail view for a ParameterTemplate object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedParameterTemplate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedParameterTemplate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedParameterTemplate'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParameterTemplate'
+          description: ''
+    delete:
+      operationId: parameter_template_destroy
+      description: Detail view for a ParameterTemplate object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '204':
+          description: No response body
+  /api/parameter/template/{id}/metadata/:
+    get:
+      operationId: parameter_template_metadata_retrieve
+      description: Generic API endpoint for reading and editing metadata for a model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+    put:
+      operationId: parameter_template_metadata_update
+      description: Generic API endpoint for reading and editing metadata for a model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+    patch:
+      operationId: parameter_template_metadata_partial_update
+      description: Generic API endpoint for reading and editing metadata for a model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parameter
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
   /api/part/:
     get:
       operationId: part_list
@@ -15657,679 +16089,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/part/parameter/:
-    get:
-      operationId: part_parameter_list
-      description: Override the GET method to determine export options.
-      parameters:
-      - name: limit
-        required: true
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-          enum:
-          - name
-          - -name
-          - data
-          - -data
-          - part
-          - -part
-          - template
-          - -template
-          - updated
-          - -updated
-          - updated_by
-          - -updated_by
-      - in: query
-        name: part
-        schema:
-          type: integer
-      - in: query
-        name: part_detail
-        schema:
-          type: boolean
-          default: false
-        description: Include detailed information about the related part in the response
-      - name: search
-        required: false
-        in: query
-        description: 'A search term. Searched fields: data, template__description,
-          template__name, template__units.'
-        schema:
-          type: string
-      - in: query
-        name: template
-        schema:
-          type: integer
-      - in: query
-        name: template_detail
-        schema:
-          type: boolean
-          default: true
-        description: Include detailed information about the part parameter template.
-      - in: query
-        name: updated_by
-        schema:
-          type: integer
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedPartParameterList'
-          description: ''
-    post:
-      operationId: part_parameter_create
-      description: |-
-        API endpoint for accessing a list of PartParameter objects.
-
-        - GET: Return list of PartParameter objects
-        - POST: Create a new PartParameter object
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartParameter'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartParameter'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartParameter'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:add:part
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartParameter'
-          description: ''
-  /api/part/parameter/{id}/:
-    get:
-      operationId: part_parameter_retrieve
-      description: API endpoint for detail view of a single PartParameter object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      - in: query
-        name: part_detail
-        schema:
-          type: boolean
-          default: false
-        description: Include detailed information about the related part in the response
-      - in: query
-        name: template_detail
-        schema:
-          type: boolean
-          default: true
-        description: Include detailed information about the part parameter template.
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartParameter'
-          description: ''
-    put:
-      operationId: part_parameter_update
-      description: API endpoint for detail view of a single PartParameter object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartParameter'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartParameter'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartParameter'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartParameter'
-          description: ''
-    patch:
-      operationId: part_parameter_partial_update
-      description: API endpoint for detail view of a single PartParameter object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedPartParameter'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedPartParameter'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedPartParameter'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartParameter'
-          description: ''
-    delete:
-      operationId: part_parameter_destroy
-      description: API endpoint for detail view of a single PartParameter object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:delete:part
-      responses:
-        '204':
-          description: No response body
-  /api/part/parameter/{id}/metadata/:
-    get:
-      operationId: part_parameter_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: part_parameter_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: part_parameter_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-  /api/part/parameter/template/:
-    get:
-      operationId: part_parameter_template_list
-      description: Override the GET method to determine export options.
-      parameters:
-      - in: query
-        name: category
-        schema:
-          type: integer
-      - in: query
-        name: checkbox
-        schema:
-          type: boolean
-      - in: query
-        name: has_choices
-        schema:
-          type: boolean
-        description: Has Choice
-      - in: query
-        name: has_units
-        schema:
-          type: boolean
-        description: Has Units
-      - name: limit
-        required: true
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - in: query
-        name: name
-        schema:
-          type: string
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-          enum:
-          - name
-          - -name
-          - units
-          - -units
-          - checkbox
-          - -checkbox
-          - parts
-          - -parts
-      - in: query
-        name: part
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: 'A search term. Searched fields: description, name.'
-        schema:
-          type: string
-      - in: query
-        name: units
-        schema:
-          type: string
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedPartParameterTemplateList'
-          description: ''
-    post:
-      operationId: part_parameter_template_create
-      description: |-
-        API endpoint for accessing a list of PartParameterTemplate objects.
-
-        - GET: Return list of PartParameterTemplate objects
-        - POST: Create a new PartParameterTemplate object
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartParameterTemplate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartParameterTemplate'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartParameterTemplate'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:add:part
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartParameterTemplate'
-          description: ''
-  /api/part/parameter/template/{id}/:
-    get:
-      operationId: part_parameter_template_retrieve
-      description: API endpoint for accessing the detail view for a PartParameterTemplate
-        object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartParameterTemplate'
-          description: ''
-    put:
-      operationId: part_parameter_template_update
-      description: API endpoint for accessing the detail view for a PartParameterTemplate
-        object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartParameterTemplate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartParameterTemplate'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartParameterTemplate'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartParameterTemplate'
-          description: ''
-    patch:
-      operationId: part_parameter_template_partial_update
-      description: API endpoint for accessing the detail view for a PartParameterTemplate
-        object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedPartParameterTemplate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedPartParameterTemplate'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedPartParameterTemplate'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartParameterTemplate'
-          description: ''
-    delete:
-      operationId: part_parameter_template_destroy
-      description: API endpoint for accessing the detail view for a PartParameterTemplate
-        object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:delete:part
-      responses:
-        '204':
-          description: No response body
-  /api/part/parameter/template/{id}/metadata/:
-    get:
-      operationId: part_parameter_template_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: part_parameter_template_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: part_parameter_template_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/part/related/:
     get:
       operationId: part_related_list
@@ -19110,6 +18869,7 @@ paths:
         description: |-
           Model Type
 
+          * `part` - Part
           * `build` - Build Order
           * `buildline` - Build Order Line Item
           * `company` - Company
@@ -19117,7 +18877,6 @@ paths:
           * `salesorder` - Sales Order
           * `salesordershipment` - Sales Order Shipment
           * `returnorder` - Return Order
-          * `part` - Part
           * `stockitem` - Stock Item
           * `stocklocation` - Stock Location
       - name: offset
@@ -26928,27 +26687,27 @@ components:
       - user_detail
     AttachmentModelTypeEnum:
       enum:
+      - part
+      - manufacturerpart
       - build
       - company
       - supplierpart
-      - manufacturerpart
       - purchaseorder
       - salesorder
       - salesordershipment
       - returnorder
-      - part
       - stockitem
       type: string
       description: |-
+        * `part` - Part
+        * `manufacturerpart` - Manufacturer Part
         * `build` - Build Order
         * `company` - Company
         * `supplierpart` - Supplier Part
-        * `manufacturerpart` - Manufacturer Part
         * `purchaseorder` - Purchase Order
         * `salesorder` - Sales Order
         * `salesordershipment` - Sales Order Shipment
         * `returnorder` - Return Order
-        * `part` - Part
         * `stockitem` - Stock Item
     Barcode:
       type: object
@@ -26968,6 +26727,13 @@ components:
           type: string
           description: Scanned barcode data
           maxLength: 4095
+        part:
+          type: integer
+          nullable: true
+        manufacturerpart:
+          type: integer
+          nullable: true
+          title: Manufacturer Part
         build:
           type: integer
           nullable: true
@@ -26976,10 +26742,6 @@ components:
           type: integer
           nullable: true
           title: Supplier Part
-        manufacturerpart:
-          type: integer
-          nullable: true
-          title: Manufacturer Part
         purchaseorder:
           type: integer
           nullable: true
@@ -26996,9 +26758,6 @@ components:
           type: integer
           nullable: true
           title: Return Order
-        part:
-          type: integer
-          nullable: true
         stockitem:
           type: integer
           nullable: true
@@ -27157,6 +26916,13 @@ components:
       type: object
       description: Serializer class for unlinking a barcode from an internal model.
       properties:
+        part:
+          type: integer
+          nullable: true
+        manufacturerpart:
+          type: integer
+          nullable: true
+          title: Manufacturer Part
         build:
           type: integer
           nullable: true
@@ -27165,10 +26931,6 @@ components:
           type: integer
           nullable: true
           title: Supplier Part
-        manufacturerpart:
-          type: integer
-          nullable: true
-          title: Manufacturer Part
         purchaseorder:
           type: integer
           nullable: true
@@ -27185,9 +26947,6 @@ components:
           type: integer
           nullable: true
           title: Return Order
-        part:
-          type: integer
-          nullable: true
         stockitem:
           type: integer
           nullable: true
@@ -27593,6 +27352,11 @@ components:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
         priority:
           type: integer
           maximum: 9223372036854775807
@@ -27611,6 +27375,7 @@ components:
       - issued_by_detail
       - level
       - overdue
+      - parameters
       - part
       - part_detail
       - part_name
@@ -28235,12 +28000,11 @@ components:
           - $ref: '#/components/schemas/Category'
           readOnly: true
           nullable: true
-        parameter_template:
+        template:
           type: integer
-          description: Parameter Template
-        parameter_template_detail:
+        template_detail:
           allOf:
-          - $ref: '#/components/schemas/PartParameterTemplate'
+          - $ref: '#/components/schemas/ParameterTemplate'
           readOnly: true
         default_value:
           type: string
@@ -28248,9 +28012,9 @@ components:
           maxLength: 500
       required:
       - category
-      - parameter_template
-      - parameter_template_detail
       - pk
+      - template
+      - template_detail
     CategoryTree:
       type: object
       description: Serializer for PartCategory tree.
@@ -28331,8 +28095,9 @@ components:
           type: string
           readOnly: true
           nullable: true
-          title: Return the string representation for the primary address. This property
-            exists for backwards compatibility.
+          title: Primary Address
+          description: Return the string representation for the primary address. This
+            property exists for backwards compatibility.
         email:
           type: string
           format: email
@@ -28344,8 +28109,12 @@ components:
             Default currency used for this supplier
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -28402,10 +28171,16 @@ components:
           type: string
           description: Company Tax ID
           maxLength: 50
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
       required:
       - address_count
       - currency
       - name
+      - parameters
       - parts_manufactured
       - parts_supplied
       - pk
@@ -28835,11 +28610,14 @@ components:
       - user_detail
     DataImportSessionModelTypeEnum:
       enum:
+      - projectcode
+      - inventreecustomuserstatemodel
+      - customunit
+      - parametertemplate
+      - parameter
       - partcategory
       - parttesttemplate
       - partsellpricebreak
-      - partparametertemplate
-      - partparameter
       - part
       - bomitem
       - partcategoryparametertemplate
@@ -28847,12 +28625,8 @@ components:
       - company
       - contact
       - manufacturerpart
-      - manufacturerpartparameter
       - supplierpart
       - supplierpricebreak
-      - projectcode
-      - inventreecustomuserstatemodel
-      - customunit
       - stockitemtestresult
       - stockitem
       - stocklocation
@@ -28868,11 +28642,14 @@ components:
       - returnorderextraline
       type: string
       description: |-
+        * `projectcode` - Project Code
+        * `inventreecustomuserstatemodel` - Custom State
+        * `customunit` - Custom Unit
+        * `parametertemplate` - Parameter Template
+        * `parameter` - Parameter
         * `partcategory` - Part Category
         * `parttesttemplate` - Part Test Template
         * `partsellpricebreak` - Part Sale Price Break
-        * `partparametertemplate` - Part Parameter Template
-        * `partparameter` - Part Parameter
         * `part` - Part
         * `bomitem` - BOM Item
         * `partcategoryparametertemplate` - Part Category Parameter Template
@@ -28880,12 +28657,8 @@ components:
         * `company` - Company
         * `contact` - Contact
         * `manufacturerpart` - Manufacturer Part
-        * `manufacturerpartparameter` - Manufacturer Part Parameter
         * `supplierpart` - Supplier Part
         * `supplierpricebreak` - Supplier Price Break
-        * `projectcode` - Project Code
-        * `inventreecustomuserstatemodel` - Custom State
-        * `customunit` - Custom Unit
         * `stockitemtestresult` - Stock Item Test Result
         * `stockitem` - Stock Item
         * `stocklocation` - Stock Location
@@ -30528,43 +30301,16 @@ components:
           type: array
           items:
             type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
       required:
       - manufacturer
+      - parameters
       - part
       - pk
-    ManufacturerPartParameter:
-      type: object
-      description: Serializer for the ManufacturerPartParameter model.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        manufacturer_part:
-          type: integer
-        manufacturer_part_detail:
-          allOf:
-          - $ref: '#/components/schemas/ManufacturerPart'
-          readOnly: true
-          nullable: true
-        name:
-          type: string
-          description: Parameter name
-          maxLength: 500
-        value:
-          type: string
-          description: Parameter value
-          maxLength: 500
-        units:
-          type: string
-          nullable: true
-          description: Parameter units
-          maxLength: 64
-      required:
-      - manufacturer_part
-      - name
-      - pk
-      - value
     MeUser:
       type: object
       description: API serializer specifically for the 'me' endpoint.
@@ -30628,6 +30374,26 @@ components:
         metadata: {}
       required:
       - metadata
+    ModelType98eEnum:
+      enum:
+      - part.part
+      - company.manufacturerpart
+      - build.build
+      - company.company
+      - company.supplierpart
+      - order.purchaseorder
+      - order.salesorder
+      - order.returnorder
+      type: string
+      description: |-
+        * `part.part` - Part
+        * `company.manufacturerpart` - Manufacturer Part
+        * `build.build` - Build Order
+        * `company.company` - Company
+        * `company.supplierpart` - Supplier Part
+        * `order.purchaseorder` - Purchase Order
+        * `order.salesorder` - Sales Order
+        * `order.returnorder` - Return Order
     NameEnum:
       enum:
       - admin
@@ -31575,29 +31341,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ManufacturerPart'
-    PaginatedManufacturerPartParameterList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ManufacturerPartParameter'
     PaginatedNewsFeedEntryList:
       type: object
       required:
@@ -31690,6 +31433,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Owner'
+    PaginatedParameterList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+    PaginatedParameterTemplateList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterTemplate'
     PaginatedPartInternalPriceList:
       type: object
       required:
@@ -31736,52 +31525,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Part'
-    PaginatedPartParameterList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/PartParameter'
-    PaginatedPartParameterTemplateList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/PartParameterTemplate'
     PaginatedPartRelationList:
       type: object
       required:
@@ -32587,6 +32330,112 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserSettings'
+    Parameter:
+      type: object
+      description: Serializer for the Parameter model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        template:
+          type: integer
+          description: Parameter template
+        model_type:
+          allOf:
+          - $ref: '#/components/schemas/ModelType98eEnum'
+          default: ''
+        model_id:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: ID of the target model for this parameter
+        data:
+          type: string
+          description: Parameter Value
+          maxLength: 500
+          minLength: 1
+        data_numeric:
+          type: number
+          format: double
+          nullable: true
+        note:
+          type: string
+          description: Optional note field
+          maxLength: 500
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        template_detail:
+          allOf:
+          - $ref: '#/components/schemas/ParameterTemplate'
+          readOnly: true
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+      required:
+      - data
+      - model_id
+      - pk
+      - template
+      - template_detail
+      - updated_by_detail
+    ParameterTemplate:
+      type: object
+      description: Serializer for the ParameterTemplate model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        name:
+          type: string
+          description: Parameter Name
+          maxLength: 100
+        units:
+          type: string
+          description: Physical units for this parameter
+          maxLength: 25
+        description:
+          type: string
+          description: Parameter description
+          maxLength: 250
+        model_type:
+          nullable: true
+          default: ''
+          oneOf:
+          - $ref: '#/components/schemas/ModelType98eEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        checkbox:
+          type: boolean
+          description: Is this parameter a checkbox?
+        choices:
+          type: string
+          description: Valid choices for this parameter (comma-separated)
+          maxLength: 5000
+        selectionlist:
+          type: integer
+          nullable: true
+          title: Selection List
+          description: Selection list for this parameter
+        enabled:
+          type: boolean
+          description: Is this parameter template enabled?
+      required:
+      - name
+      - pk
     Part:
       type: object
       description: |-
@@ -32711,7 +32560,7 @@ components:
         parameters:
           type: array
           items:
-            $ref: '#/components/schemas/PartParameter'
+            $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
         pk:
@@ -33104,8 +32953,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33113,105 +32966,6 @@ components:
       - part
       - pk
       - quantity
-    PartParameter:
-      type: object
-      description: JSON serializers for the PartParameter model.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        part:
-          type: integer
-          description: Parent Part
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-        template:
-          type: integer
-          description: Parameter Template
-        template_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartParameterTemplate'
-          readOnly: true
-          nullable: true
-        data:
-          type: string
-          description: Parameter Value
-          maxLength: 500
-          minLength: 1
-        data_numeric:
-          type: number
-          format: double
-          nullable: true
-        note:
-          type: string
-          description: Optional note field
-          maxLength: 500
-        updated:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-          description: Timestamp of last update
-        updated_by:
-          type: integer
-          readOnly: true
-          nullable: true
-          title: Update By
-          description: User who last updated this object
-        updated_by_detail:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
-          nullable: true
-      required:
-      - data
-      - part
-      - pk
-      - template
-    PartParameterTemplate:
-      type: object
-      description: JSON serializer for the PartParameterTemplate model.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        name:
-          type: string
-          description: Parameter Name
-          maxLength: 100
-        units:
-          type: string
-          description: Physical units for this parameter
-          maxLength: 25
-        description:
-          type: string
-          description: Parameter description
-          maxLength: 250
-        parts:
-          type: integer
-          readOnly: true
-          nullable: true
-          description: Number of parts using this template
-        checkbox:
-          type: boolean
-          description: Is this parameter a checkbox?
-        choices:
-          type: string
-          description: Valid choices for this parameter (comma-separated)
-          maxLength: 5000
-        selectionlist:
-          type: integer
-          nullable: true
-          title: Selection List
-          description: Selection list for this parameter
-      required:
-      - name
-      - pk
     PartPricing:
       type: object
       description: Serializer for Part pricing information.
@@ -33301,8 +33055,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33320,8 +33078,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33484,8 +33246,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33543,8 +33309,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -33560,8 +33330,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -34092,6 +33866,11 @@ components:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
         priority:
           type: integer
           maximum: 9223372036854775807
@@ -34366,12 +34145,11 @@ components:
           - $ref: '#/components/schemas/Category'
           readOnly: true
           nullable: true
-        parameter_template:
+        template:
           type: integer
-          description: Parameter Template
-        parameter_template_detail:
+        template_detail:
           allOf:
-          - $ref: '#/components/schemas/PartParameterTemplate'
+          - $ref: '#/components/schemas/ParameterTemplate'
           readOnly: true
         default_value:
           type: string
@@ -34409,8 +34187,9 @@ components:
           type: string
           readOnly: true
           nullable: true
-          title: Return the string representation for the primary address. This property
-            exists for backwards compatibility.
+          title: Primary Address
+          description: Return the string representation for the primary address. This
+            property exists for backwards compatibility.
         email:
           type: string
           format: email
@@ -34422,8 +34201,12 @@ components:
             Default currency used for this supplier
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -34480,6 +34263,11 @@ components:
           type: string
           description: Company Tax ID
           maxLength: 50
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
     PatchedContact:
       type: object
       description: Serializer class for the Contact model.
@@ -35147,34 +34935,11 @@ components:
           type: array
           items:
             type: string
-    PatchedManufacturerPartParameter:
-      type: object
-      description: Serializer for the ManufacturerPartParameter model.
-      properties:
-        pk:
-          type: integer
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
           readOnly: true
-          title: ID
-        manufacturer_part:
-          type: integer
-        manufacturer_part_detail:
-          allOf:
-          - $ref: '#/components/schemas/ManufacturerPart'
-          readOnly: true
-          nullable: true
-        name:
-          type: string
-          description: Parameter name
-          maxLength: 500
-        value:
-          type: string
-          description: Parameter value
-          maxLength: 500
-        units:
-          type: string
-          nullable: true
-          description: Parameter units
-          maxLength: 64
     PatchedMeUser:
       type: object
       description: API serializer specifically for the 'me' endpoint.
@@ -35303,6 +35068,102 @@ components:
           readOnly: true
         read:
           type: boolean
+    PatchedParameter:
+      type: object
+      description: Serializer for the Parameter model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        template:
+          type: integer
+          description: Parameter template
+        model_type:
+          allOf:
+          - $ref: '#/components/schemas/ModelType98eEnum'
+          default: ''
+        model_id:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: ID of the target model for this parameter
+        data:
+          type: string
+          description: Parameter Value
+          maxLength: 500
+          minLength: 1
+        data_numeric:
+          type: number
+          format: double
+          nullable: true
+        note:
+          type: string
+          description: Optional note field
+          maxLength: 500
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        template_detail:
+          allOf:
+          - $ref: '#/components/schemas/ParameterTemplate'
+          readOnly: true
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+    PatchedParameterTemplate:
+      type: object
+      description: Serializer for the ParameterTemplate model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        name:
+          type: string
+          description: Parameter Name
+          maxLength: 100
+        units:
+          type: string
+          description: Physical units for this parameter
+          maxLength: 25
+        description:
+          type: string
+          description: Parameter description
+          maxLength: 250
+        model_type:
+          nullable: true
+          default: ''
+          oneOf:
+          - $ref: '#/components/schemas/ModelType98eEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        checkbox:
+          type: boolean
+          description: Is this parameter a checkbox?
+        choices:
+          type: string
+          description: Valid choices for this parameter (comma-separated)
+          maxLength: 5000
+        selectionlist:
+          type: integer
+          nullable: true
+          title: Selection List
+          description: Selection list for this parameter
+        enabled:
+          type: boolean
+          description: Is this parameter template enabled?
     PatchedPart:
       type: object
       description: |-
@@ -35427,7 +35288,7 @@ components:
         parameters:
           type: array
           items:
-            $ref: '#/components/schemas/PartParameter'
+            $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
         pk:
@@ -35665,102 +35526,15 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-    PatchedPartParameter:
-      type: object
-      description: JSON serializers for the PartParameter model.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        part:
-          type: integer
-          description: Parent Part
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-        template:
-          type: integer
-          description: Parameter Template
-        template_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartParameterTemplate'
-          readOnly: true
-          nullable: true
-        data:
-          type: string
-          description: Parameter Value
-          maxLength: 500
-          minLength: 1
-        data_numeric:
-          type: number
-          format: double
-          nullable: true
-        note:
-          type: string
-          description: Optional note field
-          maxLength: 500
-        updated:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-          description: Timestamp of last update
-        updated_by:
-          type: integer
-          readOnly: true
-          nullable: true
-          title: Update By
-          description: User who last updated this object
-        updated_by_detail:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
-          nullable: true
-    PatchedPartParameterTemplate:
-      type: object
-      description: JSON serializer for the PartParameterTemplate model.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        name:
-          type: string
-          description: Parameter Name
-          maxLength: 100
-        units:
-          type: string
-          description: Physical units for this parameter
-          maxLength: 25
-        description:
-          type: string
-          description: Parameter description
-          maxLength: 250
-        parts:
-          type: integer
-          readOnly: true
-          nullable: true
-          description: Number of parts using this template
-        checkbox:
-          type: boolean
-          description: Is this parameter a checkbox?
-        choices:
-          type: string
-          description: Valid choices for this parameter (comma-separated)
-          maxLength: 5000
-        selectionlist:
-          type: integer
-          nullable: true
-          title: Selection List
-          description: Selection list for this parameter
     PatchedPartPricing:
       type: object
       description: Serializer for Part pricing information.
@@ -35850,8 +35624,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -35869,8 +35647,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -35967,8 +35749,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36009,8 +35795,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36026,8 +35816,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36368,6 +36162,11 @@ components:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
         complete_date:
           type: string
           format: date
@@ -36405,8 +36204,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36450,8 +36253,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36565,8 +36372,12 @@ components:
             Purchase price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36839,6 +36650,11 @@ components:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
         complete_date:
           type: string
           format: date
@@ -36866,8 +36682,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -36913,8 +36733,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37033,8 +36857,12 @@ components:
             Line price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37230,6 +37058,11 @@ components:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
         customer:
           type: integer
           nullable: true
@@ -37262,8 +37095,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37380,8 +37217,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37499,8 +37340,12 @@ components:
             Sale price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -37862,8 +37707,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -38158,6 +38007,11 @@ components:
             $ref: '#/components/schemas/SupplierPriceBreakBrief'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
     PatchedSupplierPriceBreak:
       type: object
       description: |-
@@ -38187,8 +38041,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -38892,6 +38750,11 @@ components:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
         complete_date:
           type: string
           format: date
@@ -38929,8 +38792,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -38941,6 +38808,7 @@ components:
       required:
       - barcode_hash
       - created_by
+      - parameters
       - pk
       - reference
       - status
@@ -38991,8 +38859,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -39110,8 +38982,12 @@ components:
             Purchase price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -39260,7 +39136,6 @@ components:
       enum:
       - BuildStatus
       - DataImportStatusCode
-      - LabelPrinterStatus
       - MachineStatus
       - PurchaseOrderStatus
       - ReturnOrderLineStatus
@@ -39272,7 +39147,6 @@ components:
       description: |-
         * `BuildStatus` - BuildStatus
         * `DataImportStatusCode` - DataImportStatusCode
-        * `LabelPrinterStatus` - LabelPrinterStatus
         * `MachineStatus` - MachineStatus
         * `PurchaseOrderStatus` - PurchaseOrderStatus
         * `ReturnOrderLineStatus` - ReturnOrderLineStatus
@@ -39521,6 +39395,11 @@ components:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
         complete_date:
           type: string
           format: date
@@ -39548,8 +39427,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -39562,6 +39445,7 @@ components:
       required:
       - barcode_hash
       - created_by
+      - parameters
       - pk
       - reference
       - status
@@ -39602,8 +39486,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -39726,8 +39614,12 @@ components:
             Line price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -40011,6 +39903,11 @@ components:
           - $ref: '#/components/schemas/Owner'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
         customer:
           type: integer
           nullable: true
@@ -40043,8 +39940,12 @@ components:
 
             * `` - ---------
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -40061,6 +39962,7 @@ components:
       required:
       - barcode_hash
       - created_by
+      - parameters
       - pk
       - reference
       - status
@@ -40184,8 +40086,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -40307,8 +40213,12 @@ components:
             Sale price currency
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -41073,8 +40983,12 @@ components:
             Purchase currency of this stock item
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -41570,10 +41484,16 @@ components:
             $ref: '#/components/schemas/SupplierPriceBreakBrief'
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
       required:
       - SKU
       - barcode_hash
       - pack_quantity_native
+      - parameters
       - part
       - pk
       - supplier
@@ -41606,8 +41526,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -41664,8 +41588,12 @@ components:
             Select currency from available options
 
             * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
             * `CNY` - CNY - Chinese Yuan
             * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
@@ -41712,6 +41640,7 @@ components:
       - scheduled_tasks
     TemplateModelTypeEnum:
       enum:
+      - part
       - build
       - buildline
       - company
@@ -41719,11 +41648,11 @@ components:
       - salesorder
       - salesordershipment
       - returnorder
-      - part
       - stockitem
       - stocklocation
       type: string
       description: |-
+        * `part` - Part
         * `build` - Build Order
         * `buildline` - Build Order Line Item
         * `company` - Company
@@ -41731,7 +41660,6 @@ components:
         * `salesorder` - Sales Order
         * `salesordershipment` - Sales Order Shipment
         * `returnorder` - Return Order
-        * `part` - Part
         * `stockitem` - Stock Item
         * `stocklocation` - Stock Location
     TestEmail:
