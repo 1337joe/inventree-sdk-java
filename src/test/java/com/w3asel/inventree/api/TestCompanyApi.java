@@ -14,6 +14,7 @@ import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.Address;
+import com.w3asel.inventree.model.AddressBrief;
 import com.w3asel.inventree.model.BulkRequest;
 import com.w3asel.inventree.model.Company;
 import com.w3asel.inventree.model.CompanyBrief;
@@ -188,13 +189,9 @@ public class TestCompanyApi extends TestApi {
 
         // verify data not directly in demo dataset
         if (1 == company) {
-            assertEquals("04964 Cox View Suite 815, 94832, Wesleyport, Delaware, Bolivia",
-                    actual.getAddress(), "Incorrect address");
-            assertEquals(2, actual.getAddressCount(), "Incorrect address count");
-
             JsonObject expectedAddress =
                     InventreeDemoDataset.getObjects(Model.COMPANY_ADDRESS, 54).get(0);
-            assertAddressEquals(expectedAddress, actual.getPrimaryAddress());
+            assertAddressBriefEquals(expectedAddress, actual.getPrimaryAddress());
 
             assertEquals(0, actual.getPartsManufactured(), "Incorrect parts manufactured");
             assertEquals(200, actual.getPartsSupplied(), "Incorrect parts supplied");
@@ -204,6 +201,21 @@ public class TestCompanyApi extends TestApi {
             assertEquals(5, actual.getPartsManufactured(), "Incorrect parts manufactured");
             assertEquals(0, actual.getPartsSupplied(), "Incorrect parts supplied");
         }
+    }
+
+    private static void assertAddressBriefEquals(JsonObject expected, AddressBrief actual) {
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        assertFieldEquals("line1", fields, actual.getLine1());
+        assertFieldEquals("line2", fields, actual.getLine2());
+        assertFieldEquals("postal_code", fields, actual.getPostalCode());
+        assertFieldEquals("postal_city", fields, actual.getPostalCity());
+        assertFieldEquals("province", fields, actual.getProvince());
+        assertFieldEquals("country", fields, actual.getCountry());
+        assertFieldEquals("shipping_notes", fields, actual.getShippingNotes());
+        assertFieldEquals("internal_shipping_notes", fields, actual.getInternalShippingNotes());
     }
 
     private static void assertAddressEquals(JsonObject expected, Address actual) {
