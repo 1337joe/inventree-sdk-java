@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '430'
+  version: '431'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -28091,13 +28091,6 @@ components:
           title: Phone number
           description: Contact phone number
           maxLength: 50
-        address:
-          type: string
-          readOnly: true
-          nullable: true
-          title: Primary Address
-          description: Return the string representation for the primary address. This
-            property exists for backwards compatibility.
         email:
           type: string
           format: email
@@ -28159,12 +28152,9 @@ components:
           format: uri
           writeOnly: true
           description: URL of remote image file
-        address_count:
-          type: integer
-          readOnly: true
         primary_address:
           allOf:
-          - $ref: '#/components/schemas/Address'
+          - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
           nullable: true
         tax_id:
@@ -28177,7 +28167,6 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
       required:
-      - address_count
       - currency
       - name
       - parameters
@@ -34183,13 +34172,6 @@ components:
           title: Phone number
           description: Contact phone number
           maxLength: 50
-        address:
-          type: string
-          readOnly: true
-          nullable: true
-          title: Primary Address
-          description: Return the string representation for the primary address. This
-            property exists for backwards compatibility.
         email:
           type: string
           format: email
@@ -34251,12 +34233,9 @@ components:
           format: uri
           writeOnly: true
           description: URL of remote image file
-        address_count:
-          type: integer
-          readOnly: true
         primary_address:
           allOf:
-          - $ref: '#/components/schemas/Address'
+          - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
           nullable: true
         tax_id:
