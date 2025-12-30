@@ -495,9 +495,8 @@ public class TestBuildApi extends TestApi {
         assertBuildEquals(expected, actual, false);
 
         // verify data not directly in demo dataset
-        // TODO overdue filter works like this, actual results come back not overdue
-        // actual.getTargetDate() != null && actual.getTargetDate().isBefore(LocalDate.now());
-        boolean expectedOverdue = false;
+        boolean expectedOverdue =
+                actual.getTargetDate() != null && actual.getTargetDate().isBefore(LocalDate.now());
 
         String expectedIssuedByName;
         String expectedPartName;
