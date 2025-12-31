@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '431'
+  version: '432'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -3125,6 +3125,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: supplier_part_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: tracked
         schema:
           type: boolean
@@ -3434,7 +3439,7 @@ paths:
         name: allocations
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include allocation details showing which stock items are allocated
           to this build line.
       - in: query
@@ -3446,7 +3451,7 @@ paths:
         name: assembly_detail
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include brief details of the assembly (parent part) related to
           the BOM item in this build line.
       - in: query
@@ -3462,7 +3467,7 @@ paths:
         name: bom_item_detail
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include detailed information about the BOM item linked to this
           build line.
       - in: query
@@ -3558,7 +3563,7 @@ paths:
         name: part_detail
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include detailed information about the specific part being built
           or consumed in this build line.
       - name: search
@@ -3632,21 +3637,21 @@ paths:
         name: allocations
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include allocation details showing which stock items are allocated
           to this build line.
       - in: query
         name: assembly_detail
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include brief details of the assembly (parent part) related to
           the BOM item in this build line.
       - in: query
         name: bom_item_detail
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include detailed information about the BOM item linked to this
           build line.
       - in: query
@@ -3664,7 +3669,7 @@ paths:
         name: part_detail
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include detailed information about the specific part being built
           or consumed in this build line.
       tags:
@@ -4767,6 +4772,13 @@ paths:
         name: manufacturer_part
         schema:
           type: integer
+      - in: query
+        name: manufacturer_part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the linked ManufacturerPart
+          in the response
       - name: offset
         required: false
         in: query
@@ -4842,7 +4854,7 @@ paths:
         name: supplier_detail
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include detailed information about the Supplier in the response
       - in: query
         name: tags__name
@@ -4956,6 +4968,13 @@ paths:
           default: false
         description: Include detailed information about the Manufacturer in the response
       - in: query
+        name: manufacturer_part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the linked ManufacturerPart
+          in the response
+      - in: query
         name: part_detail
         schema:
           type: boolean
@@ -4971,7 +4990,7 @@ paths:
         name: supplier_detail
         schema:
           type: boolean
-          default: true
+          default: false
         description: Include detailed information about the Supplier in the response
       tags:
       - company
@@ -27357,6 +27376,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
         priority:
           type: integer
           maximum: 9223372036854775807
@@ -27375,7 +27395,6 @@ components:
       - issued_by_detail
       - level
       - overdue
-      - parameters
       - part
       - part_detail
       - part_name
@@ -28166,10 +28185,10 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
       required:
       - currency
       - name
-      - parameters
       - parts_manufactured
       - parts_supplied
       - pk
@@ -30295,9 +30314,9 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
       required:
       - manufacturer
-      - parameters
       - part
       - pk
     MeUser:
@@ -32677,10 +32696,6 @@ components:
           readOnly: true
           nullable: true
           title: Stock Items
-        suppliers:
-          type: integer
-          readOnly: true
-          nullable: true
         total_in_stock:
           type: number
           format: double
@@ -32721,6 +32736,7 @@ components:
           description: Add initial supplier information for this part
         copy_category_parameters:
           type: boolean
+          writeOnly: true
           default: true
           description: Copy parameter templates from selected part category
         tags:
@@ -33860,6 +33876,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
         priority:
           type: integer
           maximum: 9223372036854775807
@@ -34247,6 +34264,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
     PatchedContact:
       type: object
       description: Serializer class for the Contact model.
@@ -34919,6 +34937,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
     PatchedMeUser:
       type: object
       description: API serializer specifically for the 'me' endpoint.
@@ -35395,10 +35414,6 @@ components:
           readOnly: true
           nullable: true
           title: Stock Items
-        suppliers:
-          type: integer
-          readOnly: true
-          nullable: true
         total_in_stock:
           type: number
           format: double
@@ -35439,6 +35454,7 @@ components:
           description: Add initial supplier information for this part
         copy_category_parameters:
           type: boolean
+          writeOnly: true
           default: true
           description: Copy parameter templates from selected part category
         tags:
@@ -36146,6 +36162,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
         complete_date:
           type: string
           format: date
@@ -36634,6 +36651,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
         complete_date:
           type: string
           format: date
@@ -37042,6 +37060,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
         customer:
           type: integer
           nullable: true
@@ -37991,6 +38010,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
     PatchedSupplierPriceBreak:
       type: object
       description: |-
@@ -38734,6 +38754,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
         complete_date:
           type: string
           format: date
@@ -38787,7 +38808,6 @@ components:
       required:
       - barcode_hash
       - created_by
-      - parameters
       - pk
       - reference
       - status
@@ -39379,6 +39399,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
         complete_date:
           type: string
           format: date
@@ -39424,7 +39445,6 @@ components:
       required:
       - barcode_hash
       - created_by
-      - parameters
       - pk
       - reference
       - status
@@ -39887,6 +39907,7 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
         customer:
           type: integer
           nullable: true
@@ -39941,7 +39962,6 @@ components:
       required:
       - barcode_hash
       - created_by
-      - parameters
       - pk
       - reference
       - status
@@ -41468,11 +41488,11 @@ components:
           items:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
+          nullable: true
       required:
       - SKU
       - barcode_hash
       - pack_quantity_native
-      - parameters
       - part
       - pk
       - supplier

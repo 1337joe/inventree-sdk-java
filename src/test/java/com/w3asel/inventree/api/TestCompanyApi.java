@@ -543,7 +543,7 @@ public class TestCompanyApi extends TestApi {
         int offset = 0;
         // TODO missing complex filter parameters on this query
         PaginatedSupplierPartList actual =
-                api.companyPartList(limit, null, null, null, company, null, null, null, null,
+                api.companyPartList(limit, null, null, null, company, null, null, null, null, null,
                         offset, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect part list count");
         List<SupplierPart> actualList = actual.getResults();
@@ -566,8 +566,9 @@ public class TestCompanyApi extends TestApi {
     @CsvSource({"11,,,,", "11,false,true,false,true", "11,true,false,true,false"})
     void companyPartRetrieve(int supplierPart, Boolean manufacturerDetail, Boolean partDetail,
             Boolean pretty, Boolean supplierDetail) throws ApiException {
-        SupplierPart actual = api.companyPartRetrieve(supplierPart, manufacturerDetail, partDetail,
-                pretty, supplierDetail);
+        Boolean manufacturerPartDetail = null;
+        SupplierPart actual = api.companyPartRetrieve(supplierPart, manufacturerDetail,
+                manufacturerPartDetail, partDetail, pretty, supplierDetail);
         JsonObject expected =
                 InventreeDemoDataset.getObjects(Model.COMPANY_SUPPLIER_PART, supplierPart).get(0);
         assertSupplierPartEquals(expected, actual, true);
@@ -614,17 +615,14 @@ public class TestCompanyApi extends TestApi {
             assertEquals(expectedPrettyName, actual.getPrettyName(), "Incorrect pretty name");
         }
 
-        // default true
-        if (supplierDetail == null || supplierDetail) {
+        if (supplierDetail == null || !supplierDetail) {
+            assertNull(actual.getSupplierDetail(), "Expected unpopulated supplier detail");
+        } else {
             CompanyBrief actualSupplierDetail = actual.getSupplierDetail();
             assertNotNull(actualSupplierDetail, "Expected populated supplier detail");
             assertEquals(InventreeDemoDataset.getFields(expectedSupplier).get("name").getAsString(),
                     actualSupplierDetail.getName(), "Incorrect supplier detail name");
-        } else {
-            assertNull(actual.getSupplierDetail(), "Expected unpopulated supplier detail");
         }
-
-
     }
 
     private static void assertManufacturerPartEquals(JsonObject expected, ManufacturerPart actual,
