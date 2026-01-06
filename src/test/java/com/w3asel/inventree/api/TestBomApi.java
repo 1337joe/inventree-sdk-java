@@ -108,7 +108,7 @@ public class TestBomApi extends TestApi {
 
         PaginatedBomItemList actual = api.bomList(limit, null, null, null, null, null, null, null,
                 offset, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null);
+                null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total bom item count");
         List<BomItem> actualList = actual.getResults();
 
@@ -127,11 +127,12 @@ public class TestBomApi extends TestApi {
     }
 
     @ParameterizedTest
-    @CsvSource({"1,,,", "375,true,false,false", "1,false,true,true"})
+    @CsvSource({"1,,,,,", "375,true,false,true,false,true", "1,false,true,false,true,false"})
     void bomRetrieve(int pk, Boolean requestCanBuild, Boolean requestPartDetail,
-            Boolean requestSubPartDetail) throws ApiException {
-        BomItem actual =
-                api.bomRetrieve(pk, requestCanBuild, requestPartDetail, requestSubPartDetail);
+            Boolean requestPricing, Boolean requestSubPartDetail, Boolean requestSubstitutes)
+            throws ApiException {
+        BomItem actual = api.bomRetrieve(pk, requestCanBuild, requestPartDetail, requestPricing,
+                requestSubPartDetail, requestSubstitutes);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.BOM_ITEM, pk).get(0);
         assertBomItemEquals(expected, actual);
 
@@ -162,12 +163,25 @@ public class TestBomApi extends TestApi {
             assertEquals(actual.getPart(), actual.getPartDetail().getPk(),
                     "Incorrect part details");
         }
+
+        // defaults to true
+        if (requestPricing == null || requestPricing) {
+            assertNotNull(actual.getPricingMax(), "Expected populated pricing");
+        } else {
+            assertNull(actual.getPricingMax(), "Expected unpopulated pricing");
+        }
+
         if (requestSubPartDetail == null || !requestSubPartDetail) {
             assertNull(actual.getPartDetail(), "Expected unpopulated sub-part details");
         } else {
             assertNotNull(actual.getSubPartDetail(), "Expected populated sub-part details");
             assertEquals(actual.getSubPart(), actual.getSubPartDetail().getPk(),
                     "Incorrect sub-part details");
+        }
+        if (requestSubstitutes == null || !requestSubstitutes) {
+            assertNull(actual.getSubstitutes(), "Expected unpopulated substitutes");
+        } else {
+            assertNotNull(actual.getSubstitutes(), "Expected populated substitutes");
         }
     }
 

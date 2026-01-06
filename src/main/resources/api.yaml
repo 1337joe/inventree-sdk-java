@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '432'
+  version: '433'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1376,6 +1376,11 @@ paths:
         schema:
           type: boolean
         description: Assembly part is trackable
+      - in: query
+        name: pricing
+        schema:
+          type: boolean
+          default: false
       - name: search
         required: false
         in: query
@@ -1409,6 +1414,11 @@ paths:
         schema:
           type: boolean
         description: Component part is virtual
+      - in: query
+        name: substitutes
+        schema:
+          type: boolean
+          default: false
       - in: query
         name: uses
         schema:
@@ -1521,7 +1531,17 @@ paths:
           default: false
         description: Include detailed information about the related part in the response
       - in: query
+        name: pricing
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: sub_part_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: substitutes
         schema:
           type: boolean
           default: false
