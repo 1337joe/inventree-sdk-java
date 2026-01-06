@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '434'
+  version: '435'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -25337,6 +25337,27 @@ paths:
         '401':
           $ref: '#/components/responses/allauth.Unauthenticated'
       operationId: allauth_auth_session_delete
+  /api/auth/v1/tokens/refresh:
+    get:
+      tags:
+      - Tokens
+      summary: |
+        Refresh the access token
+      description: |
+        Used to retrieve a new access token. Depending on `settings.HEADLESS_JWT_ROTATE_REFRESH_TOKEN`,
+        a new refresh token is returned as well.
+      requestBody:
+        $ref: '#/components/requestBodies/allauth.RefreshToken'
+      responses:
+        '200':
+          $ref: '#/components/responses/allauth.RefreshToken'
+        '400':
+          description: The refresh token is invalid or expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allauth.ErrorResponse'
+      operationId: allauth_tokens_refresh_get
   /api/auth/v1/account/password/change:
     post:
       tags:
@@ -25894,6 +25915,16 @@ components:
                 $ref: '#/components/schemas/allauth.WebAuthnCredential'
             required:
             - credential
+    allauth.RefreshToken:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              refresh_token:
+                $ref: '#/components/schemas/allauth.RefreshToken'
+            required:
+            - refresh_token
     allauth.RequestLoginCode:
       description: Request a login code.
       required: true
@@ -26190,16 +26221,7 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/components/schemas/allauth.ReauthenticationResponse'
-              status:
-                type: integer
-                example: 200
-            required:
-            - data
-            - status
+            $ref: '#/components/schemas/allauth.ReauthenticationResponse'
           examples:
             reauthentication_required:
               summary: |
@@ -26241,6 +26263,27 @@ components:
             required:
             - status
             - data
+    allauth.RefreshToken:
+      description: A new access token (and optionally new refresh token).
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/components/schemas/allauth.StatusOK'
+              data:
+                type: object
+                properties:
+                  access_token:
+                    $ref: '#/components/schemas/allauth.AccessToken'
+                  refresh_token:
+                    $ref: '#/components/schemas/allauth.RefreshToken'
+                required:
+                - access_token
+            required:
+            - data
+            - status
     allauth.SessionGone:
       description: |
         The response indicates session is invalid or no longer exists.
@@ -42034,6 +42077,11 @@ components:
       - links
       - up_to_date
       - version
+    allauth.AccessToken:
+      type: string
+      description: |
+        The access token.
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdW
     allauth.AccountConfiguration:
       type: object
       description: |
@@ -42796,6 +42844,11 @@ components:
         - type
         - total_code_count
         - unused_code_count
+    allauth.RefreshToken:
+      type: string
+      description: |
+        The refresh token.
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.QV30
     allauth.RequestLoginCode:
       type: object
       anyOf:
