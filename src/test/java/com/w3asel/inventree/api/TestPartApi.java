@@ -80,7 +80,7 @@ public class TestPartApi extends TestApi {
         api.partList(null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null);
         api.partMetadataPartialUpdate(null, null);
         api.partMetadataRetrieve(null);
         api.partMetadataUpdate(null, null);
@@ -97,7 +97,7 @@ public class TestPartApi extends TestApi {
         api.partRelatedRetrieve(null);
         api.partRelatedUpdate(null, null);
         api.partRequirementsRetrieve(null);
-        api.partRetrieve(null, null, null, null, null, null);
+        api.partRetrieve(null, null, null, null, null, null, null);
         api.partSalePriceCreate(null);
         api.partSalePriceDestroy(null);
         api.partSalePriceList(null, null, null, null, null);
@@ -131,14 +131,14 @@ public class TestPartApi extends TestApi {
     @Test
     void test() throws ApiException {
         // TODO verify results
-        Part actual = api.partRetrieve(1, null, null, null, null, null);
+        Part actual = api.partRetrieve(1, null, null, null, null, null, null);
         assertNotNull(actual);
 
         int limit = 1000;
         api.partList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null);
 
         api.partRelatedList(limit, null, null, null, null, null, null);
 
