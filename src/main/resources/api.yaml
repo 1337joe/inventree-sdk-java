@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '436'
+  version: '437'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26885,6 +26885,12 @@ components:
           type: array
           items:
             type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
+          nullable: true
       required:
       - barcode_hash
       - icon
@@ -27444,7 +27450,7 @@ components:
         metadata: {}
       required:
       - metadata
-    ModelType98eEnum:
+    ModelType4f8Enum:
       enum:
       - part.part
       - company.manufacturerpart
@@ -27454,6 +27460,7 @@ components:
       - order.purchaseorder
       - order.salesorder
       - order.returnorder
+      - stock.stocklocation
       type: string
       description: |-
         * `part.part` - Part
@@ -27464,6 +27471,7 @@ components:
         * `order.purchaseorder` - Purchase Order
         * `order.salesorder` - Sales Order
         * `order.returnorder` - Return Order
+        * `stock.stocklocation` - Stock Location
     NameEnum:
       enum:
       - admin
@@ -29413,7 +29421,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelType98eEnum'
+          - $ref: '#/components/schemas/ModelType4f8Enum'
           default: ''
         model_id:
           type: integer
@@ -29485,7 +29493,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelType98eEnum'
+          - $ref: '#/components/schemas/ModelType4f8Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
@@ -31823,6 +31831,12 @@ components:
           type: array
           items:
             type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
+          nullable: true
     PatchedMachineConfig:
       type: object
       description: Serializer for a MachineConfig.
@@ -32141,7 +32155,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelType98eEnum'
+          - $ref: '#/components/schemas/ModelType4f8Enum'
           default: ''
         model_id:
           type: integer
@@ -32206,7 +32220,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelType98eEnum'
+          - $ref: '#/components/schemas/ModelType4f8Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
