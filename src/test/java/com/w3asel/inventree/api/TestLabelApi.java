@@ -34,9 +34,6 @@ public class TestLabelApi extends TestApi {
         api.labelTemplateCreate(null);
         api.labelTemplateDestroy(null);
         // api.labelTemplateList(null, null, null, null, null, null);
-        api.labelTemplateMetadataPartialUpdate(null, null);
-        api.labelTemplateMetadataRetrieve(null);
-        api.labelTemplateMetadataUpdate(null, null);
         api.labelTemplatePartialUpdate(null, null);
         // api.labelTemplateRetrieve(null);
         api.labelTemplateUpdate(null, null);

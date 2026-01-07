@@ -28,9 +28,6 @@ public class TestAttachmentApi extends TestApi {
         // api.attachmentCreate(null);
         // api.attachmentDestroy(null);
         // api.attachmentList(null, null, null, null, null, null, null, null, null);
-        api.attachmentMetadataPartialUpdate(null, null);
-        api.attachmentMetadataRetrieve(null);
-        api.attachmentMetadataUpdate(null, null);
         api.attachmentPartialUpdate(null, null);
         api.attachmentRetrieve(null);
         api.attachmentUpdate(null, null);

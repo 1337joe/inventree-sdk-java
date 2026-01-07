@@ -59,9 +59,6 @@ public class TestBuildApi extends TestApi {
         api.buildItemCreate(null);
         api.buildItemDestroy(null);
         // api.buildItemList(null, null, null, null, null, null, null, null, null, null, null);
-        api.buildItemMetadataPartialUpdate(null, null);
-        api.buildItemMetadataRetrieve(null);
-        api.buildItemMetadataUpdate(null, null);
         api.buildItemPartialUpdate(null, null);
         // api.buildItemRetrieve(null);
         api.buildItemUpdate(null, null);
@@ -75,9 +72,6 @@ public class TestBuildApi extends TestApi {
         // api.buildList(null, null, null, null, null, null, null, null, null, null, null, null,
         // null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
         // null, null, null, null, null, null, null);
-        api.buildMetadataPartialUpdate(null, null);
-        api.buildMetadataRetrieve(null);
-        api.buildMetadataUpdate(null, null);
         api.buildPartialUpdate(null, null);
         // api.buildRetrieve(null);
         api.buildScrapOutputsCreate(null, null);

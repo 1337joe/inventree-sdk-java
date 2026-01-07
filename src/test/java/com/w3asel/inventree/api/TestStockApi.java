@@ -65,9 +65,6 @@ public class TestStockApi extends TestApi {
         api.stockLocationDestroy(null);
         api.stockLocationList(null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null);
-        api.stockLocationMetadataPartialUpdate(null, null);
-        api.stockLocationMetadataRetrieve(null);
-        api.stockLocationMetadataUpdate(null, null);
         api.stockLocationPartialUpdate(null, null);
         api.stockLocationBulkPartialUpdate(null);
         api.stockLocationRetrieve(null, null);
@@ -75,16 +72,10 @@ public class TestStockApi extends TestApi {
         api.stockLocationTypeCreate(null);
         api.stockLocationTypeDestroy(null);
         api.stockLocationTypeList(null, null, null, null);
-        api.stockLocationTypeMetadataPartialUpdate(null, null);
-        api.stockLocationTypeMetadataRetrieve(null);
-        api.stockLocationTypeMetadataUpdate(null, null);
         api.stockLocationTypePartialUpdate(null, null);
         api.stockLocationTypeRetrieve(null);
         api.stockLocationTypeUpdate(null, null);
         api.stockMergeCreate(null);
-        api.stockMetadataPartialUpdate(null, null);
-        api.stockMetadataRetrieve(null);
-        api.stockMetadataUpdate(null, null);
         api.stockPartialUpdate(null, null);
         api.stockRemoveCreate(null);
         // api.stockRetrieve(null);
@@ -97,9 +88,6 @@ public class TestStockApi extends TestApi {
         api.stockTestDestroy(null);
         api.stockTestList(null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null);
-        api.stockTestMetadataPartialUpdate(null, null);
-        api.stockTestMetadataRetrieve(null);
-        api.stockTestMetadataUpdate(null, null);
         api.stockTestPartialUpdate(null, null);
         api.stockTestRetrieve(null, null, null);
         api.stockTestUpdate(null, null);

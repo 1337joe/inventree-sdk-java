@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '435'
+  version: '436'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -536,102 +536,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/attachment/{id}/metadata/:
-    get:
-      operationId: attachment_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - attachment
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: attachment_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - attachment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: attachment_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - attachment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/background-task/:
     get:
       operationId: background_task_retrieve
@@ -1655,105 +1559,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/bom/{id}/metadata/:
-    get:
-      operationId: bom_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - bom
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-        - r:view:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: bom_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - bom
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: bom_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - bom
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/bom/{id}/validate/:
     put:
       operationId: bom_validate_update
@@ -2029,105 +1834,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/bom/substitute/{id}/metadata/:
-    get:
-      operationId: bom_substitute_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - bom
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-        - r:view:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: bom_substitute_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - bom
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: bom_substitute_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - bom
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/build/:
     get:
       operationId: build_list
@@ -2866,102 +2572,6 @@ paths:
       responses:
         '201':
           description: No response body
-  /api/build/{id}/metadata/:
-    get:
-      operationId: build_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - build
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: build_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - build
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: build_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - build
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/build/{id}/scrap-outputs/:
     post:
       operationId: build_scrap_outputs_create
@@ -3349,102 +2959,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/build/item/{id}/metadata/:
-    get:
-      operationId: build_item_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - build
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: build_item_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - build
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: build_item_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - build
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/build/line/:
     get:
       operationId: build_line_list
@@ -4056,108 +3570,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/company/{id}/metadata/:
-    get:
-      operationId: company_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:purchase_order
-        - r:view:sales_order
-        - r:view:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: company_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-        - r:change:sales_order
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: company_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-        - r:change:sales_order
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/company/address/:
     get:
       operationId: company_address_list
@@ -4640,108 +4052,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/company/contact/{id}/metadata/:
-    get:
-      operationId: company_contact_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:purchase_order
-        - r:view:sales_order
-        - r:view:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: company_contact_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-        - r:change:sales_order
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: company_contact_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-        - r:change:sales_order
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/company/part/:
     get:
       operationId: company_part_list
@@ -5137,105 +4447,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/company/part/{id}/metadata/:
-    get:
-      operationId: company_part_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-        - r:view:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: company_part_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: company_part_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/company/part/manufacturer/:
     get:
       operationId: company_part_manufacturer_list
@@ -5540,105 +4751,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/company/part/manufacturer/{id}/metadata/:
-    get:
-      operationId: company_part_manufacturer_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-        - r:view:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: company_part_manufacturer_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: company_part_manufacturer_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - company
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/company/price-break/:
     get:
       operationId: company_price_break_list
@@ -7726,102 +6838,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/label/template/{id}/metadata/:
-    get:
-      operationId: label_template_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - label
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:admin
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: label_template_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - label
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:admin
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: label_template_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - label
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:admin
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/license/:
     get:
       operationId: license_retrieve
@@ -8389,6 +7405,295 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MachineType'
+          description: ''
+  /api/metadata/{model}/{lookup_field}/{lookup_value}/:
+    get:
+      operationId: metadata_retrieve
+      description: Metadata for specific instance; see https://docs.inventree.org/en/stable/plugins/metadata/
+        for more detail on how metadata works. Most core models support metadata.
+      parameters:
+      - in: path
+        name: lookup_field
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: lookup_value
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: model
+        schema:
+          type: string
+        required: true
+      tags:
+      - metadata
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:admin
+        - r:view:part_category
+        - r:view:part
+        - r:view:stock_location
+        - r:view:stock
+        - r:view:build
+        - r:view:purchase_order
+        - r:view:sales_order
+        - r:view:return_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+    put:
+      operationId: metadata_update
+      description: Metadata for specific instance; see https://docs.inventree.org/en/stable/plugins/metadata/
+        for more detail on how metadata works. Most core models support metadata.
+      parameters:
+      - in: path
+        name: lookup_field
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: lookup_value
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: model
+        schema:
+          type: string
+        required: true
+      tags:
+      - metadata
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+    patch:
+      operationId: metadata_partial_update
+      description: Metadata for specific instance; see https://docs.inventree.org/en/stable/plugins/metadata/
+        for more detail on how metadata works. Most core models support metadata.
+      parameters:
+      - in: path
+        name: lookup_field
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: lookup_value
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: model
+        schema:
+          type: string
+        required: true
+      tags:
+      - metadata
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+  /api/metadata/{model}/{id}/:
+    get:
+      operationId: metadata_pk_retrieve
+      description: Perform a GET request to retrieve metadata for the given object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: model
+        schema:
+          type: string
+        required: true
+      tags:
+      - metadata
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:admin
+        - r:view:part_category
+        - r:view:part
+        - r:view:stock_location
+        - r:view:stock
+        - r:view:build
+        - r:view:purchase_order
+        - r:view:sales_order
+        - r:view:return_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+    put:
+      operationId: metadata_pk_update
+      description: Perform a PUT request to update metadata for the given object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: model
+        schema:
+          type: string
+        required: true
+      tags:
+      - metadata
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+          description: ''
+    patch:
+      operationId: metadata_pk_partial_update
+      description: Perform a PATCH request to partially update metadata for the given
+        object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: model
+        schema:
+          type: string
+        required: true
+      tags:
+      - metadata
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMetadata'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
           description: ''
   /api/news/:
     get:
@@ -9349,102 +8654,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/order/po-extra-line/{id}/metadata/:
-    get:
-      operationId: order_po_extra_line_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_po_extra_line_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_po_extra_line_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/po-line/:
     get:
       operationId: order_po_line_list
@@ -9766,102 +8975,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/order/po-line/{id}/metadata/:
-    get:
-      operationId: order_po_line_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_po_line_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_po_line_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/po/{id}/:
     get:
       operationId: order_po_retrieve
@@ -10086,102 +9199,6 @@ paths:
       responses:
         '201':
           description: No response body
-  /api/order/po/{id}/metadata/:
-    get:
-      operationId: order_po_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_po_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_po_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:purchase_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/po/{id}/receive/:
     post:
       operationId: order_po_receive_create
@@ -10695,102 +9712,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/order/ro-extra-line/{id}/metadata/:
-    get:
-      operationId: order_ro_extra_line_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_ro_extra_line_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_ro_extra_line_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/ro-line/:
     get:
       operationId: order_ro_line_list
@@ -11053,102 +9974,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/order/ro-line/{id}/metadata/:
-    get:
-      operationId: order_ro_line_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_ro_line_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_ro_line_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/ro-line/status/:
     get:
       operationId: order_ro_line_status_retrieve
@@ -11376,102 +10201,6 @@ paths:
       responses:
         '201':
           description: No response body
-  /api/order/ro/{id}/metadata/:
-    get:
-      operationId: order_ro_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_ro_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_ro_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:return_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/ro/{id}/receive/:
     post:
       operationId: order_ro_receive_create
@@ -12293,102 +11022,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/order/so-extra-line/{id}/metadata/:
-    get:
-      operationId: order_so_extra_line_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_so_extra_line_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_so_extra_line_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/so-line/:
     get:
       operationId: order_so_line_list
@@ -12675,102 +11308,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/order/so-line/{id}/metadata/:
-    get:
-      operationId: order_so_line_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_so_line_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_so_line_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/so/{id}/:
     get:
       operationId: order_so_retrieve
@@ -13071,102 +11608,6 @@ paths:
       responses:
         '201':
           description: No response body
-  /api/order/so/{id}/metadata/:
-    get:
-      operationId: order_so_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_so_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_so_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/so/shipment/:
     get:
       operationId: order_so_shipment_list
@@ -13396,102 +11837,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/order/so/shipment/{id}/metadata/:
-    get:
-      operationId: order_so_shipment_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: order_so_shipment_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: order_so_shipment_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - order
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:sales_order
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/order/so/shipment/{id}/ship/:
     post:
       operationId: order_so_shipment_ship_create
@@ -13805,102 +12150,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/parameter/{id}/metadata/:
-    get:
-      operationId: parameter_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - parameter
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: parameter_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - parameter
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: parameter_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - parameter
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/parameter/template/:
     get:
       operationId: parameter_template_list
@@ -14139,102 +12388,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/parameter/template/{id}/metadata/:
-    get:
-      operationId: parameter_template_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - parameter
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: parameter_template_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - parameter
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: parameter_template_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - parameter
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/part/:
     get:
       operationId: part_list
@@ -14931,105 +13084,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/PartBomValidate'
           description: ''
-  /api/part/{id}/metadata/:
-    get:
-      operationId: part_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-        - r:view:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: part_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: part_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/part/{id}/pricing/:
     get:
       operationId: part_pricing_retrieve
@@ -15516,105 +13570,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/part/category/{id}/metadata/:
-    get:
-      operationId: part_category_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part_category
-        - r:view:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: part_category_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part_category
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: part_category_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part_category
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/part/category/parameters/:
     get:
       operationId: part_category_parameters_list
@@ -15796,102 +13751,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/part/category/parameters/{id}/metadata/:
-    get:
-      operationId: part_category_parameters_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part_category
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: part_category_parameters_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part_category
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: part_category_parameters_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part_category
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/part/category/tree/:
     get:
       operationId: part_category_tree_list
@@ -16341,102 +14200,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/part/related/{id}/metadata/:
-    get:
-      operationId: part_related_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: part_related_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: part_related_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/part/sale-price/:
     get:
       operationId: part_sale_price_list
@@ -17112,102 +14875,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/part/test-template/{id}/metadata/:
-    get:
-      operationId: part_test_template_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: part_test_template_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: part_test_template_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/part/thumbs/:
     get:
       operationId: part_thumbs_list
@@ -17599,102 +15266,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PluginAdminDetail'
-          description: ''
-  /api/plugins/{plugin}/metadata/:
-    get:
-      operationId: plugins_metadata_retrieve
-      description: Metadata API endpoint for the PluginConfig model.
-      parameters:
-      - in: path
-        name: plugin
-        schema:
-          type: string
-        required: true
-      tags:
-      - plugins
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:admin
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: plugins_metadata_update
-      description: Metadata API endpoint for the PluginConfig model.
-      parameters:
-      - in: path
-        name: plugin
-        schema:
-          type: string
-        required: true
-      tags:
-      - plugins
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:admin
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: plugins_metadata_partial_update
-      description: Metadata API endpoint for the PluginConfig model.
-      parameters:
-      - in: path
-        name: plugin
-        schema:
-          type: string
-        required: true
-      tags:
-      - plugins
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:admin
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
           description: ''
   /api/plugins/{plugin}/settings/:
     get:
@@ -18393,102 +15964,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/project-code/{id}/metadata/:
-    get:
-      operationId: project_code_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - project-code
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: project_code_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - project-code
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - a:staff
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: project_code_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - project-code
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - a:staff
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/report/asset/:
     get:
       operationId: report_asset_list
@@ -19101,102 +16576,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/report/template/{id}/metadata/:
-    get:
-      operationId: report_template_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - report
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:admin
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: report_template_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - report
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:admin
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: report_template_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - report
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:admin
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/search/:
     post:
       operationId: search_create
@@ -20633,105 +18012,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/InstallStockItem'
           description: ''
-  /api/stock/{id}/metadata/:
-    get:
-      operationId: stock_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:stock
-        - r:view:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: stock_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stock
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: stock_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stock
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/stock/{id}/serial-numbers/:
     get:
       operationId: stock_serial_numbers_retrieve
@@ -21401,102 +18681,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/stock/location-type/{id}/metadata/:
-    get:
-      operationId: stock_location_type_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:stock_location
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: stock_location_type_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stock_location
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: stock_location_type_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stock_location
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/stock/location/{id}/:
     get:
       operationId: stock_location_retrieve
@@ -21624,105 +18808,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/stock/location/{id}/metadata/:
-    get:
-      operationId: stock_location_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:stock_location
-        - r:view:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: stock_location_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stock_location
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: stock_location_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stock_location
-        - r:change:build
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/stock/location/tree/:
     get:
       operationId: stock_location_tree_list
@@ -22186,102 +19271,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/stock/test/{id}/metadata/:
-    get:
-      operationId: stock_test_metadata_retrieve
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:stock
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    put:
-      operationId: stock_test_metadata_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Metadata'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stock
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
-    patch:
-      operationId: stock_test_metadata_partial_update
-      description: Generic API endpoint for reading and editing metadata for a model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedMetadata'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:stock
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Metadata'
-          description: ''
   /api/stock/track/:
     get:
       operationId: stock_track_list

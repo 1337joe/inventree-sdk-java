@@ -20,17 +20,11 @@ public class TestParameterApi extends TestApi {
         api.parameterCreate(null);
         api.parameterDestroy(null);
         api.parameterList(null, null, null, null, null, null, null, null, null);
-        api.parameterMetadataPartialUpdate(null, null);
-        api.parameterMetadataRetrieve(null);
-        api.parameterMetadataUpdate(null, null);
         api.parameterPartialUpdate(null, null);
         api.parameterTemplateCreate(null);
         api.parameterTemplateDestroy(null);
         api.parameterTemplateList(null, null, null, null, null, null, null, null, null, null, null,
                 null, null);
-        api.parameterTemplateMetadataPartialUpdate(null, null);
-        api.parameterTemplateMetadataRetrieve(null);
-        api.parameterTemplateMetadataUpdate(null, null);
         api.parameterTemplatePartialUpdate(null, null);
         api.parameterTemplateRetrieve(null);
         api.parameterTemplateUpdate(null, null);

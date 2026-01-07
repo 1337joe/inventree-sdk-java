@@ -39,9 +39,6 @@ public class TestOrderApi extends TestApi {
         api.orderPoExtraLineCreate(null);
         api.orderPoExtraLineDestroy(null);
         api.orderPoExtraLineList(null, null, null, null, null, null);
-        api.orderPoExtraLineMetadataPartialUpdate(null, null);
-        api.orderPoExtraLineMetadataRetrieve(null);
-        api.orderPoExtraLineMetadataUpdate(null, null);
         api.orderPoExtraLinePartialUpdate(null, null);
         api.orderPoExtraLineRetrieve(null);
         api.orderPoExtraLineUpdate(null, null);
@@ -52,18 +49,12 @@ public class TestOrderApi extends TestApi {
         api.orderPoLineDestroy(null);
         api.orderPoLineList(null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null);
-        api.orderPoLineMetadataPartialUpdate(null, null);
-        api.orderPoLineMetadataRetrieve(null);
-        api.orderPoLineMetadataUpdate(null, null);
         api.orderPoLinePartialUpdate(null, null);
         api.orderPoLineRetrieve(null, null, null);
         api.orderPoLineUpdate(null, null);
         api.orderPoList(null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null);
-        api.orderPoMetadataPartialUpdate(null, null);
-        api.orderPoMetadataRetrieve(null);
-        api.orderPoMetadataUpdate(null, null);
         api.orderPoPartialUpdate(null, null);
         // api.orderPoReceiveCreate(null, null);
         api.orderPoRetrieve(null, null);

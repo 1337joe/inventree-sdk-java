@@ -46,9 +46,6 @@ public class TestPluginsApi extends TestApi {
         api.pluginsDestroy(null);
         api.pluginsInstallCreate(null);
         // api.pluginsList(null, null, null, null, null, null, null, null, null, null);
-        api.pluginsMetadataPartialUpdate(null, null);
-        api.pluginsMetadataRetrieve(null);
-        api.pluginsMetadataUpdate(null, null);
         api.pluginsReloadCreate(null);
         // api.pluginsRetrieve(null);
         // api.pluginsSettingsList(null);

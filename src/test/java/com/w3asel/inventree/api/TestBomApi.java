@@ -37,17 +37,11 @@ public class TestBomApi extends TestApi {
         api.bomDestroy(null);
         // api.bomList(null, null, null, null, null, null, null, null, null, null, null, null, null,
         // null, null, null, null, null, null, null);
-        api.bomMetadataPartialUpdate(null, null);
-        api.bomMetadataRetrieve(null);
-        api.bomMetadataUpdate(null, null);
         api.bomPartialUpdate(null, null);
         // api.bomRetrieve(null);
         api.bomSubstituteCreate(null);
         api.bomSubstituteDestroy(null);
         // api.bomSubstituteList(null, null, null, null, null, null);
-        api.bomSubstituteMetadataPartialUpdate(null, null);
-        api.bomSubstituteMetadataRetrieve(null);
-        api.bomSubstituteMetadataUpdate(null, null);
         api.bomSubstitutePartialUpdate(null, null);
         // api.bomSubstituteRetrieve(null);
         api.bomSubstituteUpdate(null, null);

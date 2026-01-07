@@ -63,18 +63,12 @@ public class TestCompanyApi extends TestApi {
         // api.companyContactCreate(null);
         // api.companyContactDestroy(null);
         // api.companyContactList(null, null, null, null, null);
-        api.companyContactMetadataPartialUpdate(null, null);
-        api.companyContactMetadataRetrieve(null);
-        api.companyContactMetadataUpdate(null, null);
         api.companyContactPartialUpdate(null, null);
         // api.companyContactRetrieve(null);
         api.companyContactUpdate(null, null);
         api.companyCreate(null);
         api.companyDestroy(null);
         // api.companyList(null, null, null, null, null, null, null, null, null);
-        api.companyMetadataPartialUpdate(null, null);
-        api.companyMetadataRetrieve(null);
-        api.companyMetadataUpdate(null, null);
         api.companyPartBulkDestroy(null);
         api.companyPartCreate(null);
         api.companyPartDestroy(null);
@@ -86,15 +80,9 @@ public class TestCompanyApi extends TestApi {
         api.companyPartManufacturerDestroy(null);
         // api.companyPartManufacturerList(null, null, null, null, null, null, null, null, null,
         // null, null);
-        api.companyPartManufacturerMetadataPartialUpdate(null, null);
-        api.companyPartManufacturerMetadataRetrieve(null);
-        api.companyPartManufacturerMetadataUpdate(null, null);
         api.companyPartManufacturerPartialUpdate(null, null);
         // api.companyPartManufacturerRetrieve(null);
         api.companyPartManufacturerUpdate(null, null);
-        api.companyPartMetadataPartialUpdate(null, null);
-        api.companyPartMetadataRetrieve(null);
-        api.companyPartMetadataUpdate(null, null);
         api.companyPartPartialUpdate(null, null);
         // api.companyPartRetrieve(null, null, null, null, null);
         api.companyPartUpdate(null, null);

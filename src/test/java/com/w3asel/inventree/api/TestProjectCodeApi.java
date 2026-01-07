@@ -20,9 +20,6 @@ public class TestProjectCodeApi extends TestApi {
     void todo() throws ApiException {
         api.projectCodeCreate(null);
         api.projectCodeDestroy(null);
-        api.projectCodeMetadataPartialUpdate(null, null);
-        api.projectCodeMetadataRetrieve(null);
-        api.projectCodeMetadataUpdate(null, null);
         api.projectCodePartialUpdate(null, null);
         api.projectCodeRetrieve(null);
         api.projectCodeUpdate(null, null);

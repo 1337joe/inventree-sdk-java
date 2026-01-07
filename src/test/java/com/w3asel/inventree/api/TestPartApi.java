@@ -53,15 +53,9 @@ public class TestPartApi extends TestApi {
         api.partCategoryDestroy(null);
         // api.partCategoryList(null, null, null, null, null, null, null, null, null, null, null,
         // null);
-        api.partCategoryMetadataPartialUpdate(null, null);
-        api.partCategoryMetadataRetrieve(null);
-        api.partCategoryMetadataRetrieve(null);
         api.partCategoryParametersCreate(null);
         api.partCategoryParametersDestroy(null);
         api.partCategoryParametersList(null, null);
-        api.partCategoryParametersMetadataPartialUpdate(null, null);
-        api.partCategoryParametersMetadataRetrieve(null);
-        api.partCategoryParametersMetadataUpdate(null, null);
         api.partCategoryParametersPartialUpdate(null, null);
         api.partCategoryParametersRetrieve(null);
         api.partCategoryParametersUpdate(null, null);
@@ -81,9 +75,6 @@ public class TestPartApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null);
-        api.partMetadataPartialUpdate(null, null);
-        api.partMetadataRetrieve(null);
-        api.partMetadataUpdate(null, null);
         api.partPartialUpdate(null, null);
         api.partPricingPartialUpdate(null, null);
         api.partPricingRetrieve(null);
@@ -91,9 +82,6 @@ public class TestPartApi extends TestApi {
         api.partRelatedCreate(null);
         api.partRelatedDestroy(null);
         api.partRelatedList(null, null, null, null, null, null, null);
-        api.partRelatedMetadataPartialUpdate(null, null);
-        api.partRelatedMetadataRetrieve(null);
-        api.partRelatedMetadataUpdate(null, null);
         api.partRelatedRetrieve(null);
         api.partRelatedUpdate(null, null);
         api.partRequirementsRetrieve(null);
@@ -115,9 +103,6 @@ public class TestPartApi extends TestApi {
         api.partTestTemplateCreate(null);
         api.partTestTemplateDestroy(null);
         api.partTestTemplateList(null, null, null, null, null, null, null, null, null, null, null);
-        api.partTestTemplateMetadataPartialUpdate(null, null);
-        api.partTestTemplateMetadataRetrieve(null);
-        api.partTestTemplateMetadataUpdate(null, null);
         api.partTestTemplatePartialUpdate(null, null);
         api.partTestTemplateRetrieve(null);
         api.partTestTemplateUpdate(null, null);
