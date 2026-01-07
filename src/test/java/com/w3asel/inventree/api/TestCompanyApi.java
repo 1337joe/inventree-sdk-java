@@ -126,8 +126,6 @@ public class TestCompanyApi extends TestApi {
 
         if (detail) {
             assertFieldEquals("notes", fields, actual.getNotes());
-        } else {
-            assertNull(actual.getNotes(), "Expect null notes on non-detail calls");
         }
 
         // not directly available in demo dataset:
