@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '437'
+  version: '438'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -19506,6 +19506,28 @@ paths:
                 items:
                   $ref: '#/components/schemas/SearchResult'
           description: ''
+  /api/system/health/:
+    get:
+      operationId: system_health_retrieve
+      description: |-
+        Simple health check endpoint for monitoring purposes.
+
+        Use the root API endpoint for more detailed information (using an authenticated request).
+      tags:
+      - system
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckStatus'
+          description: InvenTree server health status
   /api/units/:
     get:
       operationId: units_list
@@ -26386,6 +26408,30 @@ components:
       required:
       - name
       - pk
+    HealthCheckStatus:
+      type: object
+      description: Status of the overall system health.
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/HealthCheckStatusStatusEnum'
+          readOnly: true
+          default: ok
+          description: |-
+            Health status of the InvenTree server
+
+            * `ok` - ok
+            * `loading` - loading
+      required:
+      - status
+    HealthCheckStatusStatusEnum:
+      enum:
+      - ok
+      - loading
+      type: string
+      description: |-
+        * `ok` - ok
+        * `loading` - loading
     Icon:
       type: object
       description: Serializer for an icon.
