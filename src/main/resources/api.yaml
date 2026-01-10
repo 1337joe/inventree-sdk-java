@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '438'
+  version: '439'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -24724,6 +24724,7 @@ components:
           items:
             $ref: '#/components/schemas/BuildItem'
           readOnly: true
+          nullable: true
         part:
           type: integer
           readOnly: true
@@ -24787,6 +24788,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/BomItem'
           readOnly: true
+          nullable: true
           title: BOM Item
         assembly_detail:
           allOf:
@@ -24798,6 +24800,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Part
         category_detail:
           allOf:
@@ -24813,13 +24816,11 @@ components:
           title: Build
       required:
       - allocated
-      - allocations
       - allow_variants
       - available_stock
       - available_substitute_stock
       - available_variant_stock
       - bom_item
-      - bom_item_detail
       - build
       - build_reference
       - consumable
@@ -24830,7 +24831,6 @@ components:
       - on_order
       - optional
       - part
-      - part_detail
       - pk
       - quantity
       - reference
@@ -29508,13 +29508,13 @@ components:
           allOf:
           - $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
       required:
       - data
       - model_id
       - pk
       - template
       - template_detail
-      - updated_by_detail
     ParameterTemplate:
       type: object
       description: Serializer for the ParameterTemplate model.
@@ -31092,6 +31092,7 @@ components:
           items:
             $ref: '#/components/schemas/BuildItem'
           readOnly: true
+          nullable: true
         part:
           type: integer
           readOnly: true
@@ -31155,6 +31156,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/BomItem'
           readOnly: true
+          nullable: true
           title: BOM Item
         assembly_detail:
           allOf:
@@ -31166,6 +31168,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
           title: Part
         category_detail:
           allOf:
@@ -32242,6 +32245,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
     PatchedParameterTemplate:
       type: object
       description: Serializer for the ParameterTemplate model.
