@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '439'
+  version: '440'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26365,8 +26365,17 @@ components:
           description: Indicates if the setting is overridden by an environment variable
           readOnly: true
           title: Override
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
+          readOnly: true
       required:
       - choices
+      - confirm
+      - confirm_text
       - description
       - key
       - name
@@ -27317,6 +27326,13 @@ components:
         required:
           type: boolean
           readOnly: true
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
+          readOnly: true
         config_type:
           allOf:
           - $ref: '#/components/schemas/ConfigTypeEnum'
@@ -27324,6 +27340,8 @@ components:
       required:
       - choices
       - config_type
+      - confirm
+      - confirm_text
       - description
       - key
       - model_filters
@@ -31719,6 +31737,13 @@ components:
           description: Indicates if the setting is overridden by an environment variable
           readOnly: true
           title: Override
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
+          readOnly: true
     PatchedGroup:
       type: object
       description: Serializer for a 'Group'.
@@ -31995,6 +32020,13 @@ components:
           readOnly: true
         required:
           type: boolean
+          readOnly: true
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
           readOnly: true
         config_type:
           allOf:
@@ -33055,6 +33087,13 @@ components:
         required:
           type: boolean
           readOnly: true
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
+          readOnly: true
         plugin:
           type: string
           readOnly: true
@@ -33115,6 +33154,13 @@ components:
           readOnly: true
         required:
           type: boolean
+          readOnly: true
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
           readOnly: true
         plugin:
           type: string
@@ -35315,6 +35361,13 @@ components:
         typ:
           type: string
           readOnly: true
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
+          readOnly: true
     PendingTask:
       type: object
       description: Serializer for an individual pending task object.
@@ -35566,11 +35619,20 @@ components:
         required:
           type: boolean
           readOnly: true
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
+          readOnly: true
         plugin:
           type: string
           readOnly: true
       required:
       - choices
+      - confirm
+      - confirm_text
       - description
       - key
       - model_filters
@@ -35675,6 +35737,13 @@ components:
         required:
           type: boolean
           readOnly: true
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
+          readOnly: true
         plugin:
           type: string
           readOnly: true
@@ -35684,6 +35753,8 @@ components:
           description: The user for which this setting applies
       required:
       - choices
+      - confirm
+      - confirm_text
       - description
       - key
       - model_filters
@@ -39039,8 +39110,17 @@ components:
         typ:
           type: string
           readOnly: true
+        confirm:
+          type: boolean
+          readOnly: true
+          description: Indicates if changing this setting requires confirmation
+        confirm_text:
+          type: string
+          readOnly: true
       required:
       - choices
+      - confirm
+      - confirm_text
       - description
       - key
       - name

@@ -162,18 +162,18 @@ public class TestPluginsApi extends TestApi {
                 List.of(Map.of("value", "json", "display_name", "JSON barcodes (human readable)"),
                         Map.of("value", "short", "display_name",
                                 "Short barcodes (space optimized)")),
-                null, null, null, typ, "", false, BARCODE_KEY).value("json"));
+                null, null, null, typ, "", false, null, null, BARCODE_KEY).value("json"));
         settings.get(BARCODE_KEY).put("SHORT_BARCODE_PREFIX", new PluginSetting(2,
                 "SHORT_BARCODE_PREFIX", "Short Barcode Prefix",
                 "Customize the prefix used for short barcodes, may be useful for environments with multiple InvenTree instances",
-                "string", Collections.emptyList(), null, null, null, typ, "", false, BARCODE_KEY)
-                        .value("INV-"));
+                "string", Collections.emptyList(), null, null, null, typ, "", false, null, null,
+                BARCODE_KEY).value("INV-"));
 
         settings.get(LABEL_KEY).put("DEBUG",
                 new PluginSetting(3, "DEBUG", "Debug mode",
                         "Enable debug mode - returns raw HTML instead of PDF", "boolean",
-                        Collections.emptyList(), null, null, null, typ, "", false, LABEL_KEY)
-                                .value("False"));
+                        Collections.emptyList(), null, null, null, typ, "", false, null, null,
+                        LABEL_KEY).value("False"));
 
         return settings;
     }
@@ -294,8 +294,8 @@ public class TestPluginsApi extends TestApi {
         settings.get(EMAIL_KEY).put("NOTIFY_BY_EMAIL",
                 new PluginUserSetting(1, "NOTIFY_BY_EMAIL", "Allow email notifications",
                         "Allow email notifications to be sent to this user", "boolean",
-                        Collections.emptyList(), null, null, null, typ, "", false, EMAIL_KEY,
-                        ADMIN_USER).value("True"));
+                        Collections.emptyList(), null, null, null, typ, "", false, null, null,
+                        EMAIL_KEY, ADMIN_USER).value("True"));
 
         return settings;
     }
