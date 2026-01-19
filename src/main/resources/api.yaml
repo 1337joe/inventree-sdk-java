@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '440'
+  version: '441'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -4754,11 +4754,7 @@ paths:
   /api/company/price-break/:
     get:
       operationId: company_price_break_list
-      description: |-
-        API endpoint for list view of SupplierPriceBreak object.
-
-        - GET: Retrieve list of SupplierPriceBreak objects
-        - POST: Create a new SupplierPriceBreak object
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: base_part
