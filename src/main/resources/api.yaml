@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '441'
+  version: '442'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -24335,7 +24335,7 @@ components:
           type: integer
           nullable: true
           title: Parent Build
-          description: BuildOrder to which this build is allocated
+          description: Build Order to which this build is allocated
         part:
           type: integer
           description: Select part to build
@@ -24369,7 +24369,7 @@ components:
           type: integer
           nullable: true
           title: Sales Order Reference
-          description: SalesOrder to which this build is allocated
+          description: Sales Order to which this build is allocated
         quantity:
           type: number
           format: double
@@ -30885,7 +30885,7 @@ components:
           type: integer
           nullable: true
           title: Parent Build
-          description: BuildOrder to which this build is allocated
+          description: Build Order to which this build is allocated
         part:
           type: integer
           description: Select part to build
@@ -30919,7 +30919,7 @@ components:
           type: integer
           nullable: true
           title: Sales Order Reference
-          description: SalesOrder to which this build is allocated
+          description: Sales Order to which this build is allocated
         quantity:
           type: number
           format: double
@@ -33995,7 +33995,7 @@ components:
           type: string
           format: date
           nullable: true
-          description: The date this this return item was received
+          description: The date this return item was received
         outcome:
           allOf:
           - $ref: '#/components/schemas/OutcomeEnum'
@@ -35446,7 +35446,7 @@ components:
         name:
           type: string
           nullable: true
-          description: PluginName of the plugin
+          description: Name of the plugin
           maxLength: 255
         package_name:
           type: string
@@ -36779,7 +36779,7 @@ components:
           type: string
           format: date
           nullable: true
-          description: The date this this return item was received
+          description: The date this return item was received
         outcome:
           allOf:
           - $ref: '#/components/schemas/OutcomeEnum'
