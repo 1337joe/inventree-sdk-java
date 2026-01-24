@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '442'
+  version: '443'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1231,6 +1231,8 @@ paths:
           - -rounding_multiple
           - sub_part
           - -sub_part
+          - IPN
+          - -IPN
           - available_stock
           - -available_stock
           - allow_variants
@@ -3060,6 +3062,8 @@ paths:
           enum:
           - part
           - -part
+          - IPN
+          - -IPN
           - allocated
           - -allocated
           - category
