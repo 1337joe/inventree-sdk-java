@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '443'
+  version: '444'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -25543,6 +25543,9 @@ components:
         navbar_message:
           type: string
           nullable: true
+        disable_theme_storage:
+          type: boolean
+          default: false
       required:
       - login_message
       - logo
