@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '444'
+  version: '445'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -34287,6 +34287,10 @@ components:
           readOnly: true
           nullable: true
           title: Completed Shipments
+        allocated_lines:
+          type: integer
+          readOnly: true
+          nullable: true
     PatchedSalesOrderAllocation:
       type: object
       description: |-
@@ -37159,6 +37163,10 @@ components:
           readOnly: true
           nullable: true
           title: Completed Shipments
+        allocated_lines:
+          type: integer
+          readOnly: true
+          nullable: true
       required:
       - barcode_hash
       - created_by
