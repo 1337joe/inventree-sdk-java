@@ -96,6 +96,7 @@ public class TestPartApi extends TestApi {
         api.partStocktakeBulkDestroy(null);
         api.partStocktakeCreate(null);
         api.partStocktakeDestroy(null);
+        api.partStocktakeGenerateCreate(null);
         api.partStocktakeList(null, null, null, null);
         api.partStocktakePartialUpdate(null, null);
         api.partStocktakeRetrieve(null);

@@ -7,7 +7,7 @@
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.447-SNAPSHOT</version>
+    <version>1.1.448-SNAPSHOT</version>
 
     <name>InvenTree SDK (Java)</name>
     <description>A Java implementation of the OpenAPI spec published by InvenTree.</description>
@@ -164,6 +164,19 @@
                         <replacement>
                             <token>^(\s+)(nullable: true$\n(^\1.*$\n)*)^\1nullable: true$\n</token>
                             <value>$1$2</value>
+                        </replacement>
+                        <!-- should be non-required fields -->
+                        <replacement>
+                            <token>^\s+- part_detail$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- part_ipn$\n</token>
+                            <value></value>
+                        </replacement>
+                        <replacement>
+                            <token>^\s+- part_description$\n</token>
+                            <value></value>
                         </replacement>
                     </replacements>
                 </configuration>

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '447'
+  version: '448'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -14407,7 +14407,7 @@ paths:
   /api/part/stocktake/:
     get:
       operationId: part_stocktake_list
-      description: API endpoint for listing part stocktake information.
+      description: Override the GET method to determine export options.
       parameters:
       - name: limit
         required: true
@@ -14647,6 +14647,36 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/part/stocktake/generate/:
+    post:
+      operationId: part_stocktake_generate_create
+      description: Perform stocktake generation on POST request.
+      tags:
+      - part
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartStocktakeGenerate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartStocktakeGenerate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartStocktakeGenerate'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartStocktakeGenerate'
+          description: ''
   /api/part/test-template/:
     get:
       operationId: part_test_template_list
@@ -30433,14 +30463,23 @@ components:
           type: integer
           readOnly: true
           title: ID
+        part:
+          type: integer
+          description: Part for stocktake
+        part_name:
+          type: string
+          readOnly: true
+        part_ipn:
+          type: string
+          readOnly: true
+        part_description:
+          type: string
+          readOnly: true
         date:
           type: string
           format: date
           readOnly: true
           description: Date stocktake was performed
-        part:
-          type: integer
-          description: Part for stocktake
         item_count:
           type: integer
           maximum: 9223372036854775807
@@ -30492,11 +30531,55 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
       required:
       - date
       - part
+      - part_description
+      - part_detail
+      - part_ipn
+      - part_name
       - pk
       - quantity
+    PartStocktakeGenerate:
+      type: object
+      description: Serializer for generating PartStocktake entries.
+      properties:
+        part:
+          type: integer
+          nullable: true
+          description: Select a part to generate stocktake information for that part
+            (and any variant parts)
+        category:
+          type: integer
+          nullable: true
+          description: Select a category to include all parts within that category
+            (and subcategories)
+        location:
+          type: integer
+          nullable: true
+          description: Select a location to include all parts with stock in that location
+            (including sub-locations)
+        generate_entry:
+          type: boolean
+          writeOnly: true
+          default: false
+          title: Generate Stocktake Entries
+          description: Save stocktake entries for the selected parts
+        generate_report:
+          type: boolean
+          writeOnly: true
+          default: false
+          description: Generate a stocktake report for the selected parts
+        output:
+          allOf:
+          - $ref: '#/components/schemas/DataOutput'
+          readOnly: true
+      required:
+      - output
     PartTestTemplate:
       type: object
       description: Serializer for the PartTestTemplate class.
@@ -32933,14 +33016,23 @@ components:
           type: integer
           readOnly: true
           title: ID
+        part:
+          type: integer
+          description: Part for stocktake
+        part_name:
+          type: string
+          readOnly: true
+        part_ipn:
+          type: string
+          readOnly: true
+        part_description:
+          type: string
+          readOnly: true
         date:
           type: string
           format: date
           readOnly: true
           description: Date stocktake was performed
-        part:
-          type: integer
-          description: Part for stocktake
         item_count:
           type: integer
           maximum: 9223372036854775807
@@ -32992,6 +33084,10 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
     PatchedPartTestTemplate:
       type: object
       description: Serializer for the PartTestTemplate class.
