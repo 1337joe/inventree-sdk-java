@@ -40,6 +40,7 @@ import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TestCompanyApi extends TestApi {
     private CompanyApi api;
@@ -154,8 +155,9 @@ public class TestCompanyApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
 
         // deep equals on first value
@@ -216,7 +218,8 @@ public class TestCompanyApi extends TestApi {
 
         // check items returned by key
         List<Integer> expectedPks = List.of(53, 54);
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertIterableEquals(expectedPks, actualPks, "Primary keys don't match");
 
         // deep equals on first value
@@ -320,8 +323,9 @@ public class TestCompanyApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertIterableEquals(expectedPks, actualPks, "Primary keys don't match");
 
         // deep equals on first value
@@ -517,8 +521,9 @@ public class TestCompanyApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
 
         // deep equals on first value
@@ -641,8 +646,9 @@ public class TestCompanyApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
 
         // deep equals on first value
@@ -709,8 +715,9 @@ public class TestCompanyApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
 
         // deep equals on first value

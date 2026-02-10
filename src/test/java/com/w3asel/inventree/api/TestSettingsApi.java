@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TestSettingsApi extends TestApi {
     private SettingsApi api;
@@ -112,7 +113,8 @@ public class TestSettingsApi extends TestApi {
             }
         }
         if (!foundNonNull) {
-            List<String> nameList = actualList.stream().map(GlobalSettings::getKey).toList();
+            List<String> nameList =
+                    actualList.stream().map(GlobalSettings::getKey).collect(Collectors.toList());
             fail("Found no demo-configured settings: " + nameList);
         }
     }
@@ -158,7 +160,8 @@ public class TestSettingsApi extends TestApi {
             }
         }
         if (!foundNonNull) {
-            List<String> nameList = actualList.stream().map(UserSettings::getKey).toList();
+            List<String> nameList =
+                    actualList.stream().map(UserSettings::getKey).collect(Collectors.toList());
             fail("Found no demo-configured user settings: " + nameList);
         }
     }

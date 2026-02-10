@@ -18,6 +18,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TestLabelApi extends TestApi {
     private LabelApi api;
@@ -84,8 +85,9 @@ public class TestLabelApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value

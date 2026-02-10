@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /** Simple class to read and parse the demo dataset. */
 public class InventreeDemoDataset {
@@ -145,7 +146,8 @@ public class InventreeDemoDataset {
             assertEquals(fieldValue.getAsString(), actualValue.toString(), message);
         } else if (type == Iterable.class) {
             assertIterableEquals(fieldValue.getAsJsonArray().asList().stream()
-                    .map(JsonElement::getAsString).toList(), (Iterable<?>) actualValue, message);
+                    .map(JsonElement::getAsString).collect(Collectors.toList()),
+                    (Iterable<?>) actualValue, message);
         } else if (type == LocalDate.class) {
             assertEquals(LocalDate.from(DATE_FORMAT.parse(fieldValue.getAsString())), actualValue,
                     message);

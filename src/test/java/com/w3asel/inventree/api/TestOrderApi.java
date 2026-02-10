@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TestOrderApi extends TestApi {
     private OrderApi api;
@@ -116,7 +117,8 @@ public class TestOrderApi extends TestApi {
                     "Expected serialized items to be created");
         } finally {
             StockApi stockApi = new StockApi(apiClient);
-            List<Integer> itemPks = result.stream().map(StockItem::getPk).toList();
+            List<Integer> itemPks =
+                    result.stream().map(StockItem::getPk).collect(Collectors.toList());
             stockApi.stockBulkDestroy(new BulkRequest().items(itemPks));
         }
     }

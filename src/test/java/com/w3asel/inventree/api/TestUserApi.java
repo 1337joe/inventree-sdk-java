@@ -120,8 +120,9 @@ public class TestUserApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
@@ -237,8 +238,9 @@ public class TestUserApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // TODO validate - type is UserCreate, not ExtendedUser for some reason

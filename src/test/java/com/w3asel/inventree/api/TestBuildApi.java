@@ -30,6 +30,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TestBuildApi extends TestApi {
     private BuildApi api;
@@ -105,7 +106,7 @@ public class TestBuildApi extends TestApi {
 
             List<BuildOutputQuantity> buildOutputs = outputResponse.stream()
                     .map(s -> new BuildOutputQuantity().output(s.getPk()).quantity(quantity))
-                    .toList();
+                    .collect(Collectors.toList());
 
             BuildOutputComplete outputComplete =
                     new BuildOutputComplete().location(locationId).outputs(buildOutputs);
@@ -123,8 +124,8 @@ public class TestBuildApi extends TestApi {
 
             assertTrue(newBuildItems.getCount() < limit,
                     "Can only clean up to " + limit + " items, found " + newBuildItems.getCount());
-            List<Integer> newPks =
-                    newBuildItems.getResults().stream().map(StockItem::getPk).toList();
+            List<Integer> newPks = newBuildItems.getResults().stream().map(StockItem::getPk)
+                    .collect(Collectors.toList());
             stockApi.stockBulkDestroy(new BulkRequest().items(newPks));
         }
     }
@@ -217,8 +218,9 @@ public class TestBuildApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
@@ -269,8 +271,9 @@ public class TestBuildApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
@@ -373,8 +376,9 @@ public class TestBuildApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value

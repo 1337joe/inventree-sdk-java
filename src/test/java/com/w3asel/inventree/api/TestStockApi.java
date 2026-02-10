@@ -35,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TestStockApi extends TestApi {
     private StockApi api;
@@ -155,7 +156,8 @@ public class TestStockApi extends TestApi {
 
         } finally {
             // clean up database
-            List<Integer> itemPks = createResultList.stream().map(StockItem::getPk).toList();
+            List<Integer> itemPks =
+                    createResultList.stream().map(StockItem::getPk).collect(Collectors.toList());
             api.stockBulkDestroy(new BulkRequest().items(itemPks));
         }
     }
@@ -261,8 +263,9 @@ public class TestStockApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
@@ -309,7 +312,8 @@ public class TestStockApi extends TestApi {
             List<StockItem> serializeCreateResult =
                     api.stockSerializeCreate(createResult.getPk(), serializeCreateInput);
 
-            List<Integer> itemPks = serializeCreateResult.stream().map(StockItem::getPk).toList();
+            List<Integer> itemPks = serializeCreateResult.stream().map(StockItem::getPk)
+                    .collect(Collectors.toList());
             api.stockBulkDestroy(new BulkRequest().items(itemPks));
             bulkDeleted = true;
         } finally {
@@ -437,8 +441,9 @@ public class TestStockApi extends TestApi {
         // check items returned by key
         List<Integer> expectedPks = expectedList.stream()
                 .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .toList();
-        List<Integer> actualPks = actualList.stream().map(c -> c.getPk()).sorted().toList();
+                .collect(Collectors.toList());
+        List<Integer> actualPks =
+                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
         assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
 
         // deep equals on first value
