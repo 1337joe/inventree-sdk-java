@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '448'
+  version: '449'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -30472,9 +30472,11 @@ components:
         part_ipn:
           type: string
           readOnly: true
+          nullable: true
         part_description:
           type: string
           readOnly: true
+          nullable: true
         date:
           type: string
           format: date
@@ -30535,12 +30537,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
       required:
       - date
       - part
-      - part_description
-      - part_detail
-      - part_ipn
       - part_name
       - pk
       - quantity
@@ -33025,9 +33025,11 @@ components:
         part_ipn:
           type: string
           readOnly: true
+          nullable: true
         part_description:
           type: string
           readOnly: true
+          nullable: true
         date:
           type: string
           format: date
@@ -33088,6 +33090,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
           readOnly: true
+          nullable: true
     PatchedPartTestTemplate:
       type: object
       description: Serializer for the PartTestTemplate class.
