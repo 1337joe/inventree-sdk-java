@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '450'
+  version: '451'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1961,6 +1961,10 @@ paths:
           enum:
           - reference
           - -reference
+          - part
+          - -part
+          - IPN
+          - -IPN
           - part__name
           - -part__name
           - status
@@ -4131,8 +4135,6 @@ paths:
         schema:
           type: string
           enum:
-          - SKU
-          - -SKU
           - part
           - -part
           - supplier
@@ -4141,8 +4143,12 @@ paths:
           - -manufacturer
           - active
           - -active
+          - IPN
+          - -IPN
           - MPN
           - -MPN
+          - SKU
+          - -SKU
           - packaging
           - -packaging
           - pack_quantity
@@ -4502,6 +4508,15 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - part
+          - -part
+          - IPN
+          - -IPN
+          - MPN
+          - -MPN
+          - manufacturer
+          - -manufacturer
       - in: query
         name: part
         schema:
@@ -9771,6 +9786,12 @@ paths:
         schema:
           type: string
           enum:
+          - part
+          - -part
+          - IPN
+          - -IPN
+          - stock
+          - -stock
           - reference
           - -reference
           - target_date
@@ -11104,6 +11125,8 @@ paths:
           - -order
           - part
           - -part
+          - IPN
+          - -IPN
           - part__name
           - -part__name
           - quantity
@@ -17580,6 +17603,8 @@ paths:
           - -batch
           - location
           - -location
+          - part
+          - -part
           - part__name
           - -part__name
           - part__IPN
@@ -17598,6 +17623,8 @@ paths:
           - -stock
           - status
           - -status
+          - IPN
+          - -IPN
           - SKU
           - -SKU
           - MPN
