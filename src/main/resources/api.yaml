@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '449'
+  version: '450'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -19318,6 +19318,11 @@ paths:
       description: Override the GET method to determine export options.
       parameters:
       - in: query
+        name: include_variants
+        schema:
+          type: boolean
+        description: Include Part Variants
+      - in: query
         name: item
         schema:
           type: integer
@@ -19333,6 +19338,18 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: max_date
+        schema:
+          type: string
+          format: date
+        description: Date before
+      - in: query
+        name: min_date
+        schema:
+          type: string
+          format: date
+        description: Date after
       - name: offset
         required: false
         in: query
@@ -19348,6 +19365,11 @@ paths:
           enum:
           - date
           - -date
+      - in: query
+        name: part
+        schema:
+          type: integer
+        description: Part
       - name: search
         required: false
         in: query
@@ -38602,9 +38624,19 @@ components:
           title: ID
         item:
           type: integer
+          nullable: true
         item_detail:
           allOf:
           - $ref: '#/components/schemas/StockItem'
+          readOnly: true
+          nullable: true
+        part:
+          type: integer
+          readOnly: true
+          nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
           readOnly: true
           nullable: true
         date:
@@ -38636,7 +38668,6 @@ components:
       required:
       - date
       - deltas
-      - item
       - label
       - pk
       - tracking_type

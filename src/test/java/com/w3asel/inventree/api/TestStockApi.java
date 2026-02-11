@@ -23,13 +23,17 @@ import com.w3asel.inventree.model.StockItem;
 import com.w3asel.inventree.model.StockTracking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -37,6 +41,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@TestMethodOrder(OrderAnnotation.class)
 public class TestStockApi extends TestApi {
     private StockApi api;
 
@@ -54,7 +59,7 @@ public class TestStockApi extends TestApi {
         api.stockConvertCreate(null, null);
         api.stockCountCreate(null);
         // api.stockCreate(null);
-        api.stockBulkDestroy(null);
+        // api.stockBulkDestroy(null);
         api.stockDestroy(null);
         api.stockInstallCreate(null, null);
         // api.stockList(null, null, null, null, null, null, null, null, null, null, null, null,
@@ -160,6 +165,65 @@ public class TestStockApi extends TestApi {
                     createResultList.stream().map(StockItem::getPk).collect(Collectors.toList());
             api.stockBulkDestroy(new BulkRequest().items(itemPks));
         }
+    }
+
+    @Test
+    void stockBulkDestroy() throws ApiException {
+        int partPk = 1;
+
+        StockItem createInput1 = new StockItem();
+        createInput1.setPart(partPk);
+        createInput1.setQuantity(1d);
+
+        StockItem createInput2 = new StockItem();
+        createInput2.setPart(partPk);
+        createInput2.setQuantity(2d);
+
+        int initialCount = api
+                .stockList(1, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null)
+                .getCount();
+
+        List<StockItem> createResultList = new ArrayList<>();
+        try {
+            createResultList.addAll(api.stockCreate(createInput1));
+            createResultList.addAll(api.stockCreate(createInput2));
+            assertEquals(2, createResultList.size(), "Expected two results");
+
+            int createdCount = api
+                    .stockList(1, null, null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null, null, null, null)
+                    .getCount();
+            assertEquals(2, createdCount - initialCount, "Expected two more items");
+
+            StockItem createResult = createResultList.get(0);
+            assertNotNull(createResult.getPk(), "Created item must have PK set");
+        } finally {
+            // clean up database
+
+            List<Integer> itemPks =
+                    createResultList.stream().map(StockItem::getPk).collect(Collectors.toList());
+            api.stockBulkDestroy(new BulkRequest().items(itemPks));
+        }
+
+        int finalCount = api
+                .stockList(1, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null)
+                .getCount();
+
+        assertEquals(initialCount, finalCount, "Expected to return to initial count after destroy");
     }
 
     private static void assertStockItemEquals(JsonObject expected, StockItem actual) {
@@ -387,6 +451,7 @@ public class TestStockApi extends TestApi {
 
         assertFieldEquals("tracking_type", fields, actual.getTrackingType());
         assertFieldEquals("item", fields, actual.getItem());
+        assertFieldEquals("part", fields, actual.getPart());
         assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
 
         // user given as name in demo dataset file, just verify null state matches
@@ -425,6 +490,9 @@ public class TestStockApi extends TestApi {
     }
 
     @Test
+    // can't delete stock tracking via api, have to test list against demo data before changes
+    // happen
+    @Order(1)
     void stockTrackList() throws ApiException {
         List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.STOCK_TRACKING, null);
         assertTrue(expectedList.size() > 0, "Expected demo data");
@@ -432,8 +500,8 @@ public class TestStockApi extends TestApi {
         int limit = 10;
         int offset = 0;
 
-        PaginatedStockTrackingList actual =
-                api.stockTrackList(limit, null, null, offset, null, null, null, null);
+        PaginatedStockTrackingList actual = api.stockTrackList(limit, null, null, null, null, null,
+                offset, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(),
                 "Incorrect total stock tracking count");
         List<StockTracking> actualList = actual.getResults();
