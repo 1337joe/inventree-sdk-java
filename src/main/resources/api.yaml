@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '451'
+  version: '452'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2676,6 +2676,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the associated build order.
       - in: query
         name: build_line
         schema:
@@ -2689,6 +2690,13 @@ paths:
         name: install_into
         schema:
           type: integer
+      - in: query
+        name: install_into_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the build output for this
+          build item.
       - name: limit
         required: true
         in: query
@@ -2705,8 +2713,8 @@ paths:
         schema:
           type: boolean
           default: false
-        description: Include detailed information about the stock location in the
-          response
+        description: Include detailed information about the location of the allocated
+          stock item.
       - name: offset
         required: false
         in: query
@@ -2748,7 +2756,8 @@ paths:
         schema:
           type: boolean
           default: false
-        description: Include detailed information about the related part in the response
+        description: Include detailed information about the part associated with this
+          build item.
       - name: search
         required: false
         in: query
@@ -2761,6 +2770,7 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the allocated stock item.
       - in: query
         name: stock_item
         schema:
@@ -2770,6 +2780,8 @@ paths:
         schema:
           type: boolean
           default: false
+        description: Include detailed information about the supplier part associated
+          with this build item.
       - in: query
         name: tracked
         schema:
@@ -24778,6 +24790,12 @@ components:
           readOnly: true
           nullable: true
           title: Supplier Part
+        install_into_detail:
+          allOf:
+          - $ref: '#/components/schemas/StockItem'
+          readOnly: true
+          nullable: true
+          title: Install Into
         bom_reference:
           type: string
           readOnly: true
@@ -31227,6 +31245,12 @@ components:
           readOnly: true
           nullable: true
           title: Supplier Part
+        install_into_detail:
+          allOf:
+          - $ref: '#/components/schemas/StockItem'
+          readOnly: true
+          nullable: true
+          title: Install Into
         bom_reference:
           type: string
           readOnly: true
