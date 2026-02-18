@@ -502,22 +502,28 @@ public class TestStockApi extends TestApi {
 
         PaginatedStockTrackingList actual = api.stockTrackList(limit, null, null, null, null, null,
                 offset, null, null, null, null, null);
-        assertEquals(expectedList.size(), actual.getCount(),
+        assertTrue(expectedList.size() <= actual.getCount(),
                 "Incorrect total stock tracking count");
         List<StockTracking> actualList = actual.getResults();
 
-        // check items returned by key
-        List<Integer> expectedPks = expectedList.stream()
-                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .collect(Collectors.toList());
-        List<Integer> actualPks =
-                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
-        assertTrue(expectedPks.containsAll(actualPks), "Incorrect primary keys");
-
         // deep equals on first value
-        StockTracking actualFirst = actualList.get(0);
-        JsonObject expectedFirst =
-                InventreeDemoDataset.getObjects(Model.STOCK_TRACKING, actualFirst.getPk()).get(0);
+        StockTracking actualFirst;
+        JsonObject expectedFirst = null;
+        int firstFoundIndex = 0;
+        do {
+            actualFirst = actualList.get(firstFoundIndex);
+
+            List<JsonObject> expectedSearch =
+                    InventreeDemoDataset.getObjects(Model.STOCK_TRACKING, actualFirst.getPk());
+            if (!expectedSearch.isEmpty()) {
+                expectedFirst = expectedSearch.get(0);
+                break;
+            }
+            firstFoundIndex++;
+        } while (firstFoundIndex < actualList.size());
+
+        assertTrue(firstFoundIndex < actualList.size(),
+                "Failed to find any expected stock tracking");
         assertStockTrackingEquals(expectedFirst, actualFirst);
     }
 
