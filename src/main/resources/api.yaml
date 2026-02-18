@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '452'
+  version: '453'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -19608,6 +19608,37 @@ paths:
                 items:
                   $ref: '#/components/schemas/SearchResult'
           description: ''
+  /api/system-internal/observability/end:
+    post:
+      operationId: system_internal_observability_end_create
+      description: Endpoint for observability tools.
+      tags:
+      - system-internal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObservabilityEnd'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ObservabilityEnd'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ObservabilityEnd'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservabilityEnd'
+          description: ''
   /api/system/health/:
     get:
       operationId: system_health_retrieve
@@ -27802,6 +27833,21 @@ components:
     NullEnum:
       enum:
       - null
+    ObservabilityEnd:
+      type: object
+      description: Serializer for observability end endpoint.
+      properties:
+        traceid:
+          type: string
+          description: Trace ID to end
+          maxLength: 128
+        service:
+          type: string
+          description: Service name
+          maxLength: 128
+      required:
+      - service
+      - traceid
     OutcomeEnum:
       enum:
       - 10
