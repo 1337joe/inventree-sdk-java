@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '454'
+  version: '455'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -12208,6 +12208,21 @@ paths:
         schema:
           type: string
         description: Exists For Model
+      - in: query
+        name: exists_for_model_id
+        schema:
+          type: number
+        description: Exists For Model ID
+      - in: query
+        name: exists_for_related_model
+        schema:
+          type: string
+        description: Exists For Related Model
+      - in: query
+        name: exists_for_related_model_id
+        schema:
+          type: number
+        description: Exists For Model ID
       - in: query
         name: for_model
         schema:
