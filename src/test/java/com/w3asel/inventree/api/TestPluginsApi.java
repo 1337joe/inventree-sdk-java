@@ -162,7 +162,7 @@ public class TestPluginsApi extends TestApi {
                 List.of(Map.of("value", "json", "display_name", "JSON barcodes (human readable)"),
                         Map.of("value", "short", "display_name",
                                 "Short barcodes (space optimized)")),
-                null, null, null, typ, "", false, null, null, BARCODE_KEY).value("json"));
+                null, null, null, typ, "", false, null, null, BARCODE_KEY).value("short"));
         settings.get(BARCODE_KEY).put("SHORT_BARCODE_PREFIX", new PluginSetting(2,
                 "SHORT_BARCODE_PREFIX", "Short Barcode Prefix",
                 "Customize the prefix used for short barcodes, may be useful for environments with multiple InvenTree instances",
