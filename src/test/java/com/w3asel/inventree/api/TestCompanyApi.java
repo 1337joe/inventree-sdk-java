@@ -452,6 +452,7 @@ public class TestCompanyApi extends TestApi {
         assertFieldEquals("supplier", fields, actual.getSupplier());
         assertFieldEquals("SKU", fields, actual.getSKU());
         assertFieldEquals("active", fields, actual.getActive());
+        assertFieldEquals("primary", fields, actual.getPrimary());
         assertFieldEquals("manufacturer_part", fields, actual.getManufacturerPart());
         assertFieldEquals("description", fields, actual.getDescription());
         assertNullableFieldEquals(String.class, "note", fields, actual.getNote());
@@ -512,9 +513,9 @@ public class TestCompanyApi extends TestApi {
         int limit = 5;
         int offset = 0;
         // TODO missing complex filter parameters on this query
-        PaginatedSupplierPartList actual =
-                api.companyPartList(limit, null, null, null, company, null, null, null, null, null,
-                        offset, null, null, null, null, null, null, null, null, null, null, null);
+        PaginatedSupplierPartList actual = api.companyPartList(limit, null, null, null, company,
+                null, null, null, null, null, offset, null, null, null, null, null, null, null,
+                null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect part list count");
         List<SupplierPart> actualList = actual.getResults();
 

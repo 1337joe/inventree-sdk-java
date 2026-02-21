@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '455'
+  version: '456'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -4155,6 +4155,8 @@ paths:
           - -manufacturer
           - active
           - -active
+          - primary
+          - -primary
           - IPN
           - -IPN
           - MPN
@@ -4190,6 +4192,11 @@ paths:
           type: boolean
           default: false
         description: Format the output with a more readable (pretty) name
+      - in: query
+        name: primary
+        schema:
+          type: boolean
+        description: Primary Supplier Part
       - name: search
         required: false
         in: query
@@ -29813,10 +29820,6 @@ components:
           - $ref: '#/components/schemas/DefaultLocation'
           readOnly: true
           nullable: true
-        default_supplier:
-          type: integer
-          nullable: true
-          description: Default supplier part
         description:
           type: string
           description: Part description (optional)
@@ -32614,10 +32617,6 @@ components:
           - $ref: '#/components/schemas/DefaultLocation'
           readOnly: true
           nullable: true
-        default_supplier:
-          type: integer
-          nullable: true
-          description: Default supplier part
         description:
           type: string
           description: Part description (optional)
@@ -35337,6 +35336,9 @@ components:
         active:
           type: boolean
           description: Is this supplier part active?
+        primary:
+          type: boolean
+          description: Is this the primary supplier part for the linked Part?
         manufacturer_detail:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
@@ -38853,6 +38855,9 @@ components:
         active:
           type: boolean
           description: Is this supplier part active?
+        primary:
+          type: boolean
+          description: Is this the primary supplier part for the linked Part?
         manufacturer_detail:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
