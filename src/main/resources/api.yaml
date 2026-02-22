@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '456'
+  version: '457'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -24705,6 +24705,16 @@ components:
           type: boolean
           default: false
           description: Allocate optional BOM items to build order
+        item_type:
+          allOf:
+          - $ref: '#/components/schemas/ItemTypeEnum'
+          default: untracked
+          description: |-
+            Select item type to auto-allocate
+
+            * `all` - All Items
+            * `untracked` - Untracked Items
+            * `tracked` - Tracked Items
     BuildCancel:
       type: object
       description: Cancel an active BuildOrder.
@@ -26895,6 +26905,16 @@ components:
       type: boolean
       enum:
       - true
+    ItemTypeEnum:
+      enum:
+      - all
+      - untracked
+      - tracked
+      type: string
+      description: |-
+        * `all` - All Items
+        * `untracked` - Untracked Items
+        * `tracked` - Tracked Items
     LabelPrint:
       type: object
       description: Serializer class for printing a label.
