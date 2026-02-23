@@ -24,7 +24,7 @@ public class TestParameterApi extends TestApi {
         api.parameterTemplateCreate(null);
         api.parameterTemplateDestroy(null);
         api.parameterTemplateList(null, null, null, null, null, null, null, null, null, null, null,
-                null, null);
+                null, null, null, null, null);
         api.parameterTemplatePartialUpdate(null, null);
         api.parameterTemplateRetrieve(null);
         api.parameterTemplateUpdate(null, null);
@@ -37,7 +37,7 @@ public class TestParameterApi extends TestApi {
         int offset = 0;
 
         api.parameterList(limit, null, null, null, offset, null, null, null, null);
-        api.parameterTemplateList(limit, null, null, null, null, null, null, null, null, offset,
-                null, null, null);
+        api.parameterTemplateList(limit, null, null, null, null, null, null, null, null, null, null,
+                null, offset, null, null, null);
     }
 }

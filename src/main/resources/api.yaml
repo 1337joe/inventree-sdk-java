@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '453'
+  version: '456'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -4155,6 +4155,8 @@ paths:
           - -manufacturer
           - active
           - -active
+          - primary
+          - -primary
           - IPN
           - -IPN
           - MPN
@@ -4190,6 +4192,11 @@ paths:
           type: boolean
           default: false
         description: Format the output with a more readable (pretty) name
+      - in: query
+        name: primary
+        schema:
+          type: boolean
+        description: Primary Supplier Part
       - name: search
         required: false
         in: query
@@ -12209,6 +12216,21 @@ paths:
           type: string
         description: Exists For Model
       - in: query
+        name: exists_for_model_id
+        schema:
+          type: number
+        description: Exists For Model ID
+      - in: query
+        name: exists_for_related_model
+        schema:
+          type: string
+        description: Exists For Related Model
+      - in: query
+        name: exists_for_related_model_id
+        schema:
+          type: number
+        description: Exists For Model ID
+      - in: query
         name: for_model
         schema:
           type: string
@@ -17623,6 +17645,8 @@ paths:
           - -part__IPN
           - updated
           - -updated
+          - purchase_price
+          - -purchase_price
           - stocktake_date
           - -stocktake_date
           - expiry_date
@@ -29796,10 +29820,6 @@ components:
           - $ref: '#/components/schemas/DefaultLocation'
           readOnly: true
           nullable: true
-        default_supplier:
-          type: integer
-          nullable: true
-          description: Default supplier part
         description:
           type: string
           description: Part description (optional)
@@ -32597,10 +32617,6 @@ components:
           - $ref: '#/components/schemas/DefaultLocation'
           readOnly: true
           nullable: true
-        default_supplier:
-          type: integer
-          nullable: true
-          description: Default supplier part
         description:
           type: string
           description: Part description (optional)
@@ -35320,6 +35336,9 @@ components:
         active:
           type: boolean
           description: Is this supplier part active?
+        primary:
+          type: boolean
+          description: Is this the primary supplier part for the linked Part?
         manufacturer_detail:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
@@ -38836,6 +38855,9 @@ components:
         active:
           type: boolean
           description: Is this supplier part active?
+        primary:
+          type: boolean
+          description: Is this the primary supplier part for the linked Part?
         manufacturer_detail:
           allOf:
           - $ref: '#/components/schemas/CompanyBrief'
