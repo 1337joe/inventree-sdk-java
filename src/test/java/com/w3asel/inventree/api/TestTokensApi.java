@@ -1,8 +1,8 @@
 package com.w3asel.inventree.api;
 
 import com.w3asel.inventree.invoker.ApiException;
-import com.w3asel.inventree.model.AllauthTokensRefreshGet200Response;
-import com.w3asel.inventree.model.AllauthTokensRefreshGetRequest;
+import com.w3asel.inventree.model.AllauthTokensRefreshPost200Response;
+import com.w3asel.inventree.model.AllauthTokensRefreshPostRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -19,8 +19,8 @@ public class TestTokensApi extends TestApi {
     @Test
     void allauthoTkensRefreshGet() throws ApiException {
         String refreshToken = "unknown";
-        AllauthTokensRefreshGetRequest request =
-                new AllauthTokensRefreshGetRequest().refreshToken(refreshToken);
-        AllauthTokensRefreshGet200Response actual = api.allauthTokensRefreshGet(request);
+        AllauthTokensRefreshPostRequest request =
+                new AllauthTokensRefreshPostRequest().refreshToken(refreshToken);
+        AllauthTokensRefreshPost200Response actual = api.allauthTokensRefreshPost(request);
     }
 }

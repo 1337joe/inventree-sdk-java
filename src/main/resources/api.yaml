@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '457'
+  version: '458'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -22506,7 +22506,7 @@ paths:
           $ref: '#/components/responses/allauth.Unauthenticated'
       operationId: allauth_auth_session_delete
   /api/auth/v1/tokens/refresh:
-    get:
+    post:
       tags:
       - Tokens
       summary: |
@@ -22525,7 +22525,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/allauth.ErrorResponse'
-      operationId: allauth_tokens_refresh_get
+      operationId: allauth_tokens_refresh_post
   /api/auth/v1/account/password/change:
     post:
       tags:
