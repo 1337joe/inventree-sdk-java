@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '458'
+  version: '459'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -33819,7 +33819,7 @@ components:
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         auto_pricing:
           type: boolean
-          default: true
+          default: false
           description: Automatically calculate purchase price based on supplier part
             data
         destination:
@@ -36464,7 +36464,7 @@ components:
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
         auto_pricing:
           type: boolean
-          default: true
+          default: false
           description: Automatically calculate purchase price based on supplier part
             data
         destination:
