@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '459'
+  version: '460'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -8360,6 +8360,8 @@ paths:
           - -total_price
           - project_code
           - -project_code
+          - updated_at
+          - -updated_at
       - in: query
         name: outstanding
         schema:
@@ -8436,6 +8438,18 @@ paths:
           type: string
           format: date
         description: Target Date Before
+      - in: query
+        name: updated_after
+        schema:
+          type: string
+          format: date
+        description: Updated After
+      - in: query
+        name: updated_before
+        schema:
+          type: string
+          format: date
+        description: Updated Before
       tags:
       - order
       security:
@@ -9438,6 +9452,8 @@ paths:
           - -complete_date
           - project_code
           - -project_code
+          - updated_at
+          - -updated_at
       - in: query
         name: outstanding
         schema:
@@ -9498,6 +9514,18 @@ paths:
           type: string
           format: date
         description: Target Date Before
+      - in: query
+        name: updated_after
+        schema:
+          type: string
+          format: date
+        description: Updated After
+      - in: query
+        name: updated_before
+        schema:
+          type: string
+          format: date
+        description: Updated Before
       tags:
       - order
       security:
@@ -10433,6 +10461,8 @@ paths:
           - -total_price
           - project_code
           - -project_code
+          - updated_at
+          - -updated_at
       - in: query
         name: outstanding
         schema:
@@ -10493,6 +10523,18 @@ paths:
           type: string
           format: date
         description: Target Date Before
+      - in: query
+        name: updated_after
+        schema:
+          type: string
+          format: date
+        description: Updated After
+      - in: query
+        name: updated_before
+        schema:
+          type: string
+          format: date
+        description: Updated Before
       tags:
       - order
       security:
@@ -33653,6 +33695,12 @@ components:
           type: integer
           nullable: true
           description: Destination for received items
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
     PatchedPurchaseOrderExtraLine:
       type: object
       description: Serializer for a PurchaseOrderExtraLine object.
@@ -34134,6 +34182,12 @@ components:
           pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
           readOnly: true
           nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
     PatchedReturnOrderExtraLine:
       type: object
       description: Serializer for a ReturnOrderExtraLine object.
@@ -34556,6 +34610,12 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
     PatchedSalesOrderAllocation:
       type: object
       description: |-
@@ -36277,6 +36337,12 @@ components:
           type: integer
           nullable: true
           description: Destination for received items
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
       required:
       - barcode_hash
       - created_by
@@ -36914,6 +36980,12 @@ components:
           pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
           readOnly: true
           nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
       required:
       - barcode_hash
       - created_by
@@ -37435,6 +37507,12 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
       required:
       - barcode_hash
       - created_by

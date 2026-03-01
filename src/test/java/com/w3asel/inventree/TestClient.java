@@ -61,7 +61,7 @@ public class TestClient {
         int offset = 0;
         PaginatedSalesOrderList salesOrders = api.orderSoList(limit, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, offset, null, null,
-                null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null);
         System.out.printf("Fetched %d of %d sales orders%n", salesOrders.getResults().size(),
                 salesOrders.getCount());
 

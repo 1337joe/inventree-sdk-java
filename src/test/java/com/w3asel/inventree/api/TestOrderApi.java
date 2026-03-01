@@ -55,7 +55,7 @@ public class TestOrderApi extends TestApi {
         api.orderPoLineUpdate(null, null);
         api.orderPoList(null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null);
+                null, null, null, null, null, null);
         api.orderPoPartialUpdate(null, null);
         // api.orderPoReceiveCreate(null, null);
         api.orderPoRetrieve(null, null);
@@ -68,9 +68,11 @@ public class TestOrderApi extends TestApi {
     void testPo() throws ApiException {
         // int limit = 1;
 
-        int poPk = api.orderPoList(limit, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null).getResults().get(0).getPk();
+        int poPk = api
+                .orderPoList(limit, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null)
+                .getResults().get(0).getPk();
         api.orderPoRetrieve(poPk, null);
     }
 
@@ -129,7 +131,7 @@ public class TestOrderApi extends TestApi {
 
         int roPk = api.orderRoList(limit, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null).getResults().get(0).getPk();
+                null, null, null, null, null, null, null).getResults().get(0).getPk();
         api.orderRoRetrieve(roPk, null);
     }
 
@@ -160,7 +162,7 @@ public class TestOrderApi extends TestApi {
 
         int soPk = api.orderSoList(limit, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null).getResults().get(0).getPk();
+                null, null, null, null, null, null, null).getResults().get(0).getPk();
         api.orderSoRetrieve(soPk, null);
     }
 
@@ -214,7 +216,7 @@ public class TestOrderApi extends TestApi {
         int offset = 0;
         PaginatedSalesOrderList actual = api.orderSoList(limit, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, offset, null, null, null,
-                null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount());
         List<SalesOrder> actualList = actual.getResults();
     }
