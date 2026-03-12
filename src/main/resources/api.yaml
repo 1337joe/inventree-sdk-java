@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '460'
+  version: '461'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26114,6 +26114,10 @@ components:
           type: boolean
           default: true
           description: Copy extra line items from the original order
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy order parameters from the original order
       required:
       - order_id
     DuplicatePart:
