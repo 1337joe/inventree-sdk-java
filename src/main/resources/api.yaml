@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '462'
+  version: '463'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -17893,6 +17893,74 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/StockItem'
+          description: ''
+    put:
+      operationId: stock_bulk_update
+      description: |-
+        Perform a PUT operation against this list endpoint.
+
+        Simply redirects to the PATCH method.
+      tags:
+      - stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StockItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StockItem'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:stock
+        - r:change:build
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockItem'
+          description: ''
+    patch:
+      operationId: stock_bulk_partial_update
+      description: |-
+        Perform a PATCH operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support PATCH,
+        so this method is provided as a custom implementation.
+      tags:
+      - stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedStockItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedStockItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedStockItem'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:stock
+        - r:change:build
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockItem'
           description: ''
     delete:
       operationId: stock_bulk_destroy

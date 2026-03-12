@@ -55,6 +55,9 @@ public class TestStockApi extends TestApi {
     void todo() throws ApiException {
         api.stockAddCreate(null);
         api.stockAssignCreate(null);
+        api.stockBulkDestroy(null);
+        api.stockBulkPartialUpdate(null);
+        api.stockBulkUpdate(null);
         api.stockChangeStatusCreate(null);
         api.stockConvertCreate(null, null);
         api.stockCountCreate(null);
