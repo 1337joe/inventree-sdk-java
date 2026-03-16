@@ -27,9 +27,10 @@ public class TestBackgroundTaskApi extends TestApi {
     void todo() throws ApiException {
         api.backgroundTaskFailedBulkDestroy(null);
         // api.backgroundTaskFailedList(null, null, null, null);
+        // api.backgroundTaskOverview();
         api.backgroundTaskPendingBulkDestroy(null);
         // api.backgroundTaskPendingList(null, null);
-        // api.backgroundTaskRetrieve();
+        api.backgroundTaskRetrieve(null);
         // api.backgroundTaskScheduledList(null, null, null, null);
     }
 
@@ -44,6 +45,13 @@ public class TestBackgroundTaskApi extends TestApi {
     }
 
     @Test
+    void backgroundTaskOverview() throws ApiException {
+        TaskOverview actual = api.backgroundTaskOverview();
+        assertNotNull(actual, "Expected task overview response");
+        assertEquals(0, actual.getFailedTasks(), "Unexpected background task failed count");
+    }
+
+    @Test
     void backgroundTaskPendingList() throws ApiException {
         int limit = 10;
         int offset = 0;
@@ -54,13 +62,6 @@ public class TestBackgroundTaskApi extends TestApi {
         List<PendingTask> actualList = actual.getResults();
 
         // TODO verify results
-    }
-
-    @Test
-    void backgroundTaskRetrieve() throws ApiException {
-        TaskOverview actual = api.backgroundTaskRetrieve();
-        assertNotNull(actual, "Expected task overview response");
-        assertEquals(0, actual.getFailedTasks(), "Unexpected background task failed count");
     }
 
     @Test

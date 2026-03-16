@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '463'
+  version: '464'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -538,7 +538,7 @@ paths:
           description: No response body
   /api/background-task/:
     get:
-      operationId: background_task_retrieve
+      operationId: background_task_overview
       description: Return information about the current status of the background task
         queue.
       tags:
@@ -555,6 +555,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TaskOverview'
+          description: ''
+  /api/background-task/{task_id}/:
+    get:
+      operationId: background_task_retrieve
+      description: Fetch information regarding a particular background task ID.
+      parameters:
+      - in: path
+        name: task_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - background-task
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDetail'
           description: ''
   /api/background-task/failed/:
     get:
@@ -39249,6 +39274,35 @@ components:
       - price
       - quantity
       - supplier
+    TaskDetail:
+      type: object
+      description: Serializer for a background task detail.
+      properties:
+        task_id:
+          type: string
+          readOnly: true
+        exists:
+          type: boolean
+          readOnly: true
+        pending:
+          type: boolean
+          readOnly: true
+        complete:
+          type: boolean
+          readOnly: true
+        success:
+          type: boolean
+          readOnly: true
+        http_status:
+          type: integer
+          readOnly: true
+      required:
+      - complete
+      - exists
+      - http_status
+      - pending
+      - success
+      - task_id
     TaskOverview:
       type: object
       description: Serializer for background task overview.
