@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '466'
+  version: '467'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -35221,6 +35221,7 @@ components:
         parent:
           type: integer
           readOnly: true
+          nullable: true
           title: Parent Item
           description: Parent stock item
         purchase_order:
@@ -38548,6 +38549,7 @@ components:
         parent:
           type: integer
           readOnly: true
+          nullable: true
           title: Parent Item
           description: Parent stock item
         purchase_order:
@@ -38719,7 +38721,6 @@ components:
       required:
       - barcode_hash
       - in_stock
-      - parent
       - part
       - pk
       - quantity
