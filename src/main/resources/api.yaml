@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '467'
+  version: '468'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -6721,14 +6721,14 @@ paths:
         description: |-
           Model Type
 
-          * `part` - Part
           * `build` - Build Order
           * `buildline` - Build Order Line Item
           * `company` - Company
           * `purchaseorder` - Purchase Order
+          * `returnorder` - Return Order
           * `salesorder` - Sales Order
           * `salesordershipment` - Sales Order Shipment
-          * `returnorder` - Return Order
+          * `part` - Part
           * `stockitem` - Stock Item
           * `stocklocation` - Stock Location
       - name: offset
@@ -16554,14 +16554,14 @@ paths:
         description: |-
           Model Type
 
-          * `part` - Part
           * `build` - Build Order
           * `buildline` - Build Order Line Item
           * `company` - Company
           * `purchaseorder` - Purchase Order
+          * `returnorder` - Return Order
           * `salesorder` - Sales Order
           * `salesordershipment` - Sales Order Shipment
-          * `returnorder` - Return Order
+          * `part` - Part
           * `stockitem` - Stock Item
           * `stocklocation` - Stock Location
       - name: offset
@@ -24084,27 +24084,27 @@ components:
       - user_detail
     AttachmentModelTypeEnum:
       enum:
-      - part
-      - manufacturerpart
       - build
       - company
+      - manufacturerpart
       - supplierpart
       - purchaseorder
+      - returnorder
       - salesorder
       - salesordershipment
-      - returnorder
+      - part
       - stockitem
       type: string
       description: |-
-        * `part` - Part
-        * `manufacturerpart` - Manufacturer Part
         * `build` - Build Order
         * `company` - Company
+        * `manufacturerpart` - Manufacturer Part
         * `supplierpart` - Supplier Part
         * `purchaseorder` - Purchase Order
+        * `returnorder` - Return Order
         * `salesorder` - Sales Order
         * `salesordershipment` - Sales Order Shipment
-        * `returnorder` - Return Order
+        * `part` - Part
         * `stockitem` - Stock Item
     Barcode:
       type: object
@@ -24124,17 +24124,14 @@ components:
           type: string
           description: Scanned barcode data
           maxLength: 4095
-        part:
-          type: integer
-          nullable: true
-        manufacturerpart:
-          type: integer
-          nullable: true
-          title: Manufacturer Part
         build:
           type: integer
           nullable: true
           title: Build Order
+        manufacturerpart:
+          type: integer
+          nullable: true
+          title: Manufacturer Part
         supplierpart:
           type: integer
           nullable: true
@@ -24143,6 +24140,10 @@ components:
           type: integer
           nullable: true
           title: Purchase Order
+        returnorder:
+          type: integer
+          nullable: true
+          title: Return Order
         salesorder:
           type: integer
           nullable: true
@@ -24151,10 +24152,9 @@ components:
           type: integer
           nullable: true
           title: Sales Order Shipment
-        returnorder:
+        part:
           type: integer
           nullable: true
-          title: Return Order
         stockitem:
           type: integer
           nullable: true
@@ -24313,17 +24313,14 @@ components:
       type: object
       description: Serializer class for unlinking a barcode from an internal model.
       properties:
-        part:
-          type: integer
-          nullable: true
-        manufacturerpart:
-          type: integer
-          nullable: true
-          title: Manufacturer Part
         build:
           type: integer
           nullable: true
           title: Build Order
+        manufacturerpart:
+          type: integer
+          nullable: true
+          title: Manufacturer Part
         supplierpart:
           type: integer
           nullable: true
@@ -24332,6 +24329,10 @@ components:
           type: integer
           nullable: true
           title: Purchase Order
+        returnorder:
+          type: integer
+          nullable: true
+          title: Return Order
         salesorder:
           type: integer
           nullable: true
@@ -24340,10 +24341,9 @@ components:
           type: integer
           nullable: true
           title: Sales Order Shipment
-        returnorder:
+        part:
           type: integer
           nullable: true
-          title: Return Order
         stockitem:
           type: integer
           nullable: true
@@ -27843,25 +27843,25 @@ components:
       - metadata
     ModelType4f8Enum:
       enum:
-      - part.part
-      - company.manufacturerpart
       - build.build
       - company.company
+      - company.manufacturerpart
       - company.supplierpart
       - order.purchaseorder
-      - order.salesorder
       - order.returnorder
+      - order.salesorder
+      - part.part
       - stock.stocklocation
       type: string
       description: |-
-        * `part.part` - Part
-        * `company.manufacturerpart` - Manufacturer Part
         * `build.build` - Build Order
         * `company.company` - Company
+        * `company.manufacturerpart` - Manufacturer Part
         * `company.supplierpart` - Supplier Part
         * `order.purchaseorder` - Purchase Order
-        * `order.salesorder` - Sales Order
         * `order.returnorder` - Return Order
+        * `order.salesorder` - Sales Order
+        * `part.part` - Part
         * `stock.stocklocation` - Stock Location
     NameEnum:
       enum:
@@ -39334,26 +39334,26 @@ components:
       - scheduled_tasks
     TemplateModelTypeEnum:
       enum:
-      - part
       - build
       - buildline
       - company
       - purchaseorder
+      - returnorder
       - salesorder
       - salesordershipment
-      - returnorder
+      - part
       - stockitem
       - stocklocation
       type: string
       description: |-
-        * `part` - Part
         * `build` - Build Order
         * `buildline` - Build Order Line Item
         * `company` - Company
         * `purchaseorder` - Purchase Order
+        * `returnorder` - Return Order
         * `salesorder` - Sales Order
         * `salesordershipment` - Sales Order Shipment
-        * `returnorder` - Return Order
+        * `part` - Part
         * `stockitem` - Stock Item
         * `stocklocation` - Stock Location
     TestEmail:

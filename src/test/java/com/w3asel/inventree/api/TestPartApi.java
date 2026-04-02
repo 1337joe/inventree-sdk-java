@@ -243,7 +243,7 @@ public class TestPartApi extends TestApi {
         if (1 == pk) {
             assertEquals(null, actual.getParentDefaultLocation(),
                     "Incorrect parent default location");
-            assertEquals(136, actual.getPartCount(), "Incorrect part count");
+            assertEquals(137, actual.getPartCount(), "Incorrect part count");
             assertFalse(actual.getStarred(), "Incorrect starred");
             assertEquals(12, actual.getSubcategories(), "Incorrect subcategories");
         } else if (5 == pk) {
