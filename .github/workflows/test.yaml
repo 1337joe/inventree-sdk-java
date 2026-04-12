@@ -65,7 +65,7 @@ jobs:
 
       - name: Read target commit hash
         run: |
-          echo "COMMIT_HASH=$(cat .github/inventree_test_hash.txt)" >> "$GITHUB_ENV"
+          echo "COMMIT_HASH=$(cat .github/inventree_test_hash.txt)" >> $GITHUB_ENV
 
       # Set up and start InvenTree server
 
@@ -75,6 +75,10 @@ jobs:
           repository: 'inventree/inventree'
           path: 'InvenTree'
           ref: '${{ env.COMMIT_HASH }}'
+      - name: Find commit date
+        run: |
+          cd InvenTree
+          echo "COMMIT_DATE=$(git log -1 --format="%ci")" >> $GITHUB_ENV
 
       # Python installs
       - name: Set up Python ${{ env.python_version }}
@@ -102,6 +106,22 @@ jobs:
           sudo apt-get install ${{ env.apt_dependency }}
           sudo apt-get install ${{ env.apt_dependency }}
 
+      # Find demo-dataset hash
+      - name: Checkout demo-dataset
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: 'inventree/demo-dataset'
+          path: 'inventree-demo-dataset'
+          fetch-depth: 0
+      - name: Find prior demo-dataset commit hash
+        run: |
+          cd inventree-demo-dataset
+          echo "DATA_HASH=$(git log -1 --format="%H" --until="$COMMIT_DATE")" >> $GITHUB_ENV
+      - name: Patch invoke tasks
+        run: |
+          cd InvenTree
+          sed -i "s/-b {branch}/--revision={branch}/g" tasks.py
+
       # Invoke commands
       - name: Install dev requirements
         run: uv pip install --require-hashes -r InvenTree/src/backend/requirements-dev.txt
@@ -110,7 +130,7 @@ jobs:
       - name: Run invoke update
         run: cd InvenTree && invoke update --skip-backup --no-frontend
       - name: Setup test environment
-        run: cd InvenTree && invoke dev.setup-test --ignore-update
+        run: cd InvenTree && invoke dev.setup-test -b $DATA_HASH --ignore-update
       - name: Start InvenTree Server
         run: |
           cd InvenTree

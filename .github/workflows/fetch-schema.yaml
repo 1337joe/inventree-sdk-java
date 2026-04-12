@@ -57,17 +57,23 @@ jobs:
             exit 1
           fi
 
-      - name: Read original commit hash
+      - name: Read original commit hash and date
         run: |
           cd schema
           git log export/${{ env.NEW_VERSION }}/api.yaml | sed -nE 's|^\s+Update API schema for [0-9]+ / (.*)$|\1|p' > ../.github/inventree_test_hash.txt
           echo "COMMIT_HASH=$(cat ../.github/inventree_test_hash.txt)" >> "$GITHUB_ENV"
+          echo "COMMIT_DATE=$(git log -1 --format="%ci")" >> $GITHUB_ENV
 
       - name: Checkout inventree demo dataset
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: 'inventree/demo-dataset'
           path: 'demo-dataset'
+          fetch-depth: 0
+      - name: Detatch to demo data prior to schema date
+        run: |
+          cd demo-dataset
+          git checkout $(git log -1 --format="%H" --until="$COMMIT_DATE")"
 
       - name: Collect files
         run: |
