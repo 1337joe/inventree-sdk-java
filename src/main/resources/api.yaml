@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '468'
+  version: '469'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27841,7 +27841,7 @@ components:
         metadata: {}
       required:
       - metadata
-    ModelType4f8Enum:
+    ModelType054Enum:
       enum:
       - build.build
       - company.company
@@ -27850,6 +27850,7 @@ components:
       - order.purchaseorder
       - order.returnorder
       - order.salesorder
+      - order.salesordershipment
       - part.part
       - stock.stocklocation
       type: string
@@ -27861,6 +27862,7 @@ components:
         * `order.purchaseorder` - Purchase Order
         * `order.returnorder` - Return Order
         * `order.salesorder` - Sales Order
+        * `order.salesordershipment` - Sales Order Shipment
         * `part.part` - Part
         * `stock.stocklocation` - Stock Location
     NameEnum:
@@ -29827,7 +29829,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelType4f8Enum'
+          - $ref: '#/components/schemas/ModelType054Enum'
           default: ''
         model_id:
           type: integer
@@ -29899,7 +29901,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelType4f8Enum'
+          - $ref: '#/components/schemas/ModelType054Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
@@ -32633,7 +32635,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelType4f8Enum'
+          - $ref: '#/components/schemas/ModelType054Enum'
           default: ''
         model_id:
           type: integer
@@ -32699,7 +32701,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelType4f8Enum'
+          - $ref: '#/components/schemas/ModelType054Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
@@ -35033,6 +35035,12 @@ components:
           nullable: true
           description: Markdown notes (optional)
           maxLength: 50000
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
+          nullable: true
         checked_by_detail:
           allOf:
           - $ref: '#/components/schemas/User'
@@ -37988,6 +37996,12 @@ components:
           nullable: true
           description: Markdown notes (optional)
           maxLength: 50000
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
+          nullable: true
         checked_by_detail:
           allOf:
           - $ref: '#/components/schemas/User'
