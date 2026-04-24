@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '476'
+  version: '477'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -72,7 +72,7 @@ paths:
   /api/admin/config/:
     get:
       operationId: admin_config_list
-      description: List view for all accessed configurations.
+      description: All accessed/in-use configurations.
       tags:
       - admin
       security:
@@ -93,12 +93,13 @@ paths:
   /api/admin/config/{key}/:
     get:
       operationId: admin_config_retrieve
-      description: Detail view for an individual configuration.
+      description: All accessed/in-use configurations.
       parameters:
       - in: path
         name: key
         schema:
           type: string
+        description: Unique identifier for this configuration
         required: true
       tags:
       - admin
@@ -118,7 +119,7 @@ paths:
   /api/admin/email/:
     get:
       operationId: admin_email_list
-      description: List view for email objects.
+      description: Backend E-Mail management for administrative purposes.
       parameters:
       - name: limit
         required: true
@@ -178,10 +179,11 @@ paths:
     delete:
       operationId: admin_email_bulk_destroy
       description: |-
-        Perform a DELETE operation against this list endpoint.
+        Perform a bulk delete operation.
 
-        Note that the typical DRF list endpoint does not support DELETE,
-        so this method is provided as a custom implementation.
+        Provide either a list of ids (via `items`) or a filter (via `filters`) to select the items to be deleted.
+
+        This action is performed attomically, so either all items will be deleted, or none will be deleted.
       tags:
       - admin
       security:
@@ -208,7 +210,7 @@ paths:
   /api/admin/email/{global_id}/:
     get:
       operationId: admin_email_retrieve
-      description: Detail view for an email object.
+      description: Backend E-Mail management for administrative purposes.
       parameters:
       - in: path
         name: global_id
@@ -234,7 +236,7 @@ paths:
           description: ''
     delete:
       operationId: admin_email_destroy
-      description: Detail view for an email object.
+      description: Backend E-Mail management for administrative purposes.
       parameters:
       - in: path
         name: global_id
@@ -5181,7 +5183,7 @@ paths:
   /api/data-output/:
     get:
       operationId: data_output_list
-      description: List view for DataOutput objects.
+      description: Mixin class for DataOutput endpoints.
       parameters:
       - name: limit
         required: true
@@ -5240,10 +5242,11 @@ paths:
     delete:
       operationId: data_output_bulk_destroy
       description: |-
-        Perform a DELETE operation against this list endpoint.
+        Perform a bulk delete operation.
 
-        Note that the typical DRF list endpoint does not support DELETE,
-        so this method is provided as a custom implementation.
+        Provide either a list of ids (via `items`) or a filter (via `filters`) to select the items to be deleted.
+
+        This action is performed attomically, so either all items will be deleted, or none will be deleted.
       tags:
       - data-output
       security:
@@ -5270,12 +5273,13 @@ paths:
   /api/data-output/{id}/:
     get:
       operationId: data_output_retrieve
-      description: Detail view for a DataOutput object.
+      description: Mixin class for DataOutput endpoints.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this data output.
         required: true
       tags:
       - data-output
@@ -5294,12 +5298,13 @@ paths:
           description: ''
     delete:
       operationId: data_output_destroy
-      description: Detail view for a DataOutput object.
+      description: Mixin class for DataOutput endpoints.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this data output.
         required: true
       tags:
       - data-output
@@ -5393,10 +5398,11 @@ paths:
     delete:
       operationId: error_report_bulk_destroy
       description: |-
-        Perform a DELETE operation against this list endpoint.
+        Perform a bulk delete operation.
 
-        Note that the typical DRF list endpoint does not support DELETE,
-        so this method is provided as a custom implementation.
+        Provide either a list of ids (via `items`) or a filter (via `filters`) to select the items to be deleted.
+
+        This action is performed attomically, so either all items will be deleted, or none will be deleted.
       tags:
       - error-report
       security:
@@ -5423,12 +5429,13 @@ paths:
   /api/error-report/{id}/:
     get:
       operationId: error_report_retrieve
-      description: Detail view for a single error message.
+      description: List view for server error messages.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Error.
         required: true
       tags:
       - error-report
@@ -5447,12 +5454,13 @@ paths:
           description: ''
     put:
       operationId: error_report_update
-      description: Detail view for a single error message.
+      description: List view for server error messages.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Error.
         required: true
       tags:
       - error-report
@@ -5482,12 +5490,13 @@ paths:
           description: ''
     patch:
       operationId: error_report_partial_update
-      description: Detail view for a single error message.
+      description: List view for server error messages.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Error.
         required: true
       tags:
       - error-report
@@ -5517,12 +5526,13 @@ paths:
           description: ''
     delete:
       operationId: error_report_destroy
-      description: Detail view for a single error message.
+      description: List view for server error messages.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Error.
         required: true
       tags:
       - error-report
@@ -7760,7 +7770,7 @@ paths:
   /api/news/:
     get:
       operationId: news_list
-      description: List view for all news items.
+      description: Newsfeed from the official inventree.org website.
       parameters:
       - name: limit
         required: true
@@ -7809,10 +7819,11 @@ paths:
     delete:
       operationId: news_bulk_destroy
       description: |-
-        Perform a DELETE operation against this list endpoint.
+        Perform a bulk delete operation.
 
-        Note that the typical DRF list endpoint does not support DELETE,
-        so this method is provided as a custom implementation.
+        Provide either a list of ids (via `items`) or a filter (via `filters`) to select the items to be deleted.
+
+        This action is performed attomically, so either all items will be deleted, or none will be deleted.
       tags:
       - news
       security:
@@ -7839,12 +7850,13 @@ paths:
   /api/news/{id}/:
     get:
       operationId: news_retrieve
-      description: Detail view for an individual news feed object.
+      description: Newsfeed from the official inventree.org website.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this news feed entry.
         required: true
       tags:
       - news
@@ -7863,12 +7875,13 @@ paths:
           description: ''
     put:
       operationId: news_update
-      description: Detail view for an individual news feed object.
+      description: Newsfeed from the official inventree.org website.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this news feed entry.
         required: true
       tags:
       - news
@@ -7899,12 +7912,13 @@ paths:
           description: ''
     patch:
       operationId: news_partial_update
-      description: Detail view for an individual news feed object.
+      description: Newsfeed from the official inventree.org website.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this news feed entry.
         required: true
       tags:
       - news
@@ -7934,12 +7948,13 @@ paths:
           description: ''
     delete:
       operationId: news_destroy
-      description: Detail view for an individual news feed object.
+      description: Newsfeed from the official inventree.org website.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this news feed entry.
         required: true
       tags:
       - news
@@ -8090,10 +8105,11 @@ paths:
     delete:
       operationId: notifications_bulk_destroy
       description: |-
-        Perform a DELETE operation against this list endpoint.
+        Perform a bulk delete operation.
 
-        Note that the typical DRF list endpoint does not support DELETE,
-        so this method is provided as a custom implementation.
+        Provide either a list of ids (via `items`) or a filter (via `filters`) to select the items to be deleted.
+
+        This action is performed attomically, so either all items will be deleted, or none will be deleted.
       tags:
       - notifications
       security:
@@ -8121,7 +8137,7 @@ paths:
     get:
       operationId: notifications_retrieve
       description: |-
-        Detail view for an individual notification object.
+        Notifications for the current user.
 
         - User can only view / delete their own notification objects
       parameters:
@@ -8129,6 +8145,7 @@ paths:
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this notification message.
         required: true
       tags:
       - notifications
@@ -8148,7 +8165,7 @@ paths:
     put:
       operationId: notifications_update
       description: |-
-        Detail view for an individual notification object.
+        Notifications for the current user.
 
         - User can only view / delete their own notification objects
       parameters:
@@ -8156,6 +8173,7 @@ paths:
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this notification message.
         required: true
       tags:
       - notifications
@@ -8187,7 +8205,7 @@ paths:
     patch:
       operationId: notifications_partial_update
       description: |-
-        Detail view for an individual notification object.
+        Notifications for the current user.
 
         - User can only view / delete their own notification objects
       parameters:
@@ -8195,6 +8213,7 @@ paths:
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this notification message.
         required: true
       tags:
       - notifications
@@ -8225,7 +8244,7 @@ paths:
     delete:
       operationId: notifications_destroy
       description: |-
-        Detail view for an individual notification object.
+        Notifications for the current user.
 
         - User can only view / delete their own notification objects
       parameters:
@@ -8233,6 +8252,7 @@ paths:
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this notification message.
         required: true
       tags:
       - notifications
@@ -19864,7 +19884,7 @@ paths:
   /api/units/:
     get:
       operationId: units_list
-      description: Override the GET method to determine export options.
+      description: List view for custom units.
       parameters:
       - name: limit
         required: true
@@ -19938,12 +19958,13 @@ paths:
   /api/units/{id}/:
     get:
       operationId: units_retrieve
-      description: Detail view for a particular custom unit.
+      description: List view for custom units.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Custom Unit.
         required: true
       tags:
       - units
@@ -19962,12 +19983,13 @@ paths:
           description: ''
     put:
       operationId: units_update
-      description: Detail view for a particular custom unit.
+      description: List view for custom units.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Custom Unit.
         required: true
       tags:
       - units
@@ -19998,12 +20020,13 @@ paths:
           description: ''
     patch:
       operationId: units_partial_update
-      description: Detail view for a particular custom unit.
+      description: List view for custom units.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Custom Unit.
         required: true
       tags:
       - units
@@ -20033,12 +20056,13 @@ paths:
           description: ''
     delete:
       operationId: units_destroy
-      description: Detail view for a particular custom unit.
+      description: List view for custom units.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Custom Unit.
         required: true
       tags:
       - units
