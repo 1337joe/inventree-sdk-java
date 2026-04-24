@@ -61,8 +61,7 @@ jobs:
         run: |
           cd schema
           git log export/${{ env.NEW_VERSION }}/api.yaml | sed -nE 's|^\s+Update API schema for [0-9]+ / (.*)$|\1|p' > ../.github/inventree_test_hash.txt
-          echo "COMMIT_HASH=$(cat ../.github/inventree_test_hash.txt)" >> "$GITHUB_ENV"
-          echo "COMMIT_DATE=$(git log -1 --format="%ci")" >> $GITHUB_ENV
+          echo "COMMIT_DATE=$(git log -1 --format="%ci" export/${{ env.NEW_VERSION }}/api.yaml)" >> $GITHUB_ENV
 
       - name: Checkout inventree demo dataset
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -73,7 +72,7 @@ jobs:
       - name: Detatch to demo data prior to schema date
         run: |
           cd demo-dataset
-          git checkout $(git log -1 --format="%H" --until="$COMMIT_DATE")
+          git checkout $(git log -1 --format="%H" --until="${{ env.COMMIT_DATE }}")
           git log -1 --format="%H" > ../.github/demo-dataset_hash.txt
 
       - name: Collect files
@@ -87,7 +86,7 @@ jobs:
         with:
           branch: '${{ env.BRANCH_NAME }}'
           create_branch: true
-          file_pattern: 'pom.xml .github/inventree_test_hash.txt src/*'
+          file_pattern: 'pom.xml .github/inventree_test_hash.txt .github/demo-dataset_hash.txt src/*'
           commit_message: 'Update to schema ${{ env.NEW_VERSION }}'
 
       - name: Checkout inventree
