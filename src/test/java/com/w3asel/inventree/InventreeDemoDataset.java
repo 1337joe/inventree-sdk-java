@@ -51,7 +51,7 @@ public class InventreeDemoDataset {
         List<JsonObject> foundObjects = new ArrayList<>();
         for (JsonElement element : rootElements) {
             JsonObject object = element.getAsJsonObject();
-            if (!model.key.equals(object.get(MODEL_KEY).getAsString())) {
+            if (!object.has(MODEL_KEY) || !model.key.equals(object.get(MODEL_KEY).getAsString())) {
                 continue;
             }
             if (pk == null || pk == object.get(PRIMARY_KEY_KEY).getAsInt()) {

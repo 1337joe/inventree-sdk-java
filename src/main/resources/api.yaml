@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '469'
+  version: '470'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26422,8 +26422,8 @@ components:
           writeOnly: true
         is_staff:
           type: boolean
-          title: Staff
-          description: Does this user have staff permissions
+          title: Administrator
+          description: Does this user have administrative permissions
         is_superuser:
           type: boolean
           title: Superuser
@@ -27812,8 +27812,8 @@ components:
           writeOnly: true
         is_staff:
           type: boolean
-          title: Staff
-          description: Does this user have staff permissions
+          title: Administrator
+          description: Does this user have administrative permissions
         is_superuser:
           type: boolean
           title: Superuser
@@ -32075,8 +32075,8 @@ components:
           writeOnly: true
         is_staff:
           type: boolean
-          title: Staff
-          description: Does this user have staff permissions
+          title: Administrator
+          description: Does this user have administrative permissions
         is_superuser:
           type: boolean
           title: Superuser
@@ -32528,8 +32528,8 @@ components:
           writeOnly: true
         is_staff:
           type: boolean
-          title: Staff
-          description: Does this user have staff permissions
+          title: Administrator
+          description: Does this user have administrative permissions
         is_superuser:
           type: boolean
           title: Superuser
@@ -39477,8 +39477,8 @@ components:
           writeOnly: true
         is_staff:
           type: boolean
-          title: Staff
-          description: Does this user have staff permissions
+          title: Administrator
+          description: Does this user have administrative permissions
         is_superuser:
           type: boolean
           title: Superuser
