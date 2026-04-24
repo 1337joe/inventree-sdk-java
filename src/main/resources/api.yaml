@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '471'
+  version: '472'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -15804,7 +15804,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - a:superuser
       responses:
         '201':
           content:
@@ -27806,22 +27806,19 @@ components:
           items:
             $ref: '#/components/schemas/Group'
           readOnly: true
-        group_ids:
-          type: array
-          items:
-            type: integer
-            writeOnly: true
-          writeOnly: true
         is_staff:
           type: boolean
-          title: Administrator
-          description: Does this user have administrative permissions
+          readOnly: true
+          title: Staff
+          description: Does this user have staff permissions
         is_superuser:
           type: boolean
+          readOnly: true
           title: Superuser
           description: Is this user a superuser
         is_active:
           type: boolean
+          readOnly: true
           title: Active
           description: Is this user account active
         profile:
@@ -27832,6 +27829,9 @@ components:
       - email
       - first_name
       - groups
+      - is_active
+      - is_staff
+      - is_superuser
       - last_name
       - pk
       - profile
@@ -32522,22 +32522,19 @@ components:
           items:
             $ref: '#/components/schemas/Group'
           readOnly: true
-        group_ids:
-          type: array
-          items:
-            type: integer
-            writeOnly: true
-          writeOnly: true
         is_staff:
           type: boolean
-          title: Administrator
-          description: Does this user have administrative permissions
+          readOnly: true
+          title: Staff
+          description: Does this user have staff permissions
         is_superuser:
           type: boolean
+          readOnly: true
           title: Superuser
           description: Is this user a superuser
         is_active:
           type: boolean
+          readOnly: true
           title: Active
           description: Is this user account active
         profile:
