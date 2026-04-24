@@ -21,6 +21,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -151,6 +152,10 @@ public class InventreeDemoDataset {
         } else if (type == LocalDate.class) {
             assertEquals(LocalDate.from(DATE_FORMAT.parse(fieldValue.getAsString())), actualValue,
                     message);
+        } else if (type == OffsetDateTime.class) {
+            OffsetDateTime offsetDateTime =
+                    parseOffsetDateTime(fieldValue.getAsString()).truncatedTo(ChronoUnit.MINUTES);
+            assertEquals(offsetDateTime, actualValue, message);
 
         } else {
             fail("Unsupported type: " + type.getName());
@@ -231,6 +236,8 @@ public class InventreeDemoDataset {
         PART_TEST_TEMPLATE("part.parttesttemplate"),
         REPORT_LABEL_TEMPLATE("report.labeltemplate"),
         REPORT_TEMPLATE("report.reporttemplate"),
+        SELECTION_LIST("common.selectionlist"),
+        SELECTION_LIST_ENTRY("common.selectionlistentry"),
         STOCK_ITEM("stock.stockitem"),
         STOCK_TEST_RESULT("stock.stockitemtestresult"),
         STOCK_TRACKING("stock.stockitemtracking"),

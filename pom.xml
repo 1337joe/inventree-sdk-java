@@ -167,7 +167,12 @@
                         </replacement>
                         <!-- un-require fields that are missing nullable annotations -->
                         <replacement>
-                            <token>^\s+- default$\n</token>
+                            <token>^\s+- default$\n</token> <!-- selection list default value -->
+                            <value></value>
+                        </replacement>
+                        <!-- value incorrectly not set by server, should not be nullable -->
+                        <replacement>
+                            <token>^\s+- entry_count$\n</token><!--selection list entry count-->
                             <value></value>
                         </replacement>
                     </replacements>

@@ -37,7 +37,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -442,12 +441,7 @@ public class TestCompanyApi extends TestApi {
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
         assertFieldEquals("barcode_hash", fields, actual.getBarcodeHash());
-
-        OffsetDateTime expectedUpdated = fields.get("updated").isJsonNull() ? null
-                : InventreeDemoDataset.parseOffsetDateTime(fields.get("updated").getAsString())
-                        .truncatedTo(ChronoUnit.MINUTES);
-        assertEquals(expectedUpdated, actual.getUpdated(), "Incorrect updated");
-
+        assertNullableFieldEquals(OffsetDateTime.class, "updated", fields, actual.getUpdated());
         assertFieldEquals("part", fields, actual.getPart());
         assertFieldEquals("supplier", fields, actual.getSupplier());
         assertFieldEquals("SKU", fields, actual.getSKU());
@@ -461,12 +455,7 @@ public class TestCompanyApi extends TestApi {
         assertFieldEquals("pack_quantity", fields, actual.getPackQuantity());
         assertFieldEquals("pack_quantity_native", fields, actual.getPackQuantityNative());
         assertFieldEquals("available", fields, actual.getAvailable());
-
-        OffsetDateTime expectedAvailabilityUpdated = InventreeDemoDataset
-                .parseOffsetDateTime(fields.get("availability_updated").getAsString())
-                .truncatedTo(ChronoUnit.MINUTES);
-        assertEquals(expectedAvailabilityUpdated, actual.getAvailabilityUpdated(),
-                "Incorrect availability updated");
+        assertFieldEquals("availability_updated", fields, actual.getAvailabilityUpdated());
 
         if (detail) {
             assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
@@ -673,12 +662,7 @@ public class TestCompanyApi extends TestApi {
         assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
-
-        OffsetDateTime expectedUpdate =
-                InventreeDemoDataset.parseOffsetDateTime(fields.get("updated").getAsString())
-                        .truncatedTo(ChronoUnit.MINUTES);
-        assertEquals(expectedUpdate, actual.getUpdated(), "Incorrect updated time");
-
+        assertFieldEquals("updated", fields, actual.getUpdated());
         assertFieldEquals("quantity", fields, actual.getQuantity());
         assertFieldEquals("price_currency", fields, actual.getPriceCurrency());
         assertFieldEquals("price", fields, actual.getPrice().doubleValue());

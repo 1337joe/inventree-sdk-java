@@ -32,7 +32,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -236,12 +235,7 @@ public class TestStockApi extends TestApi {
 
         assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
         assertFieldEquals("barcode_hash", fields, actual.getBarcodeHash());
-
-        OffsetDateTime expectedUpdated = fields.get("updated").isJsonNull() ? null
-                : InventreeDemoDataset.parseOffsetDateTime(fields.get("updated").getAsString())
-                        .truncatedTo(ChronoUnit.MINUTES);
-        assertEquals(expectedUpdated, actual.getUpdated(), "Incorrect date");
-
+        assertNullableFieldEquals(OffsetDateTime.class, "updated", fields, actual.getUpdated());
         assertNullableFieldEquals(Integer.class, "parent", fields, actual.getParent());
         assertFieldEquals("part", fields, actual.getPart());
         assertFieldEquals("supplier_part", fields, actual.getSupplierPart());
@@ -464,10 +458,7 @@ public class TestStockApi extends TestApi {
             assertNotNull(actual.getUser(), "Expected non-null user");
         }
 
-        OffsetDateTime expectedDate = fields.get("date").isJsonNull() ? null
-                : InventreeDemoDataset.parseOffsetDateTime(fields.get("date").getAsString())
-                        .truncatedTo(ChronoUnit.MINUTES);
-        assertEquals(expectedDate, actual.getDate(), "Incorrect date");
+        assertNullableFieldEquals(OffsetDateTime.class, "date", fields, actual.getDate());
 
         JsonObject expectedDeltas = fields.get("deltas").getAsJsonObject();
         // TODO can this be strongly typed in the schema?
