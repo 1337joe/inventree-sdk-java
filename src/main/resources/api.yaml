@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '474'
+  version: '475'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27125,6 +27125,21 @@ components:
           title: Attach to Model on Print
           description: Save report output as an attachment against linked model instance
             when printing
+        updated:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
         width:
           type: number
           format: double
@@ -32222,6 +32237,21 @@ components:
           title: Attach to Model on Print
           description: Save report output as an attachment against linked model instance
             when printing
+        updated:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
         width:
           type: number
           format: double
@@ -34111,6 +34141,21 @@ components:
           title: Attach to Model on Print
           description: Save report output as an attachment against linked model instance
             when printing
+        updated:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
         page_size:
           allOf:
           - $ref: '#/components/schemas/PageSizeEnum'
@@ -36939,6 +36984,21 @@ components:
           title: Attach to Model on Print
           description: Save report output as an attachment against linked model instance
             when printing
+        updated:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
         page_size:
           allOf:
           - $ref: '#/components/schemas/PageSizeEnum'
