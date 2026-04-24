@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '473'
+  version: '474'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -4511,11 +4511,7 @@ paths:
   /api/company/part/manufacturer/:
     get:
       operationId: company_part_manufacturer_list
-      description: |-
-        API endpoint for list view of ManufacturerPart object.
-
-        - GET: Return list of ManufacturerPart objects
-        - POST: Create a new ManufacturerPart object
+      description: Override the GET method to determine export options.
       parameters:
       - in: query
         name: MPN
