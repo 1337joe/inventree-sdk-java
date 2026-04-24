@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '472'
+  version: '473'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -8566,6 +8566,8 @@ paths:
           - -notes
           - reference
           - -reference
+          - line
+          - -line
       - name: search
         required: false
         in: query
@@ -8820,6 +8822,8 @@ paths:
           - -status
           - complete_date
           - -complete_date
+          - line
+          - -line
       - in: query
         name: part
         schema:
@@ -9638,6 +9642,8 @@ paths:
           - -notes
           - reference
           - -reference
+          - line
+          - -line
       - name: search
         required: false
         in: query
@@ -9872,6 +9878,8 @@ paths:
           - -target_date
           - received_date
           - -received_date
+          - line
+          - -line
       - in: query
         name: outcome
         schema:
@@ -10968,6 +10976,8 @@ paths:
           - -notes
           - reference
           - -reference
+          - line
+          - -line
       - name: search
         required: false
         in: query
@@ -11229,6 +11239,8 @@ paths:
           - -sale_price
           - target_date
           - -target_date
+          - line
+          - -line
       - in: query
         name: part
         schema:
@@ -33809,6 +33821,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         description:
           type: string
           description: Line item description (optional)
@@ -33885,6 +33902,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         link:
           type: string
           format: uri
@@ -34296,6 +34318,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         description:
           type: string
           description: Line item description (optional)
@@ -34372,6 +34399,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         link:
           type: string
           format: uri
@@ -34791,6 +34823,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         description:
           type: string
           description: Line item description (optional)
@@ -34867,6 +34904,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         link:
           type: string
           format: uri
@@ -36475,6 +36517,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         description:
           type: string
           description: Line item description (optional)
@@ -36555,6 +36602,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         link:
           type: string
           format: uri
@@ -37108,6 +37160,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         description:
           type: string
           description: Line item description (optional)
@@ -37188,6 +37245,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         link:
           type: string
           format: uri
@@ -37718,6 +37780,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         description:
           type: string
           description: Line item description (optional)
@@ -37798,6 +37865,11 @@ components:
           type: integer
           readOnly: true
           title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
         link:
           type: string
           format: uri
