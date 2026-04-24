@@ -22,7 +22,7 @@ public class TestSelectionApi extends TestApi {
         api.selectionDestroy(null);
         api.selectionEntryCreate(null, null);
         api.selectionEntryDestroy(null, null);
-        api.selectionEntryList(null, null, null);
+        api.selectionEntryList(null, null, null, null, null, null, null, null);
         api.selectionEntryPartialUpdate(null, null, null);
         api.selectionEntryRetrieve(null, null);
         api.selectionEntryUpdate(null, null, null);
@@ -38,7 +38,7 @@ public class TestSelectionApi extends TestApi {
         int limit = 1000;
         PaginatedSelectionListList actual = api.selectionList(limit, null);
         for (SelectionList list : actual.getResults()) {
-            api.selectionEntryList(list.getPk(), limit, null);
+            api.selectionEntryList(list.getPk(), limit, null, null, null, null, null, null);
         }
     }
 }

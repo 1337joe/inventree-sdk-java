@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '475'
+  version: '476'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -16959,6 +16959,10 @@ paths:
       operationId: selection_entry_list
       description: List view for SelectionEntry objects.
       parameters:
+      - in: query
+        name: active
+        schema:
+          type: boolean
       - in: path
         name: id
         schema:
@@ -16970,12 +16974,39 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: list
+        schema:
+          type: integer
       - name: offset
         required: false
         in: query
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - list
+          - -list
+          - label
+          - -label
+          - active
+          - -active
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: description, label.'
+        schema:
+          type: string
+      - in: query
+        name: value
+        schema:
+          type: string
       tags:
       - selection
       security:
