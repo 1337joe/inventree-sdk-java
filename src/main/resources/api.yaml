@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '470'
+  version: '471'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26041,6 +26041,7 @@ components:
       - purchaseorderextraline
       - salesorder
       - salesorderlineitem
+      - salesordershipment
       - salesorderextraline
       - returnorder
       - returnorderlineitem
@@ -26073,6 +26074,7 @@ components:
         * `purchaseorderextraline` - Purchase Order Extra Line
         * `salesorder` - Sales Order
         * `salesorderlineitem` - Sales Order Line Item
+        * `salesordershipment` - Sales Order Shipment
         * `salesorderextraline` - Sales Order Extra Line
         * `returnorder` - Return Order
         * `returnorderlineitem` - Return Order Line Item
