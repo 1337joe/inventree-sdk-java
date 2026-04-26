@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '477'
+  version: '478'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -25432,8 +25432,7 @@ components:
         path:
           type: array
           items:
-            type: object
-            additionalProperties: {}
+            $ref: '#/components/schemas/TreePath'
           readOnly: true
           nullable: true
         starred:
@@ -27303,8 +27302,7 @@ components:
         path:
           type: array
           items:
-            type: object
-            additionalProperties: {}
+            $ref: '#/components/schemas/TreePath'
           readOnly: true
           nullable: true
         items:
@@ -30030,8 +30028,7 @@ components:
         category_path:
           type: array
           items:
-            type: object
-            additionalProperties: {}
+            $ref: '#/components/schemas/TreePath'
           readOnly: true
           nullable: true
         category_name:
@@ -31729,8 +31726,7 @@ components:
         path:
           type: array
           items:
-            type: object
-            additionalProperties: {}
+            $ref: '#/components/schemas/TreePath'
           readOnly: true
           nullable: true
         starred:
@@ -32355,8 +32351,7 @@ components:
         path:
           type: array
           items:
-            type: object
-            additionalProperties: {}
+            $ref: '#/components/schemas/TreePath'
           readOnly: true
           nullable: true
         items:
@@ -32839,8 +32834,7 @@ components:
         category_path:
           type: array
           items:
-            type: object
-            additionalProperties: {}
+            $ref: '#/components/schemas/TreePath'
           readOnly: true
           nullable: true
         category_name:
@@ -35474,12 +35468,6 @@ components:
           writeOnly: true
           nullable: true
           description: Enter serial numbers for new items
-        tests:
-          type: array
-          items:
-            $ref: '#/components/schemas/StockItemTestResult'
-          readOnly: true
-          nullable: true
         allocated:
           type: number
           format: double
@@ -35498,43 +35486,48 @@ components:
           type: integer
           readOnly: true
           nullable: true
-        location_path:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
-          readOnly: true
-          nullable: true
         stale:
           type: boolean
           readOnly: true
           nullable: true
-        tracking_items:
-          type: integer
-          readOnly: true
-          nullable: true
-        tags:
-          type: array
-          items:
-            type: string
-        supplier_part_detail:
-          allOf:
-          - $ref: '#/components/schemas/SupplierPart'
-          readOnly: true
-          nullable: true
-          title: Supplier Part
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-          title: Part
         location_detail:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
           nullable: true
           title: Location
+        location_path:
+          type: array
+          items:
+            $ref: '#/components/schemas/TreePath'
+          readOnly: true
+          nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+          title: Part
+        supplier_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
+          readOnly: true
+          nullable: true
+          title: Supplier Part
+        tags:
+          type: array
+          items:
+            type: string
+        tests:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockItemTestResult'
+          readOnly: true
+          nullable: true
+        tracking_items:
+          type: integer
+          readOnly: true
+          nullable: true
     PatchedStockItemTestResult:
       type: object
       description: Serializer for the StockItemTestResult model.
@@ -38853,12 +38846,6 @@ components:
           writeOnly: true
           nullable: true
           description: Enter serial numbers for new items
-        tests:
-          type: array
-          items:
-            $ref: '#/components/schemas/StockItemTestResult'
-          readOnly: true
-          nullable: true
         allocated:
           type: number
           format: double
@@ -38877,43 +38864,48 @@ components:
           type: integer
           readOnly: true
           nullable: true
-        location_path:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
-          readOnly: true
-          nullable: true
         stale:
           type: boolean
           readOnly: true
           nullable: true
-        tracking_items:
-          type: integer
-          readOnly: true
-          nullable: true
-        tags:
-          type: array
-          items:
-            type: string
-        supplier_part_detail:
-          allOf:
-          - $ref: '#/components/schemas/SupplierPart'
-          readOnly: true
-          nullable: true
-          title: Supplier Part
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-          title: Part
         location_detail:
           allOf:
           - $ref: '#/components/schemas/LocationBrief'
           readOnly: true
           nullable: true
           title: Location
+        location_path:
+          type: array
+          items:
+            $ref: '#/components/schemas/TreePath'
+          readOnly: true
+          nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+          title: Part
+        supplier_part_detail:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPart'
+          readOnly: true
+          nullable: true
+          title: Supplier Part
+        tags:
+          type: array
+          items:
+            type: string
+        tests:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockItemTestResult'
+          readOnly: true
+          nullable: true
+        tracking_items:
+          type: integer
+          readOnly: true
+          nullable: true
       required:
       - barcode_hash
       - in_stock
@@ -39561,6 +39553,19 @@ components:
           format: email
       required:
       - email
+    TreePath:
+      type: object
+      description: Serializer field for representing a tree path.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+      required:
+      - name
+      - pk
     UnauthorizedStatus:
       type: integer
       enum:
