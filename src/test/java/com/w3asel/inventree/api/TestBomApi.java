@@ -14,13 +14,13 @@ import com.w3asel.inventree.model.BomItem;
 import com.w3asel.inventree.model.BomItemSubstitute;
 import com.w3asel.inventree.model.PaginatedBomItemList;
 import com.w3asel.inventree.model.PaginatedBomItemSubstituteList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class TestBomApi extends TestApi {
     private BomApi api;
@@ -160,11 +160,10 @@ public class TestBomApi extends TestApi {
                     "Incorrect part details");
         }
 
-        // defaults to true
-        if (requestPricing == null || requestPricing) {
-            assertNotNull(actual.getPricingMax(), "Expected populated pricing");
-        } else {
+        if (requestPricing == null || !requestPricing) {
             assertNull(actual.getPricingMax(), "Expected unpopulated pricing");
+        } else {
+            assertNotNull(actual.getPricingMax(), "Expected populated pricing");
         }
 
         if (requestSubPartDetail == null || !requestSubPartDetail) {
