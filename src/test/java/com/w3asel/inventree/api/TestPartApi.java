@@ -20,6 +20,9 @@ import com.w3asel.inventree.model.Part;
 import com.w3asel.inventree.model.PartBomValidate;
 import com.w3asel.inventree.model.PartInternalPrice;
 import com.w3asel.inventree.model.PartSerialNumber;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -27,9 +30,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class TestPartApi extends TestApi {
     private PartApi api;
@@ -75,7 +75,7 @@ public class TestPartApi extends TestApi {
         api.partList(null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null);
         api.partPartialUpdate(null, null);
         api.partPricingPartialUpdate(null, null);
         api.partPricingRetrieve(null);
@@ -125,7 +125,7 @@ public class TestPartApi extends TestApi {
         api.partList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null);
 
         api.partRelatedList(limit, null, null, null, null, null, null);
 

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '485'
+  version: '486'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -12766,6 +12766,11 @@ paths:
         schema:
           type: boolean
         description: Has units
+      - in: query
+        name: high_stock
+        schema:
+          type: boolean
+        description: High stock
       - in: query
         name: in_bom_for
         schema:
@@ -30229,6 +30234,10 @@ components:
           type: number
           format: double
           default: 0.0
+        maximum_stock:
+          type: number
+          format: double
+          default: 0.0
         name:
           type: string
           description: Part name
@@ -33038,6 +33047,10 @@ components:
           type: boolean
           description: Locked parts cannot be edited
         minimum_stock:
+          type: number
+          format: double
+          default: 0.0
+        maximum_stock:
           type: number
           format: double
           default: 0.0
