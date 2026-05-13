@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '481'
+  version: '482'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -12751,6 +12751,8 @@ paths:
         schema:
           type: string
           enum:
+          - id
+          - -id
           - name
           - -name
           - creation_date
