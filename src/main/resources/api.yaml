@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '484'
+  version: '485'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -24537,6 +24537,10 @@ components:
           type: string
           description: BOM item reference
           maxLength: 5000
+        raw_amount:
+          type: string
+          title: Amount
+          description: Amount required for this item (can include units)
         quantity:
           type: number
           format: double
@@ -24666,7 +24670,6 @@ components:
       required:
       - part
       - pk
-      - quantity
       - sub_part
     BomItemSubstitute:
       type: object
@@ -31279,6 +31282,10 @@ components:
           type: string
           description: BOM item reference
           maxLength: 5000
+        raw_amount:
+          type: string
+          title: Amount
+          description: Amount required for this item (can include units)
         quantity:
           type: number
           format: double
