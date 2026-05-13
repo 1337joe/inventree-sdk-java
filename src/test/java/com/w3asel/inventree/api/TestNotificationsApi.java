@@ -21,7 +21,7 @@ public class TestNotificationsApi extends TestApi {
         api.notificationsDestroy(null);
         // api.notificationsList(null, null, null, null, null, null);
         api.notificationsPartialUpdate(null, null);
-        api.notificationsReadallRetrieve();
+        api.notificationsReadallCreate(null);
         api.notificationsRetrieve(null);
         api.notificationsUpdate(null, null);
     }

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '478'
+  version: '479'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -281,7 +281,7 @@ paths:
       - oauth2:
         - a:superuser
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
@@ -8044,7 +8044,10 @@ paths:
   /api/notifications/:
     get:
       operationId: notifications_list
-      description: List view for all notifications of the current user.
+      description: |-
+        Notifications for the current user.
+
+        - User can only view / delete their own notification objects
       parameters:
       - in: query
         name: category
@@ -8266,11 +8269,23 @@ paths:
         '204':
           description: No response body
   /api/notifications/readall/:
-    get:
-      operationId: notifications_readall_retrieve
+    post:
+      operationId: notifications_readall_create
       description: Set all messages for the current user as read.
       tags:
       - notifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationMessage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NotificationMessage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NotificationMessage'
+        required: true
       security:
       - tokenAuth: []
       - basicAuth: []
