@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '483'
+  version: '484'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26623,30 +26623,42 @@ components:
         name:
           type: string
           readOnly: true
+          description: Optional human-readable name for lookup and display.
         func:
           type: string
+          title: Function
+          description: Dotted import path to the callable, e.g. myapp.tasks.job.
           maxLength: 256
         args:
           type: string
           readOnly: true
           nullable: true
+          title: Arguments
+          description: Pickled positional arguments (tuple).
         kwargs:
           type: string
           readOnly: true
           nullable: true
+          title: Keyword arguments
+          description: Pickled keyword arguments (dict).
         started:
           type: string
           format: date-time
           readOnly: true
+          title: Started at
+          description: When the worker started executing the task.
         stopped:
           type: string
           format: date-time
           readOnly: true
+          title: Stopped at
+          description: When the worker finished (success or failure).
         attempt_count:
           type: integer
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
+          description: How many times execution was attempted.
         result:
           type: string
       required:
@@ -36061,6 +36073,7 @@ components:
           title: ID
         key:
           type: string
+          title: Cluster key
           description: Name of the target cluster
           maxLength: 100
         lock:
@@ -38407,21 +38420,40 @@ components:
         name:
           type: string
           nullable: true
+          description: Optional label to identify this schedule in the admin.
           maxLength: 100
         func:
           type: string
+          title: Function
           description: e.g. module.tasks.function
           maxLength: 256
         args:
           type: string
           nullable: true
+          title: Arguments
           description: e.g. 1, 2, 'John'
         kwargs:
           type: string
           nullable: true
+          title: Keyword arguments
           description: e.g. x=1, y=2, name='John'
         schedule_type:
-          $ref: '#/components/schemas/ScheduleTypeEnum'
+          allOf:
+          - $ref: '#/components/schemas/ScheduleTypeEnum'
+          description: |-
+            How often this task should be enqueued.
+
+            * `O` - Once
+            * `I` - Minutes
+            * `H` - Hourly
+            * `D` - Daily
+            * `W` - Weekly
+            * `BW` - Biweekly
+            * `M` - Monthly
+            * `BM` - Bimonthly
+            * `Q` - Quarterly
+            * `Y` - Yearly
+            * `C` - Cron
         repeats:
           type: integer
           maximum: 9223372036854775807
@@ -38435,12 +38467,15 @@ components:
           type: string
           format: date-time
           nullable: true
+          description: When this schedule runs next (stored in UTC).
         success:
           type: boolean
         task:
           type: string
           readOnly: true
           nullable: true
+          title: Last task id
+          description: Id of the last task spawned from this schedule (read-only).
       required:
       - func
       - last_run
