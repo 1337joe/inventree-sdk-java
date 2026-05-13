@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '482'
+  version: '483'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1300,6 +1300,11 @@ paths:
           default: false
         description: Include detailed information about the related part in the response
       - in: query
+        name: part_locked
+        schema:
+          type: boolean
+        description: Assembly part is locked
+      - in: query
         name: part_testable
         schema:
           type: boolean
@@ -1411,6 +1416,74 @@ paths:
         - r:add:build
       responses:
         '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BomItem'
+          description: ''
+    put:
+      operationId: bom_bulk_update
+      description: |-
+        Perform a PUT operation against this list endpoint.
+
+        Simply redirects to the PATCH method.
+      tags:
+      - bom
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BomItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BomItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BomItem'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:bom
+        - r:change:build
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BomItem'
+          description: ''
+    patch:
+      operationId: bom_bulk_partial_update
+      description: |-
+        Perform a PATCH operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support PATCH,
+        so this method is provided as a custom implementation.
+      tags:
+      - bom
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBomItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBomItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBomItem'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:bom
+        - r:change:build
+      responses:
+        '200':
           content:
             application/json:
               schema:
