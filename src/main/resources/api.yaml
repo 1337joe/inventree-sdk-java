@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '480'
+  version: '481'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1372,7 +1372,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
+        - r:view:bom
         - r:view:build
       responses:
         '200':
@@ -1407,7 +1407,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:add:part
+        - r:add:bom
         - r:add:build
       responses:
         '201':
@@ -1430,7 +1430,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:delete:part
+        - r:delete:bom
         - r:delete:build
       responses:
         '204':
@@ -1490,7 +1490,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
+        - r:view:bom
         - r:view:build
       responses:
         '200':
@@ -1527,7 +1527,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
+        - r:change:bom
         - r:change:build
       responses:
         '200':
@@ -1563,7 +1563,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
+        - r:change:bom
         - r:change:build
       responses:
         '200':
@@ -1588,7 +1588,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:delete:part
+        - r:delete:bom
         - r:delete:build
       responses:
         '204':
@@ -1708,7 +1708,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
+        - r:view:bom
         - r:view:build
       responses:
         '200':
@@ -1739,7 +1739,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:add:part
+        - r:add:bom
         - r:add:build
       responses:
         '201':
@@ -1765,7 +1765,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
+        - r:view:bom
         - r:view:build
       responses:
         '200':
@@ -1802,7 +1802,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
+        - r:change:bom
         - r:change:build
       responses:
         '200':
@@ -1838,7 +1838,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
+        - r:change:bom
         - r:change:build
       responses:
         '200':
@@ -1863,7 +1863,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:delete:part
+        - r:delete:bom
         - r:delete:build
       responses:
         '204':
@@ -6407,6 +6407,7 @@ paths:
         - r:change:part
         - r:change:stock_location
         - r:change:stock
+        - r:change:bom
         - r:change:build
         - r:change:purchase_order
         - r:change:sales_order
@@ -6437,6 +6438,7 @@ paths:
         - r:change:part
         - r:change:stock_location
         - r:change:stock
+        - r:change:bom
         - r:change:build
         - r:change:purchase_order
         - r:change:sales_order
@@ -6514,6 +6516,7 @@ paths:
         - r:change:part
         - r:change:stock_location
         - r:change:stock
+        - r:change:bom
         - r:change:build
         - r:change:purchase_order
         - r:change:sales_order
@@ -6557,6 +6560,7 @@ paths:
         - r:change:part
         - r:change:stock_location
         - r:change:stock
+        - r:change:bom
         - r:change:build
         - r:change:purchase_order
         - r:change:sales_order
@@ -6589,6 +6593,7 @@ paths:
         - r:change:part
         - r:change:stock_location
         - r:change:stock
+        - r:change:bom
         - r:change:build
         - r:change:purchase_order
         - r:change:sales_order
@@ -7511,6 +7516,7 @@ paths:
         - r:view:part
         - r:view:stock_location
         - r:view:stock
+        - r:view:bom
         - r:view:build
         - r:view:purchase_order
         - r:view:sales_order
@@ -7566,6 +7572,7 @@ paths:
         - r:change:part
         - r:change:stock_location
         - r:change:stock
+        - r:change:bom
         - r:change:build
         - r:change:purchase_order
         - r:change:sales_order
@@ -7620,6 +7627,7 @@ paths:
         - r:change:part
         - r:change:stock_location
         - r:change:stock
+        - r:change:bom
         - r:change:build
         - r:change:purchase_order
         - r:change:sales_order
@@ -7658,6 +7666,7 @@ paths:
         - r:view:part
         - r:view:stock_location
         - r:view:stock
+        - r:view:bom
         - r:view:build
         - r:view:purchase_order
         - r:view:sales_order
@@ -7707,6 +7716,7 @@ paths:
         - r:change:part
         - r:change:stock_location
         - r:change:stock
+        - r:change:bom
         - r:change:build
         - r:change:purchase_order
         - r:change:sales_order
@@ -7756,6 +7766,7 @@ paths:
         - r:change:part
         - r:change:stock_location
         - r:change:stock
+        - r:change:bom
         - r:change:build
         - r:change:purchase_order
         - r:change:sales_order
@@ -12861,8 +12872,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
         - r:view:build
+        - r:view:part
       responses:
         '200':
           content:
@@ -12893,8 +12904,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:add:part
         - r:add:build
+        - r:add:part
       responses:
         '201':
           content:
@@ -12927,8 +12938,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
         - r:change:build
+        - r:change:part
       responses:
         '200':
           content:
@@ -12961,8 +12972,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
         - r:change:build
+        - r:change:part
       responses:
         '200':
           content:
@@ -13020,8 +13031,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
         - r:view:build
+        - r:view:part
       responses:
         '200':
           content:
@@ -13057,8 +13068,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
         - r:change:build
+        - r:change:part
       responses:
         '200':
           content:
@@ -13093,8 +13104,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
         - r:change:build
+        - r:change:part
       responses:
         '200':
           content:
@@ -13118,8 +13129,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:delete:part
         - r:delete:build
+        - r:delete:part
       responses:
         '204':
           description: No response body
@@ -13177,8 +13188,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
         - r:view:build
+        - r:view:part
       responses:
         '200':
           content:
@@ -13213,8 +13224,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
         - r:change:build
+        - r:change:part
       responses:
         '200':
           content:
@@ -13249,8 +13260,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
         - r:change:build
+        - r:change:part
       responses:
         '200':
           content:
@@ -13380,8 +13391,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
         - r:view:build
+        - r:view:part
       responses:
         '200':
           content:
@@ -13407,8 +13418,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
         - r:view:build
+        - r:view:part
       responses:
         '200':
           content:
@@ -13507,8 +13518,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part_category
         - r:view:build
+        - r:view:part_category
       responses:
         '200':
           content:
@@ -13542,8 +13553,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:add:part_category
         - r:add:build
+        - r:add:part_category
       responses:
         '201':
           content:
@@ -13576,8 +13587,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part_category
         - r:change:build
+        - r:change:part_category
       responses:
         '200':
           content:
@@ -13610,8 +13621,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part_category
         - r:change:build
+        - r:change:part_category
       responses:
         '200':
           content:
@@ -13641,8 +13652,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part_category
         - r:view:build
+        - r:view:part_category
       responses:
         '200':
           content:
@@ -13678,8 +13689,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part_category
         - r:change:build
+        - r:change:part_category
       responses:
         '200':
           content:
@@ -13714,8 +13725,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part_category
         - r:change:build
+        - r:change:part_category
       responses:
         '200':
           content:
@@ -13739,8 +13750,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:delete:part_category
         - r:delete:build
+        - r:delete:part_category
       responses:
         '204':
           description: No response body
@@ -13963,8 +13974,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part_category
         - r:view:build
+        - r:view:part_category
       responses:
         '200':
           content:
@@ -15135,8 +15146,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:part
         - r:view:build
+        - r:view:part
       responses:
         '200':
           content:
@@ -15172,8 +15183,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
         - r:change:build
+        - r:change:part
       responses:
         '200':
           content:
@@ -15208,8 +15219,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:part
         - r:change:build
+        - r:change:part
       responses:
         '200':
           content:
@@ -17948,8 +17959,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:stock
         - r:view:build
+        - r:view:stock
       responses:
         '200':
           content:
@@ -17984,8 +17995,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:add:stock
         - r:add:build
+        - r:add:stock
       responses:
         '201':
           content:
@@ -18020,8 +18031,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stock
         - r:change:build
+        - r:change:stock
       responses:
         '200':
           content:
@@ -18054,8 +18065,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stock
         - r:change:build
+        - r:change:stock
       responses:
         '200':
           content:
@@ -18077,8 +18088,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:delete:stock
         - r:delete:build
+        - r:delete:stock
       responses:
         '204':
           description: No response body
@@ -18139,8 +18150,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:stock
         - r:view:build
+        - r:view:stock
       responses:
         '200':
           content:
@@ -18176,8 +18187,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stock
         - r:change:build
+        - r:change:stock
       responses:
         '200':
           content:
@@ -18212,8 +18223,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stock
         - r:change:build
+        - r:change:stock
       responses:
         '200':
           content:
@@ -18237,8 +18248,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:delete:stock
         - r:delete:build
+        - r:delete:stock
       responses:
         '204':
           description: No response body
@@ -18342,8 +18353,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:stock
         - r:view:build
+        - r:view:stock
       responses:
         '200':
           content:
@@ -18649,8 +18660,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:stock_location
         - r:view:build
+        - r:view:stock_location
       responses:
         '200':
           content:
@@ -18684,8 +18695,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:add:stock_location
         - r:add:build
+        - r:add:stock_location
       responses:
         '201':
           content:
@@ -18718,8 +18729,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stock_location
         - r:change:build
+        - r:change:stock_location
       responses:
         '200':
           content:
@@ -18752,8 +18763,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stock_location
         - r:change:build
+        - r:change:stock_location
       responses:
         '200':
           content:
@@ -19014,8 +19025,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:stock_location
         - r:view:build
+        - r:view:stock_location
       responses:
         '200':
           content:
@@ -19051,8 +19062,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stock_location
         - r:change:build
+        - r:change:stock_location
       responses:
         '200':
           content:
@@ -19087,8 +19098,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:stock_location
         - r:change:build
+        - r:change:stock_location
       responses:
         '200':
           content:
@@ -19112,8 +19123,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:delete:stock_location
         - r:delete:build
+        - r:delete:stock_location
       responses:
         '204':
           description: No response body
@@ -19155,8 +19166,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:stock_location
         - r:view:build
+        - r:view:stock_location
       responses:
         '200':
           content:
@@ -20981,6 +20992,7 @@ paths:
           type: string
           enum:
           - admin
+          - bom
           - build
           - part
           - part_category
@@ -20995,6 +21007,7 @@ paths:
           * `admin` - Admin
           * `part_category` - Part Categories
           * `part` - Parts
+          * `bom` - Bills of Material
           * `stock_location` - Stock Locations
           * `stock` - Stock Items
           * `build` - Build Orders
@@ -27965,6 +27978,7 @@ components:
       - admin
       - part_category
       - part
+      - bom
       - stock_location
       - stock
       - build
@@ -27976,6 +27990,7 @@ components:
         * `admin` - Admin
         * `part_category` - Part Categories
         * `part` - Parts
+        * `bom` - Bills of Material
         * `stock_location` - Stock Locations
         * `stock` - Stock Items
         * `build` - Build Orders
@@ -34626,6 +34641,7 @@ components:
             * `admin` - Admin
             * `part_category` - Part Categories
             * `part` - Parts
+            * `bom` - Bills of Material
             * `stock_location` - Stock Locations
             * `stock` - Stock Items
             * `build` - Build Orders
@@ -37569,6 +37585,7 @@ components:
             * `admin` - Admin
             * `part_category` - Part Categories
             * `part` - Parts
+            * `bom` - Bills of Material
             * `stock_location` - Stock Locations
             * `stock` - Stock Items
             * `build` - Build Orders
@@ -40976,6 +40993,7 @@ components:
             r:view:part: GET for Role Parts
             r:view:stock_location: GET for Role Stock Locations
             r:view:stock: GET for Role Stock Items
+            r:view:bom: GET for Role Bills of Material
             r:view:build: GET for Role Build Orders
             r:view:purchase_order: GET for Role Purchase Orders
             r:view:sales_order: GET for Role Sales Orders
@@ -40985,6 +41003,7 @@ components:
             r:add:part: POST for Role Parts
             r:add:stock_location: POST for Role Stock Locations
             r:add:stock: POST for Role Stock Items
+            r:add:bom: POST for Role Bills of Material
             r:add:build: POST for Role Build Orders
             r:add:purchase_order: POST for Role Purchase Orders
             r:add:sales_order: POST for Role Sales Orders
@@ -40994,6 +41013,7 @@ components:
             r:change:part: PUT / PATCH for Role Parts
             r:change:stock_location: PUT / PATCH for Role Stock Locations
             r:change:stock: PUT / PATCH for Role Stock Items
+            r:change:bom: PUT / PATCH for Role Bills of Material
             r:change:build: PUT / PATCH for Role Build Orders
             r:change:purchase_order: PUT / PATCH for Role Purchase Orders
             r:change:sales_order: PUT / PATCH for Role Sales Orders
@@ -41003,6 +41023,7 @@ components:
             r:delete:part: DELETE for Role Parts
             r:delete:stock_location: DELETE for Role Stock Locations
             r:delete:stock: DELETE for Role Stock Items
+            r:delete:bom: DELETE for Role Bills of Material
             r:delete:build: DELETE for Role Build Orders
             r:delete:purchase_order: DELETE for Role Purchase Orders
             r:delete:sales_order: DELETE for Role Sales Orders
@@ -41020,6 +41041,7 @@ components:
             r:view:part: GET for Role Parts
             r:view:stock_location: GET for Role Stock Locations
             r:view:stock: GET for Role Stock Items
+            r:view:bom: GET for Role Bills of Material
             r:view:build: GET for Role Build Orders
             r:view:purchase_order: GET for Role Purchase Orders
             r:view:sales_order: GET for Role Sales Orders
@@ -41029,6 +41051,7 @@ components:
             r:add:part: POST for Role Parts
             r:add:stock_location: POST for Role Stock Locations
             r:add:stock: POST for Role Stock Items
+            r:add:bom: POST for Role Bills of Material
             r:add:build: POST for Role Build Orders
             r:add:purchase_order: POST for Role Purchase Orders
             r:add:sales_order: POST for Role Sales Orders
@@ -41038,6 +41061,7 @@ components:
             r:change:part: PUT / PATCH for Role Parts
             r:change:stock_location: PUT / PATCH for Role Stock Locations
             r:change:stock: PUT / PATCH for Role Stock Items
+            r:change:bom: PUT / PATCH for Role Bills of Material
             r:change:build: PUT / PATCH for Role Build Orders
             r:change:purchase_order: PUT / PATCH for Role Purchase Orders
             r:change:sales_order: PUT / PATCH for Role Sales Orders
@@ -41047,6 +41071,7 @@ components:
             r:delete:part: DELETE for Role Parts
             r:delete:stock_location: DELETE for Role Stock Locations
             r:delete:stock: DELETE for Role Stock Items
+            r:delete:bom: DELETE for Role Bills of Material
             r:delete:build: DELETE for Role Build Orders
             r:delete:purchase_order: DELETE for Role Purchase Orders
             r:delete:sales_order: DELETE for Role Sales Orders
