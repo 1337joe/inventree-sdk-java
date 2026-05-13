@@ -175,6 +175,11 @@
                             <token>^\s+- entry_count$\n</token><!--selection list entry count-->
                             <value></value>
                         </replacement>
+                        <!-- add missing field -->
+                        <replacement>
+                            <token>^(\s+)(TreePath:$(\n)(^\1  .*$\n){3})(^\1    pk:$\n)</token>
+                            <value>$1$2$1    icon:$3$1      type: string$3$1      readOnly: true$3$5</value>
+                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
