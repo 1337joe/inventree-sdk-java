@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '479'
+  version: '480'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -24697,6 +24697,7 @@ components:
         completion_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
         destination:
           type: integer
@@ -24812,6 +24813,7 @@ components:
           maxLength: 2000
         issued_by:
           type: integer
+          readOnly: true
           nullable: true
           description: User who issued this build order
         issued_by_detail:
@@ -31360,6 +31362,7 @@ components:
         completion_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
         destination:
           type: integer
@@ -31475,6 +31478,7 @@ components:
           maxLength: 2000
         issued_by:
           type: integer
+          readOnly: true
           nullable: true
           description: User who issued this build order
         issued_by_detail:
