@@ -111,9 +111,9 @@ public class TestSelectionApi extends TestApi {
                 entryCount = 0;
         }
 
-        // TODO returns null, revisit when API fixed
-        // assertEquals(entryCount, actual.getEntryCount());
-        // not checking entry list here
+        assertEquals(entryCount, actual.getEntryCount(), "Incorrect entry count");
+        // not checking entry list contents here
+        assertEquals(actual.getEntryCount(), actual.getChoices().size(), "Entry count/choices size mismatch");
     }
 
     private void assertSelectionEntryEquals(JsonObject expected, SelectionEntry actual) {

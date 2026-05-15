@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '486'
+  version: '487'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -35395,6 +35395,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SelectionEntry'
           readOnly: true
+          nullable: true
         created:
           type: string
           format: date-time
@@ -38600,6 +38601,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/SelectionEntry'
           readOnly: true
+          nullable: true
         created:
           type: string
           format: date-time
@@ -38619,7 +38621,6 @@ components:
           readOnly: true
       required:
       - created
-      - default
       - entry_count
       - last_updated
       - name
@@ -39729,6 +39730,10 @@ components:
         name:
           type: string
           readOnly: true
+        icon:
+          type: string
+          readOnly: true
+          nullable: true
       required:
       - name
       - pk
