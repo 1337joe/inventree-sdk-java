@@ -28,18 +28,18 @@ import com.w3asel.inventree.model.PaginatedSupplierPriceBreakList;
 import com.w3asel.inventree.model.PartBrief;
 import com.w3asel.inventree.model.SupplierPart;
 import com.w3asel.inventree.model.SupplierPriceBreak;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class TestCompanyApi extends TestApi {
     private CompanyApi api;
@@ -134,7 +134,6 @@ public class TestCompanyApi extends TestApi {
         // actual.getPrimaryAddress()
         // actual.getPartsManufactured()
         // actual.getPartsSupplied()
-        // actual.getRemoteImage()
         // actual.getTaxId()
     }
 
@@ -177,7 +176,6 @@ public class TestCompanyApi extends TestApi {
         if (1 == company) {
             assertEquals(0, actual.getPartsManufactured(), "Incorrect parts manufactured");
             assertEquals(200, actual.getPartsSupplied(), "Incorrect parts supplied");
-            assertEquals(null, actual.getRemoteImage(), "Incorrect remote image");
 
         } else if (23 == company) {
             assertEquals(5, actual.getPartsManufactured(), "Incorrect parts manufactured");

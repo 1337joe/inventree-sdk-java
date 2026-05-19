@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '488'
+  version: '489'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -25735,11 +25735,6 @@ components:
         parts_manufactured:
           type: integer
           readOnly: true
-        remote_image:
-          type: string
-          format: uri
-          writeOnly: true
-          description: URL of remote image file
         primary_address:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -30200,11 +30195,6 @@ components:
           type: string
           format: uri
           nullable: true
-        remote_image:
-          type: string
-          format: uri
-          writeOnly: true
-          description: URL of remote image file
         existing_image:
           type: string
           writeOnly: true
@@ -31994,11 +31984,6 @@ components:
         parts_manufactured:
           type: integer
           readOnly: true
-        remote_image:
-          type: string
-          format: uri
-          writeOnly: true
-          description: URL of remote image file
         primary_address:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -33016,11 +33001,6 @@ components:
           type: string
           format: uri
           nullable: true
-        remote_image:
-          type: string
-          format: uri
-          writeOnly: true
-          description: URL of remote image file
         existing_image:
           type: string
           writeOnly: true
