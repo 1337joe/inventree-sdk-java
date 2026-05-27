@@ -13,12 +13,12 @@ import com.w3asel.inventree.model.PurchaseOrderLineItemReceive;
 import com.w3asel.inventree.model.PurchaseOrderReceive;
 import com.w3asel.inventree.model.SalesOrder;
 import com.w3asel.inventree.model.StockItem;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class TestOrderApi extends TestApi {
     private OrderApi api;
@@ -61,7 +61,104 @@ public class TestOrderApi extends TestApi {
         api.orderPoRetrieve(null, null);
         api.orderPoStatusRetrieve();
         api.orderPoUpdate(null, null);
-        // ... TODO
+
+        api.orderRoCancelCreate(null);
+        api.orderRoCompleteCreate(null);
+        api.orderRoCreate(null);
+        api.orderRoDestroy(null);
+        api.orderRoExtraLineCreate(null);
+        api.orderRoExtraLineDestroy(null);
+        api.orderRoExtraLineList(null, null, null, null, null, null);
+        api.orderRoExtraLinePartialUpdate(null, null);
+        api.orderRoExtraLineRetrieve(null);
+        api.orderRoExtraLineUpdate(null, null);
+        api.orderRoHoldCreate(null);
+        api.orderRoIssueCreate(null);
+        api.orderRoLineCreate(null);
+        api.orderRoLineDestroy(null);
+        api.orderRoLineList(null, null, null, null, null, null, null, null, null, null, null, null, null);
+        api.orderRoLinePartialUpdate(null, null);
+        api.orderRoLineRetrieve(null, null, null, null);
+        api.orderRoLineStatusRetrieve();
+        api.orderRoLineUpdate(null, null);
+        api.orderRoList(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        api.orderRoPartialUpdate(null, null);
+        api.orderRoReceiveCreate(null, null);
+        api.orderRoRetrieve(null, null);
+        api.orderRoStatusRetrieve();
+        api.orderRoUpdate(null, null);
+
+        api.orderSoAllocateCreate(null, null);
+        api.orderSoAllocateSerialsCreate(null, null);
+        api.orderSoAllocationBulkPartialUpdate(null);
+        api.orderSoAllocationBulkUpdate(null);
+        api.orderSoAllocationDestroy(null);
+        api.orderSoAllocationList(null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null);
+        api.orderSoAllocationPartialUpdate(null, null);
+        api.orderSoAllocationRetrieve(null);
+        api.orderSoAllocationUpdate(null, null);
+        api.orderSoCancelCreate(null);
+        api.orderSoCompleteCreate(null, null);
+        api.orderSoCreate(null);
+        api.orderSoDestroy(null);
+        api.orderSoExtraLineCreate(null);
+        api.orderSoExtraLineDestroy(null);
+        api.orderSoExtraLineList(null, null, null, null, null, null);
+        api.orderSoExtraLinePartialUpdate(null, null);
+        api.orderSoExtraLineRetrieve(null);
+        api.orderSoExtraLineUpdate(null, null);
+        api.orderSoHoldCreate(null);
+        api.orderSoIssueCreate(null);
+        api.orderSoLineCreate(null);
+        api.orderSoLineDestroy(null);
+        api.orderSoLineList(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        api.orderSoLinePartialUpdate(null, null);
+        api.orderSoLineRetrieve(null, null, null, null);
+        api.orderSoLineUpdate(null, null);
+        api.orderSoList(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        api.orderSoPartialUpdate(null, null);
+        api.orderSoRetrieve(null, null);
+        api.orderSoShipmentCreate(null);
+        api.orderSoShipmentDestroy(null);
+        api.orderSoShipmentList(null, null, null, null, null, null, null, null, null, null);
+        api.orderSoShipmentPartialUpdate(null, null);
+        api.orderSoShipmentRetrieve(null);
+        api.orderSoShipmentShipCreate(null, null);
+        api.orderSoShipmentUpdate(null, null);
+        api.orderSoStatusRetrieve();
+        api.orderSoUpdate(null, null);
+
+        api.orderTransferOrderAllocateCreate(null, null);
+        api.orderTransferOrderAllocateSerialsCreate(null, null);
+        api.orderTransferOrderAllocationBulkPartialUpdate(null);
+        api.orderTransferOrderAllocationBulkUpdate(null);
+        api.orderTransferOrderAllocationDestroy(null);
+        api.orderTransferOrderAllocationList(null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null);
+        api.orderTransferOrderAllocationPartialUpdate(null, null);
+        api.orderTransferOrderAllocationRetrieve(null);
+        api.orderTransferOrderAllocationRetrieve(null);
+        api.orderTransferOrderCancelCreate(null);
+        api.orderTransferOrderCompleteCreate(null, null);
+        api.orderTransferOrderCreate(null);
+        api.orderTransferOrderDestroy(null);
+        api.orderTransferOrderHoldCreate(null);
+        api.orderTransferOrderIssueCreate(null);
+        api.orderTransferOrderLineCreate(null);
+        api.orderTransferOrderLineDestroy(null);
+        api.orderTransferOrderLineList(null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null);
+        api.orderTransferOrderLinePartialUpdate(null, null);
+        api.orderTransferOrderLineRetrieve(null, null, null);
+        api.orderTransferOrderLineUpdate(null, null);
+        api.orderTransferOrderList(null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        api.orderTransferOrderPartialUpdate(null, null);
+        api.orderTransferOrderRetrieve(null);
+        api.orderTransferOrderUpdate(null, null);
     }
 
     @Test

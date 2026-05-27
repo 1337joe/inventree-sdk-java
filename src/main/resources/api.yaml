@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '491'
+  version: '492'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -6485,6 +6485,7 @@ paths:
         - r:change:purchase_order
         - r:change:sales_order
         - r:change:return_order
+        - r:change:transfer_order
       responses:
         '201':
           content:
@@ -6516,6 +6517,7 @@ paths:
         - r:change:purchase_order
         - r:change:sales_order
         - r:change:return_order
+        - r:change:transfer_order
       responses:
         '204':
           description: No response body
@@ -6594,6 +6596,7 @@ paths:
         - r:change:purchase_order
         - r:change:sales_order
         - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -6638,6 +6641,7 @@ paths:
         - r:change:purchase_order
         - r:change:sales_order
         - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -6671,6 +6675,7 @@ paths:
         - r:change:purchase_order
         - r:change:sales_order
         - r:change:return_order
+        - r:change:transfer_order
       responses:
         '204':
           description: No response body
@@ -6802,6 +6807,7 @@ paths:
           - salesordershipment
           - stockitem
           - stocklocation
+          - transferorder
         description: |-
           Model Type
 
@@ -6812,6 +6818,7 @@ paths:
           * `returnorder` - Return Order
           * `salesorder` - Sales Order
           * `salesordershipment` - Sales Order Shipment
+          * `transferorder` - Transfer Order
           * `part` - Part
           * `stockitem` - Stock Item
           * `stocklocation` - Stock Location
@@ -7594,6 +7601,7 @@ paths:
         - r:view:purchase_order
         - r:view:sales_order
         - r:view:return_order
+        - r:view:transfer_order
       responses:
         '200':
           content:
@@ -7650,6 +7658,7 @@ paths:
         - r:change:purchase_order
         - r:change:sales_order
         - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -7705,6 +7714,7 @@ paths:
         - r:change:purchase_order
         - r:change:sales_order
         - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -7744,6 +7754,7 @@ paths:
         - r:view:purchase_order
         - r:view:sales_order
         - r:view:return_order
+        - r:view:transfer_order
       responses:
         '200':
           content:
@@ -7794,6 +7805,7 @@ paths:
         - r:change:purchase_order
         - r:change:sales_order
         - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -7844,6 +7856,7 @@ paths:
         - r:change:purchase_order
         - r:change:sales_order
         - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -12137,6 +12150,1100 @@ paths:
           description: ''
         '400':
           description: Invalid request
+  /api/order/transfer-order/:
+    get:
+      operationId: order_transfer_order_list
+      description: Override the GET method to determine export options.
+      parameters:
+      - in: query
+        name: assigned_to
+        schema:
+          type: integer
+        description: Responsible
+      - in: query
+        name: assigned_to_me
+        schema:
+          type: boolean
+        description: Assigned to me
+      - in: query
+        name: completed_after
+        schema:
+          type: string
+          format: date
+        description: Completed After
+      - in: query
+        name: completed_before
+        schema:
+          type: string
+          format: date
+        description: Completed Before
+      - in: query
+        name: created_after
+        schema:
+          type: string
+          format: date
+        description: Created After
+      - in: query
+        name: created_before
+        schema:
+          type: string
+          format: date
+        description: Created Before
+      - in: query
+        name: created_by
+        schema:
+          type: integer
+        description: Created By
+      - in: query
+        name: has_project_code
+        schema:
+          type: boolean
+        description: Has Project Code
+      - in: query
+        name: has_start_date
+        schema:
+          type: boolean
+        description: Has Start Date
+      - in: query
+        name: has_target_date
+        schema:
+          type: boolean
+        description: Has Target Date
+      - in: query
+        name: include_variants
+        schema:
+          type: boolean
+        description: Include Variants
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: max_date
+        schema:
+          type: string
+          format: date
+        description: Max Date
+      - in: query
+        name: min_date
+        schema:
+          type: string
+          format: date
+        description: Min Date
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - creation_date
+          - -creation_date
+          - created_by
+          - -created_by
+          - reference
+          - -reference
+          - line_items
+          - -line_items
+          - status
+          - -status
+          - start_date
+          - -start_date
+          - target_date
+          - -target_date
+          - complete_date
+          - -complete_date
+          - project_code
+          - -project_code
+      - in: query
+        name: outstanding
+        schema:
+          type: boolean
+        description: Outstanding
+      - in: query
+        name: overdue
+        schema:
+          type: boolean
+        description: overdue
+      - in: query
+        name: part
+        schema:
+          type: integer
+      - in: query
+        name: project_code
+        schema:
+          type: integer
+        description: Project Code
+      - in: query
+        name: reference
+        schema:
+          type: string
+        description: Order Reference
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: description, project_code__code,
+          reference.'
+        schema:
+          type: string
+      - in: query
+        name: start_date_after
+        schema:
+          type: string
+          format: date
+        description: Start Date After
+      - in: query
+        name: start_date_before
+        schema:
+          type: string
+          format: date
+        description: Start Date Before
+      - in: query
+        name: status
+        schema:
+          type: integer
+        description: Order Status
+      - in: query
+        name: target_date_after
+        schema:
+          type: string
+          format: date
+        description: Target Date After
+      - in: query
+        name: target_date_before
+        schema:
+          type: string
+          format: date
+        description: Target Date Before
+      - in: query
+        name: updated_after
+        schema:
+          type: string
+          format: date
+        description: Updated After
+      - in: query
+        name: updated_before
+        schema:
+          type: string
+          format: date
+        description: Updated Before
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTransferOrderList'
+          description: ''
+    post:
+      operationId: order_transfer_order_create
+      description: API endpoint for accessing a list of TransferOrder objects.
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOrder'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:add:transfer_order
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrder'
+          description: ''
+  /api/order/transfer-order-allocation/:
+    get:
+      operationId: order_transfer_order_allocation_list
+      description: API endpoint for listing TransferOrderAllocation objects.
+      parameters:
+      - in: query
+        name: include_variants
+        schema:
+          type: boolean
+        description: Include Variants
+      - in: query
+        name: item
+        schema:
+          type: integer
+      - in: query
+        name: item_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the item in the response
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: line
+        schema:
+          type: integer
+      - in: query
+        name: location
+        schema:
+          type: integer
+        description: Location
+      - in: query
+        name: location_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the stock location in the
+          response
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: query
+        name: order
+        schema:
+          type: integer
+        description: Order
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the sales order in the response
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - quantity
+          - -quantity
+          - part
+          - -part
+          - serial
+          - -serial
+          - IPN
+          - -IPN
+          - batch
+          - -batch
+          - location
+          - -location
+          - order
+          - -order
+      - in: query
+        name: outstanding
+        schema:
+          type: boolean
+        description: Outstanding
+      - in: query
+        name: part
+        schema:
+          type: integer
+        description: Part
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the related part in the response
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: item__batch, item__part__IPN,
+          item__part__name, item__serial.'
+        schema:
+          type: string
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTransferOrderAllocationList'
+          description: ''
+    put:
+      operationId: order_transfer_order_allocation_bulk_update
+      description: |-
+        Perform a PUT operation against this list endpoint.
+
+        Simply redirects to the PATCH method.
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOrderAllocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOrderAllocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOrderAllocation'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderAllocation'
+          description: ''
+    patch:
+      operationId: order_transfer_order_allocation_bulk_partial_update
+      description: |-
+        Perform a PATCH operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support PATCH,
+        so this method is provided as a custom implementation.
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrderAllocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrderAllocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrderAllocation'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderAllocation'
+          description: ''
+  /api/order/transfer-order-allocation/{id}/:
+    get:
+      operationId: order_transfer_order_allocation_retrieve
+      description: API endpoint for detail view of a TransferOrderAllocation object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderAllocation'
+          description: ''
+    put:
+      operationId: order_transfer_order_allocation_update
+      description: API endpoint for detail view of a TransferOrderAllocation object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOrderAllocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOrderAllocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOrderAllocation'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderAllocation'
+          description: ''
+    patch:
+      operationId: order_transfer_order_allocation_partial_update
+      description: API endpoint for detail view of a TransferOrderAllocation object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrderAllocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrderAllocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrderAllocation'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderAllocation'
+          description: ''
+    delete:
+      operationId: order_transfer_order_allocation_destroy
+      description: API endpoint for detail view of a TransferOrderAllocation object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:transfer_order
+      responses:
+        '204':
+          description: No response body
+  /api/order/transfer-order-line/:
+    get:
+      operationId: order_transfer_order_line_list
+      description: Override the GET method to determine export options.
+      parameters:
+      - in: query
+        name: allocated
+        schema:
+          type: boolean
+        description: Allocated
+      - in: query
+        name: completed
+        schema:
+          type: boolean
+        description: Completed
+      - in: query
+        name: has_pricing
+        schema:
+          type: boolean
+        description: Has Pricing
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: query
+        name: order
+        schema:
+          type: integer
+        description: Order
+      - in: query
+        name: order_complete
+        schema:
+          type: boolean
+        description: Order Complete
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the sales order in the response
+      - in: query
+        name: order_outstanding
+        schema:
+          type: boolean
+        description: Order Outstanding
+      - in: query
+        name: order_status
+        schema:
+          type: integer
+        description: Order Status
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - order
+          - -order
+          - part
+          - -part
+          - part__name
+          - -part__name
+          - quantity
+          - -quantity
+          - allocated
+          - -allocated
+          - transferred
+          - -transferred
+          - reference
+          - -reference
+          - target_date
+          - -target_date
+      - in: query
+        name: part
+        schema:
+          type: integer
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the related part in the response
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: part__name, quantity, reference.'
+        schema:
+          type: string
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTransferOrderLineItemList'
+          description: ''
+    post:
+      operationId: order_transfer_order_line_create
+      description: API endpoint for accessing a list of TransferOrderLineItem objects.
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOrderLineItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOrderLineItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOrderLineItem'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:add:transfer_order
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderLineItem'
+          description: ''
+  /api/order/transfer-order-line/{id}/:
+    get:
+      operationId: order_transfer_order_line_retrieve
+      description: API endpoint for detail view of a TransferOrderLineItem object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: order_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the sales order in the response
+      - in: query
+        name: part_detail
+        schema:
+          type: boolean
+          default: false
+        description: Include detailed information about the related part in the response
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderLineItem'
+          description: ''
+    put:
+      operationId: order_transfer_order_line_update
+      description: API endpoint for detail view of a TransferOrderLineItem object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOrderLineItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOrderLineItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOrderLineItem'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderLineItem'
+          description: ''
+    patch:
+      operationId: order_transfer_order_line_partial_update
+      description: API endpoint for detail view of a TransferOrderLineItem object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrderLineItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrderLineItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrderLineItem'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderLineItem'
+          description: ''
+    delete:
+      operationId: order_transfer_order_line_destroy
+      description: API endpoint for detail view of a TransferOrderLineItem object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:transfer_order
+      responses:
+        '204':
+          description: No response body
+  /api/order/transfer-order/{id}/:
+    get:
+      operationId: order_transfer_order_retrieve
+      description: API endpoint for detail view of a single TransferOrder object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrder'
+          description: ''
+    put:
+      operationId: order_transfer_order_update
+      description: API endpoint for detail view of a single TransferOrder object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOrder'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrder'
+          description: ''
+    patch:
+      operationId: order_transfer_order_partial_update
+      description: API endpoint for detail view of a single TransferOrder object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTransferOrder'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:transfer_order
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrder'
+          description: ''
+    delete:
+      operationId: order_transfer_order_destroy
+      description: API endpoint for detail view of a single TransferOrder object.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:transfer_order
+      responses:
+        '204':
+          description: No response body
+  /api/order/transfer-order/{id}/allocate/:
+    post:
+      operationId: order_transfer_order_allocate_create
+      description: |-
+        API endpoint to allocate stock items against a TransferOrder.
+
+        - The TransferOrder is specified in the URL
+        - See the TransferOrderAllocationSerializer class
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOrderLineItemAllocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOrderLineItemAllocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOrderLineItemAllocation'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderLineItemAllocation'
+          description: ''
+  /api/order/transfer-order/{id}/allocate-serials/:
+    post:
+      operationId: order_transfer_order_allocate_serials_create
+      description: API endpoint to allocation stock items against a TransferOrder,
+        by specifying serial numbers.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOrderSerialAllocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOrderSerialAllocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOrderSerialAllocation'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderSerialAllocation'
+          description: ''
+  /api/order/transfer-order/{id}/cancel/:
+    post:
+      operationId: order_transfer_order_cancel_create
+      description: API endpoint to cancel a TransferOrder.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          description: No response body
+  /api/order/transfer-order/{id}/complete/:
+    post:
+      operationId: order_transfer_order_complete_create
+      description: API endpoint to complete a TransferOrder.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOrderComplete'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOrderComplete'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOrderComplete'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferOrderComplete'
+          description: ''
+  /api/order/transfer-order/{id}/hold/:
+    post:
+      operationId: order_transfer_order_hold_create
+      description: API endpoint to hold a TransferOrder.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          description: No response body
+  /api/order/transfer-order/{id}/issue/:
+    post:
+      operationId: order_transfer_order_issue_create
+      description: API endpoint to issue a Transfer Order.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          description: No response body
   /api/parameter/:
     get:
       operationId: parameter_list
@@ -16685,6 +17792,7 @@ paths:
           - salesordershipment
           - stockitem
           - stocklocation
+          - transferorder
         description: |-
           Model Type
 
@@ -16695,6 +17803,7 @@ paths:
           * `returnorder` - Return Order
           * `salesorder` - Sales Order
           * `salesordershipment` - Sales Order Shipment
+          * `transferorder` - Transfer Order
           * `part` - Part
           * `stockitem` - Stock Item
           * `stocklocation` - Stock Location
@@ -21111,6 +22220,7 @@ paths:
           - sales_order
           - stock
           - stock_location
+          - transfer_order
         description: |-
           Permission set
 
@@ -21124,6 +22234,7 @@ paths:
           * `purchase_order` - Purchase Orders
           * `sales_order` - Sales Orders
           * `return_order` - Return Orders
+          * `transfer_order` - Transfer Orders
       - name: offset
         required: false
         in: query
@@ -24263,6 +25374,7 @@ components:
       - returnorder
       - salesorder
       - salesordershipment
+      - transferorder
       - part
       - stockitem
       type: string
@@ -24275,6 +25387,7 @@ components:
         * `returnorder` - Return Order
         * `salesorder` - Sales Order
         * `salesordershipment` - Sales Order Shipment
+        * `transferorder` - Transfer Order
         * `part` - Part
         * `stockitem` - Stock Item
     Barcode:
@@ -24323,6 +25436,10 @@ components:
           type: integer
           nullable: true
           title: Sales Order Shipment
+        transferorder:
+          type: integer
+          nullable: true
+          title: Transfer Order
         part:
           type: integer
           nullable: true
@@ -24512,6 +25629,10 @@ components:
           type: integer
           nullable: true
           title: Sales Order Shipment
+        transferorder:
+          type: integer
+          nullable: true
+          title: Transfer Order
         part:
           type: integer
           nullable: true
@@ -26216,6 +27337,8 @@ components:
       - returnorder
       - returnorderlineitem
       - returnorderextraline
+      - transferorder
+      - transferorderlineitem
       type: string
       description: |-
         * `projectcode` - Project Code
@@ -26249,6 +27372,8 @@ components:
         * `returnorder` - Return Order
         * `returnorderlineitem` - Return Order Line Item
         * `returnorderextraline` - Return Order Extra Line
+        * `transferorder` - Transfer Order
+        * `transferorderlineitem` - Transfer Order Line Item
     DataImportSessionStatusEnum:
       enum:
       - 0
@@ -28039,7 +29164,7 @@ components:
         metadata: {}
       required:
       - metadata
-    ModelType054Enum:
+    ModelTypeDf8Enum:
       enum:
       - build.build
       - company.company
@@ -28049,6 +29174,7 @@ components:
       - order.returnorder
       - order.salesorder
       - order.salesordershipment
+      - order.transferorder
       - part.part
       - stock.stocklocation
       type: string
@@ -28061,6 +29187,7 @@ components:
         * `order.returnorder` - Return Order
         * `order.salesorder` - Sales Order
         * `order.salesordershipment` - Sales Order Shipment
+        * `order.transferorder` - Transfer Order
         * `part.part` - Part
         * `stock.stocklocation` - Stock Location
     NameEnum:
@@ -28075,6 +29202,7 @@ components:
       - purchase_order
       - sales_order
       - return_order
+      - transfer_order
       type: string
       description: |-
         * `admin` - Admin
@@ -28087,6 +29215,7 @@ components:
         * `purchase_order` - Purchase Orders
         * `sales_order` - Sales Orders
         * `return_order` - Return Orders
+        * `transfer_order` - Transfer Orders
     NewsFeedEntry:
       type: object
       description: Serializer for the NewsFeedEntry model.
@@ -29970,6 +31099,75 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SupplierPriceBreak'
+    PaginatedTransferOrderAllocationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferOrderAllocation'
+    PaginatedTransferOrderLineItemList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferOrderLineItem'
+    PaginatedTransferOrderList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferOrder'
     PaginatedUserCreateList:
       type: object
       required:
@@ -30029,7 +31227,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelType054Enum'
+          - $ref: '#/components/schemas/ModelTypeDf8Enum'
           default: ''
         model_id:
           type: integer
@@ -30101,7 +31299,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelType054Enum'
+          - $ref: '#/components/schemas/ModelTypeDf8Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
@@ -32844,7 +34042,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelType054Enum'
+          - $ref: '#/components/schemas/ModelTypeDf8Enum'
           default: ''
         model_id:
           type: integer
@@ -32910,7 +34108,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelType054Enum'
+          - $ref: '#/components/schemas/ModelTypeDf8Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
@@ -34735,6 +35933,7 @@ components:
             * `purchase_order` - Purchase Orders
             * `sales_order` - Sales Orders
             * `return_order` - Return Orders
+            * `transfer_order` - Transfer Orders
         label:
           type: string
           description: Return the translated label for this ruleset.
@@ -35936,6 +37135,319 @@ components:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
           nullable: true
+    PatchedTransferOrder:
+      type: object
+      description: Serializer for a TransferOrder object.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        creation_date:
+          type: string
+          format: date
+          nullable: true
+        issue_date:
+          type: string
+          format: date
+          nullable: true
+          description: Date order was issued
+        start_date:
+          type: string
+          format: date
+          nullable: true
+          description: Scheduled start date for this order
+        target_date:
+          type: string
+          format: date
+          nullable: true
+          description: Expected date for order delivery. Order will be overdue after
+            this date.
+        description:
+          type: string
+          description: Order description (optional)
+          maxLength: 250
+        line_items:
+          type: integer
+          readOnly: true
+          nullable: true
+        completed_lines:
+          type: integer
+          readOnly: true
+          nullable: true
+        link:
+          type: string
+          format: uri
+          description: Link to external page
+          maxLength: 2000
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        reference:
+          type: string
+        responsible:
+          type: integer
+          nullable: true
+          description: User or group responsible for this order
+        contact:
+          type: integer
+          nullable: true
+          description: Point of contact for this order
+        address:
+          type: integer
+          nullable: true
+          description: Company address for this order
+        status:
+          type: integer
+          readOnly: true
+          title: Order Status
+        status_text:
+          type: string
+          readOnly: true
+        status_custom_key:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Custom status key
+          description: |-
+            Additional status information for this item
+
+            * `10` - Pending
+            * `20` - Issued
+            * `25` - On Hold
+            * `30` - Complete
+            * `40` - Cancelled
+
+            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+        notes:
+          type: string
+          nullable: true
+          description: Markdown notes (optional)
+          maxLength: 50000
+        barcode_hash:
+          type: string
+          readOnly: true
+        overdue:
+          type: boolean
+          readOnly: true
+          nullable: true
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/DuplicateOrder'
+          writeOnly: true
+          title: Duplicate Order
+          description: Specify options for duplicating this order
+        address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        responsible_detail:
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          readOnly: true
+          nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
+          nullable: true
+        take_from:
+          type: integer
+          nullable: true
+          title: Source Location
+          description: Source for transferred items
+        take_from_detail:
+          allOf:
+          - $ref: '#/components/schemas/Location'
+          readOnly: true
+          nullable: true
+        destination:
+          type: integer
+          nullable: true
+          title: Destination Location
+          description: Destination for transferred items
+        destination_detail:
+          allOf:
+          - $ref: '#/components/schemas/Location'
+          readOnly: true
+          nullable: true
+        consume:
+          type: boolean
+          title: Consume Stock
+          description: Rather than transfer the stock to the destination, "consume"
+            it, by removing transferred quantity from the allocated stock item
+        complete_date:
+          type: string
+          format: date
+          nullable: true
+          title: Completion Date
+          description: Date order was completed
+    PatchedTransferOrderAllocation:
+      type: object
+      description: |-
+        Serializer for the TransferOrderAllocation model.
+
+        This includes some fields from the related model objects.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        item:
+          type: integer
+          description: Select stock item to allocate
+        quantity:
+          type: number
+          format: double
+        line:
+          type: integer
+          readOnly: true
+        part:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          readOnly: true
+        serial:
+          type: string
+          readOnly: true
+          nullable: true
+        location:
+          type: integer
+          readOnly: true
+        item_detail:
+          allOf:
+          - $ref: '#/components/schemas/StockItem'
+          readOnly: true
+          nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/TransferOrder'
+          readOnly: true
+          nullable: true
+        location_detail:
+          allOf:
+          - $ref: '#/components/schemas/LocationBrief'
+          readOnly: true
+          nullable: true
+    PatchedTransferOrderLineItem:
+      type: object
+      description: Serializer for a TransferOrderLineItem object.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
+        link:
+          type: string
+          format: uri
+          description: Link to external page
+          maxLength: 2000
+        notes:
+          type: string
+          description: Line item notes
+          maxLength: 500
+        order:
+          type: integer
+          description: Transfer Order
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
+          type: string
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/TransferOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        allocated:
+          type: number
+          format: double
+          readOnly: true
+        overdue:
+          type: boolean
+          readOnly: true
+          nullable: true
+        part:
+          type: integer
+          nullable: true
+          description: Part
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+        transferred:
+          type: number
+          format: double
+          readOnly: true
+        available_stock:
+          type: number
+          format: double
+          readOnly: true
+        available_variant_stock:
+          type: number
+          format: double
+          readOnly: true
+        building:
+          type: number
+          format: double
+          readOnly: true
+          title: In Production
+        on_order:
+          type: number
+          format: double
+          readOnly: true
     PatchedUserProfile:
       type: object
       description: Serializer for the UserProfile model.
@@ -37052,6 +38564,7 @@ components:
       - SalesOrderStatus
       - StockHistoryCode
       - StockStatus
+      - TransferOrderStatus
       type: string
       description: |-
         * `BuildStatus` - BuildStatus
@@ -37063,6 +38576,7 @@ components:
         * `SalesOrderStatus` - SalesOrderStatus
         * `StockHistoryCode` - StockHistoryCode
         * `StockStatus` - StockStatus
+        * `TransferOrderStatus` - TransferOrderStatus
     ReportAsset:
       type: object
       description: Serializer class for the ReportAsset model.
@@ -37681,6 +39195,7 @@ components:
             * `purchase_order` - Purchase Orders
             * `sales_order` - Sales Orders
             * `return_order` - Return Orders
+            * `transfer_order` - Transfer Orders
         label:
           type: string
           description: Return the translated label for this ruleset.
@@ -39676,6 +41191,7 @@ components:
       - returnorder
       - salesorder
       - salesordershipment
+      - transferorder
       - part
       - stockitem
       - stocklocation
@@ -39688,6 +41204,7 @@ components:
         * `returnorder` - Return Order
         * `salesorder` - Sales Order
         * `salesordershipment` - Sales Order Shipment
+        * `transferorder` - Transfer Order
         * `part` - Part
         * `stockitem` - Stock Item
         * `stocklocation` - Stock Location
@@ -39700,6 +41217,398 @@ components:
           format: email
       required:
       - email
+    TransferOrder:
+      type: object
+      description: Serializer for a TransferOrder object.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        creation_date:
+          type: string
+          format: date
+          nullable: true
+        issue_date:
+          type: string
+          format: date
+          nullable: true
+          description: Date order was issued
+        start_date:
+          type: string
+          format: date
+          nullable: true
+          description: Scheduled start date for this order
+        target_date:
+          type: string
+          format: date
+          nullable: true
+          description: Expected date for order delivery. Order will be overdue after
+            this date.
+        description:
+          type: string
+          description: Order description (optional)
+          maxLength: 250
+        line_items:
+          type: integer
+          readOnly: true
+          nullable: true
+        completed_lines:
+          type: integer
+          readOnly: true
+          nullable: true
+        link:
+          type: string
+          format: uri
+          description: Link to external page
+          maxLength: 2000
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        reference:
+          type: string
+        responsible:
+          type: integer
+          nullable: true
+          description: User or group responsible for this order
+        contact:
+          type: integer
+          nullable: true
+          description: Point of contact for this order
+        address:
+          type: integer
+          nullable: true
+          description: Company address for this order
+        status:
+          type: integer
+          readOnly: true
+          title: Order Status
+        status_text:
+          type: string
+          readOnly: true
+        status_custom_key:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Custom status key
+          description: |-
+            Additional status information for this item
+
+            * `10` - Pending
+            * `20` - Issued
+            * `25` - On Hold
+            * `30` - Complete
+            * `40` - Cancelled
+
+            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+        notes:
+          type: string
+          nullable: true
+          description: Markdown notes (optional)
+          maxLength: 50000
+        barcode_hash:
+          type: string
+          readOnly: true
+        overdue:
+          type: boolean
+          readOnly: true
+          nullable: true
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/DuplicateOrder'
+          writeOnly: true
+          title: Duplicate Order
+          description: Specify options for duplicating this order
+        address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        responsible_detail:
+          allOf:
+          - $ref: '#/components/schemas/Owner'
+          readOnly: true
+          nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
+          nullable: true
+        take_from:
+          type: integer
+          nullable: true
+          title: Source Location
+          description: Source for transferred items
+        take_from_detail:
+          allOf:
+          - $ref: '#/components/schemas/Location'
+          readOnly: true
+          nullable: true
+        destination:
+          type: integer
+          nullable: true
+          title: Destination Location
+          description: Destination for transferred items
+        destination_detail:
+          allOf:
+          - $ref: '#/components/schemas/Location'
+          readOnly: true
+          nullable: true
+        consume:
+          type: boolean
+          title: Consume Stock
+          description: Rather than transfer the stock to the destination, "consume"
+            it, by removing transferred quantity from the allocated stock item
+        complete_date:
+          type: string
+          format: date
+          nullable: true
+          title: Completion Date
+          description: Date order was completed
+      required:
+      - barcode_hash
+      - created_by
+      - pk
+      - reference
+      - status
+      - status_text
+    TransferOrderAllocation:
+      type: object
+      description: |-
+        Serializer for the TransferOrderAllocation model.
+
+        This includes some fields from the related model objects.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        item:
+          type: integer
+          description: Select stock item to allocate
+        quantity:
+          type: number
+          format: double
+        line:
+          type: integer
+          readOnly: true
+        part:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          readOnly: true
+        serial:
+          type: string
+          readOnly: true
+          nullable: true
+        location:
+          type: integer
+          readOnly: true
+        item_detail:
+          allOf:
+          - $ref: '#/components/schemas/StockItem'
+          readOnly: true
+          nullable: true
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/TransferOrder'
+          readOnly: true
+          nullable: true
+        location_detail:
+          allOf:
+          - $ref: '#/components/schemas/LocationBrief'
+          readOnly: true
+          nullable: true
+      required:
+      - item
+      - line
+      - location
+      - order
+      - part
+      - pk
+      - quantity
+    TransferOrderAllocationItem:
+      type: object
+      description: A serializer for allocating a single stock-item against a TransferOrder
+        line item.
+      properties:
+        line_item:
+          type: integer
+          title: Stock Item
+        stock_item:
+          type: integer
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,5})?$
+      required:
+      - line_item
+      - quantity
+      - stock_item
+    TransferOrderComplete:
+      type: object
+      description: Serializer for completing a transfer order.
+      properties:
+        accept_incomplete_allocation:
+          type: boolean
+          default: false
+          description: Allow order to complete with incomplete allocations
+    TransferOrderLineItem:
+      type: object
+      description: Serializer for a TransferOrderLineItem object.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        line:
+          type: string
+          title: Line Number
+          description: Line number for this item (optional)
+          maxLength: 20
+        link:
+          type: string
+          format: uri
+          description: Link to external page
+          maxLength: 2000
+        notes:
+          type: string
+          description: Line item notes
+          maxLength: 500
+        order:
+          type: integer
+          description: Transfer Order
+        project_code:
+          type: integer
+          nullable: true
+          description: Select project code for this order
+        quantity:
+          type: number
+          format: double
+        reference:
+          type: string
+          description: Line item reference
+          maxLength: 100
+        target_date:
+          type: string
+          format: date
+          nullable: true
+        order_detail:
+          allOf:
+          - $ref: '#/components/schemas/TransferOrder'
+          readOnly: true
+          nullable: true
+        project_code_label:
+          type: string
+          readOnly: true
+          nullable: true
+        project_code_detail:
+          allOf:
+          - $ref: '#/components/schemas/ProjectCode'
+          readOnly: true
+          nullable: true
+        allocated:
+          type: number
+          format: double
+          readOnly: true
+        overdue:
+          type: boolean
+          readOnly: true
+          nullable: true
+        part:
+          type: integer
+          nullable: true
+          description: Part
+        part_detail:
+          allOf:
+          - $ref: '#/components/schemas/PartBrief'
+          readOnly: true
+          nullable: true
+        transferred:
+          type: number
+          format: double
+          readOnly: true
+        available_stock:
+          type: number
+          format: double
+          readOnly: true
+        available_variant_stock:
+          type: number
+          format: double
+          readOnly: true
+        building:
+          type: number
+          format: double
+          readOnly: true
+          title: In Production
+        on_order:
+          type: number
+          format: double
+          readOnly: true
+      required:
+      - allocated
+      - available_stock
+      - available_variant_stock
+      - building
+      - on_order
+      - order
+      - pk
+      - quantity
+      - transferred
+    TransferOrderLineItemAllocation:
+      type: object
+      description: DRF serializer for allocation of stock items against a transfer
+        order line item.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferOrderAllocationItem'
+      required:
+      - items
+    TransferOrderSerialAllocation:
+      type: object
+      description: DRF serializer for allocation of serial numbers against a transfer
+        order.
+      properties:
+        line_item:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+        serial_numbers:
+          type: string
+          description: Enter serial numbers to allocate
+      required:
+      - line_item
+      - quantity
+      - serial_numbers
     TreePath:
       type: object
       description: Serializer field for representing a tree path.
@@ -41113,6 +43022,7 @@ components:
             r:view:purchase_order: GET for Role Purchase Orders
             r:view:sales_order: GET for Role Sales Orders
             r:view:return_order: GET for Role Return Orders
+            r:view:transfer_order: GET for Role Transfer Orders
             r:add:admin: POST for Role Admin
             r:add:part_category: POST for Role Part Categories
             r:add:part: POST for Role Parts
@@ -41123,6 +43033,7 @@ components:
             r:add:purchase_order: POST for Role Purchase Orders
             r:add:sales_order: POST for Role Sales Orders
             r:add:return_order: POST for Role Return Orders
+            r:add:transfer_order: POST for Role Transfer Orders
             r:change:admin: PUT / PATCH for Role Admin
             r:change:part_category: PUT / PATCH for Role Part Categories
             r:change:part: PUT / PATCH for Role Parts
@@ -41133,6 +43044,7 @@ components:
             r:change:purchase_order: PUT / PATCH for Role Purchase Orders
             r:change:sales_order: PUT / PATCH for Role Sales Orders
             r:change:return_order: PUT / PATCH for Role Return Orders
+            r:change:transfer_order: PUT / PATCH for Role Transfer Orders
             r:delete:admin: DELETE for Role Admin
             r:delete:part_category: DELETE for Role Part Categories
             r:delete:part: DELETE for Role Parts
@@ -41143,6 +43055,7 @@ components:
             r:delete:purchase_order: DELETE for Role Purchase Orders
             r:delete:sales_order: DELETE for Role Sales Orders
             r:delete:return_order: DELETE for Role Return Orders
+            r:delete:transfer_order: DELETE for Role Transfer Orders
         clientCredentials:
           tokenUrl: /o/token/
           refreshUrl: /o/revoke_token/
@@ -41161,6 +43074,7 @@ components:
             r:view:purchase_order: GET for Role Purchase Orders
             r:view:sales_order: GET for Role Sales Orders
             r:view:return_order: GET for Role Return Orders
+            r:view:transfer_order: GET for Role Transfer Orders
             r:add:admin: POST for Role Admin
             r:add:part_category: POST for Role Part Categories
             r:add:part: POST for Role Parts
@@ -41171,6 +43085,7 @@ components:
             r:add:purchase_order: POST for Role Purchase Orders
             r:add:sales_order: POST for Role Sales Orders
             r:add:return_order: POST for Role Return Orders
+            r:add:transfer_order: POST for Role Transfer Orders
             r:change:admin: PUT / PATCH for Role Admin
             r:change:part_category: PUT / PATCH for Role Part Categories
             r:change:part: PUT / PATCH for Role Parts
@@ -41181,6 +43096,7 @@ components:
             r:change:purchase_order: PUT / PATCH for Role Purchase Orders
             r:change:sales_order: PUT / PATCH for Role Sales Orders
             r:change:return_order: PUT / PATCH for Role Return Orders
+            r:change:transfer_order: PUT / PATCH for Role Transfer Orders
             r:delete:admin: DELETE for Role Admin
             r:delete:part_category: DELETE for Role Part Categories
             r:delete:part: DELETE for Role Parts
@@ -41191,6 +43107,7 @@ components:
             r:delete:purchase_order: DELETE for Role Purchase Orders
             r:delete:sales_order: DELETE for Role Sales Orders
             r:delete:return_order: DELETE for Role Return Orders
+            r:delete:transfer_order: DELETE for Role Transfer Orders
     tokenAuth:
       type: apiKey
       in: header
