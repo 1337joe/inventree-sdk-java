@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '489'
+  version: '490'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -20860,6 +20860,148 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/user/me/profile/:
+    get:
+      operationId: user_me_profile_retrieve
+      description: |-
+        Detail endpoint for the user profile.
+
+        Permissions:
+        - Any authenticated user has write access against this endpoint
+        - The endpoint always returns the profile associated with the current user
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    put:
+      operationId: user_me_profile_update
+      description: |-
+        Detail endpoint for the user profile.
+
+        Permissions:
+        - Any authenticated user has write access against this endpoint
+        - The endpoint always returns the profile associated with the current user
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    patch:
+      operationId: user_me_profile_partial_update
+      description: |-
+        Detail endpoint for the user profile.
+
+        Permissions:
+        - Any authenticated user has write access against this endpoint
+        - The endpoint always returns the profile associated with the current user
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+  /api/user/me/roles/:
+    get:
+      operationId: user_me_roles_retrieve
+      description: API endpoint which lists the available role permissions for the
+        current user.
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+          description: ''
+  /api/user/me/token/:
+    get:
+      operationId: user_me_token_retrieve
+      description: |-
+        Return an API token if the user is authenticated.
+
+        - If the user already has a matching token, delete it and create a new one
+        - Existing tokens are *never* exposed again via the API
+        - Once the token is provided, it can be used for auth until it expires
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Name of the token
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuthToken'
+          description: ''
   /api/user/owner/:
     get:
       operationId: user_owner_list
@@ -20938,118 +21080,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Owner'
-          description: ''
-  /api/user/profile/:
-    get:
-      operationId: user_profile_retrieve
-      description: |-
-        Detail endpoint for the user profile.
-
-        Permissions:
-        - Any authenticated user has write access against this endpoint
-        - The endpoint always returns the profile associated with the current user
-      tags:
-      - user
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserProfile'
-          description: ''
-    put:
-      operationId: user_profile_update
-      description: |-
-        Detail endpoint for the user profile.
-
-        Permissions:
-        - Any authenticated user has write access against this endpoint
-        - The endpoint always returns the profile associated with the current user
-      tags:
-      - user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserProfile'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UserProfile'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UserProfile'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserProfile'
-          description: ''
-    patch:
-      operationId: user_profile_partial_update
-      description: |-
-        Detail endpoint for the user profile.
-
-        Permissions:
-        - Any authenticated user has write access against this endpoint
-        - The endpoint always returns the profile associated with the current user
-      tags:
-      - user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedUserProfile'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedUserProfile'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedUserProfile'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserProfile'
-          description: ''
-  /api/user/roles/:
-    get:
-      operationId: user_roles_retrieve
-      description: API endpoint which lists the available role permissions for the
-        current user.
-      tags:
-      - user
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Role'
           description: ''
   /api/user/ruleset/:
     get:
@@ -21245,36 +21275,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/user/token/:
-    get:
-      operationId: user_token_retrieve
-      description: |-
-        Return an API token if the user is authenticated.
-
-        - If the user already has a matching token, delete it and create a new one
-        - Existing tokens are *never* exposed again via the API
-        - Once the token is provided, it can be used for auth until it expires
-      parameters:
-      - in: query
-        name: name
-        schema:
-          type: string
-        description: Name of the token
-      tags:
-      - user
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetAuthToken'
-          description: ''
   /api/user/tokens/:
     get:
       operationId: user_tokens_list

@@ -22,6 +22,8 @@ import com.w3asel.inventree.model.PaginatedGroupList;
 import com.w3asel.inventree.model.PaginatedUserCreateList;
 import com.w3asel.inventree.model.Role;
 import com.w3asel.inventree.model.UserCreate;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -29,8 +31,6 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class TestUserApi extends TestApi {
 
@@ -55,16 +55,17 @@ public class TestUserApi extends TestApi {
         // api.userList(null, null, null, null, null, null, null);
         api.userMeDestroy();
         api.userMePartialUpdate(null);
+        api.userMeProfilePartialUpdate(null);
+        api.userMeProfileRetrieve();
+        api.userMeProfileUpdate(null);
         // api.userMeRetrieve();
+        // api.userMeRolesRetrieve();
+        // api.userMeTokenRetrieve(null);
         api.userMeUpdate(null);
         api.userOwnerList(null, null, null, null, null);
         api.userOwnerRetrieve(null);
         api.userPartialUpdate(null, null);
-        api.userProfilePartialUpdate(null);
-        api.userProfileRetrieve();
-        api.userProfileUpdate(null);
         // api.userRetrieve(null);
-        api.userRolesRetrieve();
         api.userRulesetDestroy(null);
         api.userRulesetList(null, null, null, null, null, null);
         api.userRulesetPartialUpdate(null, null);
@@ -72,7 +73,6 @@ public class TestUserApi extends TestApi {
         api.userRulesetUpdate(null, null);
         api.userSetPasswordPartialUpdate(null, null);
         api.userSetPasswordUpdate(null, null);
-        // api.userTokenRetrieve(null);
         // api.userTokensCreate(null);
         // api.userTokensDestroy(null);
         // api.userTokensList(null, null, null, null, null, null);
@@ -268,7 +268,7 @@ public class TestUserApi extends TestApi {
 
     @Test
     void userRolesRetrieve_root() throws ApiException {
-        Role actual = api.userRolesRetrieve();
+        Role actual = api.userMeRolesRetrieve();
         assertNotNull(actual);
     }
 
@@ -284,7 +284,7 @@ public class TestUserApi extends TestApi {
         tokenList = api.userTokensList(limit, offset, null, false, null, null);
         assertEquals(0, tokenList.getCount(), "Expect initial state of no (unrevoked) user tokens");
 
-        GetAuthToken actual = api.userTokenRetrieve(tokenName);
+        GetAuthToken actual = api.userMeTokenRetrieve(tokenName);
         assertEquals(tokenName, actual.getName(), "Incorrect name");
         // unchecked:
         // actual.getExpiry();
