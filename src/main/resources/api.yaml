@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '496'
+  version: '497'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -40514,6 +40514,10 @@ components:
         notes:
           type: string
           description: Stock transaction notes
+        location:
+          type: integer
+          nullable: true
+          description: Set stock location for counted items (optional)
       required:
       - items
     StockItem:
