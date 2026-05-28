@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '493'
+  version: '494'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -2466,7 +2466,8 @@ paths:
   /api/build/{id}/complete/:
     post:
       operationId: build_complete_create
-      description: API endpoint for completing build outputs.
+      description: Override POST to offload build output completion to the background
+        worker.
       parameters:
       - in: path
         name: id
@@ -2494,11 +2495,11 @@ paths:
       - oauth2:
         - g:read
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BuildOutputComplete'
+                $ref: '#/components/schemas/TaskDetail'
           description: ''
   /api/build/{id}/consume/:
     post:
@@ -2582,7 +2583,8 @@ paths:
   /api/build/{id}/delete-outputs/:
     post:
       operationId: build_delete_outputs_create
-      description: API endpoint for deleting multiple build outputs.
+      description: Override POST to offload build output deletion to the background
+        worker.
       parameters:
       - in: path
         name: id
@@ -2610,11 +2612,11 @@ paths:
       - oauth2:
         - g:read
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BuildOutputDelete'
+                $ref: '#/components/schemas/TaskDetail'
           description: ''
   /api/build/{id}/finish/:
     post:
@@ -2697,7 +2699,7 @@ paths:
   /api/build/{id}/scrap-outputs/:
     post:
       operationId: build_scrap_outputs_create
-      description: API endpoint for scrapping build output(s).
+      description: Override POST to offload scrapping to the background worker.
       parameters:
       - in: path
         name: id
@@ -2725,11 +2727,11 @@ paths:
       - oauth2:
         - g:read
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BuildOutputScrap'
+                $ref: '#/components/schemas/TaskDetail'
           description: ''
   /api/build/{id}/unallocate/:
     post:
