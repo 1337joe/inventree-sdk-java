@@ -22,15 +22,15 @@ import com.w3asel.inventree.model.PaginatedBuildLineList;
 import com.w3asel.inventree.model.PaginatedBuildList;
 import com.w3asel.inventree.model.PaginatedStockItemList;
 import com.w3asel.inventree.model.StockItem;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class TestBuildApi extends TestApi {
     private BuildApi api;
@@ -91,12 +91,11 @@ public class TestBuildApi extends TestApi {
         StockApi stockApi = new StockApi(apiClient);
         int limit = 10;
         int offset = 0;
-        PaginatedStockItemList previousBuildItems = stockApi.stockList(limit, null, null, null,
-                null, null, null, null, null, null, null, null, null, buildPk, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, offset,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null);
+        PaginatedStockItemList previousBuildItems = stockApi.stockList(limit, null, null, null, null, null, null, null,
+                null, null, null, null, null, buildPk, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, offset, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(0, previousBuildItems.getCount(), "Expected no existing outputs");
 
         try {
@@ -114,13 +113,12 @@ public class TestBuildApi extends TestApi {
 
         } finally {
             // ensure any created items are cleaned up
-            PaginatedStockItemList newBuildItems = stockApi.stockList(limit, null, null, null, null,
-                    null, null, null, null, null, null, null, null, buildPk, null, null, null, null,
-                    null, null, null, null, null, null, null, null, null, null, null, null, null,
-                    null, null, null, null, null, null, null, null, null, null, null, null, offset,
-                    null, null, null, null, null, null, null, null, null, null, null, null, null,
-                    null, null, null, null, null, null, null, null, null, null, null, null, null,
-                    null);
+            PaginatedStockItemList newBuildItems = stockApi.stockList(limit, null, null, null, null, null, null, null,
+                    null, null, null, null, null, buildPk, null, null, null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, null, offset, null, null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                    null, null);
 
             assertTrue(newBuildItems.getCount() < limit,
                     "Can only clean up to " + limit + " items, found " + newBuildItems.getCount());

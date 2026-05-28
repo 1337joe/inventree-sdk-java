@@ -21,14 +21,6 @@ import com.w3asel.inventree.model.PaginatedStockTrackingList;
 import com.w3asel.inventree.model.SerializeStockItem;
 import com.w3asel.inventree.model.StockItem;
 import com.w3asel.inventree.model.StockTracking;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -39,6 +31,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @TestMethodOrder(OrderAnnotation.class)
 public class TestStockApi extends TestApi {
@@ -182,12 +182,11 @@ public class TestStockApi extends TestApi {
         createInput2.setQuantity(2d);
 
         int initialCount = api
-                .stockList(1, null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null, null, null, null, null, null, null, null, null)
+                .stockList(1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null)
                 .getCount();
 
         List<StockItem> createResultList = new ArrayList<>();
@@ -197,12 +196,11 @@ public class TestStockApi extends TestApi {
             assertEquals(2, createResultList.size(), "Expected two results");
 
             int createdCount = api
-                    .stockList(1, null, null, null, null, null, null, null, null, null, null, null,
-                            null, null, null, null, null, null, null, null, null, null, null, null,
-                            null, null, null, null, null, null, null, null, null, null, null, null,
-                            null, null, null, null, null, null, null, null, null, null, null, null,
-                            null, null, null, null, null, null, null, null, null, null, null, null,
-                            null, null, null, null, null, null, null, null, null, null, null)
+                    .stockList(1, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null, null, null, null, null, null, null)
                     .getCount();
             assertEquals(2, createdCount - initialCount, "Expected two more items");
 
@@ -222,7 +220,8 @@ public class TestStockApi extends TestApi {
                         null, null, null, null, null, null, null, null, null, null, null, null,
                         null, null, null, null, null, null, null, null, null, null, null, null,
                         null, null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null, null, null, null, null, null, null, null, null)
+                        null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null)
                 .getCount();
 
         assertEquals(initialCount, finalCount, "Expected to return to initial count after destroy");
@@ -312,12 +311,11 @@ public class TestStockApi extends TestApi {
         int limit = 10;
         int offset = 0;
 
-        PaginatedStockItemList actual = api.stockList(limit, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, offset, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null);
+        PaginatedStockItemList actual = api.stockList(limit, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, offset, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total stock item count");
         List<StockItem> actualList = actual.getResults();
 

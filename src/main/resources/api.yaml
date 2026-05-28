@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '495'
+  version: '496'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -18914,6 +18914,18 @@ paths:
         schema:
           type: integer
       - in: query
+        name: created_after
+        schema:
+          type: string
+          format: date
+        description: Created after
+      - in: query
+        name: created_before
+        schema:
+          type: string
+          format: date
+        description: Created before
+      - in: query
         name: customer
         schema:
           type: integer
@@ -18969,6 +18981,11 @@ paths:
         schema:
           type: boolean
         description: Has purchase price
+      - in: query
+        name: has_stocktake
+        schema:
+          type: boolean
+        description: Has Stocktake Date
       - in: query
         name: in_stock
         schema:
@@ -19068,6 +19085,8 @@ paths:
           - -updated
           - purchase_price
           - -purchase_price
+          - creation_date
+          - -creation_date
           - stocktake_date
           - -stocktake_date
           - expiry_date
@@ -36863,17 +36882,23 @@ components:
           type: string
           readOnly: true
           description: Unique hash of barcode data
+        creation_date:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Date that this stock item was created
+        stocktake_date:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
         updated:
           type: string
           format: date-time
           readOnly: true
           nullable: true
           description: Timestamp of last update
-        stocktake_date:
-          type: string
-          format: date
-          readOnly: true
-          nullable: true
         purchase_price:
           type: string
           format: decimal
@@ -40645,17 +40670,23 @@ components:
           type: string
           readOnly: true
           description: Unique hash of barcode data
+        creation_date:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Date that this stock item was created
+        stocktake_date:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
         updated:
           type: string
           format: date-time
           readOnly: true
           nullable: true
           description: Timestamp of last update
-        stocktake_date:
-          type: string
-          format: date
-          readOnly: true
-          nullable: true
         purchase_price:
           type: string
           format: decimal
