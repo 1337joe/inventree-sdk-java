@@ -8,10 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.Attachment;
 import com.w3asel.inventree.model.AttachmentModelTypeEnum;
+import java.net.URI;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import java.net.URI;
 
 public class TestAttachmentApi extends TestApi {
     private AttachmentApi api;
@@ -37,13 +37,13 @@ public class TestAttachmentApi extends TestApi {
     @Test
     void attachmentList() throws ApiException {
         int limit = 1000;
-        api.attachmentList(limit, null, null, null, null, null, null, null, null);
+        api.attachmentList(limit, null, null, null, null, null, null, null, null, null, null);
     }
 
     @Test
     void attachmentCreateDestroy() throws ApiException {
         int initialCount =
-                api.attachmentList(1, null, null, null, null, null, null, null, null).getCount();
+                api.attachmentList(1, null, null, null, null, null, null, null, null, null, null).getCount();
 
         // set only required fields
         Attachment newItem = new Attachment().modelType(AttachmentModelTypeEnum.BUILD).modelId(0l);
@@ -55,7 +55,7 @@ public class TestAttachmentApi extends TestApi {
         assertNotNull(actual.getPk(), "Created item should have PK");
 
         try {
-            int createdCount = api.attachmentList(1, null, null, null, null, null, null, null, null)
+            int createdCount = api.attachmentList(1, null, null, null, null, null, null, null, null, null, null)
                     .getCount();
             assertEquals(initialCount + 1, createdCount, "Count should have increased");
 
@@ -70,7 +70,7 @@ public class TestAttachmentApi extends TestApi {
         }
 
         int deletedCount =
-                api.attachmentList(1, null, null, null, null, null, null, null, null).getCount();
+                api.attachmentList(1, null, null, null, null, null, null, null, null, null, null).getCount();
         assertEquals(initialCount, deletedCount, "Count should have reset");
 
         // verify item not found

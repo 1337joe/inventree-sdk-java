@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '492'
+  version: '493'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -293,10 +293,19 @@ paths:
       description: List API endpoint for Attachment objects.
       parameters:
       - in: query
+        name: has_thumbnail
+        schema:
+          type: boolean
+        description: Has Thumbnail
+      - in: query
         name: is_file
         schema:
           type: boolean
         description: Is File
+      - in: query
+        name: is_image
+        schema:
+          type: boolean
       - in: query
         name: is_link
         schema:
@@ -25316,6 +25325,11 @@ components:
           type: string
           format: uri
           nullable: true
+        thumbnail:
+          type: string
+          format: uri
+          readOnly: true
+          nullable: true
         filename:
           type: string
         link:
@@ -25328,6 +25342,10 @@ components:
           type: string
           description: Attachment comment
           maxLength: 250
+        is_image:
+          type: boolean
+          readOnly: true
+          description: True if this attachment is a valid image file
         upload_date:
           type: string
           format: date
@@ -25359,6 +25377,7 @@ components:
             type: string
       required:
       - file_size
+      - is_image
       - model_id
       - model_type
       - pk
@@ -32422,6 +32441,11 @@ components:
           type: string
           format: uri
           nullable: true
+        thumbnail:
+          type: string
+          format: uri
+          readOnly: true
+          nullable: true
         filename:
           type: string
         link:
@@ -32434,6 +32458,10 @@ components:
           type: string
           description: Attachment comment
           maxLength: 250
+        is_image:
+          type: boolean
+          readOnly: true
+          description: True if this attachment is a valid image file
         upload_date:
           type: string
           format: date
