@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '494'
+  version: '495'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -10959,6 +10959,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/SalesOrderAllocation'
           description: ''
+    delete:
+      operationId: order_so_allocation_bulk_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:sales_order
+      responses:
+        '204':
+          description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/order/so-allocation/{id}/:
     get:
       operationId: order_so_allocation_retrieve
@@ -11775,6 +11805,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SalesOrderSerialAllocation'
+          description: ''
+  /api/order/so/{id}/auto-allocate/:
+    post:
+      operationId: order_so_auto_allocate_create
+      description: Validate parameters and offload auto-allocation to a background
+        task.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesOrderAutoAllocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SalesOrderAutoAllocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SalesOrderAutoAllocation'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDetail'
           description: ''
   /api/order/so/{id}/cancel/:
     post:
@@ -26170,6 +26237,26 @@ components:
             * `all` - All Items
             * `untracked` - Untracked Items
             * `tracked` - Tracked Items
+        stock_sort_by:
+          allOf:
+          - $ref: '#/components/schemas/StockSortByEnum'
+          default: updated
+          title: Stock Priority
+          description: |-
+            Preferred order in which matching stock items are consumed
+
+            * `updated` - Oldest stock first (FIFO)
+            * `-updated` - Newest stock first (LIFO)
+            * `quantity` - Smallest quantity first
+            * `-quantity` - Largest quantity first
+            * `expiry_date` - Soonest expiry date first
+        build_lines:
+          type: array
+          items:
+            type: integer
+            title: Build Lines
+          description: Limit allocation to these build lines (leave blank to allocate
+            all lines)
     BuildCancel:
       type: object
       description: Cancel an active BuildOrder.
@@ -39538,6 +39625,60 @@ components:
       - part
       - pk
       - quantity
+    SalesOrderAutoAllocation:
+      type: object
+      description: DRF serializer for auto-allocating stock items against a SalesOrder.
+      properties:
+        location:
+          type: integer
+          nullable: true
+          title: Source Location
+          description: Stock location where items are sourced (leave blank to use
+            any location)
+        exclude_location:
+          type: integer
+          nullable: true
+          description: Exclude stock items from this location
+        shipment:
+          type: integer
+          nullable: true
+          description: Assign allocations to this shipment
+        interchangeable:
+          type: boolean
+          default: true
+          title: Interchangeable Stock
+          description: Allow stock to be taken from multiple locations to fulfil a
+            single line item
+        stock_sort_by:
+          allOf:
+          - $ref: '#/components/schemas/StockSortByEnum'
+          default: updated
+          title: Stock Priority
+          description: |-
+            Preferred order in which matching stock items are consumed
+
+            * `updated` - Oldest stock first (FIFO)
+            * `-updated` - Newest stock first (LIFO)
+            * `quantity` - Smallest quantity first
+            * `-quantity` - Largest quantity first
+            * `expiry_date` - Soonest expiry date first
+        serialized_stock:
+          allOf:
+          - $ref: '#/components/schemas/SerializedStockEnum'
+          default: any
+          description: |-
+            Control whether serialized stock items are included in auto-allocation
+
+            * `any` - Allow any stock (serialized or unserialized)
+            * `serialized` - Serialized stock only
+            * `unserialized` - Unserialized stock only
+        line_items:
+          type: array
+          items:
+            type: integer
+            title: Line Items
+          description: Limit allocation to these line items (leave blank to allocate
+            all lines)
     SalesOrderComplete:
       type: object
       description: DRF serializer for manually marking a sales order as complete.
@@ -40180,6 +40321,16 @@ components:
       - destination
       - quantity
       - serial_numbers
+    SerializedStockEnum:
+      enum:
+      - any
+      - serialized
+      - unserialized
+      type: string
+      description: |-
+        * `any` - Allow any stock (serialized or unserialized)
+        * `serialized` - Serialized stock only
+        * `unserialized` - Unserialized stock only
     Settings:
       type: object
       description: Serializer for InfoApiSerializer.
@@ -40808,6 +40959,20 @@ components:
       required:
       - items
       - location
+    StockSortByEnum:
+      enum:
+      - updated
+      - -updated
+      - quantity
+      - -quantity
+      - expiry_date
+      type: string
+      description: |-
+        * `updated` - Oldest stock first (FIFO)
+        * `-updated` - Newest stock first (LIFO)
+        * `quantity` - Smallest quantity first
+        * `-quantity` - Largest quantity first
+        * `expiry_date` - Soonest expiry date first
     StockTracking:
       type: object
       description: Serializer for StockItemTracking model.

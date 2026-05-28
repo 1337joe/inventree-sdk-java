@@ -92,6 +92,7 @@ public class TestOrderApi extends TestApi {
 
         api.orderSoAllocateCreate(null, null);
         api.orderSoAllocateSerialsCreate(null, null);
+        api.orderSoAllocationBulkDestroy(null);
         api.orderSoAllocationBulkPartialUpdate(null);
         api.orderSoAllocationBulkUpdate(null);
         api.orderSoAllocationDestroy(null);
@@ -100,6 +101,7 @@ public class TestOrderApi extends TestApi {
         api.orderSoAllocationPartialUpdate(null, null);
         api.orderSoAllocationRetrieve(null);
         api.orderSoAllocationUpdate(null, null);
+        api.orderSoAutoAllocateCreate(null, null);
         api.orderSoCancelCreate(null);
         api.orderSoCompleteCreate(null, null);
         api.orderSoCreate(null);
