@@ -8,6 +8,7 @@ import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.BulkRequest;
+import com.w3asel.inventree.model.GenericStateClass;
 import com.w3asel.inventree.model.PaginatedSalesOrderList;
 import com.w3asel.inventree.model.PurchaseOrderLineItemReceive;
 import com.w3asel.inventree.model.PurchaseOrderReceive;
@@ -59,7 +60,7 @@ public class TestOrderApi extends TestApi {
         api.orderPoPartialUpdate(null, null);
         // api.orderPoReceiveCreate(null, null);
         api.orderPoRetrieve(null, null);
-        api.orderPoStatusRetrieve();
+        // api.orderPoStatusRetrieve();
         api.orderPoUpdate(null, null);
 
         api.orderRoCancelCreate(null);
@@ -86,7 +87,7 @@ public class TestOrderApi extends TestApi {
         api.orderRoPartialUpdate(null, null);
         api.orderRoReceiveCreate(null, null);
         api.orderRoRetrieve(null, null);
-        api.orderRoStatusRetrieve();
+        // api.orderRoStatusRetrieve();
         api.orderRoUpdate(null, null);
 
         api.orderSoAllocateCreate(null, null);
@@ -128,7 +129,7 @@ public class TestOrderApi extends TestApi {
         api.orderSoShipmentRetrieve(null);
         api.orderSoShipmentShipCreate(null, null);
         api.orderSoShipmentUpdate(null, null);
-        api.orderSoStatusRetrieve();
+        // api.orderSoStatusRetrieve();
         api.orderSoUpdate(null, null);
 
         api.orderTransferOrderAllocateCreate(null, null);
@@ -171,6 +172,8 @@ public class TestOrderApi extends TestApi {
                         null, null, null, null, null, null, null, null, null)
                 .getResults().get(0).getPk();
         api.orderPoRetrieve(poPk, null);
+
+        // TODO verify results
     }
 
     @Test
@@ -180,6 +183,8 @@ public class TestOrderApi extends TestApi {
         int poExtraPk = api.orderPoExtraLineList(limit, null, null, null, null, null).getResults()
                 .get(0).getPk();
         api.orderPoExtraLineRetrieve(poExtraPk);
+
+        // TODO verify results
     }
 
     @Test
@@ -189,6 +194,8 @@ public class TestOrderApi extends TestApi {
         int poLinePk = api.orderPoLineList(limit, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null).getResults().get(0).getPk();
         api.orderPoLineRetrieve(poLinePk, null, null);
+
+        // TODO verify results
     }
 
     @Test
@@ -223,6 +230,13 @@ public class TestOrderApi extends TestApi {
     }
 
     @Test
+    void orderPoStatusRetrieve() throws ApiException {
+        GenericStateClass actual = api.orderPoStatusRetrieve();
+        assertNotNull(actual, "Expected populated status");
+        assertEquals("PurchaseOrderStatus", actual.getStatusClass(), "Incorrect status class");
+    }
+
+    @Test
     void testRo() throws ApiException {
         // int limit = 1;
 
@@ -230,6 +244,8 @@ public class TestOrderApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null).getResults().get(0).getPk();
         api.orderRoRetrieve(roPk, null);
+
+        // TODO verify results
     }
 
     @Test
@@ -239,6 +255,8 @@ public class TestOrderApi extends TestApi {
         int roExtraPk = api.orderRoExtraLineList(limit, null, null, null, null, null).getResults()
                 .get(0).getPk();
         api.orderRoExtraLineRetrieve(roExtraPk);
+
+        // TODO verify results
     }
 
     @Test
@@ -248,6 +266,15 @@ public class TestOrderApi extends TestApi {
         int roLinePk = api.orderRoLineList(limit, null, null, null, null, null, null, null, null,
                 null, null, null, null).getResults().get(0).getPk();
         api.orderRoLineRetrieve(roLinePk, null, null, null);
+
+        // TODO verify results
+    }
+
+    @Test
+    void orderRoStatusRetrieve() throws ApiException {
+        GenericStateClass actual = api.orderRoStatusRetrieve();
+        assertNotNull(actual, "Expected populated status");
+        assertEquals("ReturnOrderStatus", actual.getStatusClass(), "Incorrect status class");
     }
 
     @Test
@@ -261,6 +288,8 @@ public class TestOrderApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null).getResults().get(0).getPk();
         api.orderSoRetrieve(soPk, null);
+
+        // TODO verify results
     }
 
     @Test
@@ -272,6 +301,8 @@ public class TestOrderApi extends TestApi {
         api.orderSoExtraLineRetrieve(soExtraPk);
 
         api.orderSoExtraLineList(limit, null, null, null, null, "Coupon");
+
+        // TODO verify results
     }
 
     @Test
@@ -281,6 +312,8 @@ public class TestOrderApi extends TestApi {
         int soLinePk = api.orderSoLineList(limit, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null).getResults().get(0).getPk();
         api.orderSoLineRetrieve(soLinePk, null, null, null);
+
+        // TODO verify results
     }
 
     @Test
@@ -291,6 +324,8 @@ public class TestOrderApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null).getResults()
                 .get(0).getPk();
         api.orderSoAllocationRetrieve(soAllocationPk);
+
+        // TODO verify results
     }
 
     @Test
@@ -301,6 +336,8 @@ public class TestOrderApi extends TestApi {
                 api.orderSoShipmentList(limit, null, null, null, null, null, null, null, null, null)
                         .getResults().get(0).getPk();
         api.orderSoShipmentRetrieve(soShipmentPk);
+
+        // TODO verify results
     }
 
     @Test
@@ -316,5 +353,42 @@ public class TestOrderApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount());
         List<SalesOrder> actualList = actual.getResults();
+
+        // TODO verify results
+    }
+
+    @Test
+    void orderSoStatusRetrieve() throws ApiException {
+        GenericStateClass actual = api.orderSoStatusRetrieve();
+        assertNotNull(actual, "Expected populated status");
+        assertEquals("SalesOrderStatus", actual.getStatusClass(), "Incorrect status class");
+    }
+
+    @Disabled("Missing sample data")
+    @Test
+    void testTransferOrderAllocation() throws ApiException {
+        // int limit = 1;
+
+        int toaPk = api
+                .orderTransferOrderAllocationList(limit, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null)
+                .getResults().get(0).getPk();
+        api.orderTransferOrderAllocationRetrieve(toaPk);
+
+        // TODO verify results
+    }
+
+    @Disabled("Missing sample data")
+    @Test
+    void testTransferOrder() throws ApiException {
+        // int limit = 1;
+
+        int toPk = api
+                .orderTransferOrderList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
+                        null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+                .getResults().get(0).getPk();
+        api.orderTransferOrderRetrieve(toPk);
+
+        // TODO verify results
     }
 }
