@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '497'
+  version: '498'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26095,6 +26095,7 @@ components:
             * `40` - Complete
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -26184,7 +26185,6 @@ components:
       - quantity
       - reference
       - status
-      - status_text
     BuildAllocation:
       type: object
       description: Serializer for allocating stock items against a build order.
@@ -32878,6 +32878,7 @@ components:
             * `40` - Complete
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -35221,6 +35222,7 @@ components:
           title: Order Status
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -35743,6 +35745,7 @@ components:
           title: Order Status
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -36167,6 +36170,7 @@ components:
           title: Order Status
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -36845,8 +36849,8 @@ components:
           maximum: 9223372036854775807
         status_text:
           type: string
+          nullable: true
           readOnly: true
-          title: Status
         status_custom_key:
           type: integer
           nullable: true
@@ -37350,6 +37354,7 @@ components:
           title: Order Status
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -38237,6 +38242,7 @@ components:
           title: Order Status
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -38365,7 +38371,6 @@ components:
       - pk
       - reference
       - status
-      - status_text
       - supplier
       - supplier_name
     PurchaseOrderComplete:
@@ -38917,6 +38922,7 @@ components:
           title: Order Status
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -39035,7 +39041,6 @@ components:
       - pk
       - reference
       - status
-      - status_text
     ReturnOrderExtraLine:
       type: object
       description: Serializer for a ReturnOrderExtraLine object.
@@ -39440,6 +39445,7 @@ components:
           title: Order Status
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -39574,7 +39580,6 @@ components:
       - pk
       - reference
       - status
-      - status_text
     SalesOrderAllocation:
       type: object
       description: |-
@@ -40637,8 +40642,8 @@ components:
           maximum: 9223372036854775807
         status_text:
           type: string
+          nullable: true
           readOnly: true
-          title: Status
         status_custom_key:
           type: integer
           nullable: true
@@ -40790,7 +40795,6 @@ components:
       - part
       - pk
       - quantity
-      - status_text
     StockItemSerialNumbers:
       type: object
       description: Serializer for extra serial number information about a stock item.
@@ -41520,6 +41524,7 @@ components:
           title: Order Status
         status_text:
           type: string
+          nullable: true
           readOnly: true
         status_custom_key:
           type: integer
@@ -41621,7 +41626,6 @@ components:
       - pk
       - reference
       - status
-      - status_text
     TransferOrderAllocation:
       type: object
       description: |-

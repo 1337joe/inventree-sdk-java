@@ -494,31 +494,28 @@ public class TestBuildApi extends TestApi {
         boolean expectedOverdue =
                 actual.getTargetDate() != null && actual.getTargetDate().isBefore(LocalDate.now());
 
-        String expectedIssuedByName;
+        String expectedIssuedByName = InventreeDemoDataset.getFields(expected).get("issued_by").getAsJsonArray()
+                .asList().get(0).getAsString();
         String expectedPartName;
         String expectedProjectCodeLabel;
         String expectedStatusText;
         switch (pk) {
             case 18:
-                expectedIssuedByName = "allaccess";
                 expectedPartName = "Blue Chair";
                 expectedProjectCodeLabel = "PRO-INF";
-                expectedStatusText = "Production";
+                expectedStatusText = "Production"; // status: 20
                 break;
             case 23:
-                expectedIssuedByName = "admin";
                 expectedPartName = "Red Furniture Set";
                 expectedProjectCodeLabel = null;
-                expectedStatusText = "On Hold";
+                expectedStatusText = "Pending Approval"; // status: 25
                 break;
             case 24:
-                expectedIssuedByName = "admin";
                 expectedPartName = "Green Furniture Set";
                 expectedProjectCodeLabel = null;
-                expectedStatusText = "Production";
+                expectedStatusText = "Production"; // status: 20
                 break;
             default:
-                expectedIssuedByName = null;
                 expectedPartName = null;
                 expectedProjectCodeLabel = null;
                 expectedStatusText = null;
