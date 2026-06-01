@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '498'
+  version: '499'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -888,8 +888,6 @@ paths:
           enum:
           - user
           - -user
-          - plugin
-          - -plugin
           - timestamp
           - -timestamp
           - endpoint
@@ -903,7 +901,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: plugin.'
+        description: 'A search term. Searched fields: data.'
         schema:
           type: string
       - in: query
