@@ -22,7 +22,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       - name: Read current schema version
         run: |
@@ -44,7 +44,7 @@ jobs:
           fi
 
       - name: Checkout schema
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           repository: 'inventree/schema'
           path: 'schema'
@@ -64,7 +64,7 @@ jobs:
           echo "COMMIT_DATE=$(git log -1 --format="%ci" export/${{ env.NEW_VERSION }}/api.yaml)" >> $GITHUB_ENV
 
       - name: Checkout inventree demo dataset
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           repository: 'inventree/demo-dataset'
           path: 'demo-dataset'
@@ -90,7 +90,7 @@ jobs:
           commit_message: 'Update to schema ${{ env.NEW_VERSION }}'
 
       - name: Checkout inventree
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           repository: 'inventree/InvenTree'
           path: 'InvenTree'
