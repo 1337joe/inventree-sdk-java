@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '500'
+  version: '501'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -35339,6 +35339,11 @@ components:
         plugin:
           type: string
           readOnly: true
+        read_only:
+          type: boolean
+          description: Indicates if the setting is overridden by configuration
+          readOnly: true
+          title: Override
     PatchedPluginUninstall:
       type: object
       description: Serializer for uninstalling a plugin.
@@ -38309,6 +38314,11 @@ components:
         plugin:
           type: string
           readOnly: true
+        read_only:
+          type: boolean
+          description: Indicates if the setting is overridden by configuration
+          readOnly: true
+          title: Override
       required:
       - choices
       - confirm
@@ -38319,6 +38329,7 @@ components:
       - name
       - pk
       - plugin
+      - read_only
       - required
       - typ
       - type

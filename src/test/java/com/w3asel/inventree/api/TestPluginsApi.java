@@ -10,13 +10,6 @@ import com.w3asel.inventree.model.PluginRegistryStatus;
 import com.w3asel.inventree.model.PluginSetting;
 import com.w3asel.inventree.model.PluginUIFeature;
 import com.w3asel.inventree.model.PluginUserSetting;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,6 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class TestPluginsApi extends TestApi {
     private static final String BARCODE_KEY = "inventreebarcode";
@@ -162,18 +162,18 @@ public class TestPluginsApi extends TestApi {
                 List.of(Map.of("value", "json", "display_name", "JSON barcodes (human readable)"),
                         Map.of("value", "short", "display_name",
                                 "Short barcodes (space optimized)")),
-                null, null, null, typ, "", false, null, null, BARCODE_KEY).value("short"));
+                null, null, null, typ, "", false, null, null, BARCODE_KEY, false).value("short"));
         settings.get(BARCODE_KEY).put("SHORT_BARCODE_PREFIX", new PluginSetting(2,
                 "SHORT_BARCODE_PREFIX", "Short Barcode Prefix",
                 "Customize the prefix used for short barcodes, may be useful for environments with multiple InvenTree instances",
                 "string", Collections.emptyList(), null, null, null, typ, "", false, null, null,
-                BARCODE_KEY).value("INV-"));
+                BARCODE_KEY, false).value("INV-"));
 
         settings.get(LABEL_KEY).put("DEBUG",
                 new PluginSetting(3, "DEBUG", "Debug mode",
                         "Enable debug mode - returns raw HTML instead of PDF", "boolean",
                         Collections.emptyList(), null, null, null, typ, "", false, null, null,
-                        LABEL_KEY).value("False"));
+                        LABEL_KEY, false).value("False"));
 
         return settings;
     }
