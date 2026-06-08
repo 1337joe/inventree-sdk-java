@@ -114,7 +114,7 @@ public class TestUserApi extends TestApi {
 
         PaginatedGroupList actual = api.userGroupList(limit, offset, null, permissionDetail,
                 roleDetail, null, userDetail);
-        assertEquals(expectedList.size(), actual.getCount(), "Incorrect total stock item count");
+        assertEquals(expectedList.size(), actual.getCount(), "Incorrect total group count");
         List<Group> actualList = actual.getResults();
 
         // check items returned by key

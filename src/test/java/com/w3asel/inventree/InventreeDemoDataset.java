@@ -11,7 +11,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.Test;
 
 /** Simple class to read and parse the demo dataset. */
 public class InventreeDemoDataset {
@@ -243,6 +243,7 @@ public class InventreeDemoDataset {
         STOCK_TRACKING("stock.stockitemtracking"),
         STOCK_LOCATION("stock.stocklocation"),
         STOCK_LOCATION_TYPE("stock.stocklocationtype"),
+        TAG("taggit.tag"),
         USERS_OWNER("users.owner"),
         USERS_RULESET("users.ruleset"),
         USERS_PROFILE("users.userprofile");
