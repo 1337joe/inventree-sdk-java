@@ -75,7 +75,7 @@ public class TestPartApi extends TestApi {
         api.partList(null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null);
         api.partPartialUpdate(null, null);
         api.partPricingPartialUpdate(null, null);
         api.partPricingRetrieve(null);
@@ -125,7 +125,7 @@ public class TestPartApi extends TestApi {
         api.partList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null);
 
         api.partRelatedList(limit, null, null, null, null, null, null);
 

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '499'
+  version: '500'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -352,6 +352,11 @@ paths:
         description: 'A search term. Searched fields: comment, model_id, model_type.'
         schema:
           type: string
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
       - in: query
         name: upload_user
         schema:
@@ -2164,6 +2169,11 @@ paths:
           type: integer
         description: Order Status
       - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
+      - in: query
         name: target_date_after
         schema:
           type: string
@@ -3527,6 +3537,11 @@ paths:
         description: 'A search term. Searched fields: description, name, tax_id, website.'
         schema:
           type: string
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
       tags:
       - company
       security:
@@ -4332,6 +4347,11 @@ paths:
           default: false
         description: Include detailed information about the Supplier in the response
       - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
+      - in: query
         name: tags__name
         schema:
           type: string
@@ -4671,6 +4691,11 @@ paths:
           part__IPN, part__description, part__name, tags__name, tags__slug.'
         schema:
           type: string
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
       - in: query
         name: tags__name
         schema:
@@ -8591,6 +8616,11 @@ paths:
           type: integer
         description: Supplier Part
       - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
+      - in: query
         name: target_date_after
         schema:
           type: string
@@ -9671,6 +9701,11 @@ paths:
           type: integer
         description: Order Status
       - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
+      - in: query
         name: target_date_after
         schema:
           type: string
@@ -10683,6 +10718,11 @@ paths:
         schema:
           type: integer
         description: Order Status
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
       - in: query
         name: target_date_after
         schema:
@@ -12008,6 +12048,11 @@ paths:
         schema:
           type: boolean
         description: shipped
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
       tags:
       - order
       security:
@@ -12387,6 +12432,11 @@ paths:
         schema:
           type: integer
         description: Order Status
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
       - in: query
         name: target_date_after
         schema:
@@ -14098,14 +14148,6 @@ paths:
         schema:
           type: boolean
           default: false
-      - in: query
-        name: tags_name
-        schema:
-          type: string
-      - in: query
-        name: tags_slug
-        schema:
-          type: string
       - in: query
         name: testable
         schema:
@@ -19207,6 +19249,11 @@ paths:
           type: boolean
           default: false
       - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
+      - in: query
         name: tags__name
         schema:
           type: string
@@ -19932,6 +19979,11 @@ paths:
         name: structural
         schema:
           type: boolean
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: Tags
       - in: query
         name: top_level
         schema:
@@ -21191,6 +21243,204 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthCheckStatus'
           description: InvenTree server health status
+  /api/tag/:
+    get:
+      operationId: tag_list
+      description: List view for all tags.
+      parameters:
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: model_type
+        schema:
+          type: string
+        description: Model Type
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - name
+          - -name
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: name.'
+        schema:
+          type: string
+      tags:
+      - tag
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTagList'
+          description: ''
+    post:
+      operationId: tag_create
+      description: List view for all tags.
+      tags:
+      - tag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tag'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tag'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tag'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:staff
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: ''
+  /api/tag/{id}/:
+    get:
+      operationId: tag_retrieve
+      description: Detail view for a particular tag.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tag
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: ''
+    put:
+      operationId: tag_update
+      description: Detail view for a particular tag.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tag'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tag'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tag'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:staff
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: ''
+    patch:
+      operationId: tag_partial_update
+      description: Detail view for a particular tag.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTag'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTag'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTag'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:staff
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: ''
+    delete:
+      operationId: tag_destroy
+      description: Detail view for a particular tag.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tag
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:staff
+      responses:
+        '204':
+          description: No response body
   /api/units/:
     get:
       operationId: units_list
@@ -26169,6 +26419,10 @@ components:
           type: integer
           readOnly: true
           title: Build Level
+        tags:
+          type: array
+          items:
+            type: string
       required:
       - barcode_hash
       - completed
@@ -26996,6 +27250,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
       required:
       - currency
       - name
@@ -27432,6 +27690,7 @@ components:
     DataImportSessionModelTypeEnum:
       enum:
       - projectcode
+      - tag
       - inventreecustomuserstatemodel
       - customunit
       - parametertemplate
@@ -27467,6 +27726,7 @@ components:
       type: string
       description: |-
         * `projectcode` - Project Code
+        * `tag` - tag
         * `inventreecustomuserstatemodel` - Custom State
         * `customunit` - Custom Unit
         * `parametertemplate` - Parameter Template
@@ -31224,6 +31484,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SupplierPriceBreak'
+    PaginatedTagList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
     PaginatedTransferOrderAllocationList:
       type: object
       required:
@@ -32952,6 +33235,10 @@ components:
           type: integer
           readOnly: true
           title: Build Level
+        tags:
+          type: array
+          items:
+            type: string
     PatchedBuildItem:
       type: object
       description: Serializes a BuildItem object, which is an allocation of a stock
@@ -33332,6 +33619,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
     PatchedContact:
       type: object
       description: Serializer class for the Contact model.
@@ -35287,6 +35578,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
         complete_date:
           type: string
           format: date
@@ -35808,6 +36103,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
         complete_date:
           type: string
           format: date
@@ -36236,6 +36535,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
         customer:
           type: integer
           nullable: true
@@ -36651,6 +36954,10 @@ components:
           - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
     PatchedSelectionEntry:
       type: object
       description: Serializer for a selection entry.
@@ -37279,6 +37586,21 @@ components:
           - $ref: '#/components/schemas/SupplierPart'
           readOnly: true
           nullable: true
+    PatchedTag:
+      type: object
+      description: Serializer for the Tag model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        name:
+          type: string
+          maxLength: 100
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-\w]+$
     PatchedTransferOrder:
       type: object
       description: Serializer for a TransferOrder object.
@@ -37417,6 +37739,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
         take_from:
           type: integer
           nullable: true
@@ -38307,6 +38633,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
         complete_date:
           type: string
           format: date
@@ -38985,6 +39315,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
         complete_date:
           type: string
           format: date
@@ -39511,6 +39845,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
         customer:
           type: integer
           nullable: true
@@ -40036,6 +40374,10 @@ components:
           - $ref: '#/components/schemas/AddressBrief'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
       required:
       - order
       - pk
@@ -41359,6 +41701,25 @@ components:
       - price
       - quantity
       - supplier
+    Tag:
+      type: object
+      description: Serializer for the Tag model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        name:
+          type: string
+          maxLength: 100
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-\w]+$
+      required:
+      - name
+      - pk
+      - slug
     TaskDetail:
       type: object
       description: Serializer for a background task detail.
@@ -41587,6 +41948,10 @@ components:
             $ref: '#/components/schemas/Parameter'
           readOnly: true
           nullable: true
+        tags:
+          type: array
+          items:
+            type: string
         take_from:
           type: integer
           nullable: true

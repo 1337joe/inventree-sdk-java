@@ -146,7 +146,7 @@ public class TestCompanyApi extends TestApi {
         int offset = 0;
         String ordering = "name";
         PaginatedCompanyList actual =
-                api.companyList(limit, null, null, null, null, null, offset, ordering, null);
+                api.companyList(limit, null, null, null, null, null, offset, ordering, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect company list count");
         List<Company> actualList = actual.getResults();
 
@@ -502,7 +502,7 @@ public class TestCompanyApi extends TestApi {
         // TODO missing complex filter parameters on this query
         PaginatedSupplierPartList actual = api.companyPartList(limit, null, null, null, company,
                 null, null, null, null, null, offset, null, null, null, null, null, null, null,
-                null, null, null, null, null);
+                null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect part list count");
         List<SupplierPart> actualList = actual.getResults();
 
@@ -627,7 +627,7 @@ public class TestCompanyApi extends TestApi {
         int limit = 5;
         int offset = 0;
         PaginatedManufacturerPartList actual = api.companyPartManufacturerList(limit, null, null,
-                null, null, offset, null, null, null, null, null, null, null, null);
+                null, null, offset, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect manufacturer list count");
         List<ManufacturerPart> actualList = actual.getResults();
 

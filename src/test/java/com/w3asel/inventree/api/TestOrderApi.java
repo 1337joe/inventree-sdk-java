@@ -56,7 +56,7 @@ public class TestOrderApi extends TestApi {
         api.orderPoLineUpdate(null, null);
         api.orderPoList(null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null);
+                null, null, null, null, null, null, null);
         api.orderPoPartialUpdate(null, null);
         // api.orderPoReceiveCreate(null, null);
         api.orderPoRetrieve(null, null);
@@ -83,7 +83,7 @@ public class TestOrderApi extends TestApi {
         api.orderRoLineStatusRetrieve();
         api.orderRoLineUpdate(null, null);
         api.orderRoList(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         api.orderRoPartialUpdate(null, null);
         api.orderRoReceiveCreate(null, null);
         api.orderRoRetrieve(null, null);
@@ -121,12 +121,12 @@ public class TestOrderApi extends TestApi {
         api.orderSoLineRetrieve(null, null, null, null);
         api.orderSoLineUpdate(null, null);
         api.orderSoList(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         api.orderSoPartialUpdate(null, null);
         api.orderSoRetrieve(null, null);
         api.orderSoShipmentCreate(null);
         api.orderSoShipmentDestroy(null);
-        api.orderSoShipmentList(null, null, null, null, null, null, null, null, null, null);
+        api.orderSoShipmentList(null, null, null, null, null, null, null, null, null, null, null);
         api.orderSoShipmentPartialUpdate(null, null);
         api.orderSoShipmentRetrieve(null);
         api.orderSoShipmentShipCreate(null, null);
@@ -158,7 +158,7 @@ public class TestOrderApi extends TestApi {
         api.orderTransferOrderLineRetrieve(null, null, null);
         api.orderTransferOrderLineUpdate(null, null);
         api.orderTransferOrderList(null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         api.orderTransferOrderPartialUpdate(null, null);
         api.orderTransferOrderRetrieve(null);
         api.orderTransferOrderUpdate(null, null);
@@ -171,7 +171,7 @@ public class TestOrderApi extends TestApi {
         int poPk = api
                 .orderPoList(limit, null, null, null, null, null, null, null, null, null, null,
                         null, null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null, null, null, null, null, null, null)
+                        null, null, null, null, null, null, null, null, null, null)
                 .getResults().get(0).getPk();
         api.orderPoRetrieve(poPk, null);
 
@@ -244,7 +244,7 @@ public class TestOrderApi extends TestApi {
 
         int roPk = api.orderRoList(limit, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null).getResults().get(0).getPk();
+                null, null, null, null, null, null, null, null).getResults().get(0).getPk();
         api.orderRoRetrieve(roPk, null);
 
         // TODO verify results
@@ -288,7 +288,7 @@ public class TestOrderApi extends TestApi {
 
         int soPk = api.orderSoList(limit, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null).getResults().get(0).getPk();
+                null, null, null, null, null, null, null, null).getResults().get(0).getPk();
         api.orderSoRetrieve(soPk, null);
 
         // TODO verify results
@@ -335,7 +335,7 @@ public class TestOrderApi extends TestApi {
         // int limit = 1;
 
         int soShipmentPk =
-                api.orderSoShipmentList(limit, null, null, null, null, null, null, null, null, null)
+                api.orderSoShipmentList(limit, null, null, null, null, null, null, null, null, null, null)
                         .getResults().get(0).getPk();
         api.orderSoShipmentRetrieve(soShipmentPk);
 
@@ -352,7 +352,7 @@ public class TestOrderApi extends TestApi {
         int offset = 0;
         PaginatedSalesOrderList actual = api.orderSoList(limit, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, offset, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount());
         List<SalesOrder> actualList = actual.getResults();
 
@@ -387,7 +387,8 @@ public class TestOrderApi extends TestApi {
 
         int toPk = api
                 .orderTransferOrderList(limit, null, null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+                        null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                        null)
                 .getResults().get(0).getPk();
         api.orderTransferOrderRetrieve(toPk);
 

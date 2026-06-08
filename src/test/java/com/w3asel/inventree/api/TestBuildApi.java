@@ -95,7 +95,7 @@ public class TestBuildApi extends TestApi {
                 null, null, null, null, null, buildPk, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, offset, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(0, previousBuildItems.getCount(), "Expected no existing outputs");
 
         try {
@@ -118,7 +118,7 @@ public class TestBuildApi extends TestApi {
                     null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                     null, null, null, null, null, null, offset, null, null, null, null, null, null, null, null, null,
                     null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                    null, null);
+                    null, null, null);
 
             assertTrue(newBuildItems.getCount() < limit,
                     "Can only clean up to " + limit + " items, found " + newBuildItems.getCount());
@@ -209,7 +209,7 @@ public class TestBuildApi extends TestApi {
 
         PaginatedBuildList actual = api.buildList(limit, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, offset, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total build count");
         List<Build> actualList = actual.getResults();
 
