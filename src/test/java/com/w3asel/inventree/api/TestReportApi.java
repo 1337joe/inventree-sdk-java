@@ -18,7 +18,7 @@ public class TestReportApi extends TestApi {
         int limit = 1000;
         api.reportAssetList(limit, null);
         api.reportSnippetList(limit, null);
-        api.reportTemplateList(limit, null, null, null, null, null, null);
+        api.reportTemplateList(limit, null, null, null, null, null, null, null, null, null);
 
         // ReportAsset actual = api.reportAssetRetrieve(1);
         // assertNotNull(actual);

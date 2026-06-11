@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '502'
+  version: '503'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -6862,6 +6862,21 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - name
+          - -name
+          - enabled
+          - -enabled
+          - width
+          - -width
+          - height
+          - -height
       - name: search
         required: false
         in: query
@@ -17877,6 +17892,10 @@ paths:
       description: API endpoint for viewing list of ReportTemplate objects.
       parameters:
       - in: query
+        name: attach_to_model
+        schema:
+          type: boolean
+      - in: query
         name: enabled
         schema:
           type: boolean
@@ -17895,6 +17914,10 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: merge
+        schema:
+          type: boolean
       - in: query
         name: model_type
         schema:
@@ -17931,6 +17954,17 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - name
+          - -name
+          - enabled
+          - -enabled
       - name: search
         required: false
         in: query

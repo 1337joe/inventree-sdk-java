@@ -10,15 +10,15 @@ import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.LabelTemplate;
 import com.w3asel.inventree.model.PaginatedLabelTemplateList;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class TestLabelApi extends TestApi {
     private LabelApi api;
@@ -78,7 +78,7 @@ public class TestLabelApi extends TestApi {
         int offset = 0;
 
         PaginatedLabelTemplateList actual =
-                api.labelTemplateList(limit, null, null, null, offset, null);
+                api.labelTemplateList(limit, null, null, null, offset, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect label template count");
         List<LabelTemplate> actualList = actual.getResults();
 
