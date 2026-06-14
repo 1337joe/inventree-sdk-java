@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '503'
+  version: '504'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -37069,12 +37069,13 @@ components:
           format: date-time
           readOnly: true
           description: Date and time that the selection list was last updated
+        entry_count:
+          type: integer
+          readOnly: true
         choices:
           type: array
           items:
             $ref: '#/components/schemas/SelectionEntry'
-        entry_count:
-          type: integer
           readOnly: true
     PatchedStockItem:
       type: object
@@ -40693,14 +40694,16 @@ components:
           format: date-time
           readOnly: true
           description: Date and time that the selection list was last updated
+        entry_count:
+          type: integer
+          readOnly: true
         choices:
           type: array
           items:
             $ref: '#/components/schemas/SelectionEntry'
-        entry_count:
-          type: integer
           readOnly: true
       required:
+      - choices
       - created
       - entry_count
       - last_updated
