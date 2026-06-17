@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '507'
+  version: '508'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -35580,21 +35580,9 @@ components:
           readOnly: true
         status_custom_key:
           type: integer
-          readOnly: true
           nullable: true
-          title: Custom status key
-          description: |-
-            Additional status information for this item
-
-            * `10` - Pending
-            * `20` - Placed
-            * `25` - On Hold
-            * `30` - Complete
-            * `40` - Cancelled
-            * `50` - Lost
-            * `60` - Returned
-
-            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+          title: Custom Status Key
+          description: Update order status to a custom value for this logical value
         notes:
           type: string
           nullable: true
@@ -36107,19 +36095,9 @@ components:
           readOnly: true
         status_custom_key:
           type: integer
-          readOnly: true
           nullable: true
-          title: Custom status key
-          description: |-
-            Additional status information for this item
-
-            * `10` - Pending
-            * `20` - In Progress
-            * `25` - On Hold
-            * `30` - Complete
-            * `40` - Cancelled
-
-            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+          title: Custom Status Key
+          description: Update order status to a custom value for this logical value
         notes:
           type: string
           nullable: true
@@ -36536,22 +36514,9 @@ components:
           readOnly: true
         status_custom_key:
           type: integer
-          readOnly: true
           nullable: true
-          title: Custom status key
-          description: |-
-            Additional status information for this item
-
-            * `10` - Pending
-            * `15` - In Progress
-            * `20` - Shipped
-            * `25` - On Hold
-            * `30` - Complete
-            * `40` - Cancelled
-            * `50` - Lost
-            * `60` - Returned
-
-            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+          title: Custom Status Key
+          description: Update order status to a custom value for this logical value
         notes:
           type: string
           nullable: true
@@ -37744,19 +37709,9 @@ components:
           readOnly: true
         status_custom_key:
           type: integer
-          readOnly: true
           nullable: true
-          title: Custom status key
-          description: |-
-            Additional status information for this item
-
-            * `10` - Pending
-            * `20` - Issued
-            * `25` - On Hold
-            * `30` - Complete
-            * `40` - Cancelled
-
-            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+          title: Custom Status Key
+          description: Update order status to a custom value for this logical value
         notes:
           type: string
           nullable: true
@@ -38642,21 +38597,9 @@ components:
           readOnly: true
         status_custom_key:
           type: integer
-          readOnly: true
           nullable: true
-          title: Custom status key
-          description: |-
-            Additional status information for this item
-
-            * `10` - Pending
-            * `20` - Placed
-            * `25` - On Hold
-            * `30` - Complete
-            * `40` - Cancelled
-            * `50` - Lost
-            * `60` - Returned
-
-            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+          title: Custom Status Key
+          description: Update order status to a custom value for this logical value
         notes:
           type: string
           nullable: true
@@ -39326,19 +39269,9 @@ components:
           readOnly: true
         status_custom_key:
           type: integer
-          readOnly: true
           nullable: true
-          title: Custom status key
-          description: |-
-            Additional status information for this item
-
-            * `10` - Pending
-            * `20` - In Progress
-            * `25` - On Hold
-            * `30` - Complete
-            * `40` - Cancelled
-
-            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+          title: Custom Status Key
+          description: Update order status to a custom value for this logical value
         notes:
           type: string
           nullable: true
@@ -39853,22 +39786,9 @@ components:
           readOnly: true
         status_custom_key:
           type: integer
-          readOnly: true
           nullable: true
-          title: Custom status key
-          description: |-
-            Additional status information for this item
-
-            * `10` - Pending
-            * `15` - In Progress
-            * `20` - Shipped
-            * `25` - On Hold
-            * `30` - Complete
-            * `40` - Cancelled
-            * `50` - Lost
-            * `60` - Returned
-
-            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+          title: Custom Status Key
+          description: Update order status to a custom value for this logical value
         notes:
           type: string
           nullable: true
@@ -41961,19 +41881,9 @@ components:
           readOnly: true
         status_custom_key:
           type: integer
-          readOnly: true
           nullable: true
-          title: Custom status key
-          description: |-
-            Additional status information for this item
-
-            * `10` - Pending
-            * `20` - Issued
-            * `25` - On Hold
-            * `30` - Complete
-            * `40` - Cancelled
-
-            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+          title: Custom Status Key
+          description: Update order status to a custom value for this logical value
         notes:
           type: string
           nullable: true
