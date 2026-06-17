@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '504'
+  version: '505'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27100,6 +27100,12 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
+          nullable: true
       required:
       - level
       - name
@@ -29583,7 +29589,7 @@ components:
         metadata: {}
       required:
       - metadata
-    ModelTypeDf8Enum:
+    ModelTypeD42Enum:
       enum:
       - build.build
       - company.company
@@ -29595,6 +29601,7 @@ components:
       - order.salesordershipment
       - order.transferorder
       - part.part
+      - part.partcategory
       - stock.stocklocation
       type: string
       description: |-
@@ -29608,6 +29615,7 @@ components:
         * `order.salesordershipment` - Sales Order Shipment
         * `order.transferorder` - Transfer Order
         * `part.part` - Part
+        * `part.partcategory` - Part Category
         * `stock.stocklocation` - Stock Location
     NameEnum:
       enum:
@@ -31669,7 +31677,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelTypeDf8Enum'
+          - $ref: '#/components/schemas/ModelTypeD42Enum'
           default: ''
         model_id:
           type: integer
@@ -31741,7 +31749,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelTypeDf8Enum'
+          - $ref: '#/components/schemas/ModelTypeD42Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
@@ -33528,6 +33536,12 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
+          nullable: true
     PatchedCategoryParameterTemplate:
       type: object
       description: Serializer for the PartCategoryParameterTemplate model.
@@ -34502,7 +34516,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelTypeDf8Enum'
+          - $ref: '#/components/schemas/ModelTypeD42Enum'
           default: ''
         model_id:
           type: integer
@@ -34568,7 +34582,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelTypeDf8Enum'
+          - $ref: '#/components/schemas/ModelTypeD42Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
