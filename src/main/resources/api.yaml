@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '506'
+  version: '507'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27611,6 +27611,12 @@ components:
         description:
           type: string
           readOnly: true
+        lookup_field:
+          type: string
+          nullable: true
+          description: Database field to use for foreign-key lookup. Leave blank for
+            automatic lookup.
+          maxLength: 100
       required:
       - description
       - field
@@ -33793,6 +33799,12 @@ components:
         description:
           type: string
           readOnly: true
+        lookup_field:
+          type: string
+          nullable: true
+          description: Database field to use for foreign-key lookup. Leave blank for
+            automatic lookup.
+          maxLength: 100
     PatchedDataImportRow:
       type: object
       description: Serializer for the DataImportRow model.
