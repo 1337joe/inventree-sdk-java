@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '508'
+  version: '509'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27722,6 +27722,18 @@ components:
         completed_row_count:
           type: integer
           readOnly: true
+        completed_row_count_history:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+        row_count_history:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
       required:
       - available_fields
       - column_mappings
@@ -33898,6 +33910,18 @@ components:
         completed_row_count:
           type: integer
           readOnly: true
+        completed_row_count_history:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+        row_count_history:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
     PatchedErrorMessage:
       type: object
       description: DRF serializer for server error messages.
