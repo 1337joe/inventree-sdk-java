@@ -276,7 +276,7 @@ public class TestPartApi extends TestApi {
 
         int limit = 5;
         int offset = 0;
-        PaginatedCategoryTreeList actual = api.partCategoryTreeList(limit, offset, null);
+        PaginatedCategoryTreeList actual = api.partCategoryTreeList(limit, null, null, offset, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(),
                 "Incorrect part category tree list count");
         List<CategoryTree> actualList = actual.getResults();

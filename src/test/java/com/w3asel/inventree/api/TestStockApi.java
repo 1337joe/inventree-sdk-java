@@ -76,7 +76,7 @@ public class TestStockApi extends TestApi {
         api.stockLocationPartialUpdate(null, null);
         api.stockLocationBulkPartialUpdate(null);
         api.stockLocationRetrieve(null, null);
-        api.stockLocationTreeList(null, null, null);
+        api.stockLocationTreeList(null, null, null, null, null, null, null, null);
         api.stockLocationTypeCreate(null);
         api.stockLocationTypeDestroy(null);
         api.stockLocationTypeList(null, null, null, null);

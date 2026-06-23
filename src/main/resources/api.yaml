@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '510'
+  version: '511'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -15262,12 +15262,21 @@ paths:
       description: API endpoint for accessing a list of PartCategory objects ready
         for rendering a tree.
       parameters:
+      - in: query
+        name: level
+        schema:
+          type: integer
       - name: limit
         required: true
         in: query
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: max_level
+        schema:
+          type: number
+        description: Limit the depth of the category tree
       - name: offset
         required: false
         in: query
@@ -15287,6 +15296,20 @@ paths:
           - -name
           - subcategories
           - -subcategories
+      - in: query
+        name: parent
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: description, name.'
+        schema:
+          type: string
+      - in: query
+        name: tree_id
+        schema:
+          type: integer
       tags:
       - part
       security:
@@ -20504,12 +20527,21 @@ paths:
       description: API endpoint for accessing a list of StockLocation objects, ready
         for rendering as a tree.
       parameters:
+      - in: query
+        name: level
+        schema:
+          type: integer
       - name: limit
         required: true
         in: query
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: max_level
+        schema:
+          type: number
+        description: Limit the depth of the category tree
       - name: offset
         required: false
         in: query
@@ -20527,8 +20559,22 @@ paths:
           - -level
           - name
           - -name
-          - sublocations
-          - -sublocations
+          - subcategories
+          - -subcategories
+      - in: query
+        name: parent
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: description, name.'
+        schema:
+          type: string
+      - in: query
+        name: tree_id
+        schema:
+          type: integer
       tags:
       - stock
       security:
@@ -27155,9 +27201,24 @@ components:
           type: string
           description: Name
           maxLength: 100
+        description:
+          type: string
+          description: Description (optional)
+          maxLength: 250
+        pathstring:
+          type: string
+          title: Path
+          description: Path
+          maxLength: 250
         parent:
           type: integer
           nullable: true
+        tree_id:
+          type: integer
+          readOnly: true
+        level:
+          type: integer
+          readOnly: true
         icon:
           type: string
           description: Icon (optional)
@@ -27170,9 +27231,11 @@ components:
           type: integer
           readOnly: true
       required:
+      - level
       - name
       - pk
       - subcategories
+      - tree_id
     ColorEnum:
       enum:
       - primary
@@ -29080,9 +29143,24 @@ components:
           type: string
           description: Name
           maxLength: 100
+        description:
+          type: string
+          description: Description (optional)
+          maxLength: 250
+        pathstring:
+          type: string
+          title: Path
+          description: Path
+          maxLength: 250
         parent:
           type: integer
           nullable: true
+        tree_id:
+          type: integer
+          readOnly: true
+        level:
+          type: integer
+          readOnly: true
         icon:
           type: string
           description: |-
@@ -29099,9 +29177,11 @@ components:
           readOnly: true
       required:
       - icon
+      - level
       - name
       - pk
       - sublocations
+      - tree_id
     LoginMethodsEnum:
       type: string
       enum:
