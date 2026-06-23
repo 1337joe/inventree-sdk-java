@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '509'
+  version: '510'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -7359,7 +7359,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - a:staff
       responses:
         '200':
           content:
