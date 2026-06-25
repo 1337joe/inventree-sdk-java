@@ -38,7 +38,7 @@ jobs:
       - name: Set version on release
         if: github.event_name == 'release'
         run: |
-          echo "TAG_NAME=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
+          echo "TAG_NAME=${{ github.event.release.tag_name }}" >> "$GITHUB_ENV"
 
       - name: Write version into pom if overridden
         if: github.event_name == 'workflow_dispatch' ||  github.event_name == 'release'
