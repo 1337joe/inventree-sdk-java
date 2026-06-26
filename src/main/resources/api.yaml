@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '512'
+  version: '513'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -17334,6 +17334,10 @@ paths:
       operationId: project_code_list
       description: Override the GET method to determine export options.
       parameters:
+      - in: query
+        name: active
+        schema:
+          type: boolean
       - name: limit
         required: true
         in: query
@@ -35597,6 +35601,9 @@ components:
           type: string
           description: Project description
           maxLength: 200
+        active:
+          type: boolean
+          description: Is this project code active?
         responsible:
           type: integer
           nullable: true
@@ -38611,6 +38618,9 @@ components:
           type: string
           description: Project description
           maxLength: 200
+        active:
+          type: boolean
+          description: Is this project code active?
         responsible:
           type: integer
           nullable: true
