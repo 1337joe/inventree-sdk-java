@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '511'
+  version: '512'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -40875,6 +40875,11 @@ components:
           type: string
           description: Packaging this stock item is stored in
           maxLength: 50
+        merge:
+          type: boolean
+          default: false
+          title: Merge into existing stock
+          description: Merge this item into existing stock at the destination if possible
       required:
       - pk
       - quantity
