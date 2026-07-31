@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '513'
+  version: '514'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26360,6 +26360,12 @@ components:
           nullable: true
           title: Destination Location
           description: Select location where the completed items will be stored
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/BuildDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         external:
           type: boolean
           title: External Build
@@ -26693,6 +26699,23 @@ components:
           type: integer
       required:
       - build_line
+    BuildDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+      required:
+      - original
     BuildItem:
       type: object
       description: Serializes a BuildItem object, which is an allocation of a stock
@@ -27310,6 +27333,12 @@ components:
           type: string
           description: Point of contact
           maxLength: 100
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/CompanyDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         link:
           type: string
           format: uri
@@ -27409,6 +27438,23 @@ components:
       - name
       - pk
       - thumbnail
+    CompanyDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+      required:
+      - original
     Config:
       type: object
       description: |-
@@ -28001,60 +28047,6 @@ components:
       description: |-
         * `I` - Inbound
         * `O` - Outbound
-    DuplicateOrder:
-      type: object
-      description: Serializer for specifying options when duplicating an order.
-      properties:
-        order_id:
-          type: integer
-          description: ID of the order to duplicate
-        copy_lines:
-          type: boolean
-          default: true
-          description: Copy line items from the original order
-        copy_extra_lines:
-          type: boolean
-          default: true
-          description: Copy extra line items from the original order
-        copy_parameters:
-          type: boolean
-          default: true
-          description: Copy order parameters from the original order
-      required:
-      - order_id
-    DuplicatePart:
-      type: object
-      description: |-
-        Serializer for specifying options when duplicating a Part.
-
-        The fields in this serializer control how the Part is duplicated.
-      properties:
-        part:
-          type: integer
-          title: Original Part
-          description: Select original part to duplicate
-        copy_image:
-          type: boolean
-          default: false
-          description: Copy image from original part
-        copy_bom:
-          type: boolean
-          default: false
-          description: Copy bill of materials from original part
-        copy_parameters:
-          type: boolean
-          default: false
-          description: Copy parameter data from original part
-        copy_notes:
-          type: boolean
-          default: true
-          description: Copy notes from original part
-        copy_tests:
-          type: boolean
-          default: false
-          description: Copy test templates from original part
-      required:
-      - part
     EmailMessage:
       type: object
       description: Serializer for the EmailMessage model.
@@ -29594,6 +29586,12 @@ components:
           nullable: true
           description: Manufacturer part description
           maxLength: 250
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/ManufacturerPartDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         MPN:
           type: string
           nullable: true
@@ -29628,6 +29626,23 @@ components:
       - manufacturer
       - part
       - pk
+    ManufacturerPartDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+      required:
+      - original
     MeUser:
       type: object
       description: API serializer specifically for the 'me' endpoint.
@@ -32141,7 +32156,7 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicatePart'
+          - $ref: '#/components/schemas/PartDuplicateOptions'
           writeOnly: true
           title: Duplicate Part
           description: Copy initial data from another Part
@@ -32355,6 +32370,39 @@ components:
           description: Copy substitute parts when duplicate BOM items
       required:
       - part
+    PartDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_image:
+          type: boolean
+          default: false
+          description: Copy image from original part
+        copy_bom:
+          type: boolean
+          default: false
+          description: Copy bill of materials from original part
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from original part
+        copy_tests:
+          type: boolean
+          default: false
+          description: Copy test templates from original part
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+      required:
+      - original
     PartInternalPrice:
       type: object
       description: Serializer for internal prices for Part model.
@@ -33236,6 +33284,12 @@ components:
           nullable: true
           title: Destination Location
           description: Select location where the completed items will be stored
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/BuildDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         external:
           type: boolean
           title: External Build
@@ -33722,6 +33776,12 @@ components:
           type: string
           description: Point of contact
           maxLength: 100
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/CompanyDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         link:
           type: string
           format: uri
@@ -34468,6 +34528,12 @@ components:
           nullable: true
           description: Manufacturer part description
           maxLength: 250
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/ManufacturerPartDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         MPN:
           type: string
           nullable: true
@@ -34989,7 +35055,7 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicatePart'
+          - $ref: '#/components/schemas/PartDuplicateOptions'
           writeOnly: true
           title: Duplicate Part
           description: Copy initial data from another Part
@@ -35708,10 +35774,10 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicateOrder'
+          - $ref: '#/components/schemas/PurchaseOrderDuplicateOptions'
           writeOnly: true
-          title: Duplicate Order
-          description: Specify options for duplicating this order
+          title: Duplication Options
+          description: Specify options for duplicating this item
         address_detail:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -36223,10 +36289,10 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicateOrder'
+          - $ref: '#/components/schemas/ReturnOrderDuplicateOptions'
           writeOnly: true
-          title: Duplicate Order
-          description: Specify options for duplicating this order
+          title: Duplication Options
+          description: Specify options for duplicating this item
         address_detail:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -36642,10 +36708,10 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicateOrder'
+          - $ref: '#/components/schemas/SalesOrderDuplicateOptions'
           writeOnly: true
-          title: Duplicate Order
-          description: Specify options for duplicating this order
+          title: Duplication Options
+          description: Specify options for duplicating this item
         address_detail:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -37041,6 +37107,12 @@ components:
           type: integer
           nullable: true
           description: User who checked this shipment
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderShipmentDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         reference:
           type: string
           default: '1'
@@ -37550,6 +37622,12 @@ components:
           nullable: true
           description: Supplier part description
           maxLength: 250
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPartDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         in_stock:
           type: number
           format: double
@@ -37837,10 +37915,10 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicateOrder'
+          - $ref: '#/components/schemas/TransferOrderDuplicateOptions'
           writeOnly: true
-          title: Duplicate Order
-          description: Specify options for duplicating this order
+          title: Duplication Options
+          description: Specify options for duplicating this item
         address_detail:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -38728,10 +38806,10 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicateOrder'
+          - $ref: '#/components/schemas/PurchaseOrderDuplicateOptions'
           writeOnly: true
-          title: Duplicate Order
-          description: Specify options for duplicating this order
+          title: Duplication Options
+          description: Specify options for duplicating this item
         address_detail:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -38838,6 +38916,31 @@ components:
           type: boolean
           default: false
           description: Allow order to be closed with incomplete line items
+    PurchaseOrderDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+        copy_lines:
+          type: boolean
+          default: true
+          description: Copy line items from the original order
+        copy_extra_lines:
+          type: boolean
+          default: true
+          description: Copy extra line items from the original order
+      required:
+      - original
     PurchaseOrderExtraLine:
       type: object
       description: Serializer for a PurchaseOrderExtraLine object.
@@ -39400,10 +39503,10 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicateOrder'
+          - $ref: '#/components/schemas/ReturnOrderDuplicateOptions'
           writeOnly: true
-          title: Duplicate Order
-          description: Specify options for duplicating this order
+          title: Duplication Options
+          description: Specify options for duplicating this item
         address_detail:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -39492,6 +39595,27 @@ components:
       - pk
       - reference
       - status
+    ReturnOrderDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+        copy_extra_lines:
+          type: boolean
+          default: true
+          description: Copy extra line items from the original order
+      required:
+      - original
     ReturnOrderExtraLine:
       type: object
       description: Serializer for a ReturnOrderExtraLine object.
@@ -39917,10 +40041,10 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicateOrder'
+          - $ref: '#/components/schemas/SalesOrderDuplicateOptions'
           writeOnly: true
-          title: Duplicate Order
-          description: Specify options for duplicating this order
+          title: Duplication Options
+          description: Specify options for duplicating this item
         address_detail:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -40159,6 +40283,31 @@ components:
           type: boolean
           default: false
           description: Allow order to be closed with incomplete line items
+    SalesOrderDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+        copy_lines:
+          type: boolean
+          default: true
+          description: Copy line items from the original order
+        copy_extra_lines:
+          type: boolean
+          default: true
+          description: Copy extra line items from the original order
+      required:
+      - original
     SalesOrderExtraLine:
       type: object
       description: Serializer for a SalesOrderExtraLine object.
@@ -40426,6 +40575,12 @@ components:
           type: integer
           nullable: true
           description: User who checked this shipment
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderShipmentDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         reference:
           type: string
           default: '1'
@@ -40546,6 +40701,23 @@ components:
           format: uri
           description: Link to external page
           maxLength: 2000
+    SalesOrderShipmentDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+      required:
+      - original
     ScheduleTypeEnum:
       enum:
       - O
@@ -41571,6 +41743,12 @@ components:
           nullable: true
           description: Supplier part description
           maxLength: 250
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/SupplierPartDuplicateOptions'
+          writeOnly: true
+          title: Duplication Options
+          description: Specify options for duplicating this item
         in_stock:
           type: number
           format: double
@@ -41699,6 +41877,23 @@ components:
       - part
       - pk
       - supplier
+    SupplierPartDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+      required:
+      - original
     SupplierPriceBreak:
       type: object
       description: |-
@@ -42017,10 +42212,10 @@ components:
           nullable: true
         duplicate:
           allOf:
-          - $ref: '#/components/schemas/DuplicateOrder'
+          - $ref: '#/components/schemas/TransferOrderDuplicateOptions'
           writeOnly: true
-          title: Duplicate Order
-          description: Specify options for duplicating this order
+          title: Duplication Options
+          description: Specify options for duplicating this item
         address_detail:
           allOf:
           - $ref: '#/components/schemas/AddressBrief'
@@ -42179,6 +42374,27 @@ components:
           type: boolean
           default: false
           description: Allow order to complete with incomplete allocations
+    TransferOrderDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_parameters:
+          type: boolean
+          default: true
+          description: Copy parameters from the original item
+        copy_lines:
+          type: boolean
+          default: true
+          description: Copy line items from the original order
+      required:
+      - original
     TransferOrderLineItem:
       type: object
       description: Serializer for a TransferOrderLineItem object.
