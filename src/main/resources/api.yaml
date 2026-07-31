@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '514'
+  version: '515'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -33020,11 +33020,11 @@ components:
           title: ID
         attachment:
           type: string
-          format: uri
+          format: binary
           nullable: true
         thumbnail:
           type: string
-          format: uri
+          format: binary
           readOnly: true
           nullable: true
         filename:
@@ -33789,7 +33789,7 @@ components:
           maxLength: 2000
         image:
           type: string
-          format: uri
+          format: binary
           nullable: true
         active:
           type: boolean
@@ -34005,7 +34005,7 @@ components:
           readOnly: true
         data_file:
           type: string
-          format: uri
+          format: binary
         update_records:
           type: boolean
           title: Update Existing Records
@@ -34242,7 +34242,7 @@ components:
           $ref: '#/components/schemas/TemplateModelTypeEnum'
         template:
           type: string
-          format: uri
+          format: binary
         filters:
           type: string
           description: Template query filters (comma-separated list of key=value pairs)
@@ -34857,7 +34857,7 @@ components:
           readOnly: true
         image:
           type: string
-          format: uri
+          format: binary
           nullable: true
         existing_image:
           type: string
@@ -35504,7 +35504,7 @@ components:
       properties:
         image:
           type: string
-          format: uri
+          format: binary
     PatchedPluginActivate:
       type: object
       description: Serializer for activating or deactivating a plugin.
@@ -36110,7 +36110,7 @@ components:
           title: ID
         asset:
           type: string
-          format: uri
+          format: binary
         description:
           type: string
           description: Asset file description
@@ -36125,7 +36125,7 @@ components:
           title: ID
         snippet:
           type: string
-          format: uri
+          format: binary
         description:
           type: string
           description: Snippet file description
@@ -36150,7 +36150,7 @@ components:
           $ref: '#/components/schemas/TemplateModelTypeEnum'
         template:
           type: string
-          format: uri
+          format: binary
         filters:
           type: string
           description: Template query filters (comma-separated list of key=value pairs)
@@ -37534,7 +37534,7 @@ components:
           maxLength: 500
         attachment:
           type: string
-          format: uri
+          format: binary
           nullable: true
           description: Test result attachment
         notes:
