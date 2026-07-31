@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '515'
+  version: '516'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -13943,6 +13943,10 @@ paths:
           default: false
       - in: query
         name: component
+        schema:
+          type: boolean
+      - in: query
+        name: consumable
         schema:
           type: boolean
       - in: query
@@ -32057,6 +32061,9 @@ components:
         virtual:
           type: boolean
           description: Is this a virtual part, such as a software product or license?
+        consumable:
+          type: boolean
+          description: Is this part consumable, such as glue or a fastener?
         pricing_min:
           type: string
           format: decimal
@@ -32319,6 +32326,9 @@ components:
         virtual:
           type: boolean
           description: Is this a virtual part, such as a software product or license?
+        consumable:
+          type: boolean
+          description: Is this part consumable, such as glue or a fastener?
         units:
           type: string
           nullable: true
@@ -34956,6 +34966,9 @@ components:
         virtual:
           type: boolean
           description: Is this a virtual part, such as a software product or license?
+        consumable:
+          type: boolean
+          description: Is this part consumable, such as glue or a fastener?
         pricing_min:
           type: string
           format: decimal

@@ -2,13 +2,13 @@
   {
     "metadata": true,
     "comment": "This file contains a dump of the InvenTree database",
-    "exported_at": "2026-06-17T05:24:23.679576",
-    "exported_at_utc": "2026-06-17T05:24:23.679600",
-    "source_version": "1.4.0 dev",
-    "api_version": 507,
+    "exported_at": "2026-07-04T12:26:21.798238",
+    "exported_at_utc": "2026-07-04T12:26:21.798265",
+    "source_version": "1.5.0 dev",
+    "api_version": 515,
     "django_version": "5.2.15",
-    "python_version": "3.11.14",
-    "source_commit": "80fcc3e",
+    "python_version": "3.12.13",
+    "source_commit": "5df2ada",
     "installed_apps": [
       "InvenTree",
       "allauth",
@@ -7271,6 +7271,7 @@
       "metadata": null,
       "code": "PRJ-NIM",
       "description": "Project Nimbus",
+      "active": true,
       "responsible": null
     }
   },
@@ -7281,6 +7282,7 @@
       "metadata": null,
       "code": "PRJ-HEL",
       "description": "Project Helix",
+      "active": true,
       "responsible": null
     }
   },
@@ -7291,6 +7293,7 @@
       "metadata": null,
       "code": "PRJ-PHO",
       "description": "Project Phoenix",
+      "active": true,
       "responsible": null
     }
   },
@@ -7301,6 +7304,7 @@
       "metadata": null,
       "code": "PRJ-CAT",
       "description": "Project Catalyst",
+      "active": true,
       "responsible": null
     }
   },
@@ -7311,6 +7315,7 @@
       "metadata": null,
       "code": "PRO-ZEN",
       "description": "Project Zenith",
+      "active": true,
       "responsible": null
     }
   },
@@ -7321,6 +7326,7 @@
       "metadata": null,
       "code": "PRO-INF",
       "description": "Project Infinity",
+      "active": true,
       "responsible": null
     }
   },
@@ -8658,6 +8664,14 @@
     "fields": {
       "value": "12",
       "key": "CALENDAR_HORIZON_MONTHS"
+    }
+  },
+  {
+    "model": "common.inventreesetting",
+    "pk": 274,
+    "fields": {
+      "value": "False",
+      "key": "STOCK_MERGE_ON_TRANSFER"
     }
   },
   {
@@ -13366,7 +13380,7 @@
     "pk": 46,
     "fields": {
       "metadata": {},
-      "notes": null,
+      "notes": "### Account Details\n\n| Username | Password |\n| --- | --- |\n| purchasing | hunter2 |\n| engineering | adf234D234-123 |",
       "image": "",
       "name": "Fabby Boards",
       "description": "PCB fabrication house",
@@ -95414,7 +95428,7 @@
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$1000000$CWvgH2EOSzLLJgYY64YHjS$S5ppC9xcNnjL5GLQQh3oTTwahpM4yYK1HyOvXc0pyiE=",
-      "last_login": "2026-06-17T05:22:11.088Z",
+      "last_login": "2026-07-04T12:01:25.846Z",
       "is_superuser": true,
       "username": "admin",
       "first_name": "Adam",
@@ -200745,7 +200759,7 @@
     "fields": {
       "metadata": {},
       "reference_int": 28,
-      "notes": null,
+      "notes": "- We are still waiting for confirmation from this customer\n- They need to pay the deposit before shipment",
       "barcode_data": "",
       "barcode_hash": "",
       "total_price_currency": "USD",
@@ -200761,7 +200775,7 @@
         "admin"
       ],
       "issue_date": null,
-      "updated_at": null,
+      "updated_at": "2026-07-04T11:52:25.435Z",
       "responsible": 5,
       "contact": 41,
       "address": 1,
@@ -223242,6 +223256,32 @@
     }
   },
   {
+    "model": "common.notesimage",
+    "pk": 8,
+    "fields": {
+      "image": "notes/image_mpSMlEi.png",
+      "user": [
+        "admin"
+      ],
+      "date": "2026-07-04T12:23:12.128Z",
+      "model_type": "build",
+      "model_id": 28
+    }
+  },
+  {
+    "model": "common.notesimage",
+    "pk": 9,
+    "fields": {
+      "image": "notes/image_0CIf9My.png",
+      "user": [
+        "admin"
+      ],
+      "date": "2026-07-04T12:25:10.218Z",
+      "model_type": "build",
+      "model_id": 28
+    }
+  },
+  {
     "model": "common.inventreeusersetting",
     "pk": 1,
     "fields": {
@@ -227672,7 +227712,7 @@
     "fields": {
       "metadata": {},
       "reference_int": 28,
-      "notes": null,
+      "notes": "#### Production Notes\n\n**Order Of Installation:**\n\n*Don't mix up the order of widget installation - it is actually important:*\n\n1. Red\n2. Blue\n3. Pink \n4. Green\n\n**Switch Configuration:**\n\n![](/media/notes/image_mpSMlEi.png)\n\n**Press This Buton:**\n\n*Press this button three times to invert the flux activator.*\n\n![](/media/notes/image_0CIf9My.png)",
       "barcode_data": "",
       "barcode_hash": "",
       "reference": "BO0028",

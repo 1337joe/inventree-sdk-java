@@ -128,16 +128,12 @@ public class TestBuildApi extends TestApi {
         }
     }
 
-    private static void assertBuildEquals(JsonObject expected, Build actual, boolean list) {
+    private static void assertBuildEquals(JsonObject expected, Build actual) {
         assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        if (list) {
-            assertNull(actual.getNotes(), "Expect null notes on list query.");
-        } else {
-            assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
-        }
+        assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
         assertFieldEquals("barcode_hash", fields, actual.getBarcodeHash());
         assertFieldEquals("reference", fields, actual.getReference());
         assertFieldEquals("title", fields, actual.getTitle());
@@ -225,7 +221,7 @@ public class TestBuildApi extends TestApi {
         Build actualFirst = actualList.get(0);
         JsonObject expectedFirst =
                 InventreeDemoDataset.getObjects(Model.BUILD, actualFirst.getPk()).get(0);
-        assertBuildEquals(expectedFirst, actualFirst, true);
+        assertBuildEquals(expectedFirst, actualFirst);
     }
 
     private static void assertBuildItemEquals(JsonObject expected, BuildItem actual) {
@@ -488,7 +484,7 @@ public class TestBuildApi extends TestApi {
     void buildRetrieve(int pk) throws ApiException {
         Build actual = api.buildRetrieve(pk);
         JsonObject expected = InventreeDemoDataset.getObjects(Model.BUILD, pk).get(0);
-        assertBuildEquals(expected, actual, false);
+        assertBuildEquals(expected, actual);
 
         // verify data not directly in demo dataset
         boolean expectedOverdue =
