@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '517'
+  version: '518'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27873,6 +27873,7 @@ components:
       - partcategory
       - parttesttemplate
       - partsellpricebreak
+      - partinternalpricebreak
       - part
       - bomitem
       - partcategoryparametertemplate
@@ -27909,6 +27910,7 @@ components:
         * `partcategory` - Part Category
         * `parttesttemplate` - Part Test Template
         * `partsellpricebreak` - Part Sale Price Break
+        * `partinternalpricebreak` - Part Internal Price Break
         * `part` - Part
         * `bomitem` - BOM Item
         * `partcategoryparametertemplate` - Part Category Parameter Template
