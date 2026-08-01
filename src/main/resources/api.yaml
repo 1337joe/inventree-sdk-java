@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '518'
+  version: '519'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -22294,11 +22294,17 @@ paths:
     get:
       operationId: user_me_retrieve
       description: |-
-        Detail endpoint for current user.
+        Retrieve details for the current user.
 
-        Permissions:
-        - User can edit their own details via this endpoint
-        - Only a subset of fields are available here
+        Pass '?roles=true' to also include the user's roles and permissions
+        (previously only available via the separate '/user/me/roles/' endpoint).
+      parameters:
+      - in: query
+        name: roles
+        schema:
+          type: boolean
+        description: Include the roles and permissions associated with the current
+          user in the response
       tags:
       - user
       security:
@@ -29694,6 +29700,17 @@ components:
           allOf:
           - $ref: '#/components/schemas/UserProfile'
           readOnly: true
+        roles:
+          type: object
+          additionalProperties: {}
+          description: Roles associated with the user.
+          readOnly: true
+        permissions:
+          type: object
+          additionalProperties: {}
+          description: Permissions associated with the user.
+          readOnly: true
+          nullable: true
       required:
       - email
       - first_name
@@ -29704,6 +29721,7 @@ components:
       - last_name
       - pk
       - profile
+      - roles
       - username
     Metadata:
       type: object
@@ -34636,6 +34654,17 @@ components:
           allOf:
           - $ref: '#/components/schemas/UserProfile'
           readOnly: true
+        roles:
+          type: object
+          additionalProperties: {}
+          description: Roles associated with the user.
+          readOnly: true
+        permissions:
+          type: object
+          additionalProperties: {}
+          description: Permissions associated with the user.
+          readOnly: true
+          nullable: true
     PatchedMetadata:
       type: object
       description: Serializer class for model metadata API access.

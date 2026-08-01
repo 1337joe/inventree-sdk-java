@@ -181,9 +181,10 @@ public class TestUserApi extends TestApi {
         }
     }
 
-    @Test
-    void userMeRetrieve_admin() throws ApiException {
-        MeUser actual = api.userMeRetrieve();
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void userMeRetrieve_admin(boolean roles) throws ApiException {
+        MeUser actual = api.userMeRetrieve(roles);
         assertNotNull(actual);
         assertEquals(1, actual.getPk(), "Incorrect pk returned");
         assertEquals("admin", actual.getUsername(), "Incorrect username returned");
@@ -194,6 +195,15 @@ public class TestUserApi extends TestApi {
         assertTrue(actual.getIsStaff(), "Incorrect isStaff returned");
         assertTrue(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
         assertTrue(actual.getIsActive(), "Incorrect isActive returned");
+        if (roles) {
+            assertNotNull(actual.getRoles(), "Expected roles to be populated");
+            assertTrue(actual.getRoles().size() > 0, "Expected roles to be populated");
+            assertNotNull(actual.getPermissions(), "Expected permissions to be populated");
+            assertTrue(actual.getPermissions().size() > 0, "Expected permissions to be populated");
+        } else {
+            assertTrue(actual.getRoles() == null || actual.getRoles().isEmpty(), "Expected roles to be null/empty");
+            assertNull(actual.getPermissions(), "Expected permissions to be null");
+        }
     }
 
     private static void assertExtendedUserEquals(JsonObject expected, ExtendedUser actual) {
