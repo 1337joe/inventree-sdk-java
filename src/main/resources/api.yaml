@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '519'
+  version: '520'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -19686,6 +19686,49 @@ paths:
               schema:
                 $ref: '#/components/schemas/ConvertStockItem'
           description: ''
+  /api/stock/{id}/disassemble/:
+    post:
+      operationId: stock_disassemble_create
+      description: |-
+        API endpoint for disassembling a stock item into its component parts.
+
+        The components are generated based on the BOM lines provided in the request,
+        which must be valid BOM lines for the part associated with the stock item.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisassembleStockItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DisassembleStockItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DisassembleStockItem'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockItem'
+          description: ''
   /api/stock/{id}/install/:
     post:
       operationId: stock_install_create
@@ -26964,7 +27007,10 @@ components:
           type: integer
           description: Location for completed build outputs
         status_custom_key:
-          type: integer
+          allOf:
+          - $ref: '#/components/schemas/StatusCustomKeyEnum'
+          default: 10
+          title: Status
           description: |-
             Stock item status code
 
@@ -26978,8 +27024,15 @@ components:
             * `85` - Returned
 
             Additional custom status keys may be retrieved from the 'stock_status_retrieve' call.
-          default: 10
-          title: Status
+
+            * `10` - OK
+            * `50` - Attention needed
+            * `55` - Damaged
+            * `60` - Destroyed
+            * `65` - Rejected
+            * `70` - Lost
+            * `75` - Quarantined
+            * `85` - Returned
         accept_incomplete_allocation:
           type: boolean
           default: false
@@ -28059,6 +28112,99 @@ components:
       description: |-
         * `I` - Inbound
         * `O` - Outbound
+    DisassembleStockItem:
+      type: object
+      description: |-
+        DRF serializer class for disassembling a StockItem into component parts.
+
+        Note: The stock item being disassembled is provided via the serializer context
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisassemblyLine'
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,5})?$
+          description: Number of assemblies to disassemble
+        location:
+          type: integer
+          nullable: true
+          description: Default destination location for the component items
+        notes:
+          type: string
+          description: Optional note field
+      required:
+      - items
+      - quantity
+    DisassemblyLine:
+      type: object
+      description: Serializer for a single component line in a stock disassembly operation.
+      properties:
+        bom_item:
+          type: integer
+          description: BOM line which defines the component part to break out
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,5})?$
+          description: Quantity of the component part to create
+        location:
+          type: integer
+          nullable: true
+          description: Destination location for the component items
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status2a7Enum'
+          description: |-
+            Status code for the component items
+
+            * `10` - OK
+            * `50` - Attention needed
+            * `55` - Damaged
+            * `60` - Destroyed
+            * `65` - Rejected
+            * `70` - Lost
+            * `75` - Quarantined
+            * `85` - Returned
+
+            Additional custom status keys may be retrieved from the 'stock_status_retrieve' call.
+
+            * `10` - OK
+            * `50` - Attention needed
+            * `55` - Damaged
+            * `60` - Destroyed
+            * `65` - Rejected
+            * `70` - Lost
+            * `75` - Quarantined
+            * `85` - Returned
+        purchase_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          nullable: true
+          description: Unit purchase price for the component items (leave blank for
+            automatic cost allocation)
+        purchase_price_currency:
+          type: string
+          title: Currency
+          description: |-
+            Purchase price currency
+
+            * `AUD` - AUD - Australian Dollar
+            * `CAD` - CAD - Canadian Dollar
+            * `CNY` - CNY - Chinese Yuan
+            * `EUR` - EUR - Euro
+            * `GBP` - GBP - British Pound
+            * `JPY` - JPY - Japanese Yen
+            * `NZD` - NZD - New Zealand Dollar
+            * `USD` - USD - US Dollar
+
+            Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
+      required:
+      - bom_item
+      - quantity
     EmailMessage:
       type: object
       description: Serializer for the EmailMessage model.
@@ -37437,7 +37583,7 @@ components:
           nullable: true
         status:
           allOf:
-          - $ref: '#/components/schemas/StockItemStatusEnum'
+          - $ref: '#/components/schemas/Status2a7Enum'
           minimum: 0
           maximum: 9223372036854775807
         status_text:
@@ -39289,7 +39435,9 @@ components:
           default: ''
           description: Enter serial numbers for incoming stock items
         status:
-          type: integer
+          allOf:
+          - $ref: '#/components/schemas/Status2a7Enum'
+          default: 10
           description: |-
             Stock item status code
 
@@ -39303,7 +39451,15 @@ components:
             * `85` - Returned
 
             Additional custom status keys may be retrieved from the 'stock_status_retrieve' call.
-          default: 10
+
+            * `10` - OK
+            * `50` - Attention needed
+            * `55` - Damaged
+            * `60` - Destroyed
+            * `65` - Rejected
+            * `70` - Lost
+            * `75` - Quarantined
+            * `85` - Returned
         packaging:
           type: string
           default: ''
@@ -39896,7 +40052,6 @@ components:
           type: integer
           title: Return order line item
         status:
-          type: integer
           description: |-
             Stock item status code
 
@@ -39910,6 +40065,18 @@ components:
             * `85` - Returned
 
             Additional custom status keys may be retrieved from the 'stock_status_retrieve' call.
+
+            * `10` - OK
+            * `50` - Attention needed
+            * `55` - Damaged
+            * `60` - Destroyed
+            * `65` - Rejected
+            * `70` - Lost
+            * `75` - Quarantined
+            * `85` - Returned
+          oneOf:
+          - $ref: '#/components/schemas/Status2a7Enum'
+          - $ref: '#/components/schemas/BlankEnum'
       required:
       - item
     ReturnOrderReceive:
@@ -41069,6 +41236,68 @@ components:
       - password_forgotten_enabled
       - registration_enabled
       - sso_registration
+    Status2a7Enum:
+      enum:
+      - 10
+      - 50
+      - 55
+      - 60
+      - 65
+      - 70
+      - 75
+      - 85
+      type: integer
+      description: |-
+        * `10` - OK
+        * `50` - Attention needed
+        * `55` - Damaged
+        * `60` - Destroyed
+        * `65` - Rejected
+        * `70` - Lost
+        * `75` - Quarantined
+        * `85` - Returned
+
+        Additional custom status keys may be retrieved from the 'stock_status_retrieve' call.
+
+        * `10` - OK
+        * `50` - Attention needed
+        * `55` - Damaged
+        * `60` - Destroyed
+        * `65` - Rejected
+        * `70` - Lost
+        * `75` - Quarantined
+        * `85` - Returned
+    StatusCustomKeyEnum:
+      enum:
+      - 10
+      - 50
+      - 55
+      - 60
+      - 65
+      - 70
+      - 75
+      - 85
+      type: integer
+      description: |-
+        * `10` - OK
+        * `50` - Attention needed
+        * `55` - Damaged
+        * `60` - Destroyed
+        * `65` - Rejected
+        * `70` - Lost
+        * `75` - Quarantined
+        * `85` - Returned
+
+        Additional custom status keys may be retrieved from the 'stock_status_retrieve' call.
+
+        * `10` - OK
+        * `50` - Attention needed
+        * `55` - Damaged
+        * `60` - Destroyed
+        * `65` - Rejected
+        * `70` - Lost
+        * `75` - Quarantined
+        * `85` - Returned
     StockAdd:
       type: object
       description: Serializer for adding stock to stock item(s).
@@ -41112,7 +41341,6 @@ components:
           description: Batch code for this stock item
           maxLength: 100
         status:
-          type: integer
           description: |-
             Stock item status code
 
@@ -41127,6 +41355,20 @@ components:
             * `85` - Returned
 
             Additional custom status keys may be retrieved from the 'stock_status_retrieve' call.
+
+            * `None` - No Change
+            * `10` - OK
+            * `50` - Attention needed
+            * `55` - Damaged
+            * `60` - Destroyed
+            * `65` - Rejected
+            * `70` - Lost
+            * `75` - Quarantined
+            * `85` - Returned
+          oneOf:
+          - $ref: '#/components/schemas/Status2a7Enum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         packaging:
           type: string
           description: Packaging this stock item is stored in
@@ -41186,7 +41428,9 @@ components:
           title: Stock Items
           description: Select stock items to change status
         status:
-          type: integer
+          allOf:
+          - $ref: '#/components/schemas/Status2a7Enum'
+          default: 10
           description: |-
             Stock item status code
 
@@ -41200,7 +41444,15 @@ components:
             * `85` - Returned
 
             Additional custom status keys may be retrieved from the 'stock_status_retrieve' call.
-          default: 10
+
+            * `10` - OK
+            * `50` - Attention needed
+            * `55` - Damaged
+            * `60` - Destroyed
+            * `65` - Rejected
+            * `70` - Lost
+            * `75` - Quarantined
+            * `85` - Returned
         note:
           type: string
           title: Notes
@@ -41336,7 +41588,7 @@ components:
           nullable: true
         status:
           allOf:
-          - $ref: '#/components/schemas/StockItemStatusEnum'
+          - $ref: '#/components/schemas/Status2a7Enum'
           minimum: 0
           maximum: 9223372036854775807
         status_text:
@@ -41511,26 +41763,6 @@ components:
       required:
       - next
       - previous
-    StockItemStatusEnum:
-      enum:
-      - 10
-      - 50
-      - 55
-      - 60
-      - 65
-      - 70
-      - 75
-      - 85
-      type: integer
-      description: |-
-        * `10` - OK
-        * `50` - Attention needed
-        * `55` - Damaged
-        * `60` - Destroyed
-        * `65` - Rejected
-        * `70` - Lost
-        * `75` - Quarantined
-        * `85` - Returned
     StockItemTestResult:
       type: object
       description: Serializer for the StockItemTestResult model.

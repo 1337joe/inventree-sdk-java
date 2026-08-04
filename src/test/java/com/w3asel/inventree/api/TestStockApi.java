@@ -63,6 +63,7 @@ public class TestStockApi extends TestApi {
         // api.stockCreate(null);
         // api.stockBulkDestroy(null);
         api.stockDestroy(null);
+        api.stockDisassembleCreate(null, null);
         api.stockInstallCreate(null, null);
         // api.stockList(null, null, null, null, null, null, null, null, null, null, null, null,
         // null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
