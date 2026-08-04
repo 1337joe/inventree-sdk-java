@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '520'
+  version: '521'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -18961,10 +18961,6 @@ paths:
           type: boolean
         description: Is Allocated
       - in: query
-        name: ancestor
-        schema:
-          type: integer
-      - in: query
         name: assembly
         schema:
           type: boolean
@@ -19039,11 +19035,6 @@ paths:
         schema:
           type: boolean
         description: Depleted
-      - in: query
-        name: exclude_tree
-        schema:
-          type: number
-        description: Provide a StockItem PK to exclude that item and all its descendants
       - in: query
         name: expired
         schema:
@@ -19210,6 +19201,10 @@ paths:
           - -SKU
           - MPN
           - -MPN
+      - in: query
+        name: parent
+        schema:
+          type: integer
       - in: query
         name: part
         schema:

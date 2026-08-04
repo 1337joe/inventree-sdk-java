@@ -92,10 +92,10 @@ public class TestBuildApi extends TestApi {
         int limit = 10;
         int offset = 0;
         PaginatedStockItemList previousBuildItems = stockApi.stockList(limit, null, null, null, null, null, null, null,
-                null, null, null, null, null, buildPk, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, buildPk, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, offset, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                null, null, offset, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(0, previousBuildItems.getCount(), "Expected no existing outputs");
 
         try {
@@ -114,11 +114,11 @@ public class TestBuildApi extends TestApi {
         } finally {
             // ensure any created items are cleaned up
             PaginatedStockItemList newBuildItems = stockApi.stockList(limit, null, null, null, null, null, null, null,
-                    null, null, null, null, null, buildPk, null, null, null, null, null, null, null, null, null, null,
+                    null, null, null, null, buildPk, null, null, null, null, null, null, null, null, null, null, null,
                     null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                    null, null, null, null, null, null, offset, null, null, null, null, null, null, null, null, null,
+                    null, null, null, null, offset, null, null, null, null, null, null, null, null, null, null, null,
                     null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                    null, null, null);
+                    null, null);
 
             assertTrue(newBuildItems.getCount() < limit,
                     "Can only clean up to " + limit + " items, found " + newBuildItems.getCount());
