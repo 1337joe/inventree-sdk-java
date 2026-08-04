@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '521'
+  version: '522'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -13729,6 +13729,21 @@ paths:
         description: 'A search term. Searched fields: description, name.'
         schema:
           type: string
+      - in: query
+        name: unique
+        schema:
+          type: integer
+          title: Uniqueness
+          enum:
+          - 0
+          - 1
+          - 2
+        description: |-
+          Enforce uniqueness of linked parameter values against this template
+
+          * `0` - No uniqueness required
+          * `1` - Unique for model type
+          * `2` - Globally unique
       - in: query
         name: units
         schema:
@@ -32049,6 +32064,18 @@ components:
         enabled:
           type: boolean
           description: Is this parameter template enabled?
+        unique:
+          allOf:
+          - $ref: '#/components/schemas/UniqueEnum'
+          title: Uniqueness
+          description: |-
+            Enforce uniqueness of linked parameter values against this template
+
+            * `0` - No uniqueness required
+            * `1` - Unique for model type
+            * `2` - Globally unique
+          minimum: 0
+          maximum: 9223372036854775807
       required:
       - name
       - pk
@@ -34983,6 +35010,18 @@ components:
         enabled:
           type: boolean
           description: Is this parameter template enabled?
+        unique:
+          allOf:
+          - $ref: '#/components/schemas/UniqueEnum'
+          title: Uniqueness
+          description: |-
+            Enforce uniqueness of linked parameter values against this template
+
+            * `0` - No uniqueness required
+            * `1` - Unique for model type
+            * `2` - Globally unique
+          minimum: 0
+          maximum: 9223372036854775807
     PatchedPart:
       type: object
       description: |-
@@ -42861,6 +42900,16 @@ components:
           description: Add transaction note (optional)
       required:
       - location
+    UniqueEnum:
+      enum:
+      - 0
+      - 1
+      - 2
+      type: integer
+      description: |-
+        * `0` - No uniqueness required
+        * `1` - Unique for model type
+        * `2` - Globally unique
     Unit:
       type: object
       description: Serializer for the AllUnitListResponseSerializer.

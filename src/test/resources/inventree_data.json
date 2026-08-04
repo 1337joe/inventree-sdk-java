@@ -2,13 +2,13 @@
   {
     "metadata": true,
     "comment": "This file contains a dump of the InvenTree database",
-    "exported_at": "2026-07-13T06:20:39.699941",
-    "exported_at_utc": "2026-07-13T06:20:39.699967",
+    "exported_at": "2026-07-14T00:33:51.744091",
+    "exported_at_utc": "2026-07-14T00:33:51.744112",
     "source_version": "1.5.0 dev",
     "api_version": 521,
     "django_version": "5.2.15",
     "python_version": "3.12.13",
-    "source_commit": "7db01de",
+    "source_commit": "daadf22",
     "installed_apps": [
       "InvenTree",
       "allauth",
@@ -12240,7 +12240,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12255,7 +12256,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12270,7 +12272,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12285,7 +12288,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12300,7 +12304,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12315,7 +12320,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12330,7 +12336,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12345,7 +12352,8 @@
       "checkbox": false,
       "choices": "Red, Blue, Green, Orange, Yellow, Black, White, Pink, Purple",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12360,7 +12368,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12375,7 +12384,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12390,7 +12400,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12405,7 +12416,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12420,7 +12432,8 @@
       "checkbox": false,
       "choices": "1, 2, 3, 4, 5, 6, 7",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12435,7 +12448,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12450,7 +12464,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12465,7 +12480,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12480,7 +12496,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12495,7 +12512,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12510,7 +12528,8 @@
       "checkbox": true,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12525,7 +12544,8 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12543,7 +12563,8 @@
       "checkbox": false,
       "choices": "NET-30, NET-90, COD, EOM",
       "selectionlist": null,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
     }
   },
   {
@@ -12558,7 +12579,27 @@
       "checkbox": false,
       "choices": "",
       "selectionlist": 1,
-      "enabled": true
+      "enabled": true,
+      "unique": 0
+    }
+  },
+  {
+    "model": "common.parametertemplate",
+    "pk": 254,
+    "fields": {
+      "metadata": {},
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "name": "Supplier ID",
+      "units": "",
+      "description": "Unique ID for each supplier",
+      "checkbox": false,
+      "choices": "",
+      "selectionlist": null,
+      "enabled": true,
+      "unique": 1
     }
   },
   {
@@ -95799,7 +95840,7 @@
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$1000000$CWvgH2EOSzLLJgYY64YHjS$S5ppC9xcNnjL5GLQQh3oTTwahpM4yYK1HyOvXc0pyiE=",
-      "last_login": "2026-07-07T03:25:37.031Z",
+      "last_login": "2026-07-14T00:29:15.301Z",
       "is_superuser": true,
       "username": "admin",
       "first_name": "Adam",
@@ -219236,6 +219277,346 @@
       "data": "Armadillo",
       "data_numeric": null,
       "note": "I have selected an Armadillo"
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15546,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:12.524Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 48,
+      "template": 254,
+      "data": "SUP-001",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15547,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:20.453Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 49,
+      "template": 254,
+      "data": "SUP-002",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15548,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:24.116Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 3,
+      "template": 254,
+      "data": "SUP-003",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15549,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:27.494Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 1,
+      "template": 254,
+      "data": "SUP-004",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15550,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:31.251Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 46,
+      "template": 254,
+      "data": "SUP-005",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15551,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:34.820Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 41,
+      "template": 254,
+      "data": "SUP-006",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15552,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:38.052Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 39,
+      "template": 254,
+      "data": "SUP-007",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15553,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:42.269Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 38,
+      "template": 254,
+      "data": "SUP-008",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15554,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:46.705Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 2,
+      "template": 254,
+      "data": "SUP-009",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15555,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:50.331Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 40,
+      "template": 254,
+      "data": "SUP-010",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15556,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:32:54.127Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 36,
+      "template": 254,
+      "data": "SUP-011",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15557,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:33:01.374Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 45,
+      "template": 254,
+      "data": "SUP-012",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15558,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:33:05.189Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 43,
+      "template": 254,
+      "data": "SUP-013",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15559,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:33:09.843Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 47,
+      "template": 254,
+      "data": "SUP-014",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15560,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:33:13.283Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 29,
+      "template": 254,
+      "data": "SUP-015",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15561,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:33:15.956Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 44,
+      "template": 254,
+      "data": "SUP-016",
+      "data_numeric": null,
+      "note": ""
+    }
+  },
+  {
+    "model": "common.parameter",
+    "pk": 15562,
+    "fields": {
+      "metadata": {},
+      "updated": "2026-07-14T00:33:19.642Z",
+      "updated_by": [
+        "admin"
+      ],
+      "model_type": [
+        "company",
+        "company"
+      ],
+      "model_id": 42,
+      "template": 254,
+      "data": "SUP-017",
+      "data_numeric": null,
+      "note": ""
     }
   },
   {
