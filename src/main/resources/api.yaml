@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '523'
+  version: '524'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -9024,8 +9024,6 @@ paths:
           - -SKU
           - IPN
           - -IPN
-          - total_price
-          - -total_price
           - target_date
           - -target_date
           - order
@@ -36319,6 +36317,9 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
+        discount:
+          type: number
+          format: double
         link:
           type: string
           format: uri
@@ -36369,6 +36370,12 @@ components:
           nullable: true
           description: Target date for this line item (leave blank to use the target
             date from the order)
+        total_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/PurchaseOrder'
@@ -36446,6 +36453,9 @@ components:
           type: integer
           nullable: true
           description: External Build Order to be fulfilled by this line item
+        discount:
+          type: number
+          format: double
         overdue:
           type: boolean
           readOnly: true
@@ -36486,9 +36496,11 @@ components:
           nullable: true
           description: Destination for received items
         total_price:
-          type: number
-          format: double
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
           readOnly: true
+          nullable: true
         merge_items:
           type: boolean
           writeOnly: true
@@ -36826,6 +36838,9 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
+        discount:
+          type: number
+          format: double
         link:
           type: string
           format: uri
@@ -36876,6 +36891,12 @@ components:
           nullable: true
           description: Target date for this line item (leave blank to use the target
             date from the order)
+        total_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/ReturnOrder'
@@ -36967,6 +36988,9 @@ components:
             * `60` - Reject
           minimum: 0
           maximum: 9223372036854775807
+        discount:
+          type: number
+          format: double
         price:
           type: string
           format: decimal
@@ -37325,6 +37349,9 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
+        discount:
+          type: number
+          format: double
         link:
           type: string
           format: uri
@@ -37375,6 +37402,12 @@ components:
           nullable: true
           description: Target date for this line item (leave blank to use the target
             date from the order)
+        total_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
@@ -37452,6 +37485,9 @@ components:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
           nullable: true
+        discount:
+          type: number
+          format: double
         overdue:
           type: boolean
           readOnly: true
@@ -39392,6 +39428,9 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
+        discount:
+          type: number
+          format: double
         link:
           type: string
           format: uri
@@ -39442,6 +39481,12 @@ components:
           nullable: true
           description: Target date for this line item (leave blank to use the target
             date from the order)
+        total_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/PurchaseOrder'
@@ -39523,6 +39568,9 @@ components:
           type: integer
           nullable: true
           description: External Build Order to be fulfilled by this line item
+        discount:
+          type: number
+          format: double
         overdue:
           type: boolean
           readOnly: true
@@ -39563,9 +39611,11 @@ components:
           nullable: true
           description: Destination for received items
         total_price:
-          type: number
-          format: double
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
           readOnly: true
+          nullable: true
         merge_items:
           type: boolean
           writeOnly: true
@@ -39619,7 +39669,6 @@ components:
       - pk
       - quantity
       - received
-      - total_price
     PurchaseOrderLineItemReceive:
       type: object
       description: A serializer for receiving a single purchase order line item against
@@ -40077,6 +40126,9 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
+        discount:
+          type: number
+          format: double
         link:
           type: string
           format: uri
@@ -40127,6 +40179,12 @@ components:
           nullable: true
           description: Target date for this line item (leave blank to use the target
             date from the order)
+        total_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/ReturnOrder'
@@ -40222,6 +40280,9 @@ components:
             * `60` - Reject
           minimum: 0
           maximum: 9223372036854775807
+        discount:
+          type: number
+          format: double
         price:
           type: string
           format: decimal
@@ -40780,6 +40841,9 @@ components:
           type: string
           description: Line item description (optional)
           maxLength: 250
+        discount:
+          type: number
+          format: double
         link:
           type: string
           format: uri
@@ -40830,6 +40894,12 @@ components:
           nullable: true
           description: Target date for this line item (leave blank to use the target
             date from the order)
+        total_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,13}(?:\.\d{0,6})?$
+          readOnly: true
+          nullable: true
         order_detail:
           allOf:
           - $ref: '#/components/schemas/SalesOrder'
@@ -40911,6 +40981,9 @@ components:
           - $ref: '#/components/schemas/CompanyBrief'
           readOnly: true
           nullable: true
+        discount:
+          type: number
+          format: double
         overdue:
           type: boolean
           readOnly: true
