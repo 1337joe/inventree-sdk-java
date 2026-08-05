@@ -38,6 +38,7 @@ public class TestOrderApi extends TestApi {
         api.orderPoCompleteCreate(null, null);
         api.orderPoCreate(null);
         api.orderPoDestroy(null);
+        api.orderPoExtraLineBulkDestroy(null);
         api.orderPoExtraLineCreate(null);
         api.orderPoExtraLineDestroy(null);
         api.orderPoExtraLineList(null, null, null, null, null, null);
@@ -67,6 +68,7 @@ public class TestOrderApi extends TestApi {
         api.orderRoCompleteCreate(null);
         api.orderRoCreate(null);
         api.orderRoDestroy(null);
+        api.orderRoExtraLineBulkDestroy(null);
         api.orderRoExtraLineCreate(null);
         api.orderRoExtraLineDestroy(null);
         api.orderRoExtraLineList(null, null, null, null, null, null);
@@ -75,6 +77,7 @@ public class TestOrderApi extends TestApi {
         api.orderRoExtraLineUpdate(null, null);
         api.orderRoHoldCreate(null);
         api.orderRoIssueCreate(null);
+        api.orderRoLineBulkDestroy(null);
         api.orderRoLineCreate(null);
         api.orderRoLineDestroy(null);
         api.orderRoLineList(null, null, null, null, null, null, null, null, null, null, null, null, null);
@@ -106,6 +109,7 @@ public class TestOrderApi extends TestApi {
         api.orderSoCompleteCreate(null, null);
         api.orderSoCreate(null);
         api.orderSoDestroy(null);
+        api.orderSoExtraLineBulkDestroy(null);
         api.orderSoExtraLineCreate(null);
         api.orderSoExtraLineDestroy(null);
         api.orderSoExtraLineList(null, null, null, null, null, null);
@@ -114,6 +118,7 @@ public class TestOrderApi extends TestApi {
         api.orderSoExtraLineUpdate(null, null);
         api.orderSoHoldCreate(null);
         api.orderSoIssueCreate(null);
+        api.orderSoLineBulkDestroy(null);
         api.orderSoLineCreate(null);
         api.orderSoLineDestroy(null);
         api.orderSoLineList(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
@@ -150,6 +155,7 @@ public class TestOrderApi extends TestApi {
         api.orderTransferOrderDestroy(null);
         api.orderTransferOrderHoldCreate(null);
         api.orderTransferOrderIssueCreate(null);
+        api.orderTransferOrderLineBulkDestroy(null);
         api.orderTransferOrderLineCreate(null);
         api.orderTransferOrderLineDestroy(null);
         api.orderTransferOrderLineList(null, null, null, null, null, null, null, null, null, null, null, null, null,

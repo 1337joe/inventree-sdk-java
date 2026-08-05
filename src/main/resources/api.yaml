@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '522'
+  version: '523'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -8802,6 +8802,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/PurchaseOrderExtraLine'
           description: ''
+    delete:
+      operationId: order_po_extra_line_bulk_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:purchase_order
+      responses:
+        '204':
+          description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/order/po-extra-line/{id}/:
     get:
       operationId: order_po_extra_line_retrieve
@@ -9883,6 +9913,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/ReturnOrderExtraLine'
           description: ''
+    delete:
+      operationId: order_ro_extra_line_bulk_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:return_order
+      responses:
+        '204':
+          description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/order/ro-extra-line/{id}/:
     get:
       operationId: order_ro_extra_line_retrieve
@@ -10135,6 +10195,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/ReturnOrderLineItem'
           description: ''
+    delete:
+      operationId: order_ro_line_bulk_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:return_order
+      responses:
+        '204':
+          description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/order/ro-line/{id}/:
     get:
       operationId: order_ro_line_retrieve
@@ -11252,6 +11342,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/SalesOrderExtraLine'
           description: ''
+    delete:
+      operationId: order_so_extra_line_bulk_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:sales_order
+      responses:
+        '204':
+          description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/order/so-extra-line/{id}/:
     get:
       operationId: order_so_extra_line_retrieve
@@ -11524,6 +11644,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/SalesOrderLineItem'
           description: ''
+    delete:
+      operationId: order_so_line_bulk_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:sales_order
+      responses:
+        '204':
+          description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/order/so-line/{id}/:
     get:
       operationId: order_so_line_retrieve
@@ -12963,6 +13113,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/TransferOrderLineItem'
           description: ''
+    delete:
+      operationId: order_transfer_order_line_bulk_destroy
+      description: |-
+        Perform a DELETE operation against this list endpoint.
+
+        Note that the typical DRF list endpoint does not support DELETE,
+        so this method is provided as a custom implementation.
+      tags:
+      - order
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:transfer_order
+      responses:
+        '204':
+          description: No response body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+        required: true
   /api/order/transfer-order-line/{id}/:
     get:
       operationId: order_transfer_order_line_retrieve
