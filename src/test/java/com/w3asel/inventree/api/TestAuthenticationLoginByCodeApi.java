@@ -18,5 +18,6 @@ public class TestAuthenticationLoginByCodeApi extends TestApi {
     void todo() throws ApiException {
         api.allauthAuthCodeConfirmPost(null);
         api.allauthAuthCodeRequestPost(null);
+        api.allauthAuthCodeResendPost();
     }
 }
