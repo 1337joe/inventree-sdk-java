@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '524'
+  version: '525'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -25812,10 +25812,13 @@ components:
           description: Shipping notes for internal use
           maxLength: 100
         link:
-          type: string
-          format: uri
           description: Link to address information (external)
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
       required:
       - company
       - pk
@@ -25989,16 +25992,19 @@ components:
         thumbnail:
           type: string
           format: uri
-          readOnly: true
           nullable: true
+          readOnly: true
         filename:
           type: string
         link:
-          type: string
-          format: uri
           nullable: true
           description: Link to external URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         comment:
           type: string
           description: Attachment comment
@@ -26710,11 +26716,14 @@ components:
           description: Markdown notes (optional)
           maxLength: 50000
         link:
-          type: string
-          format: uri
           title: External Link
           description: Link to external URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         issued_by:
           type: integer
           readOnly: true
@@ -27551,20 +27560,26 @@ components:
           description: Description of the company
           maxLength: 500
         website:
-          type: string
-          format: uri
           description: Company website URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         phone:
           type: string
           title: Phone number
           description: Contact phone number
           maxLength: 50
         email:
-          type: string
-          format: email
           nullable: true
-          default: ''
+          oneOf:
+          - type: string
+            format: email
+            default: ''
+          - type: string
+            maxLength: 0
         currency:
           type: string
           description: |-
@@ -27591,10 +27606,13 @@ components:
           title: Duplication Options
           description: Specify options for duplicating this item
         link:
-          type: string
-          format: uri
           description: Link to external company information
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         image:
           type: string
           format: uri
@@ -27671,6 +27689,7 @@ components:
         image:
           type: string
           format: uri
+          nullable: true
           readOnly: true
         thumbnail:
           type: string
@@ -27685,7 +27704,6 @@ components:
           maxLength: 50
       required:
       - currency
-      - image
       - name
       - pk
       - thumbnail
@@ -27763,9 +27781,12 @@ components:
           type: string
           maxLength: 100
         email:
-          type: string
-          format: email
-          maxLength: 254
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
         role:
           type: string
           maxLength: 100
@@ -28261,8 +28282,8 @@ components:
         output:
           type: string
           format: uri
-          readOnly: true
           nullable: true
+          readOnly: true
         errors:
           nullable: true
       required:
@@ -28551,9 +28572,12 @@ components:
           type: string
           description: Last name of the user
         email:
-          type: string
-          format: email
           description: Email address of the user
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
         groups:
           type: array
           items:
@@ -29944,11 +29968,14 @@ components:
           description: Manufacturer Part Number
           maxLength: 100
         link:
-          type: string
-          format: uri
           nullable: true
           description: URL for external manufacturer part link
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         barcode_hash:
           type: string
           description: Unique hash of barcode data
@@ -30007,9 +30034,12 @@ components:
           type: string
           description: Last name of the user
         email:
-          type: string
-          format: email
           description: Email address of the user
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
         groups:
           type: array
           items:
@@ -32347,11 +32377,14 @@ components:
           description: Part keywords to improve visibility in search results
           maxLength: 250
         link:
-          type: string
-          format: uri
           nullable: true
           description: Link to external URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         locked:
           type: boolean
           description: Locked parts cannot be edited
@@ -32652,8 +32685,8 @@ components:
         image:
           type: string
           format: uri
-          readOnly: true
           nullable: true
+          readOnly: true
         thumbnail:
           type: string
           readOnly: true
@@ -33323,13 +33356,13 @@ components:
         image:
           type: string
           format: uri
+          nullable: true
           readOnly: true
         count:
           type: integer
           readOnly: true
       required:
       - count
-      - image
     PartThumbSerializerUpdate:
       type: object
       description: Serializer for updating Part thumbnail.
@@ -33397,10 +33430,13 @@ components:
           description: Shipping notes for internal use
           maxLength: 100
         link:
-          type: string
-          format: uri
           description: Link to address information (external)
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
     PatchedAttachment:
       type: object
       description: Serializer class for the Attachment model.
@@ -33416,16 +33452,19 @@ components:
         thumbnail:
           type: string
           format: binary
-          readOnly: true
           nullable: true
+          readOnly: true
         filename:
           type: string
         link:
-          type: string
-          format: uri
           nullable: true
           description: Link to external URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         comment:
           type: string
           description: Attachment comment
@@ -33784,11 +33823,14 @@ components:
           description: Markdown notes (optional)
           maxLength: 50000
         link:
-          type: string
-          format: uri
           title: External Link
           description: Link to external URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         issued_by:
           type: integer
           readOnly: true
@@ -34134,20 +34176,26 @@ components:
           description: Description of the company
           maxLength: 500
         website:
-          type: string
-          format: uri
           description: Company website URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         phone:
           type: string
           title: Phone number
           description: Contact phone number
           maxLength: 50
         email:
-          type: string
-          format: email
           nullable: true
-          default: ''
+          oneOf:
+          - type: string
+            format: email
+            default: ''
+          - type: string
+            maxLength: 0
         currency:
           type: string
           description: |-
@@ -34174,10 +34222,13 @@ components:
           title: Duplication Options
           description: Specify options for duplicating this item
         link:
-          type: string
-          format: uri
           description: Link to external company information
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         image:
           type: string
           format: binary
@@ -34244,9 +34295,12 @@ components:
           type: string
           maxLength: 100
         email:
-          type: string
-          format: email
-          maxLength: 254
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
         role:
           type: string
           maxLength: 100
@@ -34500,9 +34554,12 @@ components:
           type: string
           description: Last name of the user
         email:
-          type: string
-          format: email
           description: Email address of the user
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
         groups:
           type: array
           items:
@@ -34931,11 +34988,14 @@ components:
           description: Manufacturer Part Number
           maxLength: 100
         link:
-          type: string
-          format: uri
           nullable: true
           description: URL for external manufacturer part link
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         barcode_hash:
           type: string
           description: Unique hash of barcode data
@@ -34973,9 +35033,12 @@ components:
           type: string
           description: Last name of the user
         email:
-          type: string
-          format: email
           description: Email address of the user
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
         groups:
           type: array
           items:
@@ -35290,11 +35353,14 @@ components:
           description: Part keywords to improve visibility in search results
           maxLength: 250
         link:
-          type: string
-          format: uri
           nullable: true
           description: Link to external URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         locked:
           type: boolean
           description: Locked parts cannot be edited
@@ -36157,10 +36223,13 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         project_code:
           type: integer
           nullable: true
@@ -36321,10 +36390,13 @@ components:
           type: number
           format: double
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -36404,10 +36476,13 @@ components:
           description: Line number for this item (optional)
           maxLength: 20
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -36686,10 +36761,13 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         project_code:
           type: integer
           nullable: true
@@ -36842,10 +36920,13 @@ components:
           type: number
           format: double
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -36925,10 +37006,13 @@ components:
           description: Line number for this item (optional)
           maxLength: 20
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -37117,10 +37201,13 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         project_code:
           type: integer
           nullable: true
@@ -37353,10 +37440,13 @@ components:
           type: number
           format: double
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -37436,10 +37526,13 @@ components:
           description: Line number for this item (optional)
           maxLength: 20
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -37602,10 +37695,13 @@ components:
           description: Unique hash of barcode data
           maxLength: 128
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           nullable: true
@@ -37789,11 +37885,14 @@ components:
         is_building:
           type: boolean
         link:
-          type: string
-          format: uri
           title: External Link
           description: Link to external URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           nullable: true
@@ -38109,11 +38208,14 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           nullable: true
           description: URL for external supplier part link
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         active:
           type: boolean
           description: Is this supplier part active?
@@ -38336,10 +38438,13 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         project_code:
           type: integer
           nullable: true
@@ -38521,10 +38626,13 @@ components:
           description: Line number for this item (optional)
           maxLength: 20
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -39227,10 +39335,13 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         project_code:
           type: integer
           nullable: true
@@ -39432,10 +39543,13 @@ components:
           type: number
           format: double
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -39519,10 +39633,13 @@ components:
           description: Line number for this item (optional)
           maxLength: 20
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -39947,10 +40064,13 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         project_code:
           type: integer
           nullable: true
@@ -40130,10 +40250,13 @@ components:
           type: number
           format: double
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -40217,10 +40340,13 @@ components:
           description: Line number for this item (optional)
           maxLength: 20
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -40508,10 +40634,13 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         project_code:
           type: integer
           nullable: true
@@ -40845,10 +40974,13 @@ components:
           type: number
           format: double
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -40932,10 +41064,13 @@ components:
           description: Line number for this item (optional)
           maxLength: 20
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -41128,10 +41263,13 @@ components:
           description: Unique hash of barcode data
           maxLength: 128
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           nullable: true
@@ -41225,10 +41363,13 @@ components:
           description: Reference number for associated invoice
           maxLength: 100
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
     SalesOrderShipmentDuplicateOptions:
       type: object
       description: |-
@@ -41831,11 +41972,14 @@ components:
         is_building:
           type: boolean
         link:
-          type: string
-          format: uri
           title: External Link
           description: Link to external URL
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           nullable: true
@@ -42353,11 +42497,14 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           nullable: true
           description: URL for external supplier part link
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         active:
           type: boolean
           description: Is this supplier part active?
@@ -42756,10 +42903,13 @@ components:
           readOnly: true
           nullable: true
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         project_code:
           type: integer
           nullable: true
@@ -43002,10 +43152,13 @@ components:
           description: Line number for this item (optional)
           maxLength: 20
         link:
-          type: string
-          format: uri
           description: Link to external page
-          maxLength: 2000
+          oneOf:
+          - type: string
+            format: uri
+            maxLength: 2000
+          - type: string
+            maxLength: 0
         notes:
           type: string
           description: Line item notes
@@ -43200,9 +43353,12 @@ components:
           type: string
           description: Last name of the user
         email:
-          type: string
-          format: email
           description: Email address of the user
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
       required:
       - email
       - first_name
@@ -43227,9 +43383,12 @@ components:
           type: string
           description: Last name of the user
         email:
-          type: string
-          format: email
           description: Email address of the user
+          oneOf:
+          - type: string
+            format: email
+          - type: string
+            maxLength: 0
         groups:
           type: array
           items:
