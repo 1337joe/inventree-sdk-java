@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '528'
+  version: '529'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -14271,6 +14271,11 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - in: query
+        name: on_order
+        schema:
+          type: boolean
+        description: On order
       - name: ordering
         required: false
         in: query
@@ -14286,6 +14291,8 @@ paths:
           - -creation_date
           - IPN
           - -IPN
+          - ordering
+          - -ordering
           - in_stock
           - -in_stock
           - total_in_stock
