@@ -39,7 +39,7 @@ public class TestReportApi extends TestApi {
         api.reportPrintCreate(null);
         api.reportSnippetCreate(null);
         api.reportSnippetDestroy(null);
-        api.reportSnippetList(null, null);
+        api.reportSnippetList(null, null, null, null);
         api.reportSnippetPartialUpdate(null, null);
         api.reportSnippetRetrieve(null);
         api.reportSnippetUpdate(null, null);
@@ -56,7 +56,7 @@ public class TestReportApi extends TestApi {
         // TODO verify results
         int limit = 1000;
         api.reportAssetList(limit, null);
-        api.reportSnippetList(limit, null);
+        api.reportSnippetList(limit, null, null, null);
 
         // ReportAsset actual = api.reportAssetRetrieve(1);
         // assertNotNull(actual);
