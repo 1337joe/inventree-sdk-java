@@ -78,6 +78,8 @@ public class TestOrderApi extends TestApi {
         api.orderRoHoldCreate(null);
         api.orderRoIssueCreate(null);
         api.orderRoLineBulkDestroy(null);
+        api.orderRoLineBulkPartialUpdate(null);
+        api.orderRoLineBulkUpdate(null);
         api.orderRoLineCreate(null);
         api.orderRoLineDestroy(null);
         api.orderRoLineList(null, null, null, null, null, null, null, null, null, null, null, null, null);
