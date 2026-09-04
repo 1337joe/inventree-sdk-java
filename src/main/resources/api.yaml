@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '531'
+  version: '532'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -26467,6 +26467,11 @@ components:
         quantity:
           type: number
           format: double
+        piece_count:
+          type: integer
+          default: 1
+          description: Number of pieces required (for cut-to-length items). Total
+            material = quantity x piece_count.
         allow_variants:
           type: boolean
           description: Stock items for variant parts can be used for this BOM item
@@ -33636,6 +33641,11 @@ components:
         quantity:
           type: number
           format: double
+        piece_count:
+          type: integer
+          default: 1
+          description: Number of pieces required (for cut-to-length items). Total
+            material = quantity x piece_count.
         allow_variants:
           type: boolean
           description: Stock items for variant parts can be used for this BOM item
