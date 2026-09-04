@@ -76,7 +76,7 @@ public class InventreeDemoDataset {
      */
     public static <T> void assertFieldEquals(String field, JsonObject expected, T actualValue) {
         assertNotNull(actualValue,
-                "actualValue is null and cannot be used for type determination, use assertNullableEquals on field "
+                "actualValue is null and cannot be used for type determination, use assertNullableFieldEquals on field "
                         + field);
 
         @SuppressWarnings("unchecked")
@@ -84,7 +84,6 @@ public class InventreeDemoDataset {
 
         assertNullableFieldEquals(type, field, expected, actualValue);
     }
-
 
     /**
      * Verifies the equality of the selected field in the expected object and the provided value
