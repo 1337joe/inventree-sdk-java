@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '532'
+  version: '533'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1195,7 +1195,11 @@ paths:
   /api/bom/:
     get:
       operationId: bom_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for accessing a list of BomItem objects.
+
+        - GET: Return list of BomItem objects
+        - POST: Create a new BomItem object
       parameters:
       - in: query
         name: allow_variants
@@ -1956,7 +1960,11 @@ paths:
   /api/build/:
     get:
       operationId: build_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for accessing a list of Build objects.
+
+        - GET: Return list of objects (with filters)
+        - POST: Create a new Build object
       parameters:
       - in: query
         name: active
@@ -2785,7 +2793,11 @@ paths:
   /api/build/item/:
     get:
       operationId: build_item_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for accessing a list of BuildItem objects.
+
+        - GET: Return list of objects
+        - POST: Create a new BuildItem object
       parameters:
       - in: query
         name: build
@@ -3106,7 +3118,7 @@ paths:
   /api/build/line/:
     get:
       operationId: build_line_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for accessing a list of BuildLine objects.
       parameters:
       - in: query
         name: allocated
@@ -3482,7 +3494,13 @@ paths:
   /api/company/:
     get:
       operationId: company_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for accessing a list of Company objects.
+
+        Provides two methods:
+
+        - GET: Return list of objects
+        - POST: Create a new Company object
       parameters:
       - in: query
         name: active
@@ -3724,7 +3742,7 @@ paths:
   /api/company/address/:
     get:
       operationId: company_address_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for list view of Address model.
       parameters:
       - in: query
         name: company
@@ -3965,7 +3983,7 @@ paths:
   /api/company/contact/:
     get:
       operationId: company_contact_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for list view of Company model.
       parameters:
       - in: query
         name: company
@@ -4206,7 +4224,11 @@ paths:
   /api/company/part/:
     get:
       operationId: company_part_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for list view of SupplierPart object.
+
+        - GET: Return list of SupplierPart objects
+        - POST: Create a new SupplierPart object
       parameters:
       - in: query
         name: MPN
@@ -4615,7 +4637,11 @@ paths:
   /api/company/part/manufacturer/:
     get:
       operationId: company_part_manufacturer_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for list view of ManufacturerPart object.
+
+        - GET: Return list of ManufacturerPart objects
+        - POST: Create a new ManufacturerPart object
       parameters:
       - in: query
         name: MPN
@@ -4929,7 +4955,11 @@ paths:
   /api/company/price-break/:
     get:
       operationId: company_price_break_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for list view of SupplierPriceBreak object.
+
+        - GET: Retrieve list of SupplierPriceBreak objects
+        - POST: Create a new SupplierPriceBreak object
       parameters:
       - in: query
         name: base_part
@@ -5808,7 +5838,7 @@ paths:
   /api/generic/status/custom/:
     get:
       operationId: generic_status_custom_list
-      description: Override the GET method to determine export options.
+      description: List view for all custom states.
       parameters:
       - name: limit
         required: true
@@ -8448,7 +8478,7 @@ paths:
   /api/order/po/:
     get:
       operationId: order_po_list
-      description: Override the GET method to determine export options.
+      description: Override the list method to determine export options.
       parameters:
       - in: query
         name: assigned_to
@@ -8676,11 +8706,7 @@ paths:
           description: ''
     post:
       operationId: order_po_create
-      description: |-
-        API endpoint for accessing a list of PurchaseOrder objects.
-
-        - GET: Return list of PurchaseOrder objects (with filters)
-        - POST: Create a new PurchaseOrder object
+      description: Save user information on order creation.
       tags:
       - order
       requestBody:
@@ -8711,7 +8737,7 @@ paths:
   /api/order/po-extra-line/:
     get:
       operationId: order_po_extra_line_list
-      description: Override the GET method to determine export options.
+      description: Override the list method to determine export options.
       parameters:
       - name: limit
         required: true
@@ -8774,7 +8800,13 @@ paths:
           description: ''
     post:
       operationId: order_po_extra_line_create
-      description: API endpoint for accessing a list of PurchaseOrderExtraLine objects.
+      description: |-
+        API endpoint for accessing PurchaseOrderExtraLine objects.
+
+        - GET: Return list of PurchaseOrderExtraLine objects (with filters), or a single object
+        - POST: Create a new PurchaseOrderExtraLine object
+        - PUT / PATCH: Update an existing PurchaseOrderExtraLine object
+        - DELETE: Remove a PurchaseOrderExtraLine object (or bulk delete multiple objects)
       tags:
       - order
       requestBody:
@@ -8805,10 +8837,11 @@ paths:
     delete:
       operationId: order_po_extra_line_bulk_destroy
       description: |-
-        Perform a DELETE operation against this list endpoint.
+        Perform a bulk delete operation.
 
-        Note that the typical DRF list endpoint does not support DELETE,
-        so this method is provided as a custom implementation.
+        Provide either a list of ids (via `items`) or a filter (via `filters`) to select the items to be deleted.
+
+        This action is performed attomically, so either all items will be deleted, or none will be deleted.
       tags:
       - order
       security:
@@ -8835,12 +8868,20 @@ paths:
   /api/order/po-extra-line/{id}/:
     get:
       operationId: order_po_extra_line_retrieve
-      description: API endpoint for detail view of a PurchaseOrderExtraLine object.
+      description: |-
+        API endpoint for accessing PurchaseOrderExtraLine objects.
+
+        - GET: Return list of PurchaseOrderExtraLine objects (with filters), or a single object
+        - POST: Create a new PurchaseOrderExtraLine object
+        - PUT / PATCH: Update an existing PurchaseOrderExtraLine object
+        - DELETE: Remove a PurchaseOrderExtraLine object (or bulk delete multiple objects)
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order Extra
+          Line.
         required: true
       tags:
       - order
@@ -8859,12 +8900,20 @@ paths:
           description: ''
     put:
       operationId: order_po_extra_line_update
-      description: API endpoint for detail view of a PurchaseOrderExtraLine object.
+      description: |-
+        API endpoint for accessing PurchaseOrderExtraLine objects.
+
+        - GET: Return list of PurchaseOrderExtraLine objects (with filters), or a single object
+        - POST: Create a new PurchaseOrderExtraLine object
+        - PUT / PATCH: Update an existing PurchaseOrderExtraLine object
+        - DELETE: Remove a PurchaseOrderExtraLine object (or bulk delete multiple objects)
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order Extra
+          Line.
         required: true
       tags:
       - order
@@ -8895,12 +8944,20 @@ paths:
           description: ''
     patch:
       operationId: order_po_extra_line_partial_update
-      description: API endpoint for detail view of a PurchaseOrderExtraLine object.
+      description: |-
+        API endpoint for accessing PurchaseOrderExtraLine objects.
+
+        - GET: Return list of PurchaseOrderExtraLine objects (with filters), or a single object
+        - POST: Create a new PurchaseOrderExtraLine object
+        - PUT / PATCH: Update an existing PurchaseOrderExtraLine object
+        - DELETE: Remove a PurchaseOrderExtraLine object (or bulk delete multiple objects)
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order Extra
+          Line.
         required: true
       tags:
       - order
@@ -8930,12 +8987,20 @@ paths:
           description: ''
     delete:
       operationId: order_po_extra_line_destroy
-      description: API endpoint for detail view of a PurchaseOrderExtraLine object.
+      description: |-
+        API endpoint for accessing PurchaseOrderExtraLine objects.
+
+        - GET: Return list of PurchaseOrderExtraLine objects (with filters), or a single object
+        - POST: Create a new PurchaseOrderExtraLine object
+        - PUT / PATCH: Update an existing PurchaseOrderExtraLine object
+        - DELETE: Remove a PurchaseOrderExtraLine object (or bulk delete multiple objects)
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order Extra
+          Line.
         required: true
       tags:
       - order
@@ -8951,7 +9016,7 @@ paths:
   /api/order/po-line/:
     get:
       operationId: order_po_line_list
-      description: Override the GET method to determine export options.
+      description: Override the list method to determine export options.
       parameters:
       - in: query
         name: base_part
@@ -9079,11 +9144,7 @@ paths:
           description: ''
     post:
       operationId: order_po_line_create
-      description: |-
-        API endpoint for accessing a list of PurchaseOrderLineItem objects.
-
-        - GET: Return a list of PurchaseOrder Line Item objects
-        - POST: Create a new PurchaseOrderLineItem object
+      description: Create or update a new PurchaseOrderLineItem object.
       tags:
       - order
       requestBody:
@@ -9114,10 +9175,11 @@ paths:
     delete:
       operationId: order_po_line_bulk_destroy
       description: |-
-        Perform a DELETE operation against this list endpoint.
+        Perform a bulk delete operation.
 
-        Note that the typical DRF list endpoint does not support DELETE,
-        so this method is provided as a custom implementation.
+        Provide either a list of ids (via `items`) or a filter (via `filters`) to select the items to be deleted.
+
+        This action is performed attomically, so either all items will be deleted, or none will be deleted.
       tags:
       - order
       security:
@@ -9144,25 +9206,20 @@ paths:
   /api/order/po-line/{id}/:
     get:
       operationId: order_po_line_retrieve
-      description: Detail API endpoint for PurchaseOrderLineItem object.
+      description: |-
+        API endpoint for accessing PurchaseOrderLineItem objects.
+
+        - GET: Return list of PurchaseOrderLineItem objects (with filters), or a single object
+        - POST: Create a new PurchaseOrderLineItem object
+        - PUT / PATCH: Update an existing PurchaseOrderLineItem object
+        - DELETE: Remove a PurchaseOrderLineItem object (or bulk delete multiple objects)
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order Line Item.
         required: true
-      - in: query
-        name: order_detail
-        schema:
-          type: boolean
-          default: false
-        description: Include detailed information about the sales order in the response
-      - in: query
-        name: part_detail
-        schema:
-          type: boolean
-          default: false
-        description: Include detailed information about the related part in the response
       tags:
       - order
       security:
@@ -9180,12 +9237,19 @@ paths:
           description: ''
     put:
       operationId: order_po_line_update
-      description: Detail API endpoint for PurchaseOrderLineItem object.
+      description: |-
+        API endpoint for accessing PurchaseOrderLineItem objects.
+
+        - GET: Return list of PurchaseOrderLineItem objects (with filters), or a single object
+        - POST: Create a new PurchaseOrderLineItem object
+        - PUT / PATCH: Update an existing PurchaseOrderLineItem object
+        - DELETE: Remove a PurchaseOrderLineItem object (or bulk delete multiple objects)
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order Line Item.
         required: true
       tags:
       - order
@@ -9216,12 +9280,19 @@ paths:
           description: ''
     patch:
       operationId: order_po_line_partial_update
-      description: Detail API endpoint for PurchaseOrderLineItem object.
+      description: |-
+        API endpoint for accessing PurchaseOrderLineItem objects.
+
+        - GET: Return list of PurchaseOrderLineItem objects (with filters), or a single object
+        - POST: Create a new PurchaseOrderLineItem object
+        - PUT / PATCH: Update an existing PurchaseOrderLineItem object
+        - DELETE: Remove a PurchaseOrderLineItem object (or bulk delete multiple objects)
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order Line Item.
         required: true
       tags:
       - order
@@ -9251,12 +9322,19 @@ paths:
           description: ''
     delete:
       operationId: order_po_line_destroy
-      description: Detail API endpoint for PurchaseOrderLineItem object.
+      description: |-
+        API endpoint for accessing PurchaseOrderLineItem objects.
+
+        - GET: Return list of PurchaseOrderLineItem objects (with filters), or a single object
+        - POST: Create a new PurchaseOrderLineItem object
+        - PUT / PATCH: Update an existing PurchaseOrderLineItem object
+        - DELETE: Remove a PurchaseOrderLineItem object (or bulk delete multiple objects)
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order Line Item.
         required: true
       tags:
       - order
@@ -9272,19 +9350,20 @@ paths:
   /api/order/po/{id}/:
     get:
       operationId: order_po_retrieve
-      description: API endpoint for detail view of a PurchaseOrder object.
+      description: |-
+        API endpoint for accessing PurchaseOrder objects.
+
+        - GET: Return list of PurchaseOrder objects (with filters), or a single PurchaseOrder object
+        - POST: Create a new PurchaseOrder object
+        - PUT / PATCH: Update an existing PurchaseOrder object
+        - DELETE: Remove a PurchaseOrder object
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order.
         required: true
-      - in: query
-        name: supplier_detail
-        schema:
-          type: boolean
-          default: false
-        description: Include detailed information about the supplier in the response
       tags:
       - order
       security:
@@ -9302,12 +9381,19 @@ paths:
           description: ''
     put:
       operationId: order_po_update
-      description: API endpoint for detail view of a PurchaseOrder object.
+      description: |-
+        API endpoint for accessing PurchaseOrder objects.
+
+        - GET: Return list of PurchaseOrder objects (with filters), or a single PurchaseOrder object
+        - POST: Create a new PurchaseOrder object
+        - PUT / PATCH: Update an existing PurchaseOrder object
+        - DELETE: Remove a PurchaseOrder object
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order.
         required: true
       tags:
       - order
@@ -9338,12 +9424,19 @@ paths:
           description: ''
     patch:
       operationId: order_po_partial_update
-      description: API endpoint for detail view of a PurchaseOrder object.
+      description: |-
+        API endpoint for accessing PurchaseOrder objects.
+
+        - GET: Return list of PurchaseOrder objects (with filters), or a single PurchaseOrder object
+        - POST: Create a new PurchaseOrder object
+        - PUT / PATCH: Update an existing PurchaseOrder object
+        - DELETE: Remove a PurchaseOrder object
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order.
         required: true
       tags:
       - order
@@ -9373,12 +9466,19 @@ paths:
           description: ''
     delete:
       operationId: order_po_destroy
-      description: API endpoint for detail view of a PurchaseOrder object.
+      description: |-
+        API endpoint for accessing PurchaseOrder objects.
+
+        - GET: Return list of PurchaseOrder objects (with filters), or a single PurchaseOrder object
+        - POST: Create a new PurchaseOrder object
+        - PUT / PATCH: Update an existing PurchaseOrder object
+        - DELETE: Remove a PurchaseOrder object
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order.
         required: true
       tags:
       - order
@@ -9403,6 +9503,7 @@ paths:
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order.
         required: true
       tags:
       - order
@@ -9424,6 +9525,7 @@ paths:
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order.
         required: true
       tags:
       - order
@@ -9460,6 +9562,7 @@ paths:
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order.
         required: true
       tags:
       - order
@@ -9481,6 +9584,7 @@ paths:
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order.
         required: true
       tags:
       - order
@@ -9496,25 +9600,13 @@ paths:
   /api/order/po/{id}/receive/:
     post:
       operationId: order_po_receive_create
-      description: |-
-        API endpoint to receive stock items against a PurchaseOrder.
-
-        - The purchase order is specified in the URL.
-        - Items to receive are specified as a list called "items" with the following options:
-            - line_item: pk of the PO Line item
-            - supplier_part: pk value of the supplier part
-            - quantity: quantity to receive
-            - status: stock item status
-            - expiry_date: stock item expiry date (optional)
-            - location: destination for stock item (optional)
-            - batch_code: the batch code for this stock item
-            - serial_numbers: serial numbers for this stock item
-        - A global location must also be specified. This is used when no locations are specified for items, and no location is given in the PO line item
+      description: API endpoint to receive stock items against a PurchaseOrder.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
+        description: A unique integer value identifying this Purchase Order.
         required: true
       tags:
       - order
@@ -9569,7 +9661,7 @@ paths:
   /api/order/ro/:
     get:
       operationId: order_ro_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for accessing a list of ReturnOrder objects.
       parameters:
       - in: query
         name: assigned_to
@@ -9820,7 +9912,7 @@ paths:
   /api/order/ro-extra-line/:
     get:
       operationId: order_ro_extra_line_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for accessing a list of ReturnOrderExtraLine objects.
       parameters:
       - name: limit
         required: true
@@ -10060,7 +10152,7 @@ paths:
   /api/order/ro-line/:
     get:
       operationId: order_ro_line_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for accessing a list of ReturnOrderLineItemList objects.
       parameters:
       - in: query
         name: has_pricing
@@ -10711,7 +10803,11 @@ paths:
   /api/order/so/:
     get:
       operationId: order_so_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for accessing a list of SalesOrder objects.
+
+        - GET: Return list of SalesOrder objects (with filters)
+        - POST: Create a new SalesOrder
       parameters:
       - in: query
         name: assigned_to
@@ -10968,7 +11064,7 @@ paths:
   /api/order/so-allocation/:
     get:
       operationId: order_so_allocation_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for listing SalesOrderAllocation objects.
       parameters:
       - in: query
         name: assigned_to_shipment
@@ -11315,7 +11411,7 @@ paths:
   /api/order/so-extra-line/:
     get:
       operationId: order_so_extra_line_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for accessing a list of SalesOrderExtraLine objects.
       parameters:
       - name: limit
         required: true
@@ -11555,7 +11651,7 @@ paths:
   /api/order/so-line/:
     get:
       operationId: order_so_line_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for accessing a list of SalesOrderLineItem objects.
       parameters:
       - in: query
         name: allocated
@@ -12507,7 +12603,7 @@ paths:
   /api/order/transfer-order/:
     get:
       operationId: order_transfer_order_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for accessing a list of TransferOrder objects.
       parameters:
       - in: query
         name: assigned_to
@@ -13042,7 +13138,7 @@ paths:
   /api/order/transfer-order-line/:
     get:
       operationId: order_transfer_order_line_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for accessing a list of TransferOrderLineItem objects.
       parameters:
       - in: query
         name: allocated
@@ -13636,7 +13732,7 @@ paths:
   /api/parameter/:
     get:
       operationId: parameter_list
-      description: Override the GET method to determine export options.
+      description: List API endpoint for Parameter objects.
       parameters:
       - in: query
         name: enabled
@@ -13892,7 +13988,7 @@ paths:
   /api/parameter/template/:
     get:
       operationId: parameter_template_list
-      description: Override the GET method to determine export options.
+      description: List view for ParameterTemplate objects.
       parameters:
       - in: query
         name: checkbox
@@ -14160,7 +14256,8 @@ paths:
   /api/part/:
     get:
       operationId: part_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for accessing a list of Part objects, or creating
+        a new Part instance.
       parameters:
       - in: query
         name: IPN
@@ -15024,7 +15121,11 @@ paths:
   /api/part/category/:
     get:
       operationId: part_category_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for accessing a list of PartCategory objects.
+
+        - GET: Return a list of PartCategory objects
+        - POST: Create a new PartCategory object
       parameters:
       - in: query
         name: cascade
@@ -15352,7 +15453,10 @@ paths:
   /api/part/category/parameters/:
     get:
       operationId: part_category_parameters_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for accessing a list of PartCategoryParameterTemplate objects.
+
+        - GET: Return a list of PartCategoryParameterTemplate objects
       parameters:
       - name: limit
         required: true
@@ -15603,7 +15707,7 @@ paths:
   /api/part/internal-price/:
     get:
       operationId: part_internal_price_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for list view of PartInternalPriceBreak model.
       parameters:
       - name: limit
         required: true
@@ -16005,7 +16109,7 @@ paths:
   /api/part/sale-price/:
     get:
       operationId: part_sale_price_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for list view of PartSalePriceBreak model.
       parameters:
       - name: limit
         required: true
@@ -16204,7 +16308,7 @@ paths:
   /api/part/stocktake/:
     get:
       operationId: part_stocktake_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for listing part stocktake information.
       parameters:
       - name: limit
         required: true
@@ -16477,7 +16581,7 @@ paths:
   /api/part/test-template/:
     get:
       operationId: part_test_template_list
-      description: Override the GET method to determine export options.
+      description: API endpoint for listing (and creating) a PartTestTemplate.
       parameters:
       - in: query
         name: enabled
@@ -17606,7 +17710,7 @@ paths:
   /api/project-code/:
     get:
       operationId: project_code_list
-      description: Override the GET method to determine export options.
+      description: List view for all project codes.
       parameters:
       - in: query
         name: active
@@ -19215,7 +19319,12 @@ paths:
   /api/stock/:
     get:
       operationId: stock_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for list view of Stock objects.
+
+        - GET: Return a list of all StockItem objects (with optional query filters)
+        - POST: Create a new StockItem
+        - DELETE: Delete multiple StockItem objects
       parameters:
       - in: query
         name: IPN
@@ -20281,7 +20390,11 @@ paths:
   /api/stock/location/:
     get:
       operationId: stock_location_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for list view of StockLocation objects.
+
+        - GET: Return list of StockLocation objects
+        - POST: Create a new StockLocation
       parameters:
       - in: query
         name: cascade
@@ -21344,7 +21457,13 @@ paths:
   /api/stock/track/:
     get:
       operationId: stock_track_list
-      description: Override the GET method to determine export options.
+      description: |-
+        API endpoint for list view of StockItemTracking objects.
+
+        StockItemTracking objects are read-only
+        (they are created by internal model functionality)
+
+        - GET: Return list of StockItemTracking objects
       parameters:
       - in: query
         name: include_variants
@@ -21852,7 +21971,7 @@ paths:
   /api/units/:
     get:
       operationId: units_list
-      description: List view for custom units.
+      description: Override the list method to determine export options.
       parameters:
       - name: limit
         required: true
