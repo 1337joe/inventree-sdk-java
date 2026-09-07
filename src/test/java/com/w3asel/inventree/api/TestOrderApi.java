@@ -53,14 +53,14 @@ public class TestOrderApi extends TestApi {
         api.orderPoLineList(null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null);
         api.orderPoLinePartialUpdate(null, null);
-        api.orderPoLineRetrieve(null, null, null);
+        api.orderPoLineRetrieve(null);
         api.orderPoLineUpdate(null, null);
         api.orderPoList(null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null);
         api.orderPoPartialUpdate(null, null);
         // api.orderPoReceiveCreate(null, null);
-        api.orderPoRetrieve(null, null);
+        api.orderPoRetrieve(null);
         // api.orderPoStatusRetrieve();
         api.orderPoUpdate(null, null);
 
@@ -181,7 +181,7 @@ public class TestOrderApi extends TestApi {
                         null, null, null, null, null, null, null, null, null, null, null, null,
                         null, null, null, null, null, null, null, null, null, null)
                 .getResults().get(0).getPk();
-        api.orderPoRetrieve(poPk, null);
+        api.orderPoRetrieve(poPk);
 
         // TODO verify results
     }
@@ -203,7 +203,7 @@ public class TestOrderApi extends TestApi {
 
         int poLinePk = api.orderPoLineList(limit, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null).getResults().get(0).getPk();
-        api.orderPoLineRetrieve(poLinePk, null, null);
+        api.orderPoLineRetrieve(poLinePk);
 
         // TODO verify results
     }
