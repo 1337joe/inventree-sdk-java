@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '533'
+  version: '534'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -353,7 +353,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -2177,7 +2177,7 @@ paths:
           type: integer
         description: Order Status
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -3556,7 +3556,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -4369,7 +4369,7 @@ paths:
           default: false
         description: Include detailed information about the Supplier in the response
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -4718,7 +4718,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -8661,7 +8661,7 @@ paths:
           type: integer
         description: Supplier Part
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -9836,7 +9836,7 @@ paths:
           type: integer
         description: Order Status
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -10984,7 +10984,7 @@ paths:
           type: integer
         description: Order Status
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -12378,7 +12378,7 @@ paths:
           type: boolean
         description: shipped
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -12762,7 +12762,7 @@ paths:
           type: integer
         description: Order Status
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -14529,6 +14529,11 @@ paths:
         schema:
           type: boolean
         description: Required for Build Order
+      - in: query
+        name: tag_name
+        schema:
+          type: string
+        description: Tags
       - in: query
         name: tags
         schema:
@@ -19700,7 +19705,7 @@ paths:
           type: boolean
           default: false
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
@@ -20478,7 +20483,7 @@ paths:
         schema:
           type: boolean
       - in: query
-        name: tags
+        name: tag_name
         schema:
           type: string
         description: Tags
