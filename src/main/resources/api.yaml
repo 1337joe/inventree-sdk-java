@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '535'
+  version: '536'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -286,6 +286,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TestEmail'
+          description: ''
+  /api/admin/scim/:
+    get:
+      operationId: admin_scim_list
+      description: Return the current SCIM configuration status.
+      parameters:
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:superuser
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedScimConfigurationList'
+          description: ''
+  /api/admin/scim/disable/:
+    post:
+      operationId: admin_scim_disable_create
+      description: Disable the SCIM provisioning endpoint and revoke its secret.
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:superuser
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimConfiguration'
+          description: ''
+  /api/admin/scim/generate/:
+    post:
+      operationId: admin_scim_generate_create
+      description: |-
+        Generate a new SCIM bearer secret, and enable the endpoint.
+
+        The raw secret is returned exactly once in this response - only its
+        HMAC digest is persisted. Generating a new secret invalidates any
+        previously issued one.
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:superuser
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimSecret'
           description: ''
   /api/attachment/:
     get:
@@ -32087,6 +32162,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ScheduledTask'
+    PaginatedScimConfigurationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimConfiguration'
     PaginatedSelectionEntryList:
       type: object
       required:
@@ -41730,6 +41828,55 @@ components:
       - last_run
       - pk
       - success
+    ScimConfiguration:
+      type: object
+      description: Serializer for the (read-only, status-only) SCIM configuration.
+      properties:
+        enabled:
+          type: boolean
+          readOnly: true
+          description: Enable the SCIM provisioning endpoint
+        has_secret:
+          type: boolean
+          readOnly: true
+        secret_generated:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        last_used:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        base_url:
+          type: string
+          description: Return the absolute base URL that should be configured in the
+            Identity Provider.
+          readOnly: true
+      required:
+      - base_url
+      - enabled
+      - has_secret
+    ScimSecret:
+      type: object
+      description: |-
+        Serializer for a freshly (re)generated SCIM bearer secret.
+
+        This is the *only* place the raw secret is ever exposed - it cannot be
+        retrieved again afterwards.
+      properties:
+        secret:
+          type: string
+          readOnly: true
+        base_url:
+          type: string
+          description: Return the absolute base URL that should be configured in the
+            Identity Provider.
+          readOnly: true
+      required:
+      - base_url
+      - secret
     SearchResult:
       type: object
       description: Serializer for a search result.
