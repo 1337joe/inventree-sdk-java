@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '534'
+  version: '535'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -41899,6 +41899,8 @@ components:
       type: object
       description: Serializer for InfoApiSerializer.
       properties:
+        sso_enabled:
+          type: boolean
         sso_registration:
           type: boolean
         registration_enabled:
@@ -41908,6 +41910,7 @@ components:
       required:
       - password_forgotten_enabled
       - registration_enabled
+      - sso_enabled
       - sso_registration
     Status2a7Enum:
       enum:
