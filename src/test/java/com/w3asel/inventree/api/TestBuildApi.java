@@ -133,8 +133,6 @@ public class TestBuildApi extends TestApi {
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        // TODO revisit at v537 after notes refactor
-        // assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
         assertFieldEquals("barcode_hash", fields, actual.getBarcodeHash());
         assertFieldEquals("reference", fields, actual.getReference());
         assertFieldEquals("title", fields, actual.getTitle());

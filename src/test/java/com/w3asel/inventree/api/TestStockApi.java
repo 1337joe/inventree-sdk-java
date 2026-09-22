@@ -233,7 +233,6 @@ public class TestStockApi extends TestApi {
 
         JsonObject fields = InventreeDemoDataset.getFields(expected);
 
-        assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
         assertFieldEquals("barcode_hash", fields, actual.getBarcodeHash());
         assertNullableFieldEquals(OffsetDateTime.class, "updated", fields, actual.getUpdated());
         assertNullableFieldEquals(Integer.class, "parent", fields, actual.getParent());

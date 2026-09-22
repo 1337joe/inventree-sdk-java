@@ -125,8 +125,6 @@ public class TestCompanyApi extends TestApi {
         assertFieldEquals("currency", fields, actual.getCurrency());
 
         if (detail) {
-            // TODO revisit at v537 after notes refactor
-            // assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
         }
 
         // not directly available in demo dataset:
@@ -456,11 +454,7 @@ public class TestCompanyApi extends TestApi {
         assertFieldEquals("available", fields, actual.getAvailable());
         assertFieldEquals("availability_updated", fields, actual.getAvailabilityUpdated());
 
-        if (detail) {
-            assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
-        } else {
-            assertNull(actual.getNotes(), "Expect null notes on non-detail calls");
-
+        if (!detail) {
             assertNull(actual.getManufacturerDetail(),
                     "Expect null manufacturer detail on non-detail calls");
             assertNull(actual.getManufacturerPartDetail(),
@@ -598,11 +592,7 @@ public class TestCompanyApi extends TestApi {
         assertNullableFieldEquals(String.class, "description", fields, actual.getDescription());
         assertNullableFieldEquals(URI.class, "link", fields, actual.getLink());
 
-        if (detail) {
-            assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
-        } else {
-            assertNull(actual.getNotes(), "Expect null notes on list calls");
-
+        if (!detail) {
             assertNull(actual.getManufacturerDetail(),
                     "Expect null manufacturer detail on list calls");
             assertNull(actual.getPartDetail(), "Expect null part detail on list calls");

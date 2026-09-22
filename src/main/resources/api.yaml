@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '536'
+  version: '537'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -6880,6 +6880,37 @@ paths:
               schema:
                 $ref: '#/components/schemas/DataImportAcceptRow'
           description: ''
+  /api/instance-info/:
+    get:
+      operationId: instance_info_retrieve
+      description: Return counts of attachments, notes and parameters for the given
+        instance.
+      parameters:
+      - in: query
+        name: model_id
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: model_type
+        schema:
+          type: string
+        required: true
+      tags:
+      - instance-info
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstanceInfo'
+          description: ''
   /api/label/print/:
     post:
       operationId: label_print_create
@@ -8218,15 +8249,252 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/notes-image-upload/:
+  /api/note/:
     get:
-      operationId: notes_image_upload_list
+      operationId: note_list
+      description: List API endpoint for Note objects.
+      parameters:
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: model_id
+        schema:
+          type: integer
+      - in: query
+        name: model_type
+        schema:
+          type: string
+        description: Model Type
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - model_id
+          - -model_id
+          - model_type
+          - -model_type
+          - updated_by
+          - -updated_by
+          - updated
+          - -updated
+          - primary
+          - -primary
+          - template
+          - -template
+          - title
+          - -title
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: content, description, title.'
+        schema:
+          type: string
+      - in: query
+        name: template
+        schema:
+          type: boolean
+        description: Template
+      - in: query
+        name: updated_by
+        schema:
+          type: integer
+      tags:
+      - note
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedNoteList'
+          description: ''
+    post:
+      operationId: note_create
+      description: List API endpoint for Note objects.
+      tags:
+      - note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Note'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Note'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+          description: ''
+  /api/note/{id}/:
+    get:
+      operationId: note_retrieve
+      description: Detail API endpoint for Note objects.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - note
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+          description: ''
+    put:
+      operationId: note_update
+      description: Detail API endpoint for Note objects.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Note'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Note'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+          description: ''
+    patch:
+      operationId: note_partial_update
+      description: Detail API endpoint for Note objects.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedNote'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedNote'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedNote'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+          description: ''
+    delete:
+      operationId: note_destroy
+      description: Detail API endpoint for Note objects.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - note
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '204':
+          description: No response body
+  /api/note/image/:
+    get:
+      operationId: note_image_list
       description: List view for all notes images.
       parameters:
       - name: limit
         required: true
         in: query
         description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: model_id
+        schema:
+          type: integer
+        description: Model ID
+      - in: query
+        name: model_type
+        schema:
+          type: string
+        description: Model Type
+      - in: query
+        name: note
         schema:
           type: integer
       - name: offset
@@ -8244,11 +8512,15 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: model_id, model_type, user.'
+        description: A search term.
         schema:
           type: string
+      - in: query
+        name: user
+        schema:
+          type: integer
       tags:
-      - notes-image-upload
+      - note
       security:
       - tokenAuth: []
       - basicAuth: []
@@ -8263,10 +8535,10 @@ paths:
                 $ref: '#/components/schemas/PaginatedNotesImageList'
           description: ''
     post:
-      operationId: notes_image_upload_create
+      operationId: note_image_create
       description: List view for all notes images.
       tags:
-      - notes-image-upload
+      - note
       requestBody:
         content:
           application/json:
@@ -27025,11 +27297,6 @@ components:
           title: Source Location
           description: Select location to take stock from for this build (leave blank
             to take from any stock location)
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         link:
           title: External Link
           description: Link to external URL
@@ -27279,6 +27546,10 @@ components:
           type: boolean
           default: true
           description: Copy parameters from the original item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
       required:
       - original
     BuildItem:
@@ -27944,11 +28215,6 @@ components:
         is_supplier:
           type: boolean
           description: Do you purchase items from this company?
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         parts_supplied:
           type: integer
           readOnly: true
@@ -28037,6 +28303,10 @@ components:
           type: boolean
           default: true
           description: Copy parameters from the original item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
       required:
       - original
     Config:
@@ -29538,6 +29808,32 @@ components:
           description: Add transaction note (optional)
       required:
       - stock_item
+    InstanceInfo:
+      type: object
+      description: |-
+        Serializer for aggregated per-instance counts (attachments, notes, parameters).
+
+        Backs a single generic lookup (see common.api.InstanceInfoView) that any
+        model instance's detail page can use to drive its Attachments/Notes/
+        Parameters tab notification dots from one request, instead of each tab
+        independently querying its own list endpoint just to read a count.
+      properties:
+        attachment_count:
+          type: integer
+          readOnly: true
+          description: Number of attachments associated with this instance
+        note_count:
+          type: integer
+          readOnly: true
+          description: Number of notes associated with this instance
+        parameter_count:
+          type: integer
+          readOnly: true
+          description: Number of parameters associated with this instance
+      required:
+      - attachment_count
+      - note_count
+      - parameter_count
     IsTrueEnum:
       type: boolean
       enum:
@@ -30295,11 +30591,6 @@ components:
           type: string
           description: Unique hash of barcode data
           maxLength: 128
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         tags:
           type: array
           items:
@@ -30329,6 +30620,10 @@ components:
           type: boolean
           default: true
           description: Copy parameters from the original item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
       required:
       - original
     MeUser:
@@ -30502,6 +30797,94 @@ components:
       - read
       - summary
       - title
+    Note:
+      type: object
+      description: Serializer for the Note model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        template:
+          type: boolean
+          default: false
+          description: Is this note a template (not linked to a specific model instance)?
+        model_type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/NoteModelTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        model_id:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+          description: Target model instance ID for this note
+        primary:
+          type: boolean
+          default: false
+          description: Is this the primary note for the associated model?
+        title:
+          type: string
+          description: Note title
+          maxLength: 100
+        description:
+          type: string
+          description: Optional description field
+          maxLength: 250
+        content:
+          type: string
+          description: Note content
+          maxLength: 50000
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
+      required:
+      - pk
+      - title
+    NoteModelTypeEnum:
+      enum:
+      - build.build
+      - company.company
+      - company.manufacturerpart
+      - company.supplierpart
+      - order.purchaseorder
+      - order.returnorder
+      - order.salesorder
+      - order.salesordershipment
+      - order.transferorder
+      - part.part
+      - stock.stockitem
+      type: string
+      description: |-
+        * `` - ---------
+        * `build.build` - Build Order
+        * `company.company` - Company
+        * `company.manufacturerpart` - Manufacturer Part
+        * `company.supplierpart` - Supplier Part
+        * `order.purchaseorder` - Purchase Order
+        * `order.returnorder` - Return Order
+        * `order.salesorder` - Sales Order
+        * `order.salesordershipment` - Sales Order Shipment
+        * `order.transferorder` - Transfer Order
+        * `part.part` - Part
+        * `stock.stockitem` - Stock Item
     NotesImage:
       type: object
       description: Serializer for the NotesImage model.
@@ -30521,21 +30904,12 @@ components:
           type: string
           format: date-time
           readOnly: true
-        model_type:
-          type: string
-          nullable: true
-          description: Target model type for this image
-          maxLength: 100
-        model_id:
+        note:
           type: integer
-          maximum: 9223372036854775807
-          minimum: -9223372036854775808
-          format: int64
-          nullable: true
-          description: Target model ID for this image
       required:
       - date
       - image
+      - note
       - pk
     NotificationMessage:
       type: object
@@ -31426,6 +31800,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NewsFeedEntry'
+    PaginatedNoteList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
     PaginatedNotesImageList:
       type: object
       required:
@@ -32738,11 +33135,6 @@ components:
           type: string
           description: Part name
           maxLength: 100
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         parameters:
           type: array
           items:
@@ -34160,11 +34552,6 @@ components:
           title: Source Location
           description: Select location to take stock from for this build (leave blank
             to take from any stock location)
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         link:
           title: External Link
           description: Link to external URL
@@ -34588,11 +34975,6 @@ components:
         is_supplier:
           type: boolean
           description: Do you purchase items from this company?
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         parts_supplied:
           type: integer
           readOnly: true
@@ -35343,11 +35725,6 @@ components:
           type: string
           description: Unique hash of barcode data
           maxLength: 128
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         tags:
           type: array
           items:
@@ -35452,6 +35829,64 @@ components:
           maxLength: 250
         read:
           type: boolean
+    PatchedNote:
+      type: object
+      description: Serializer for the Note model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        template:
+          type: boolean
+          default: false
+          description: Is this note a template (not linked to a specific model instance)?
+        model_type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/NoteModelTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        model_id:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+          description: Target model instance ID for this note
+        primary:
+          type: boolean
+          default: false
+          description: Is this the primary note for the associated model?
+        title:
+          type: string
+          description: Note title
+          maxLength: 100
+        description:
+          type: string
+          description: Optional description field
+          maxLength: 250
+        content:
+          type: string
+          description: Note content
+          maxLength: 50000
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Timestamp of last update
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Update By
+          description: User who last updated this object
+        updated_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
     PatchedNotificationMessage:
       type: object
       description: Serializer for the InvenTreeUserSetting model.
@@ -35719,11 +36154,6 @@ components:
           type: string
           description: Part name
           maxLength: 100
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         parameters:
           type: array
           items:
@@ -36604,11 +37034,6 @@ components:
           nullable: true
           title: Custom Status Key
           description: Update order status to a custom value for this logical value
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -37142,11 +37567,6 @@ components:
           nullable: true
           title: Custom Status Key
           description: Update order status to a custom value for this logical value
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -37582,11 +38002,6 @@ components:
           nullable: true
           title: Custom Status Key
           description: Update order status to a custom value for this logical value
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -38045,11 +38460,6 @@ components:
             maxLength: 2000
           - type: string
             maxLength: 0
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         parameters:
           type: array
           items:
@@ -38236,11 +38646,6 @@ components:
             maxLength: 2000
           - type: string
             maxLength: 0
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         owner:
           type: integer
           nullable: true
@@ -38367,6 +38772,12 @@ components:
           writeOnly: true
           nullable: true
           description: Enter serial numbers for new items
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/StockItemDuplicateOptions'
+          writeOnly: true
+          title: Duplicate Stock Item
+          description: Copy initial data from another stock item
         allocated:
           type: number
           format: double
@@ -38637,11 +39048,6 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
@@ -38819,11 +39225,6 @@ components:
           nullable: true
           title: Custom Status Key
           description: Update order status to a custom value for this logical value
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -39716,11 +40117,6 @@ components:
           nullable: true
           title: Custom Status Key
           description: Update order status to a custom value for this logical value
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -39855,6 +40251,10 @@ components:
           type: boolean
           default: true
           description: Copy parameters from the original item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
         copy_lines:
           type: boolean
           default: true
@@ -40445,11 +40845,6 @@ components:
           nullable: true
           title: Custom Status Key
           description: Update order status to a custom value for this logical value
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -40566,6 +40961,10 @@ components:
           type: boolean
           default: true
           description: Copy parameters from the original item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
         copy_extra_lines:
           type: boolean
           default: true
@@ -41015,11 +41414,6 @@ components:
           nullable: true
           title: Custom Status Key
           description: Update order status to a custom value for this logical value
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -41286,6 +41680,10 @@ components:
           type: boolean
           default: true
           description: Copy parameters from the original item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
         copy_lines:
           type: boolean
           default: true
@@ -41613,11 +42011,6 @@ components:
             maxLength: 2000
           - type: string
             maxLength: 0
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         parameters:
           type: array
           items:
@@ -41728,6 +42121,10 @@ components:
           type: boolean
           default: true
           description: Copy parameters from the original item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
       required:
       - original
     ScheduleTypeEnum:
@@ -42375,11 +42772,6 @@ components:
             maxLength: 2000
           - type: string
             maxLength: 0
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         owner:
           type: integer
           nullable: true
@@ -42506,6 +42898,12 @@ components:
           writeOnly: true
           nullable: true
           description: Enter serial numbers for new items
+        duplicate:
+          allOf:
+          - $ref: '#/components/schemas/StockItemDuplicateOptions'
+          writeOnly: true
+          title: Duplicate Stock Item
+          description: Copy initial data from another stock item
         allocated:
           type: number
           format: double
@@ -42572,6 +42970,32 @@ components:
       - part
       - pk
       - quantity
+    StockItemDuplicateOptions:
+      type: object
+      description: |-
+        Generic serializer for specifying copy options when duplicating a model instance.
+
+        Builds its fields dynamically at instantiation time so the same class can be
+        reused for any model without subclassing.
+      properties:
+        original:
+          type: integer
+          description: Select instance to duplicate
+        copy_tests:
+          type: boolean
+          default: false
+          title: Copy Test Results
+          description: Copy test results from the original stock item
+        copy_history:
+          type: boolean
+          default: false
+          description: Copy stock history from the original stock item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
+      required:
+      - original
     StockItemSerialNumbers:
       type: object
       description: Serializer for extra serial number information about a stock item.
@@ -42978,11 +43402,6 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         part_detail:
           allOf:
           - $ref: '#/components/schemas/PartBrief'
@@ -43027,6 +43446,10 @@ components:
           type: boolean
           default: true
           description: Copy parameters from the original item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
       required:
       - original
     SupplierPriceBreak:
@@ -43336,11 +43759,6 @@ components:
           nullable: true
           title: Custom Status Key
           description: Update order status to a custom value for this logical value
-        notes:
-          type: string
-          nullable: true
-          description: Markdown notes (optional)
-          maxLength: 50000
         barcode_hash:
           type: string
           readOnly: true
@@ -43527,6 +43945,10 @@ components:
           type: boolean
           default: true
           description: Copy parameters from the original item
+        copy_notes:
+          type: boolean
+          default: true
+          description: Copy notes from the original item
         copy_lines:
           type: boolean
           default: true
