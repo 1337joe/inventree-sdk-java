@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '539'
+  version: '540'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -29733,6 +29733,8 @@ components:
           allOf:
           - $ref: '#/components/schemas/Settings'
           readOnly: true
+        system_state:
+          readOnly: true
       required:
       - active_plugins
       - apiVersion
@@ -29751,6 +29753,7 @@ components:
       - server
       - settings
       - system_health
+      - system_state
       - version
       - worker_count
       - worker_pending_tasks
