@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '538'
+  version: '539'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -3847,7 +3847,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: company__name, country, line1,
+          line2, postal_city, postal_code, title.'
         schema:
           type: string
       tags:
@@ -4088,7 +4089,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: company__name, name.'
+        description: 'A search term. Searched fields: company__name, email, name,
+          phone, role.'
         schema:
           type: string
       tags:
@@ -5085,7 +5087,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: part__SKU, part__supplier__name.'
+        description: 'A search term. Searched fields: part__SKU, part__part__IPN,
+          part__part__name, part__supplier__name.'
         schema:
           type: string
       - in: query
@@ -11521,7 +11524,7 @@ paths:
         required: false
         in: query
         description: 'A search term. Searched fields: item__batch, item__part__IPN,
-          item__part__name, item__serial.'
+          item__part__name, item__serial, line__order__customer__name, line__order__reference.'
         schema:
           type: string
       - in: query
@@ -13282,7 +13285,7 @@ paths:
         required: false
         in: query
         description: 'A search term. Searched fields: item__batch, item__part__IPN,
-          item__part__name, item__serial.'
+          item__part__name, item__serial, line__order__reference.'
         schema:
           type: string
       tags:
@@ -22591,7 +22594,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: first_name, last_name, username.'
+        description: 'A search term. Searched fields: email, first_name, last_name,
+          username.'
         schema:
           type: string
       tags:
@@ -23652,8 +23656,6 @@ paths:
           - -name
           - revoked
           - -revoked
-          - revoked
-          - -revoked
       - in: query
         name: revoked
         schema:
@@ -23661,7 +23663,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: key, name.'
+        description: 'A search term. Searched fields: name, user__email, user__first_name,
+          user__last_name, user__username.'
         schema:
           type: string
       - in: query
