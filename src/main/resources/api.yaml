@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '540'
+  version: '541'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -23184,25 +23184,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/MeUser'
           description: ''
-    delete:
-      operationId: user_me_destroy
-      description: |-
-        Detail endpoint for current user.
-
-        Permissions:
-        - User can edit their own details via this endpoint
-        - Only a subset of fields are available here
-      tags:
-      - user
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '204':
-          description: No response body
   /api/user/me/profile/:
     get:
       operationId: user_me_profile_retrieve

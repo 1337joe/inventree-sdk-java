@@ -53,7 +53,6 @@ public class TestUserApi extends TestApi {
         // api.userGroupRetrieve(null, null, null, null);
         api.userGroupUpdate(null, null);
         // api.userList(null, null, null, null, null, null, null);
-        api.userMeDestroy();
         api.userMePartialUpdate(null);
         api.userMeProfilePartialUpdate(null);
         api.userMeProfileRetrieve();
