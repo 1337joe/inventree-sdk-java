@@ -200,6 +200,7 @@ public class InventreeDemoDataset {
         CUSTOM_USER_STATE("common.inventreecustomuserstatemodel"),
         GLOBAL_SETTING("common.inventreesetting"),
         USER_SETTING("common.inventreeusersetting"),
+        NOTE("common.note"),
         NOTES_IMAGE("common.notesimage"),
         PROJECT_CODE("common.projectcode"),
         COMPANY_ADDRESS("company.address"),
