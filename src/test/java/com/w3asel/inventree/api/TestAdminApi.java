@@ -10,15 +10,15 @@ import com.w3asel.inventree.model.Config;
 import com.w3asel.inventree.model.EmailMessage;
 import com.w3asel.inventree.model.PaginatedEmailMessageList;
 import com.w3asel.inventree.model.TestEmail;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.UUID;
 
 public class TestAdminApi extends TestApi {
     private AdminApi api;
@@ -29,6 +29,18 @@ public class TestAdminApi extends TestApi {
         // TODO why is this not the same format as elsewhere?
         apiClient.setOffsetDateTimeFormat(DateTimeFormatter
                 .ofPattern("yyyy-MM-dd'T'HH:mm:ss.nnnnnn").withZone(ZoneOffset.UTC));
+    }
+
+    @Disabled
+    @Test
+    void todo() throws ApiException {
+        api.adminOauth2Create(null);
+        api.adminOauth2Destroy(null);
+        api.adminOauth2List(null, null);
+        api.adminOauth2PartialUpdate(null, null);
+        api.adminOauth2RegenerateCreate(null);
+        api.adminOauth2Retrieve(null);
+        api.adminOauth2Update(null, null);
     }
 
     @Test

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '541'
+  version: '542'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -286,6 +286,217 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TestEmail'
+          description: ''
+  /api/admin/oauth2/:
+    get:
+      operationId: admin_oauth2_list
+      description: Manage a oAuth2 (provider side) application.
+      parameters:
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedOAuth2ApplicationList'
+          description: ''
+    post:
+      operationId: admin_oauth2_create
+      description: Manage a oAuth2 (provider side) application.
+      tags:
+      - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuth2Application'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OAuth2Application'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OAuth2Application'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:add:admin
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Application'
+          description: ''
+  /api/admin/oauth2/{id}/:
+    get:
+      operationId: admin_oauth2_retrieve
+      description: Manage a oAuth2 (provider side) application.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this application.
+        required: true
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Application'
+          description: ''
+    put:
+      operationId: admin_oauth2_update
+      description: Manage a oAuth2 (provider side) application.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this application.
+        required: true
+      tags:
+      - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuth2Application'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OAuth2Application'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OAuth2Application'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Application'
+          description: ''
+    patch:
+      operationId: admin_oauth2_partial_update
+      description: Manage a oAuth2 (provider side) application.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this application.
+        required: true
+      tags:
+      - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOAuth2Application'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOAuth2Application'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOAuth2Application'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Application'
+          description: ''
+    delete:
+      operationId: admin_oauth2_destroy
+      description: |-
+        Delete an OAuth2 application.
+
+        Deletion of the built-in default OIDC client is not allowed.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this application.
+        required: true
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:admin
+      responses:
+        '204':
+          description: No response body
+  /api/admin/oauth2/{id}/regenerate/:
+    post:
+      operationId: admin_oauth2_regenerate_create
+      description: Regenerate the client secret.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this application.
+        required: true
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:add:admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Application'
           description: ''
   /api/admin/scim/:
     get:
@@ -26436,6 +26647,15 @@ components:
           maxLength: 100
       required:
       - pk
+    AlgorithmEnum:
+      enum:
+      - RS256
+      - HS256
+      type: string
+      description: |-
+        * `` - No OIDC support
+        * `RS256` - RSA with SHA-2 256
+        * `HS256` - HMAC with SHA-2 256
     AllUnitListResponse:
       type: object
       description: Serializer for the AllUnitList.
@@ -26642,6 +26862,22 @@ components:
         * `transferorder` - Transfer Order
         * `part` - Part
         * `stockitem` - Stock Item
+    AuthorizationGrantTypeEnum:
+      enum:
+      - authorization-code
+      - urn:ietf:params:oauth:grant-type:device_code
+      - implicit
+      - password
+      - client-credentials
+      - openid-hybrid
+      type: string
+      description: |-
+        * `authorization-code` - Authorization code
+        * `urn:ietf:params:oauth:grant-type:device_code` - Device Code
+        * `implicit` - Implicit
+        * `password` - Resource owner password-based
+        * `client-credentials` - Client credentials
+        * `openid-hybrid` - OpenID connect hybrid
     Barcode:
       type: object
       description: Generic serializer for receiving barcode data.
@@ -28093,6 +28329,14 @@ components:
       - pk
       - subcategories
       - tree_id
+    ClientTypeEnum:
+      enum:
+      - confidential
+      - public
+      type: string
+      description: |-
+        * `confidential` - Confidential
+        * `public` - Public
     ColorEnum:
       enum:
       - primary
@@ -30957,6 +31201,49 @@ components:
     NullEnum:
       enum:
       - null
+    OAuth2Application:
+      type: object
+      description: Serializer for OAuth2 application records.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        client_id:
+          type: string
+          readOnly: true
+        client_secret:
+          type: string
+          readOnly: true
+          description: Client secret for authentication
+        name:
+          type: string
+          maxLength: 255
+        client_type:
+          $ref: '#/components/schemas/ClientTypeEnum'
+        authorization_grant_type:
+          $ref: '#/components/schemas/AuthorizationGrantTypeEnum'
+        redirect_uris:
+          type: string
+          description: Allowed URIs list, space separated
+        post_logout_redirect_uris:
+          type: string
+          description: Allowed Post Logout URIs list, space separated
+        skip_authorization:
+          type: boolean
+        algorithm:
+          oneOf:
+          - $ref: '#/components/schemas/AlgorithmEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        is_builtin:
+          type: boolean
+          readOnly: true
+      required:
+      - authorization_grant_type
+      - client_id
+      - client_secret
+      - client_type
+      - id
+      - is_builtin
     ObservabilityEnd:
       type: object
       description: Serializer for observability end endpoint.
@@ -31856,6 +32143,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NotificationMessage'
+    PaginatedOAuth2ApplicationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuth2Application'
     PaginatedOwnerList:
       type: object
       required:
@@ -35919,6 +36229,42 @@ components:
           readOnly: true
         read:
           type: boolean
+    PatchedOAuth2Application:
+      type: object
+      description: Serializer for OAuth2 application records.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        client_id:
+          type: string
+          readOnly: true
+        client_secret:
+          type: string
+          readOnly: true
+          description: Client secret for authentication
+        name:
+          type: string
+          maxLength: 255
+        client_type:
+          $ref: '#/components/schemas/ClientTypeEnum'
+        authorization_grant_type:
+          $ref: '#/components/schemas/AuthorizationGrantTypeEnum'
+        redirect_uris:
+          type: string
+          description: Allowed URIs list, space separated
+        post_logout_redirect_uris:
+          type: string
+          description: Allowed Post Logout URIs list, space separated
+        skip_authorization:
+          type: boolean
+        algorithm:
+          oneOf:
+          - $ref: '#/components/schemas/AlgorithmEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        is_builtin:
+          type: boolean
+          readOnly: true
     PatchedParameter:
       type: object
       description: Serializer for the Parameter model.
