@@ -34,6 +34,13 @@ public class TestAdminApi extends TestApi {
     @Disabled
     @Test
     void todo() throws ApiException {
+        // api.adminConfigList();
+        // api.adminConfigRetrieve(null);
+        // api.adminEmailBulkDestroy(null);
+        // api.adminEmailDestroy(null);
+        // api.adminEmailList(null, null, null, null);
+        // api.adminEmailRetrieve(null);
+        // api.adminEmailTestCreate(null);
         api.adminOauth2Create(null);
         api.adminOauth2Destroy(null);
         api.adminOauth2List(null, null);
@@ -41,6 +48,25 @@ public class TestAdminApi extends TestApi {
         api.adminOauth2RegenerateCreate(null);
         api.adminOauth2Retrieve(null);
         api.adminOauth2Update(null, null);
+        api.adminScimDisableCreate();
+        api.adminScimGenerateCreate();
+        api.adminScimList(null, null);
+        api.adminSsoCreate(null);
+        api.adminSsoDestroy(null);
+        api.adminSsoList(null, null);
+        api.adminSsoPartialUpdate(null, null);
+        api.adminSsoRetrieve(null);
+        api.adminSsoUpdate(null, null);
+    }
+
+    @Test
+    void test() throws ApiException {
+        int limit = 5;
+        int offset = 0;
+        api.adminOauth2List(limit, offset);
+        // TODO return isn't paginated
+        // api.adminScimList(limit, offset);
+        api.adminSsoList(limit, offset);
     }
 
     @Test

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '542'
+  version: '543'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -573,6 +573,188 @@ paths:
               schema:
                 $ref: '#/components/schemas/ScimSecret'
           description: ''
+  /api/admin/sso/:
+    get:
+      operationId: admin_sso_list
+      description: Manage a SocialApp (client side) application.
+      parameters:
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSocialAppList'
+          description: ''
+    post:
+      operationId: admin_sso_create
+      description: Manage a SocialApp (client side) application.
+      tags:
+      - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialApp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SocialApp'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SocialApp'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:add:admin
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialApp'
+          description: ''
+  /api/admin/sso/{id}/:
+    get:
+      operationId: admin_sso_retrieve
+      description: Manage a SocialApp (client side) application.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialApp'
+          description: ''
+    put:
+      operationId: admin_sso_update
+      description: Manage a SocialApp (client side) application.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialApp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SocialApp'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SocialApp'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialApp'
+          description: ''
+    patch:
+      operationId: admin_sso_partial_update
+      description: Manage a SocialApp (client side) application.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSocialApp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSocialApp'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSocialApp'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialApp'
+          description: ''
+    delete:
+      operationId: admin_sso_destroy
+      description: Manage a SocialApp (client side) application.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - admin
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:admin
+      responses:
+        '204':
+          description: No response body
   /api/attachment/:
     get:
       operationId: attachment_list
@@ -32925,6 +33107,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SelectionList'
+    PaginatedSocialAppList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialApp'
     PaginatedStockItemList:
       type: object
       required:
@@ -38903,6 +39108,33 @@ components:
           items:
             $ref: '#/components/schemas/SelectionEntry'
           readOnly: true
+    PatchedSocialApp:
+      type: object
+      description: Serializer for SocialApp records.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: Human friendly name for the application - will be displayed
+            to users
+        provider:
+          $ref: '#/components/schemas/ProviderEnum'
+        provider_id:
+          type: string
+          description: Unique identifier - required for generic providers that can
+            be configured multiple times such as SAML or OpenID Connect
+        client_id:
+          type: string
+          description: App ID, or consumer key
+          maxLength: 191
+        secret:
+          type: string
+          title: Secret key
+          description: API secret, client secret, or consumer secret
+          maxLength: 191
+        settings: {}
     PatchedStockItem:
       type: object
       description: |-
@@ -40366,6 +40598,14 @@ components:
       required:
       - code
       - pk
+    ProviderEnum:
+      enum:
+      - openid_connect
+      - saml
+      type: string
+      description: |-
+        * `openid_connect` - OpenID Connect
+        * `saml` - SAML
     PurchaseOrder:
       type: object
       description: Serializer for a PurchaseOrder object.
@@ -42789,6 +43029,38 @@ components:
       - registration_enabled
       - sso_enabled
       - sso_registration
+    SocialApp:
+      type: object
+      description: Serializer for SocialApp records.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: Human friendly name for the application - will be displayed
+            to users
+        provider:
+          $ref: '#/components/schemas/ProviderEnum'
+        provider_id:
+          type: string
+          description: Unique identifier - required for generic providers that can
+            be configured multiple times such as SAML or OpenID Connect
+        client_id:
+          type: string
+          description: App ID, or consumer key
+          maxLength: 191
+        secret:
+          type: string
+          title: Secret key
+          description: API secret, client secret, or consumer secret
+          maxLength: 191
+        settings: {}
+      required:
+      - client_id
+      - id
+      - name
+      - provider
     Status2a7Enum:
       enum:
       - 10
