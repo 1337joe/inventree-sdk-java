@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '545'
+  version: '546'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -29871,11 +29871,18 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
       required:
       - choices
       - confirm
       - confirm_text
       - description
+      - flags
       - key
       - name
       - pk
@@ -30902,6 +30909,12 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
         config_type:
           allOf:
           - $ref: '#/components/schemas/ConfigTypeEnum'
@@ -30912,6 +30925,7 @@ components:
       - confirm
       - confirm_text
       - description
+      - flags
       - key
       - model_filters
       - name
@@ -35874,6 +35888,12 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
     PatchedGroup:
       type: object
       description: Serializer for a 'Group'.
@@ -36172,6 +36192,12 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
         config_type:
           allOf:
           - $ref: '#/components/schemas/ConfigTypeEnum'
@@ -37385,6 +37411,12 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
         plugin:
           type: string
           readOnly: true
@@ -37458,6 +37490,12 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
         plugin:
           type: string
           readOnly: true
@@ -40150,6 +40188,12 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
     PendingTask:
       type: object
       description: Serializer for an individual pending task object.
@@ -40409,6 +40453,12 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
         plugin:
           type: string
           readOnly: true
@@ -40422,6 +40472,7 @@ components:
       - confirm
       - confirm_text
       - description
+      - flags
       - key
       - model_filters
       - name
@@ -40533,6 +40584,12 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
         plugin:
           type: string
           readOnly: true
@@ -40545,6 +40602,7 @@ components:
       - confirm
       - confirm_text
       - description
+      - flags
       - key
       - model_filters
       - name
@@ -44982,11 +45040,18 @@ components:
         confirm_text:
           type: string
           readOnly: true
+        flags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Indicating behavior or purpose of setting.
       required:
       - choices
       - confirm
       - confirm_text
       - description
+      - flags
       - key
       - name
       - pk
