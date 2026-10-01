@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '543'
+  version: '544'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -761,6 +761,11 @@ paths:
       description: List API endpoint for Attachment objects.
       parameters:
       - in: query
+        name: filename
+        schema:
+          type: string
+        description: Filename
+      - in: query
         name: has_thumbnail
         schema:
           type: boolean
@@ -817,7 +822,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: comment, model_id, model_type.'
+        description: 'A search term. Searched fields: attachment, comment, model_id,
+          model_type.'
         schema:
           type: string
       - in: query
