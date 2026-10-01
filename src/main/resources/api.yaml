@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '546'
+  version: '547'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -24005,6 +24005,10 @@ paths:
       operationId: user_tokens_list
       description: List of user tokens for current user.
       parameters:
+      - in: query
+        name: issued_by
+        schema:
+          type: integer
       - name: limit
         required: true
         in: query
@@ -24036,15 +24040,27 @@ paths:
           - -name
           - revoked
           - -revoked
+          - revoked_by
+          - -revoked_by
+          - issued_by
+          - -issued_by
+          - token_version
+          - -token_version
+          - revocation_reason
+          - -revocation_reason
       - in: query
         name: revoked
         schema:
           type: boolean
+      - in: query
+        name: revoked_by
+        schema:
+          type: integer
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name, user__email, user__first_name,
-          user__last_name, user__username.'
+        description: 'A search term. Searched fields: name, revocation_reason, user__email,
+          user__first_name, user__last_name, user__username.'
         schema:
           type: string
       - in: query
@@ -24127,13 +24143,19 @@ paths:
           description: ''
     delete:
       operationId: user_tokens_destroy
-      description: Details for a user token.
+      description: Revoke this specific user token.
       parameters:
       - in: path
         name: id
         schema:
           type: integer
         required: true
+      - in: query
+        name: revocation_reason
+        schema:
+          type: string
+          default: ''
+        description: Reason for revoking the token.
       tags:
       - user
       security:
@@ -26944,11 +26966,39 @@ components:
           type: boolean
           description: Return True if the token is currently used to call the endpoint.
           readOnly: true
+        revoked_by:
+          type: integer
+          nullable: true
+          description: User who revoked the token
+        revoked_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        issued_by:
+          type: integer
+          nullable: true
+          description: User who issued the token
+        issued_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        token_version:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: Version of the API token
+        revocation_reason:
+          type: string
+          nullable: true
+          description: As entered by the user or action during revocation
       required:
       - active
       - created
       - id
       - in_use
+      - issued_by_detail
+      - revoked_by_detail
       - token
       - user_detail
     Attachment:

@@ -290,7 +290,7 @@ public class TestUserApi extends TestApi {
         int offset = 0;
 
         PaginatedApiTokenList tokenList;
-        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        tokenList = api.userTokensList(limit, null, offset, null, false, null, null, null);
         assertEquals(0, tokenList.getCount(), "Expect initial state of no (unrevoked) user tokens");
 
         GetAuthToken actual = api.userMeTokenRetrieve(tokenName);
@@ -299,12 +299,12 @@ public class TestUserApi extends TestApi {
         // actual.getExpiry();
         // actual.getToken();
 
-        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        tokenList = api.userTokensList(limit, null, offset, null, false, null, null, null);
         assertEquals(1, tokenList.getCount(), "Expect newly created token");
 
-        api.userTokensDestroy(tokenList.getResults().get(0).getId());
+        api.userTokensDestroy(tokenList.getResults().get(0).getId(), null);
 
-        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        tokenList = api.userTokensList(limit, null, offset, null, false, null, null, null);
         assertEquals(0, tokenList.getCount(), "Expect token deleted");
     }
 
@@ -318,7 +318,7 @@ public class TestUserApi extends TestApi {
         int offset = 0;
 
         PaginatedApiTokenList tokenList;
-        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        tokenList = api.userTokensList(limit, null, offset, null, false, null, null, null);
         assertEquals(0, tokenList.getCount(), "Expect initial state of no (unrevoked) user tokens");
 
         ApiToken actual = api.userTokensCreate(tokenInput);
@@ -335,12 +335,12 @@ public class TestUserApi extends TestApi {
         // actual.getToken();
         // actual.getUser();
 
-        tokenList = api.userTokensList(limit, offset, null, false, null, null);
+        tokenList = api.userTokensList(limit, null, offset, null, false, null, null, null);
         assertEquals(1, tokenList.getCount(), "Expect newly created token");
         assertEquals(actual.getId(), tokenList.getResults().get(0).getId(),
                 "Expected created token");
 
-        api.userTokensDestroy(actual.getId());
+        api.userTokensDestroy(actual.getId(), null);
 
         ApiToken deleted = api.userTokensRetrieve(actual.getId(), false);
         assertTrue(deleted.getRevoked(), "Incorrect revoked");
