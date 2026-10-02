@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '549'
+  version: '550'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -41325,6 +41325,11 @@ components:
           type: integer
           nullable: true
           description: Select destination location for received items
+        batch_code:
+          type: string
+          default: ''
+          description: Enter batch code for incoming stock items - applied to any
+            line item which does not specify its own batch code
       required:
       - items
     ReferenceStatusEnum:
