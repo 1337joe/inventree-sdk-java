@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.w3asel.inventree.InventreeDemoDataset;
 import com.w3asel.inventree.InventreeDemoDataset.Model;
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.AvailableTransition;
 import com.w3asel.inventree.model.BulkRequest;
 import com.w3asel.inventree.model.GenericStateClass;
 import com.w3asel.inventree.model.PaginatedSalesOrderList;
@@ -34,7 +35,7 @@ public class TestOrderApi extends TestApi {
     @Disabled
     @Test
     void todo() throws ApiException {
-        api.orderPoCancelCreate(null);
+        api.orderPoCancelCreate(null, null);
         api.orderPoCompleteCreate(null, null);
         api.orderPoCreate(null);
         api.orderPoDestroy(null);
@@ -45,8 +46,8 @@ public class TestOrderApi extends TestApi {
         api.orderPoExtraLinePartialUpdate(null, null);
         api.orderPoExtraLineRetrieve(null);
         api.orderPoExtraLineUpdate(null, null);
-        api.orderPoHoldCreate(null);
-        api.orderPoIssueCreate(null);
+        api.orderPoHoldCreate(null, null);
+        api.orderPoIssueCreate(null, null);
         api.orderPoLineBulkDestroy(null);
         api.orderPoLineCreate(null);
         api.orderPoLineDestroy(null);
@@ -62,6 +63,7 @@ public class TestOrderApi extends TestApi {
         // api.orderPoReceiveCreate(null, null);
         api.orderPoRetrieve(null);
         // api.orderPoStatusRetrieve();
+        // api.orderPoTransitionsRetrieve(null);
         api.orderPoUpdate(null, null);
 
         api.orderRoCancelCreate(null);
@@ -245,6 +247,15 @@ public class TestOrderApi extends TestApi {
         GenericStateClass actual = api.orderPoStatusRetrieve();
         assertNotNull(actual, "Expected populated status");
         assertEquals("PurchaseOrderStatus", actual.getStatusClass(), "Incorrect status class");
+    }
+
+    @Disabled("Returns list, not single element")
+    @Test
+    void orderPoTransitionsRetrieve() throws ApiException {
+        int orderPk = InventreeDemoDataset.getObjects(Model.ORDER_PURCHASE, null).get(0)
+                .get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt();
+        AvailableTransition actual = api.orderPoTransitionsRetrieve(orderPk);
+        assertNotNull(actual, "Expected populated transitions");
     }
 
     @Test

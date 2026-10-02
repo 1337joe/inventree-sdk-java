@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '550'
+  version: '551'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -10240,13 +10240,17 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/order/po/{id}/cancel/:
-    post:
-      operationId: order_po_cancel_create
+  /api/order/po/{id}/_transitions/:
+    get:
+      operationId: order_po__transitions_retrieve
       description: |-
-        API endpoint to 'cancel' a purchase order.
+        List the FSM transitions reachable from this object's current state.
 
-        The purchase order must be in a state which can be cancelled
+        Blocked transitions are included and flagged with their reason.
+
+        Only transitions this viewset exposes as an endpoint are reported: ``available_transitions``
+        matches by state field name, so restricting the answer to this viewset's own endpoints keeps
+        every entry something the client can POST to.
       parameters:
       - in: path
         name: id
@@ -10263,12 +10267,50 @@ paths:
       - oauth2:
         - g:read
       responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableTransition'
+          description: ''
+  /api/order/po/{id}/cancel/:
+    post:
+      operationId: order_po_cancel_create
+      description: API endpoint to 'cancel_order' the current item.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Purchase Order.
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:add:purchase_order
+      responses:
         '201':
           description: No response body
   /api/order/po/{id}/complete/:
     post:
       operationId: order_po_complete_create
-      description: API endpoint to 'complete' a purchase order.
+      description: API endpoint to 'complete_order' the current item.
       parameters:
       - in: path
         name: id
@@ -10305,7 +10347,7 @@ paths:
   /api/order/po/{id}/hold/:
     post:
       operationId: order_po_hold_create
-      description: API endpoint to place a PurchaseOrder on hold.
+      description: API endpoint to 'hold_order' the current item.
       parameters:
       - in: path
         name: id
@@ -10315,19 +10357,31 @@ paths:
         required: true
       tags:
       - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+        required: true
       security:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:purchase_order
       responses:
         '201':
           description: No response body
   /api/order/po/{id}/issue/:
     post:
       operationId: order_po_issue_create
-      description: API endpoint to 'issue' (place) a PurchaseOrder.
+      description: API endpoint to 'place_order' the current item.
       parameters:
       - in: path
         name: id
@@ -10337,12 +10391,24 @@ paths:
         required: true
       tags:
       - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+        required: true
       security:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:purchase_order
       responses:
         '201':
           description: No response body
@@ -27143,6 +27209,35 @@ components:
         * `password` - Resource owner password-based
         * `client-credentials` - Client credentials
         * `openid-hybrid` - OpenID connect hybrid
+    AvailableTransition:
+      type: object
+      description: Listing of available transitions for a given object.
+      properties:
+        name:
+          type: string
+          readOnly: true
+        url_path:
+          type: string
+          readOnly: true
+        target:
+          type: string
+          readOnly: true
+        label:
+          type: string
+          readOnly: true
+        blocked:
+          type: boolean
+          readOnly: true
+        blocking_reason:
+          type: string
+          readOnly: true
+          nullable: true
+      required:
+      - blocked
+      - label
+      - name
+      - target
+      - url_path
     Barcode:
       type: object
       description: Generic serializer for receiving barcode data.
