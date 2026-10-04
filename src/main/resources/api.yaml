@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '551'
+  version: '552'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -10242,7 +10242,7 @@ paths:
           description: No response body
   /api/order/po/{id}/_transitions/:
     get:
-      operationId: order_po__transitions_retrieve
+      operationId: order_po__transitions_list
       description: |-
         List the FSM transitions reachable from this object's current state.
 
@@ -10271,7 +10271,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AvailableTransition'
+                type: array
+                items:
+                  $ref: '#/components/schemas/AvailableTransition'
           description: ''
   /api/order/po/{id}/cancel/:
     post:

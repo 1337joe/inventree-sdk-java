@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class TestOrderApi extends TestApi {
     private OrderApi api;
@@ -63,7 +65,7 @@ public class TestOrderApi extends TestApi {
         // api.orderPoReceiveCreate(null, null);
         api.orderPoRetrieve(null);
         // api.orderPoStatusRetrieve();
-        // api.orderPoTransitionsRetrieve(null);
+        // api.orderPoTransitionsList(null);
         api.orderPoUpdate(null, null);
 
         api.orderRoCancelCreate(null);
@@ -241,7 +243,6 @@ public class TestOrderApi extends TestApi {
         }
     }
 
-    @Disabled("404 Not Found")
     @Test
     void orderPoStatusRetrieve() throws ApiException {
         GenericStateClass actual = api.orderPoStatusRetrieve();
@@ -249,13 +250,28 @@ public class TestOrderApi extends TestApi {
         assertEquals("PurchaseOrderStatus", actual.getStatusClass(), "Incorrect status class");
     }
 
-    @Disabled("Returns list, not single element")
-    @Test
-    void orderPoTransitionsRetrieve() throws ApiException {
-        int orderPk = InventreeDemoDataset.getObjects(Model.ORDER_PURCHASE, null).get(0)
-                .get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt();
-        AvailableTransition actual = api.orderPoTransitionsRetrieve(orderPk);
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void orderPoTransitionsList(int orderPk) throws ApiException {
+        List<AvailableTransition> actual = api.orderPoTransitionsList(orderPk);
         assertNotNull(actual, "Expected populated transitions");
+
+        int expectedCount;
+        switch (orderPk) {
+            case 1:
+                expectedCount = 2;
+                break;
+            case 2:
+                expectedCount = 3;
+                break;
+            case 3:
+                expectedCount = 0;
+                break;
+            default:
+                expectedCount = 0;
+                break;
+        };
+        assertEquals(expectedCount, actual.size(), "Incorrect transition count");
     }
 
     @Test
