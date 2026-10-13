@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '553'
+  version: '554'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27069,6 +27069,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
         issued_by:
           type: integer
           nullable: true
@@ -27077,6 +27078,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/User'
           readOnly: true
+          nullable: true
         token_version:
           type: integer
           maximum: 9223372036854775807
@@ -27092,8 +27094,6 @@ components:
       - created
       - id
       - in_use
-      - issued_by_detail
-      - revoked_by_detail
       - token
       - user_detail
     Attachment:
@@ -31286,6 +31286,7 @@ components:
           additionalProperties: {}
           description: Roles associated with the user.
           readOnly: true
+          nullable: true
         permissions:
           type: object
           additionalProperties: {}
@@ -31302,7 +31303,6 @@ components:
       - last_name
       - pk
       - profile
-      - roles
       - username
     Metadata:
       type: object
@@ -31590,6 +31590,7 @@ components:
         client_secret:
           type: string
           readOnly: true
+          nullable: true
           description: Client secret for authentication
         name:
           type: string
@@ -31616,7 +31617,6 @@ components:
       required:
       - authorization_grant_type
       - client_id
-      - client_secret
       - client_type
       - id
       - is_builtin
@@ -36496,6 +36496,7 @@ components:
           additionalProperties: {}
           description: Roles associated with the user.
           readOnly: true
+          nullable: true
         permissions:
           type: object
           additionalProperties: {}
@@ -36653,6 +36654,7 @@ components:
         client_secret:
           type: string
           readOnly: true
+          nullable: true
           description: Client secret for authentication
         name:
           type: string
