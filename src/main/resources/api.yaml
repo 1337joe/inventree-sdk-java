@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '554'
+  version: '555'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -4246,8 +4246,8 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: company__name, country, line1,
-          line2, postal_city, postal_code, title.'
+        description: 'A search term. Searched fields: company__name, country, email,
+          line1, line2, phone, postal_city, postal_code, title.'
         schema:
           type: string
       tags:
@@ -26884,6 +26884,19 @@ components:
           type: string
           description: Address country
           maxLength: 50
+        phone:
+          type: string
+          title: Phone number
+          description: Phone number for this address
+          maxLength: 50
+        email:
+          description: Email address for this address
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
         shipping_notes:
           type: string
           title: Courier shipping notes
@@ -26941,6 +26954,19 @@ components:
           type: string
           description: Address country
           maxLength: 50
+        phone:
+          type: string
+          title: Phone number
+          description: Phone number for this address
+          maxLength: 50
+        email:
+          description: Email address for this address
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
         shipping_notes:
           type: string
           title: Courier shipping notes
@@ -34846,6 +34872,19 @@ components:
           type: string
           description: Address country
           maxLength: 50
+        phone:
+          type: string
+          title: Phone number
+          description: Phone number for this address
+          maxLength: 50
+        email:
+          description: Email address for this address
+          oneOf:
+          - type: string
+            format: email
+            maxLength: 254
+          - type: string
+            maxLength: 0
         shipping_notes:
           type: string
           title: Courier shipping notes
@@ -39177,6 +39216,10 @@ components:
           nullable: true
           title: Address
           description: Shipping address for this shipment
+        contact:
+          type: integer
+          nullable: true
+          description: Point of contact for this shipment
         delivery_date:
           type: string
           format: date
@@ -39227,6 +39270,11 @@ components:
         checked_by_detail:
           allOf:
           - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
           readOnly: true
           nullable: true
         customer_detail:
@@ -42788,6 +42836,10 @@ components:
           nullable: true
           title: Address
           description: Shipping address for this shipment
+        contact:
+          type: integer
+          nullable: true
+          description: Point of contact for this shipment
         delivery_date:
           type: string
           format: date
@@ -42838,6 +42890,11 @@ components:
         checked_by_detail:
           allOf:
           - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
+        contact_detail:
+          allOf:
+          - $ref: '#/components/schemas/Contact'
           readOnly: true
           nullable: true
         customer_detail:

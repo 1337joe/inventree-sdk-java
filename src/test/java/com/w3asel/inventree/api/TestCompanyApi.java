@@ -199,6 +199,10 @@ public class TestCompanyApi extends TestApi {
         assertFieldEquals("shipping_notes", fields, actual.getShippingNotes());
         assertFieldEquals("internal_shipping_notes", fields, actual.getInternalShippingNotes());
         assertFieldEquals("link", fields, actual.getLink());
+
+        // Not yet in demo dataset
+        // assertFieldEquals("email", fields, actual.getEmail());
+        // assertFieldEquals("phone", fields, actual.getPhone());
     }
 
     @Test
