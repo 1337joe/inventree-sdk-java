@@ -59,6 +59,9 @@ public class TestUserApi extends TestApi {
         api.userMeProfileUpdate(null);
         // api.userMeRetrieve();
         // api.userMeRolesRetrieve();
+        api.userMeTipsPartialUpdate(null, null);
+        api.userMeTipsRetrieve(null);
+        api.userMeTipsUpdate(null, null);
         // api.userMeTokenRetrieve(null);
         api.userMeUpdate(null);
         api.userOwnerList(null, null, null, null, null);

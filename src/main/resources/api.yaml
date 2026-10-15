@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '556'
+  version: '557'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -23794,6 +23794,101 @@ paths:
               schema:
                 $ref: '#/components/schemas/Role'
           description: ''
+  /api/user/me/tips/{id}/:
+    get:
+      operationId: user_me_tips_retrieve
+      description: Detail endpoint for tip result manipulation.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TipResult'
+          description: ''
+    put:
+      operationId: user_me_tips_update
+      description: Detail endpoint for tip result manipulation.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TipResult'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TipResult'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TipResult'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TipResult'
+          description: ''
+    patch:
+      operationId: user_me_tips_partial_update
+      description: Detail endpoint for tip result manipulation.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTipResult'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTipResult'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTipResult'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - g:read
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TipResult'
+          description: ''
   /api/user/me/token/:
     get:
       operationId: user_me_token_retrieve
@@ -29813,6 +29908,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/BriefUserProfile'
           readOnly: true
+        tips:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          description: Return the user's known tip results, creating missing records
+            first.
+          readOnly: true
       required:
       - email
       - first_name
@@ -29820,6 +29923,7 @@ components:
       - last_name
       - pk
       - profile
+      - tips
       - username
     FailedTask:
       type: object
@@ -31319,6 +31423,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/UserProfile'
           readOnly: true
+        tips:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          description: Return the user's known tip results, creating missing records
+            first.
+          readOnly: true
         roles:
           type: object
           additionalProperties: {}
@@ -31341,6 +31453,7 @@ components:
       - last_name
       - pk
       - profile
+      - tips
       - username
     Metadata:
       type: object
@@ -36062,6 +36175,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/BriefUserProfile'
           readOnly: true
+        tips:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          description: Return the user's known tip results, creating missing records
+            first.
+          readOnly: true
     PatchedGlobalSettings:
       type: object
       description: Serializer for the InvenTreeSetting model.
@@ -36548,6 +36669,14 @@ components:
         profile:
           allOf:
           - $ref: '#/components/schemas/UserProfile'
+          readOnly: true
+        tips:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          description: Return the user's known tip results, creating missing records
+            first.
           readOnly: true
         roles:
           type: object
@@ -39994,6 +40123,29 @@ components:
           type: string
           readOnly: true
           pattern: ^[-\w]+$
+    PatchedTipResult:
+      type: object
+      description: Serializer for the TipResult model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        tip_id:
+          type: string
+          readOnly: true
+          title: Tip ID/Name
+        shown:
+          type: boolean
+          description: Was this tip shown?
+        finished:
+          type: boolean
+          description: Was this tip finished?
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The last time this tip result was updated
     PatchedTransferOrder:
       type: object
       description: Serializer for a TransferOrder object.
@@ -44606,6 +44758,33 @@ components:
           format: email
       required:
       - email
+    TipResult:
+      type: object
+      description: Serializer for the TipResult model.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        tip_id:
+          type: string
+          readOnly: true
+          title: Tip ID/Name
+        shown:
+          type: boolean
+          description: Was this tip shown?
+        finished:
+          type: boolean
+          description: Was this tip finished?
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          description: The last time this tip result was updated
+      required:
+      - pk
+      - tip_id
+      - updated
     TransferOrder:
       type: object
       description: Serializer for a TransferOrder object.
@@ -45163,6 +45342,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/BriefUserProfile'
           readOnly: true
+        tips:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+          description: Return the user's known tip results, creating missing records
+            first.
+          readOnly: true
       required:
       - email
       - first_name
@@ -45170,6 +45357,7 @@ components:
       - last_name
       - pk
       - profile
+      - tips
       - username
     UserProfile:
       type: object
