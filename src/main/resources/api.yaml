@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '555'
+  version: '556'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -3982,6 +3982,10 @@ paths:
           type: boolean
       - in: query
         name: is_customer
+        schema:
+          type: boolean
+      - in: query
+        name: is_internal
         schema:
           type: boolean
       - in: query
@@ -28831,6 +28835,9 @@ components:
         is_supplier:
           type: boolean
           description: Do you purchase items from this company?
+        is_internal:
+          type: boolean
+          description: Does this company represent your own organization?
         parts_supplied:
           type: integer
           readOnly: true
@@ -30052,6 +30059,10 @@ components:
           type: string
           readOnly: true
           nullable: true
+        model_filters:
+          type: object
+          additionalProperties: {}
+          readOnly: true
         api_url:
           type: string
           readOnly: true
@@ -30084,6 +30095,7 @@ components:
       - description
       - flags
       - key
+      - model_filters
       - name
       - pk
       - read_only
@@ -35710,6 +35722,9 @@ components:
         is_supplier:
           type: boolean
           description: Do you purchase items from this company?
+        is_internal:
+          type: boolean
+          description: Does this company represent your own organization?
         parts_supplied:
           type: integer
           readOnly: true
@@ -36082,6 +36097,10 @@ components:
           type: string
           readOnly: true
           nullable: true
+        model_filters:
+          type: object
+          additionalProperties: {}
+          readOnly: true
         api_url:
           type: string
           readOnly: true
@@ -40398,6 +40417,10 @@ components:
           type: string
           readOnly: true
           nullable: true
+        model_filters:
+          type: object
+          additionalProperties: {}
+          readOnly: true
         api_url:
           type: string
           readOnly: true
@@ -45264,6 +45287,10 @@ components:
           type: string
           readOnly: true
           nullable: true
+        model_filters:
+          type: object
+          additionalProperties: {}
+          readOnly: true
         api_url:
           type: string
           readOnly: true
@@ -45291,6 +45318,7 @@ components:
       - description
       - flags
       - key
+      - model_filters
       - name
       - pk
       - typ
