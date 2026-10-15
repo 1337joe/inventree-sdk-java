@@ -122,10 +122,8 @@ public class TestCompanyApi extends TestApi {
         assertFieldEquals("is_customer", fields, actual.getIsCustomer());
         assertFieldEquals("is_supplier", fields, actual.getIsSupplier());
         assertFieldEquals("is_manufacturer", fields, actual.getIsManufacturer());
+        assertFieldEquals("is_internal", fields, actual.getIsInternal());
         assertFieldEquals("currency", fields, actual.getCurrency());
-
-        // Not yet in demo dataset
-        // assertFieldEquals("is_internal", fields, actual.getIsInternal());
 
         if (detail) {
         }
@@ -202,10 +200,8 @@ public class TestCompanyApi extends TestApi {
         assertFieldEquals("shipping_notes", fields, actual.getShippingNotes());
         assertFieldEquals("internal_shipping_notes", fields, actual.getInternalShippingNotes());
         assertFieldEquals("link", fields, actual.getLink());
-
-        // Not yet in demo dataset
-        // assertFieldEquals("email", fields, actual.getEmail());
-        // assertFieldEquals("phone", fields, actual.getPhone());
+        assertFieldEquals("email", fields, actual.getEmail());
+        assertFieldEquals("phone", fields, actual.getPhone());
     }
 
     @Test
