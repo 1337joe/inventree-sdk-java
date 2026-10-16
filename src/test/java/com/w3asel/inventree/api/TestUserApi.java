@@ -21,6 +21,7 @@ import com.w3asel.inventree.model.PaginatedApiTokenList;
 import com.w3asel.inventree.model.PaginatedGroupList;
 import com.w3asel.inventree.model.PaginatedUserCreateList;
 import com.w3asel.inventree.model.Role;
+import com.w3asel.inventree.model.TipResult;
 import com.w3asel.inventree.model.UserCreate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,7 +61,7 @@ public class TestUserApi extends TestApi {
         // api.userMeRetrieve();
         // api.userMeRolesRetrieve();
         api.userMeTipsPartialUpdate(null, null);
-        api.userMeTipsRetrieve(null);
+        // api.userMeTipsRetrieve(null);
         api.userMeTipsUpdate(null, null);
         // api.userMeTokenRetrieve(null);
         api.userMeUpdate(null);
@@ -184,6 +185,14 @@ public class TestUserApi extends TestApi {
     }
 
     @ParameterizedTest
+    @ValueSource(ints = {1})
+    void userMeTipsRetrieve(int pk) throws ApiException {
+        TipResult actual = api.userMeTipsRetrieve(pk);
+        assertEquals(pk, actual.getPk(), "Incorrect pk returned");
+        // TODO further verify results when more results are present
+    }
+
+    @ParameterizedTest
     @ValueSource(booleans = {true, false})
     void userMeRetrieve_admin(boolean roles) throws ApiException {
         MeUser actual = api.userMeRetrieve(roles);
@@ -206,6 +215,7 @@ public class TestUserApi extends TestApi {
             assertTrue(actual.getRoles() == null || actual.getRoles().isEmpty(), "Expected roles to be null/empty");
             assertNull(actual.getPermissions(), "Expected permissions to be null");
         }
+        assertTrue(actual.getTips().size() > 0, "Expected tips to be populated");
     }
 
     private static void assertExtendedUserEquals(JsonObject expected, ExtendedUser actual) {
