@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '558'
+  version: '559'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -28215,6 +28215,7 @@ components:
         notes:
           type: string
           description: Optional notes for the stock consumption
+          maxLength: 512
     BuildConsumeAllocation:
       type: object
       description: Serializer for an individual BuildItem to be consumed against a
@@ -28529,6 +28530,7 @@ components:
           description: Complete outputs if stock has not been fully allocated
         notes:
           type: string
+          maxLength: 512
       required:
       - location
       - outputs
@@ -28549,6 +28551,7 @@ components:
         batch_code:
           type: string
           description: Batch code for this build output
+          maxLength: 100
         serial_numbers:
           type: string
           description: Enter serial numbers for build outputs
@@ -28607,6 +28610,7 @@ components:
         notes:
           type: string
           description: Reason for scrapping build output(s)
+          maxLength: 512
       required:
       - location
       - notes
@@ -29647,6 +29651,7 @@ components:
         notes:
           type: string
           description: Optional note field
+          maxLength: 512
       required:
       - items
       - quantity
@@ -30548,6 +30553,7 @@ components:
         note:
           type: string
           description: Add transaction note (optional)
+          maxLength: 512
       required:
       - stock_item
     InstanceInfo:
@@ -41622,6 +41628,7 @@ components:
           type: string
           default: ''
           description: Enter batch code for incoming stock items
+          maxLength: 100
         expiry_date:
           type: string
           format: date
@@ -41661,15 +41668,18 @@ components:
           type: string
           default: ''
           description: Override packaging information for incoming stock items
+          maxLength: 50
         note:
           type: string
           default: ''
           description: Additional note for incoming stock items
+          maxLength: 512
         barcode:
           type: string
           nullable: true
           default: ''
           description: Scanned barcode
+          maxLength: 500
       required:
       - line_item
       - quantity
@@ -41690,6 +41700,7 @@ components:
           default: ''
           description: Enter batch code for incoming stock items - applied to any
             line item which does not specify its own batch code
+          maxLength: 100
       required:
       - items
     ReferenceStatusEnum:
@@ -42316,6 +42327,7 @@ components:
           type: string
           default: ''
           description: Additional note for incoming stock items
+          maxLength: 512
       required:
       - items
       - location
@@ -43513,6 +43525,7 @@ components:
         notes:
           type: string
           description: Optional note field
+          maxLength: 512
       required:
       - destination
       - quantity
@@ -43649,6 +43662,7 @@ components:
         notes:
           type: string
           description: Stock transaction notes
+          maxLength: 512
       required:
       - items
     StockAdjustmentItem:
@@ -43738,6 +43752,7 @@ components:
         notes:
           type: string
           description: Stock assignment notes
+          maxLength: 512
       required:
       - customer
       - items
@@ -43797,6 +43812,7 @@ components:
           type: string
           title: Notes
           description: Add transaction note (optional)
+          maxLength: 512
       required:
       - items
     StockCount:
@@ -43810,6 +43826,7 @@ components:
         notes:
           type: string
           description: Stock transaction notes
+          maxLength: 512
         location:
           type: integer
           nullable: true
@@ -44243,6 +44260,7 @@ components:
         notes:
           type: string
           description: Stock merging notes
+          maxLength: 512
         allow_mismatched_suppliers:
           type: boolean
           description: Allow stock items with different supplier parts to be merged
@@ -44275,6 +44293,7 @@ components:
         notes:
           type: string
           description: Stock transaction notes
+          maxLength: 512
       required:
       - items
     StockReturn:
@@ -44288,6 +44307,7 @@ components:
         notes:
           type: string
           description: Stock transaction notes
+          maxLength: 512
         location:
           type: integer
           description: Destination stock location
@@ -44381,6 +44401,7 @@ components:
         notes:
           type: string
           description: Stock transaction notes
+          maxLength: 512
         location:
           type: integer
           description: Destination stock location
@@ -45268,6 +45289,7 @@ components:
           type: string
           title: Notes
           description: Add transaction note (optional)
+          maxLength: 512
       required:
       - location
     UniqueEnum:
