@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '557'
+  version: '558'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -37965,7 +37965,8 @@ components:
         address:
           type: integer
           nullable: true
-          description: Company address for this order
+          title: Supplier Address
+          description: Supplier address for this order
         status:
           type: integer
           readOnly: true
@@ -38076,6 +38077,24 @@ components:
           type: integer
           nullable: true
           description: Destination for received items
+        receiving_company:
+          type: integer
+          nullable: true
+          description: Internal company which is receiving the items
+        receiving_company_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
+          nullable: true
+        delivery_address:
+          type: integer
+          nullable: true
+          description: Delivery address for this order
+        delivery_address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
         updated_at:
           type: string
           format: date-time
@@ -41139,7 +41158,8 @@ components:
         address:
           type: integer
           nullable: true
-          description: Company address for this order
+          title: Supplier Address
+          description: Supplier address for this order
         status:
           type: integer
           readOnly: true
@@ -41250,6 +41270,24 @@ components:
           type: integer
           nullable: true
           description: Destination for received items
+        receiving_company:
+          type: integer
+          nullable: true
+          description: Internal company which is receiving the items
+        receiving_company_detail:
+          allOf:
+          - $ref: '#/components/schemas/CompanyBrief'
+          readOnly: true
+          nullable: true
+        delivery_address:
+          type: integer
+          nullable: true
+          description: Delivery address for this order
+        delivery_address_detail:
+          allOf:
+          - $ref: '#/components/schemas/AddressBrief'
+          readOnly: true
+          nullable: true
         updated_at:
           type: string
           format: date-time
