@@ -32,7 +32,7 @@ public class TestReportApi extends TestApi {
     void todo() throws ApiException {
         api.reportAssetCreate(null);
         api.reportAssetDestroy(null);
-        api.reportAssetList(null, null);
+        api.reportAssetList(null, null, null, null);
         api.reportAssetPartialUpdate(null, null);
         api.reportAssetRetrieve(null);
         api.reportAssetUpdate(null, null);
@@ -55,7 +55,7 @@ public class TestReportApi extends TestApi {
     void test() throws ApiException {
         // TODO verify results
         int limit = 1000;
-        api.reportAssetList(limit, null);
+        api.reportAssetList(limit, null, null, null);
         api.reportSnippetList(limit, null, null, null);
 
         // ReportAsset actual = api.reportAssetRetrieve(1);

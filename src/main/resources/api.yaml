@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '559'
+  version: '560'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -6572,10 +6572,17 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
+          enum:
+          - column_label
+          - -column_label
+          - field_name
+          - -field_name
+          - session
+          - -session
       - name: search
         required: false
         in: query
-        description: A search term.
+        description: 'A search term. Searched fields: column_label, field_name.'
         schema:
           type: string
       - in: query
@@ -7687,7 +7694,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name.'
+        description: 'A search term. Searched fields: driver, machine_type, name.'
         schema:
           type: string
       tags:
@@ -18747,6 +18754,21 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - description
+          - -description
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: description.'
+        schema:
+          type: string
       tags:
       - report
       security:
@@ -21496,7 +21518,7 @@ paths:
       - name: search
         required: false
         in: query
-        description: 'A search term. Searched fields: name.'
+        description: 'A search term. Searched fields: description, name.'
         schema:
           type: string
       tags:
