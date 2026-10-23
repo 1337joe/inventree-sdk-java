@@ -120,6 +120,7 @@ jobs:
       - name: Patch invoke tasks
         run: |
           cd InvenTree
+          sed -i "s/if branch != 'main':/if False:/g" tasks.py
           sed -i "s/-b {branch}/--revision={branch}/g" tasks.py
 
       # Invoke commands
