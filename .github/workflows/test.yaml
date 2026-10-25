@@ -107,16 +107,9 @@ jobs:
           sudo apt-get install ${{ env.apt_dependency }}
 
       # Find demo-dataset hash
-      - name: Checkout demo-dataset
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          repository: 'inventree/demo-dataset'
-          path: 'inventree-demo-dataset'
-          fetch-depth: 0
-      - name: Find prior demo-dataset commit hash
+      - name: Read demo dataset commit hash
         run: |
-          cd inventree-demo-dataset
-          echo "DATA_HASH=$(git log -1 --format="%H" --until="$COMMIT_DATE")" >> $GITHUB_ENV
+          echo "DATA_HASH=$(cat .github/demo-dataset_hash.txt)" >> $GITHUB_ENV
       - name: Patch invoke tasks
         run: |
           cd InvenTree

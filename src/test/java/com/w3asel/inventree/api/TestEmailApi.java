@@ -14,7 +14,7 @@ public class TestEmailApi extends TestApi {
         api = new EmailApi(apiClient);
     }
 
-    @Disabled("500: Internal Server Error")
+    @Disabled("Response: {status:ok}, not simple login object")
     @Test
     void emailGenerateCreate() throws ApiException {
         GetSimpleLogin input = new GetSimpleLogin().email("admin@demo.inventree.org");

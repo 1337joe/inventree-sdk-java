@@ -66,7 +66,7 @@ public class TestUserApi extends TestApi {
         // api.userMeTokenRetrieve(null);
         api.userMeUpdate(null);
         api.userOwnerList(null, null, null, null, null);
-        api.userOwnerRetrieve(null);
+        // api.userOwnerRetrieve(null);
         api.userPartialUpdate(null, null);
         // api.userRetrieve(null);
         api.userRulesetDestroy(null);
@@ -184,67 +184,6 @@ public class TestUserApi extends TestApi {
         }
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1})
-    void userMeTipsRetrieve(int pk) throws ApiException {
-        TipResult actual = api.userMeTipsRetrieve(pk);
-        assertEquals(pk, actual.getPk(), "Incorrect pk returned");
-        // TODO further verify results when more results are present
-    }
-
-    @ParameterizedTest
-    @ValueSource(booleans = {true, false})
-    void userMeRetrieve_admin(boolean roles) throws ApiException {
-        MeUser actual = api.userMeRetrieve(roles);
-        assertNotNull(actual);
-        assertEquals(1, actual.getPk(), "Incorrect pk returned");
-        assertEquals("admin", actual.getUsername(), "Incorrect username returned");
-        assertEquals("Adam", actual.getFirstName(), "Incorrect first name returned");
-        assertEquals("Administrator", actual.getLastName(), "Incorrect last name returned");
-        assertEquals("admin@demo.inventree.org", actual.getEmail(), "Incorrect email returned");
-        assertEquals(0, actual.getGroups().size(), "Incorrect groups returned");
-        assertTrue(actual.getIsStaff(), "Incorrect isStaff returned");
-        assertTrue(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
-        assertTrue(actual.getIsActive(), "Incorrect isActive returned");
-        if (roles) {
-            assertNotNull(actual.getRoles(), "Expected roles to be populated");
-            assertTrue(actual.getRoles().size() > 0, "Expected roles to be populated");
-            assertNotNull(actual.getPermissions(), "Expected permissions to be populated");
-            assertTrue(actual.getPermissions().size() > 0, "Expected permissions to be populated");
-        } else {
-            assertTrue(actual.getRoles() == null || actual.getRoles().isEmpty(), "Expected roles to be null/empty");
-            assertNull(actual.getPermissions(), "Expected permissions to be null");
-        }
-        assertTrue(actual.getTips().size() > 0, "Expected tips to be populated");
-    }
-
-    private static void assertExtendedUserEquals(JsonObject expected, ExtendedUser actual) {
-        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
-
-        JsonObject fields = InventreeDemoDataset.getFields(expected);
-
-        assertFieldEquals("is_superuser", fields, actual.getIsSuperuser());
-        assertFieldEquals("username", fields, actual.getUsername());
-        assertFieldEquals("first_name", fields, actual.getFirstName());
-        assertFieldEquals("last_name", fields, actual.getLastName());
-        assertFieldEquals("email", fields, actual.getEmail());
-        assertFieldEquals("is_staff", fields, actual.getIsStaff());
-        assertFieldEquals("is_active", fields, actual.getIsActive());
-
-        List<Group> groups = actual.getGroups();
-        List<String> actualGroupNames =
-                groups.stream().map(Group::getName).collect(Collectors.toList());
-        assertNullableFieldEquals(Iterable.class, "groups", fields, actualGroupNames);
-
-        // not directly available in demo dataset:
-        // actual.getProfile()
-
-        // not directly available from server response:
-        // "last_login"
-        // "date_joined"
-        // "user_permissions"
-    }
-
     @Test
     void userList() throws ApiException {
         List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.USER, null);
@@ -274,29 +213,67 @@ public class TestUserApi extends TestApi {
         // assertExtendedUserEquals(expectedFirst, actualFirst);
     }
 
-    @Test
-    void userOwnerRetrieve_readersGroup() throws ApiException {
-        Owner actual = api.userOwnerRetrieve(1);
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void userMeRetrieve_admin(boolean roles) throws ApiException {
+        MeUser actual = api.userMeRetrieve(roles);
         assertNotNull(actual);
+        assertEquals(1, actual.getPk(), "Incorrect pk returned");
+        assertEquals("admin", actual.getUsername(), "Incorrect username returned");
+        assertEquals("Adam", actual.getFirstName(), "Incorrect first name returned");
+        assertEquals("Administrator", actual.getLastName(), "Incorrect last name returned");
+        assertEquals("admin@demo.inventree.org", actual.getEmail(), "Incorrect email returned");
+        assertEquals(0, actual.getGroups().size(), "Incorrect groups returned");
+        assertTrue(actual.getIsStaff(), "Incorrect isStaff returned");
+        assertTrue(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
+        assertTrue(actual.getIsActive(), "Incorrect isActive returned");
+        if (roles) {
+            assertNotNull(actual.getRoles(), "Expected roles to be populated");
+            assertTrue(actual.getRoles().size() > 0, "Expected roles to be populated");
+            assertNotNull(actual.getPermissions(), "Expected permissions to be populated");
+            assertTrue(actual.getPermissions().size() > 0, "Expected permissions to be populated");
+        } else {
+            assertTrue(actual.getRoles() == null || actual.getRoles().isEmpty(), "Expected roles to be null/empty");
+            assertNull(actual.getPermissions(), "Expected permissions to be null");
+        }
+        assertTrue(actual.getTips().size() > 0, "Expected tips to be populated");
+    }
+
+    @Test
+    void userMeRolesRetrieve_admin() throws ApiException {
+        Role actual = api.userMeRolesRetrieve();
+        assertNotNull(actual);
+        assertEquals("admin", actual.getUsername(), "Incorrect username returned");
+        assertTrue(actual.getIsStaff(), "Incorrect isStaff returned");
+        assertTrue(actual.getIsSuperuser(), "Incorrect isSuperuser returned");
+        assertTrue(actual.getRoles().size() > 0, "Expected roles to be populated");
+        assertTrue(actual.getPermissions().size() > 0, "Expected permissions to be populated");
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 2})
-    void userRetrieve(int pk) throws ApiException {
-        ExtendedUser actual = api.userRetrieve(pk);
-        JsonObject expected = InventreeDemoDataset.getObjects(Model.USER, pk).get(0);
-        assertExtendedUserEquals(expected, actual);
-    }
+    @ValueSource(ints = {1})
+    void userMeTipsRetrieve_admin(int pk) throws ApiException {
+        TipResult actual = api.userMeTipsRetrieve(pk);
+        assertEquals(pk, actual.getPk(), "Incorrect pk returned");
 
-    @Test
-    void userRolesRetrieve_root() throws ApiException {
-        Role actual = api.userMeRolesRetrieve();
-        assertNotNull(actual);
+        String expectedTipId = null;
+        Boolean expectedShown = null;
+        Boolean expectedFinished = null;
+        if (pk == 1) {
+            expectedTipId = "org.inventree.i.tip.ftug";
+            expectedShown = false;
+            expectedFinished = true;
+        }
+
+        assertEquals(expectedTipId, actual.getTipId(), "Incorrect tipId returned");
+        assertEquals(expectedShown, actual.getShown(), "Incorrect shown returned");
+        // TODO inconsistent results between local and workflow tests, disabled for now
+        // assertEquals(expectedFinished, actual.getFinished(), "Incorrect finished returned");
     }
 
     @ResourceLock("userTokens")
     @Test
-    void userTokenRetrieve() throws ApiException {
+    void userMeTokenRetrieve() throws ApiException {
         String tokenName = "test-token-retrieve";
 
         int limit = 10;
@@ -321,9 +298,67 @@ public class TestUserApi extends TestApi {
         assertEquals(0, tokenList.getCount(), "Expect token deleted");
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {1})
+    void userOwnerRetrieve(int pk) throws ApiException {
+        Owner actual = api.userOwnerRetrieve(pk);
+        assertNotNull(actual, "Expected result");
+        assertEquals(pk, actual.getPk(), "Incorrect pk returned");
+
+        String expectedLabel = "group";
+        String expectedName = null;
+        Long expectedOwnerId = null;
+        String expectedOwnerModel = null;
+        if (pk == 1) {
+            expectedName = "readers";
+            expectedOwnerId = 1L;
+            expectedOwnerModel = "group";
+        }
+
+        assertEquals(expectedLabel, actual.getLabel(), "Incorrect label returned");
+        assertEquals(expectedName, actual.getName(), "Incorrect name returned");
+        assertEquals(expectedOwnerId, actual.getOwnerId(), "Incorrect ownerId returned");
+        assertEquals(expectedOwnerModel, actual.getOwnerModel(), "Incorrect ownerModel returned");
+    }
+
+    private static void assertExtendedUserEquals(JsonObject expected, ExtendedUser actual) {
+        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
+
+        JsonObject fields = InventreeDemoDataset.getFields(expected);
+
+        assertFieldEquals("is_superuser", fields, actual.getIsSuperuser());
+        assertFieldEquals("username", fields, actual.getUsername());
+        assertFieldEquals("first_name", fields, actual.getFirstName());
+        assertFieldEquals("last_name", fields, actual.getLastName());
+        assertFieldEquals("email", fields, actual.getEmail());
+        assertFieldEquals("is_staff", fields, actual.getIsStaff());
+        assertFieldEquals("is_active", fields, actual.getIsActive());
+
+        List<Group> groups = actual.getGroups();
+        List<String> actualGroupNames =
+                groups.stream().map(Group::getName).collect(Collectors.toList());
+        assertNullableFieldEquals(Iterable.class, "groups", fields, actualGroupNames);
+
+        // not directly available in demo dataset:
+        // actual.getProfile()
+
+        // not directly available from server response:
+        // "last_login"
+        // "date_joined"
+        // "user_permissions"
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2})
+    void userRetrieve(int pk) throws ApiException {
+        ExtendedUser actual = api.userRetrieve(pk);
+        JsonObject expected = InventreeDemoDataset.getObjects(Model.USER, pk).get(0);
+        assertExtendedUserEquals(expected, actual);
+    }
+
     @ResourceLock("userTokens")
     @Test
-    void userTokenCreate() throws ApiException {
+    void userTokenCreate_Destroy_List_Retrieve() throws ApiException {
         String tokenName = "test-token-create";
         ApiToken tokenInput = new ApiToken().name(tokenName);
 

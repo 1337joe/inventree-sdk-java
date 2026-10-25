@@ -9,6 +9,7 @@ import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.Config;
 import com.w3asel.inventree.model.EmailMessage;
 import com.w3asel.inventree.model.PaginatedEmailMessageList;
+import com.w3asel.inventree.model.PaginatedSocialAppList;
 import com.w3asel.inventree.model.TestEmail;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -53,7 +54,7 @@ public class TestAdminApi extends TestApi {
         api.adminScimList(null, null);
         api.adminSsoCreate(null);
         api.adminSsoDestroy(null);
-        api.adminSsoList(null, null);
+        // api.adminSsoList(null, null);
         api.adminSsoPartialUpdate(null, null);
         api.adminSsoRetrieve(null);
         api.adminSsoUpdate(null, null);
@@ -66,7 +67,6 @@ public class TestAdminApi extends TestApi {
         api.adminOauth2List(limit, offset);
         // TODO return isn't paginated
         // api.adminScimList(limit, offset);
-        api.adminSsoList(limit, offset);
     }
 
     @Test
@@ -138,5 +138,32 @@ public class TestAdminApi extends TestApi {
         assertEquals(400, thrown.getCode(), "Expected HTTP 400 Bad Request");
         assertTrue(thrown.getMessage().contains("Email server not configured"),
                 "Should contain Email server not configured: " + thrown.getMessage());
+    }
+
+    @Test
+    void adminSsoList() throws ApiException {
+        // TODO no demo data
+        // List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.SocialApp, null);
+        // assertTrue(expectedList.size() > 0, "Expected demo data");
+
+        int limit = 10;
+        int offset = 0;
+        PaginatedSocialAppList actual = api.adminSsoList(limit, offset);
+        // assertTrue(expectedList.size() <= actual.getCount(), "Incorrect social app list count");
+        // List<SocialApp> actualList = actual.getResults();
+        //
+        // // check items returned by key
+        // List<Integer> expectedPks = expectedList.stream()
+        // .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
+        // .collect(Collectors.toList());
+        // List<Integer> actualPks =
+        // actualList.stream().map(c -> c.getId()).sorted().collect(Collectors.toList());
+        // assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
+        //
+        // // deep equals on first value
+        // SocialApp actualFirst = actualList.get(0);
+        // JsonObject expectedFirst =
+        // InventreeDemoDataset.getObjects(Model.SocialApp, actualFirst.getId()).get(0);
+        // assertSocialAppEquals(expectedFirst, actualFirst, false);
     }
 }
