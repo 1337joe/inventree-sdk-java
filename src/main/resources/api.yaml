@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '564'
+  version: '565'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1032,6 +1032,139 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/audit/:
+    get:
+      operationId: audit_list
+      description: |-
+        API endpoint for audit log entries (read-only).
+
+        - GET (list): Return a list of audit log entries
+        - GET (detail): Return a single audit log entry
+      parameters:
+      - in: query
+        name: action
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+        description: |-
+          * `0` - create
+          * `1` - update
+          * `2` - delete
+          * `3` - access
+      - in: query
+        name: actor
+        schema:
+          type: integer
+      - in: query
+        name: cid
+        schema:
+          type: string
+      - in: query
+        name: include_children
+        schema:
+          type: boolean
+        description: Include entries for child objects (default = true)
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: max_date
+        schema:
+          type: string
+          format: date
+        description: Max Date
+      - in: query
+        name: min_date
+        schema:
+          type: string
+          format: date
+        description: Min Date
+      - in: query
+        name: model_id
+        schema:
+          type: string
+        description: Primary key of the object (requires model_type)
+      - in: query
+        name: model_type
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - timestamp
+          - -timestamp
+          - action
+          - -action
+          - actor
+          - -actor
+      - name: search
+        required: false
+        in: query
+        description: 'A search term. Searched fields: actor__username, object_repr.'
+        schema:
+          type: string
+      tags:
+      - audit
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:staff
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAuditLogEntryList'
+          description: ''
+  /api/audit/{id}/:
+    get:
+      operationId: audit_retrieve
+      description: |-
+        API endpoint for audit log entries (read-only).
+
+        - GET (list): Return a list of audit log entries
+        - GET (detail): Return a single audit log entry
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Audit Log Entry.
+        required: true
+      tags:
+      - audit
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:staff
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogEntry'
+          description: ''
   /api/background-task/:
     get:
       operationId: background_task_overview
@@ -26963,6 +27096,18 @@ components:
         * `reject` - Not permitted
         * `accept` - Accept as consumed by this build order
         * `trim` - Deallocate before completing this build order
+    ActionEnum:
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      type: integer
+      description: |-
+        * `0` - create
+        * `1` - update
+        * `2` - delete
+        * `3` - access
     ActionPlugin:
       type: object
       description: Serializer for the ActionPluginView responses.
@@ -27370,6 +27515,149 @@ components:
         * `transferorder` - Transfer Order
         * `part` - Part
         * `stockitem` - Stock Item
+    AuditChangeDetail:
+      type: object
+      description: Describes a single field change within an audit log entry.
+      properties:
+        field:
+          type: string
+        label:
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AuditChangeDetailTypeEnum'
+          title: Change Type
+        old:
+          nullable: true
+        new:
+          nullable: true
+        old_display:
+          type: string
+          nullable: true
+        new_display:
+          type: string
+          nullable: true
+        model_type:
+          type: string
+          nullable: true
+          description: Related model (for FK fields)
+        operation:
+          type: string
+          nullable: true
+          description: M2M operation (add / delete)
+        objects:
+          type: array
+          items:
+            type: string
+          nullable: true
+        numeric:
+          type: boolean
+          description: The field holds a numeric value
+      required:
+      - field
+      - label
+      - type
+    AuditChangeDetailTypeEnum:
+      enum:
+      - value
+      - fk
+      - m2m
+      type: string
+      description: |-
+        * `value` - value
+        * `fk` - fk
+        * `m2m` - m2m
+    AuditLogEntry:
+      type: object
+      description: Serializer for the AuditLogEntry model (read-only).
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        action:
+          allOf:
+          - $ref: '#/components/schemas/ActionEnum'
+          readOnly: true
+        action_label:
+          type: string
+          readOnly: true
+          title: Action
+        actor:
+          type: integer
+          readOnly: true
+          nullable: true
+        actor_detail:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+          nullable: true
+        actor_username:
+          type: string
+          readOnly: true
+          nullable: true
+        model_type:
+          type: string
+          readOnly: true
+        model_label:
+          type: string
+          description: Return the human readable name of the audited model.
+          readOnly: true
+        object_pk:
+          type: string
+          readOnly: true
+        object_repr:
+          type: string
+          readOnly: true
+          title: Object representation
+        parent_model_type:
+          type: string
+          readOnly: true
+          nullable: true
+        parent_object_pk:
+          type: string
+          readOnly: true
+          nullable: true
+        changes:
+          readOnly: true
+        changes_detail:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditChangeDetail'
+          readOnly: true
+          title: Change Details
+        cid:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Correlation ID
+        additional_data:
+          readOnly: true
+          nullable: true
+        remote_addr:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Remote address
+        remote_port:
+          type: integer
+          readOnly: true
+          nullable: true
+      required:
+      - action
+      - action_label
+      - changes
+      - changes_detail
+      - model_label
+      - model_type
+      - object_pk
+      - object_repr
+      - pk
+      - timestamp
     AuthorizationGrantTypeEnum:
       enum:
       - authorization-code
@@ -31974,6 +32262,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attachment'
+    PaginatedAuditLogEntryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogEntry'
     PaginatedBarcodeScanResultList:
       type: object
       required:
