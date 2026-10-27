@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '561'
+  version: '562'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -7030,6 +7030,7 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
+        - r:change:pricing
         - r:change:stock_location
         - r:change:stock
         - r:change:bom
@@ -7062,6 +7063,7 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
+        - r:change:pricing
         - r:change:stock_location
         - r:change:stock
         - r:change:bom
@@ -7141,6 +7143,7 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
+        - r:change:pricing
         - r:change:stock_location
         - r:change:stock
         - r:change:bom
@@ -7186,6 +7189,7 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
+        - r:change:pricing
         - r:change:stock_location
         - r:change:stock
         - r:change:bom
@@ -7220,6 +7224,7 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
+        - r:change:pricing
         - r:change:stock_location
         - r:change:stock
         - r:change:bom
@@ -8192,6 +8197,7 @@ paths:
         - r:view:admin
         - r:view:part_category
         - r:view:part
+        - r:view:pricing
         - r:view:stock_location
         - r:view:stock
         - r:view:bom
@@ -8249,6 +8255,7 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
+        - r:change:pricing
         - r:change:stock_location
         - r:change:stock
         - r:change:bom
@@ -8305,6 +8312,7 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
+        - r:change:pricing
         - r:change:stock_location
         - r:change:stock
         - r:change:bom
@@ -8345,6 +8353,7 @@ paths:
         - r:view:admin
         - r:view:part_category
         - r:view:part
+        - r:view:pricing
         - r:view:stock_location
         - r:view:stock
         - r:view:bom
@@ -8396,6 +8405,7 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
+        - r:change:pricing
         - r:change:stock_location
         - r:change:stock
         - r:change:bom
@@ -8447,6 +8457,7 @@ paths:
         - r:change:admin
         - r:change:part_category
         - r:change:part
+        - r:change:pricing
         - r:change:stock_location
         - r:change:stock
         - r:change:bom
@@ -15793,101 +15804,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/PartBomValidate'
           description: ''
-  /api/part/{id}/pricing/:
-    get:
-      operationId: part_pricing_retrieve
-      description: API endpoint for viewing part pricing data.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartPricing'
-          description: ''
-    put:
-      operationId: part_pricing_update
-      description: API endpoint for viewing part pricing data.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartPricing'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartPricing'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartPricing'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartPricing'
-          description: ''
-    patch:
-      operationId: part_pricing_partial_update
-      description: API endpoint for viewing part pricing data.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedPartPricing'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedPartPricing'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedPartPricing'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartPricing'
-          description: ''
   /api/part/{id}/requirements/:
     get:
       operationId: part_requirements_retrieve
@@ -16537,205 +16453,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedCategoryTreeList'
           description: ''
-  /api/part/internal-price/:
-    get:
-      operationId: part_internal_price_list
-      description: API endpoint for list view of PartInternalPriceBreak model.
-      parameters:
-      - name: limit
-        required: true
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-          enum:
-          - quantity
-          - -quantity
-          - price
-          - -price
-      - in: query
-        name: part
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedPartInternalPriceList'
-          description: ''
-    post:
-      operationId: part_internal_price_create
-      description: API endpoint for list view of PartInternalPriceBreak model.
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartInternalPrice'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartInternalPrice'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartInternalPrice'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:add:part
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartInternalPrice'
-          description: ''
-  /api/part/internal-price/{id}/:
-    get:
-      operationId: part_internal_price_retrieve
-      description: Detail endpoint for PartInternalPriceBreak model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartInternalPrice'
-          description: ''
-    put:
-      operationId: part_internal_price_update
-      description: Detail endpoint for PartInternalPriceBreak model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartInternalPrice'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartInternalPrice'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartInternalPrice'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartInternalPrice'
-          description: ''
-    patch:
-      operationId: part_internal_price_partial_update
-      description: Detail endpoint for PartInternalPriceBreak model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedPartInternalPrice'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedPartInternalPrice'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedPartInternalPrice'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartInternalPrice'
-          description: ''
-    delete:
-      operationId: part_internal_price_destroy
-      description: Detail endpoint for PartInternalPriceBreak model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:delete:part
-      responses:
-        '204':
-          description: No response body
   /api/part/related/:
     get:
       operationId: part_related_list
@@ -16922,205 +16639,6 @@ paths:
     delete:
       operationId: part_related_destroy
       description: API endpoint for accessing detail view of a PartRelated object.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:delete:part
-      responses:
-        '204':
-          description: No response body
-  /api/part/sale-price/:
-    get:
-      operationId: part_sale_price_list
-      description: API endpoint for list view of PartSalePriceBreak model.
-      parameters:
-      - name: limit
-        required: true
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-          enum:
-          - quantity
-          - -quantity
-          - price
-          - -price
-      - in: query
-        name: part
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedPartSalePriceList'
-          description: ''
-    post:
-      operationId: part_sale_price_create
-      description: API endpoint for list view of PartSalePriceBreak model.
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartSalePrice'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartSalePrice'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartSalePrice'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:add:part
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartSalePrice'
-          description: ''
-  /api/part/sale-price/{id}/:
-    get:
-      operationId: part_sale_price_retrieve
-      description: Detail endpoint for PartSellPriceBreak model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartSalePrice'
-          description: ''
-    put:
-      operationId: part_sale_price_update
-      description: Detail endpoint for PartSellPriceBreak model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PartSalePrice'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PartSalePrice'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PartSalePrice'
-        required: true
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartSalePrice'
-          description: ''
-    patch:
-      operationId: part_sale_price_partial_update
-      description: Detail endpoint for PartSellPriceBreak model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedPartSalePrice'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedPartSalePrice'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedPartSalePrice'
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:change:part
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PartSalePrice'
-          description: ''
-    delete:
-      operationId: part_sale_price_destroy
-      description: Detail endpoint for PartSellPriceBreak model.
       parameters:
       - in: path
         name: id
@@ -18540,6 +18058,508 @@ paths:
                 items:
                   $ref: '#/components/schemas/PluginUIFeature'
           description: ''
+  /api/pricing/internal-price/:
+    get:
+      operationId: pricing_internal_price_list
+      description: API endpoint for list view of PartInternalPriceBreak model.
+      parameters:
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - quantity
+          - -quantity
+          - price
+          - -price
+      - in: query
+        name: part
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - pricing
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPartInternalPriceList'
+          description: ''
+    post:
+      operationId: pricing_internal_price_create
+      description: API endpoint for list view of PartInternalPriceBreak model.
+      tags:
+      - pricing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartInternalPrice'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartInternalPrice'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartInternalPrice'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:add:pricing
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartInternalPrice'
+          description: ''
+  /api/pricing/internal-price/{id}/:
+    get:
+      operationId: pricing_internal_price_retrieve
+      description: Detail endpoint for PartInternalPriceBreak model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartInternalPrice'
+          description: ''
+    put:
+      operationId: pricing_internal_price_update
+      description: Detail endpoint for PartInternalPriceBreak model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartInternalPrice'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartInternalPrice'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartInternalPrice'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartInternalPrice'
+          description: ''
+    patch:
+      operationId: pricing_internal_price_partial_update
+      description: Detail endpoint for PartInternalPriceBreak model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPartInternalPrice'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPartInternalPrice'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPartInternalPrice'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartInternalPrice'
+          description: ''
+    delete:
+      operationId: pricing_internal_price_destroy
+      description: Detail endpoint for PartInternalPriceBreak model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:pricing
+      responses:
+        '204':
+          description: No response body
+  /api/pricing/part/{id}/:
+    get:
+      operationId: pricing_part_retrieve
+      description: |-
+        API endpoint for viewing part pricing data.
+
+        Note: The URL 'pk' refers to the linked Part instance (not the PartPricing instance).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartPricing'
+          description: ''
+    put:
+      operationId: pricing_part_update
+      description: |-
+        API endpoint for viewing part pricing data.
+
+        Note: The URL 'pk' refers to the linked Part instance (not the PartPricing instance).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartPricing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartPricing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartPricing'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartPricing'
+          description: ''
+    patch:
+      operationId: pricing_part_partial_update
+      description: |-
+        API endpoint for viewing part pricing data.
+
+        Note: The URL 'pk' refers to the linked Part instance (not the PartPricing instance).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPartPricing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPartPricing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPartPricing'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartPricing'
+          description: ''
+  /api/pricing/sale-price/:
+    get:
+      operationId: pricing_sale_price_list
+      description: API endpoint for list view of PartSalePriceBreak model.
+      parameters:
+      - name: limit
+        required: true
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+          enum:
+          - quantity
+          - -quantity
+          - price
+          - -price
+      - in: query
+        name: part
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - pricing
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPartSalePriceList'
+          description: ''
+    post:
+      operationId: pricing_sale_price_create
+      description: API endpoint for list view of PartSalePriceBreak model.
+      tags:
+      - pricing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartSalePrice'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartSalePrice'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartSalePrice'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:add:pricing
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartSalePrice'
+          description: ''
+  /api/pricing/sale-price/{id}/:
+    get:
+      operationId: pricing_sale_price_retrieve
+      description: Detail endpoint for PartSellPriceBreak model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:view:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartSalePrice'
+          description: ''
+    put:
+      operationId: pricing_sale_price_update
+      description: Detail endpoint for PartSellPriceBreak model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartSalePrice'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartSalePrice'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartSalePrice'
+        required: true
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartSalePrice'
+          description: ''
+    patch:
+      operationId: pricing_sale_price_partial_update
+      description: Detail endpoint for PartSellPriceBreak model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPartSalePrice'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPartSalePrice'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPartSalePrice'
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:change:pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartSalePrice'
+          description: ''
+    delete:
+      operationId: pricing_sale_price_destroy
+      description: Detail endpoint for PartSellPriceBreak model.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - pricing
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - r:delete:pricing
+      responses:
+        '204':
+          description: No response body
   /api/project-code/:
     get:
       operationId: project_code_list
@@ -24045,6 +24065,7 @@ paths:
           - build
           - part
           - part_category
+          - pricing
           - purchase_order
           - return_order
           - sales_order
@@ -24057,6 +24078,7 @@ paths:
           * `admin` - Admin
           * `part_category` - Part Categories
           * `part` - Parts
+          * `pricing` - Pricing
           * `bom` - Bills of Material
           * `stock_location` - Stock Locations
           * `stock` - Stock Items
@@ -29467,10 +29489,10 @@ components:
       - customunit
       - parametertemplate
       - parameter
-      - partcategory
-      - parttesttemplate
       - partsellpricebreak
       - partinternalpricebreak
+      - partcategory
+      - parttesttemplate
       - part
       - bomitem
       - partcategoryparametertemplate
@@ -29504,10 +29526,10 @@ components:
         * `customunit` - Custom Unit
         * `parametertemplate` - Parameter Template
         * `parameter` - Parameter
-        * `partcategory` - Part Category
-        * `parttesttemplate` - Part Test Template
         * `partsellpricebreak` - Part Sale Price Break
         * `partinternalpricebreak` - Part Internal Price Break
+        * `partcategory` - Part Category
+        * `parttesttemplate` - Part Test Template
         * `part` - Part
         * `bomitem` - BOM Item
         * `partcategoryparametertemplate` - Part Category Parameter Template
@@ -31523,6 +31545,7 @@ components:
       - admin
       - part_category
       - part
+      - pricing
       - bom
       - stock_location
       - stock
@@ -31536,6 +31559,7 @@ components:
         * `admin` - Admin
         * `part_category` - Part Categories
         * `part` - Parts
+        * `pricing` - Pricing
         * `bom` - Bills of Material
         * `stock_location` - Stock Locations
         * `stock` - Stock Items
@@ -34439,7 +34463,7 @@ components:
           type: string
           title: Currency
           description: |-
-            Purchase currency of this stock item
+            Currency for this price break
 
             * `AUD` - AUD - Australian Dollar
             * `CAD` - CAD - Canadian Dollar
@@ -34747,7 +34771,7 @@ components:
           type: string
           title: Currency
           description: |-
-            Purchase currency of this stock item
+            Currency for this price break
 
             * `AUD` - AUD - Australian Dollar
             * `CAD` - CAD - Canadian Dollar
@@ -37353,7 +37377,7 @@ components:
           type: string
           title: Currency
           description: |-
-            Purchase currency of this stock item
+            Currency for this price break
 
             * `AUD` - AUD - Australian Dollar
             * `CAD` - CAD - Canadian Dollar
@@ -37591,7 +37615,7 @@ components:
           type: string
           title: Currency
           description: |-
-            Purchase currency of this stock item
+            Currency for this price break
 
             * `AUD` - AUD - Australian Dollar
             * `CAD` - CAD - Canadian Dollar
@@ -38879,6 +38903,7 @@ components:
             * `admin` - Admin
             * `part_category` - Part Categories
             * `part` - Parts
+            * `pricing` - Pricing
             * `bom` - Bills of Material
             * `stock_location` - Stock Locations
             * `stock` - Stock Items
@@ -42407,6 +42432,7 @@ components:
             * `admin` - Admin
             * `part_category` - Part Categories
             * `part` - Parts
+            * `pricing` - Pricing
             * `bom` - Bills of Material
             * `stock_location` - Stock Locations
             * `stock` - Stock Items
@@ -46722,6 +46748,7 @@ components:
             r:view:admin: GET for Role Admin
             r:view:part_category: GET for Role Part Categories
             r:view:part: GET for Role Parts
+            r:view:pricing: GET for Role Pricing
             r:view:stock_location: GET for Role Stock Locations
             r:view:stock: GET for Role Stock Items
             r:view:bom: GET for Role Bills of Material
@@ -46733,6 +46760,7 @@ components:
             r:add:admin: POST for Role Admin
             r:add:part_category: POST for Role Part Categories
             r:add:part: POST for Role Parts
+            r:add:pricing: POST for Role Pricing
             r:add:stock_location: POST for Role Stock Locations
             r:add:stock: POST for Role Stock Items
             r:add:bom: POST for Role Bills of Material
@@ -46744,6 +46772,7 @@ components:
             r:change:admin: PUT / PATCH for Role Admin
             r:change:part_category: PUT / PATCH for Role Part Categories
             r:change:part: PUT / PATCH for Role Parts
+            r:change:pricing: PUT / PATCH for Role Pricing
             r:change:stock_location: PUT / PATCH for Role Stock Locations
             r:change:stock: PUT / PATCH for Role Stock Items
             r:change:bom: PUT / PATCH for Role Bills of Material
@@ -46755,6 +46784,7 @@ components:
             r:delete:admin: DELETE for Role Admin
             r:delete:part_category: DELETE for Role Part Categories
             r:delete:part: DELETE for Role Parts
+            r:delete:pricing: DELETE for Role Pricing
             r:delete:stock_location: DELETE for Role Stock Locations
             r:delete:stock: DELETE for Role Stock Items
             r:delete:bom: DELETE for Role Bills of Material
@@ -46774,6 +46804,7 @@ components:
             r:view:admin: GET for Role Admin
             r:view:part_category: GET for Role Part Categories
             r:view:part: GET for Role Parts
+            r:view:pricing: GET for Role Pricing
             r:view:stock_location: GET for Role Stock Locations
             r:view:stock: GET for Role Stock Items
             r:view:bom: GET for Role Bills of Material
@@ -46785,6 +46816,7 @@ components:
             r:add:admin: POST for Role Admin
             r:add:part_category: POST for Role Part Categories
             r:add:part: POST for Role Parts
+            r:add:pricing: POST for Role Pricing
             r:add:stock_location: POST for Role Stock Locations
             r:add:stock: POST for Role Stock Items
             r:add:bom: POST for Role Bills of Material
@@ -46796,6 +46828,7 @@ components:
             r:change:admin: PUT / PATCH for Role Admin
             r:change:part_category: PUT / PATCH for Role Part Categories
             r:change:part: PUT / PATCH for Role Parts
+            r:change:pricing: PUT / PATCH for Role Pricing
             r:change:stock_location: PUT / PATCH for Role Stock Locations
             r:change:stock: PUT / PATCH for Role Stock Items
             r:change:bom: PUT / PATCH for Role Bills of Material
@@ -46807,6 +46840,7 @@ components:
             r:delete:admin: DELETE for Role Admin
             r:delete:part_category: DELETE for Role Part Categories
             r:delete:part: DELETE for Role Parts
+            r:delete:pricing: DELETE for Role Pricing
             r:delete:stock_location: DELETE for Role Stock Locations
             r:delete:stock: DELETE for Role Stock Items
             r:delete:bom: DELETE for Role Bills of Material

@@ -15,10 +15,8 @@ import com.w3asel.inventree.model.Category;
 import com.w3asel.inventree.model.CategoryTree;
 import com.w3asel.inventree.model.PaginatedCategoryList;
 import com.w3asel.inventree.model.PaginatedCategoryTreeList;
-import com.w3asel.inventree.model.PaginatedPartInternalPriceList;
 import com.w3asel.inventree.model.Part;
 import com.w3asel.inventree.model.PartBomValidate;
-import com.w3asel.inventree.model.PartInternalPrice;
 import com.w3asel.inventree.model.PartSerialNumber;
 import java.time.LocalDate;
 import java.util.List;
@@ -66,20 +64,11 @@ public class TestPartApi extends TestApi {
         api.partCategoryUpdate(null, null);
         api.partCreate(null);
         api.partDestroy(null);
-        api.partInternalPriceCreate(null);
-        api.partInternalPriceDestroy(null);
-        // api.partInternalPriceList(null, null, null, null, null);
-        api.partInternalPricePartialUpdate(null, null);
-        // api.partInternalPriceRetrieve(null);
-        api.partInternalPriceUpdate(null, null);
         api.partList(null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null);
         api.partPartialUpdate(null, null);
-        api.partPricingPartialUpdate(null, null);
-        api.partPricingRetrieve(null);
-        api.partPricingUpdate(null, null);
         api.partRelatedCreate(null);
         api.partRelatedDestroy(null);
         api.partRelatedList(null, null, null, null, null, null, null);
@@ -87,12 +76,6 @@ public class TestPartApi extends TestApi {
         api.partRelatedUpdate(null, null);
         api.partRequirementsRetrieve(null);
         api.partRetrieve(null, null, null, null, null, null, null);
-        api.partSalePriceCreate(null);
-        api.partSalePriceDestroy(null);
-        api.partSalePriceList(null, null, null, null, null);
-        api.partSalePricePartialUpdate(null, null);
-        api.partSalePriceRetrieve(null);
-        api.partSalePriceUpdate(null, null);
         // api.partSerialNumbersRetrieve(null);
         api.partStocktakeBulkDestroy(null);
         api.partStocktakeCreate(null);
@@ -128,8 +111,6 @@ public class TestPartApi extends TestApi {
                 null, null, null, null, null, null, null, null, null, null, null, null, null);
 
         api.partRelatedList(limit, null, null, null, null, null, null);
-
-        api.partSalePriceList(limit, null, null, null, null);
 
         api.partStocktakeList(limit, null, null, null);
 
@@ -294,55 +275,6 @@ public class TestPartApi extends TestApi {
         JsonObject expectedFirst =
                 InventreeDemoDataset.getObjects(Model.PART_CATEGORY, actualFirst.getPk()).get(0);
         assertCategoryTreeEquals(expectedFirst, actualFirst);
-    }
-
-    private void assertPartInternalPriceEquals(JsonObject expected, PartInternalPrice actual) {
-        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
-
-        JsonObject fields = InventreeDemoDataset.getFields(expected);
-
-        assertFieldEquals("part", fields, actual.getPart());
-        assertFieldEquals("price", fields, actual.getPrice());
-        assertFieldEquals("price_currency", fields, actual.getPriceCurrency());
-        assertFieldEquals("quantity", fields, actual.getQuantity());
-    }
-
-    @Test
-    void partInternalPriceList() throws ApiException {
-        List<JsonObject> expectedList =
-                InventreeDemoDataset.getObjects(Model.PART_INTERNAL_PRICE_BREAK, null);
-        assertTrue(expectedList.size() > 0, "Expected demo data");
-
-        int limit = 5;
-        int offset = 0;
-        PaginatedPartInternalPriceList actual =
-                api.partInternalPriceList(limit, offset, null, null, null);;
-        assertEquals(expectedList.size(), actual.getCount(),
-                "Incorrect part internal price list count");
-        List<PartInternalPrice> actualList = actual.getResults();
-
-        // check items returned by key
-        List<Integer> expectedPks = expectedList.stream()
-                .map(json -> json.get(InventreeDemoDataset.PRIMARY_KEY_KEY).getAsInt()).sorted()
-                .collect(Collectors.toList());
-        List<Integer> actualPks =
-                actualList.stream().map(c -> c.getPk()).sorted().collect(Collectors.toList());
-        assertTrue(expectedPks.containsAll(actualPks), "Unexpected primary keys");
-
-        // deep equals on first value
-        PartInternalPrice actualFirst = actualList.get(0);
-        JsonObject expectedFirst = InventreeDemoDataset
-                .getObjects(Model.PART_INTERNAL_PRICE_BREAK, actualFirst.getPk()).get(0);
-        assertPartInternalPriceEquals(expectedFirst, actualFirst);
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {1})
-    void partInternalPriceRetrieve(int pk) throws ApiException {
-        PartInternalPrice actual = api.partInternalPriceRetrieve(pk);
-        JsonObject expected =
-                InventreeDemoDataset.getObjects(Model.PART_INTERNAL_PRICE_BREAK, pk).get(0);
-        assertPartInternalPriceEquals(expected, actual);
     }
 
     @ParameterizedTest
