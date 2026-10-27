@@ -16,6 +16,6 @@ public class TestDefaultApi extends TestApi {
     @Test
     void rootRetrieve() throws ApiException {
         // TODO verify results
-        InfoApi actual = api.rootRetrieve();
+        InfoApi actual = api.rootRetrieve(null);
     }
 }

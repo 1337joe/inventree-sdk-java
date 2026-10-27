@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '562'
+  version: '563'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -12,6 +12,12 @@ paths:
     get:
       operationId: root_retrieve
       description: Serve current server information.
+      parameters:
+      - in: query
+        name: link_nonce
+        schema:
+          type: string
+        description: Nonce for short-term identity proof
       security:
       - tokenAuth: []
       - basicAuth: []
@@ -30453,6 +30459,11 @@ components:
           type: string
           readOnly: true
           nullable: true
+        link:
+          type: string
+          readOnly: true
+          nullable: true
+          description: Temporary identity proof
         version:
           type: string
           readOnly: true
