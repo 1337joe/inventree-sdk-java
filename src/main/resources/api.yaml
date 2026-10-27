@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '565'
+  version: '566'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -1064,6 +1064,10 @@ paths:
         schema:
           type: string
       - in: query
+        name: event_type
+        schema:
+          type: integer
+      - in: query
         name: include_children
         schema:
           type: boolean
@@ -1127,7 +1131,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - a:staff
+        - g:read
       responses:
         '200':
           content:
@@ -1157,7 +1161,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - a:staff
+        - g:read
       responses:
         '200':
           content:
@@ -22488,146 +22492,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/stock/track/:
-    get:
-      operationId: stock_track_list
-      description: |-
-        API endpoint for list view of StockItemTracking objects.
-
-        StockItemTracking objects are read-only
-        (they are created by internal model functionality)
-
-        - GET: Return list of StockItemTracking objects
-      parameters:
-      - in: query
-        name: include_variants
-        schema:
-          type: boolean
-        description: Include Part Variants
-      - in: query
-        name: item
-        schema:
-          type: integer
-      - in: query
-        name: item_detail
-        schema:
-          type: boolean
-          default: false
-        description: Include detailed information about the item in the response
-      - name: limit
-        required: true
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - in: query
-        name: max_date
-        schema:
-          type: string
-          format: date
-        description: Date before
-      - in: query
-        name: min_date
-        schema:
-          type: string
-          format: date
-        description: Date after
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-          enum:
-          - date
-          - -date
-      - in: query
-        name: part
-        schema:
-          type: integer
-        description: Part
-      - name: search
-        required: false
-        in: query
-        description: 'A search term. Searched fields: notes.'
-        schema:
-          type: string
-      - in: query
-        name: user
-        schema:
-          type: integer
-      - in: query
-        name: user_detail
-        schema:
-          type: boolean
-          default: false
-      tags:
-      - stock
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:stock
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedStockTrackingList'
-          description: ''
-  /api/stock/track/{id}/:
-    get:
-      operationId: stock_track_retrieve
-      description: Detail API endpoint for StockItemTracking model.
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - stock
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - r:view:stock
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StockTracking'
-          description: ''
-  /api/stock/track/status/:
-    get:
-      operationId: stock_track_status_retrieve
-      description: Retrieve information about a specific status code
-      tags:
-      - stock
-      security:
-      - tokenAuth: []
-      - basicAuth: []
-      - cookieAuth: []
-      - oauth2:
-        - g:read
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericStateClass'
-          description: ''
-        '400':
-          description: Invalid request
   /api/stock/transfer/:
     post:
       operationId: stock_transfer_create
@@ -27600,6 +27464,23 @@ components:
           type: string
           readOnly: true
           nullable: true
+        event_type:
+          type: integer
+          readOnly: true
+          nullable: true
+        event_label:
+          type: string
+          readOnly: true
+          nullable: true
+          title: Event
+        notes:
+          type: string
+          readOnly: true
+          nullable: true
+          description: Notes associated with this entry
+        deltas:
+          nullable: true
+          readOnly: true
         model_type:
           type: string
           readOnly: true
@@ -29799,7 +29680,6 @@ components:
       - stockitemtestresult
       - stockitem
       - stocklocation
-      - stockitemtracking
       - purchaseorder
       - purchaseorderlineitem
       - purchaseorderextraline
@@ -29836,7 +29716,6 @@ components:
         * `stockitemtestresult` - Stock Item Test Result
         * `stockitem` - Stock Item
         * `stocklocation` - Stock Location
-        * `stockitemtracking` - Stock Item Tracking
         * `purchaseorder` - Purchase Order
         * `purchaseorderlineitem` - Purchase Order Line Item
         * `purchaseorderextraline` - Purchase Order Extra Line
@@ -33918,29 +33797,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StockLocationType'
-    PaginatedStockTrackingList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/StockTracking'
     PaginatedSupplierPartList:
       type: object
       required:
@@ -40209,10 +40065,6 @@ components:
             $ref: '#/components/schemas/StockItemTestResult'
           readOnly: true
           nullable: true
-        tracking_items:
-          type: integer
-          readOnly: true
-          nullable: true
     PatchedStockItemTestResult:
       type: object
       description: Serializer for the StockItemTestResult model.
@@ -44467,10 +44319,6 @@ components:
             $ref: '#/components/schemas/StockItemTestResult'
           readOnly: true
           nullable: true
-        tracking_items:
-          type: integer
-          readOnly: true
-          nullable: true
       required:
       - barcode_hash
       - in_stock
@@ -44493,10 +44341,6 @@ components:
           default: false
           title: Copy Test Results
           description: Copy test results from the original stock item
-        copy_history:
-          type: boolean
-          default: false
-          description: Copy stock history from the original stock item
         copy_notes:
           type: boolean
           default: true
@@ -44703,63 +44547,6 @@ components:
         * `quantity` - Smallest quantity first
         * `-quantity` - Largest quantity first
         * `expiry_date` - Soonest expiry date first
-    StockTracking:
-      type: object
-      description: Serializer for StockItemTracking model.
-      properties:
-        pk:
-          type: integer
-          readOnly: true
-          title: ID
-        item:
-          type: integer
-          nullable: true
-        item_detail:
-          allOf:
-          - $ref: '#/components/schemas/StockItem'
-          readOnly: true
-          nullable: true
-        part:
-          type: integer
-          readOnly: true
-          nullable: true
-        part_detail:
-          allOf:
-          - $ref: '#/components/schemas/PartBrief'
-          readOnly: true
-          nullable: true
-        date:
-          type: string
-          format: date-time
-          readOnly: true
-        deltas:
-          readOnly: true
-        label:
-          type: string
-          readOnly: true
-        notes:
-          type: string
-          nullable: true
-          description: Entry notes
-          maxLength: 512
-        tracking_type:
-          type: integer
-          readOnly: true
-        user:
-          type: integer
-          readOnly: true
-          nullable: true
-        user_detail:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
-          nullable: true
-      required:
-      - date
-      - deltas
-      - label
-      - pk
-      - tracking_type
     StockTransfer:
       type: object
       description: Serializer for transferring (moving) stock item(s).

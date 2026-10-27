@@ -17,10 +17,8 @@ import com.w3asel.inventree.model.BulkRequest;
 import com.w3asel.inventree.model.GenericStateClass;
 import com.w3asel.inventree.model.GenericStateValue;
 import com.w3asel.inventree.model.PaginatedStockItemList;
-import com.w3asel.inventree.model.PaginatedStockTrackingList;
 import com.w3asel.inventree.model.SerializeStockItem;
 import com.w3asel.inventree.model.StockItem;
-import com.w3asel.inventree.model.StockTracking;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -33,14 +31,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-@TestMethodOrder(OrderAnnotation.class)
 public class TestStockApi extends TestApi {
     private StockApi api;
 
@@ -100,9 +94,6 @@ public class TestStockApi extends TestApi {
         api.stockTestPartialUpdate(null, null);
         api.stockTestRetrieve(null, null, null);
         api.stockTestUpdate(null, null);
-        // api.stockTrackList(null, null, null, null, null, null);
-        // api.stockTrackRetrieve(null);
-        // api.stockTrackStatusRetrieve();
         api.stockTransferCreate(null);
         api.stockUninstallCreate(null, null);
         api.stockUpdate(null, null);
@@ -437,134 +428,5 @@ public class TestStockApi extends TestApi {
         assertFieldEquals("name", expectedCustom, customActual.getName());
         assertFieldEquals("label", expectedCustom, customActual.getLabel());
         assertFieldEquals("color", expectedCustom, customActual.getColor());
-    }
-
-    private static void assertStockTrackingEquals(JsonObject expected, StockTracking actual) {
-        assertFieldEquals(InventreeDemoDataset.PRIMARY_KEY_KEY, expected, actual.getPk());
-
-        JsonObject fields = InventreeDemoDataset.getFields(expected);
-
-        assertFieldEquals("tracking_type", fields, actual.getTrackingType());
-        assertFieldEquals("item", fields, actual.getItem());
-        assertFieldEquals("part", fields, actual.getPart());
-        assertNullableFieldEquals(String.class, "notes", fields, actual.getNotes());
-
-        // user given as name in demo dataset file, just verify null state matches
-        if (fields.get("user").isJsonNull()) {
-            assertNull(actual.getUser(), "Expected null user");
-        } else {
-            assertNotNull(actual.getUser(), "Expected non-null user");
-        }
-
-        assertNullableFieldEquals(OffsetDateTime.class, "date", fields, actual.getDate());
-
-        JsonObject expectedDeltas = fields.get("deltas").getAsJsonObject();
-        // TODO can this be strongly typed in the schema?
-        @SuppressWarnings("unchecked")
-        Map<String, Object> actualDeltas = (Map<String, Object>) actual.getDeltas();
-        for (String key : expectedDeltas.keySet()) {
-            if (actualDeltas.get(key) instanceof Double) {
-                assertEquals(expectedDeltas.get(key).getAsDouble(), actualDeltas.get(key),
-                        "Deltas mismatch on key: " + key);
-            } else {
-                assertEquals(expectedDeltas.get(key).getAsString(), actualDeltas.get(key),
-                        "Deltas mismatch on key: " + key);
-            }
-        }
-
-        // not directly available in demo dataset:
-        // actual.getLabel()
-        // actual.getUser()
-
-        // not available through schema-mapped API:
-        assertNull(actual.getItemDetail(), "Expected null item details");
-        assertNull(actual.getUserDetail(), "Expected null user details");
-    }
-
-    @Test
-    // can't delete stock tracking via api, have to test list against demo data before changes
-    // happen
-    @Order(1)
-    void stockTrackList() throws ApiException {
-        List<JsonObject> expectedList = InventreeDemoDataset.getObjects(Model.STOCK_TRACKING, null);
-        assertTrue(expectedList.size() > 0, "Expected demo data");
-
-        int limit = 10;
-        int offset = 0;
-
-        PaginatedStockTrackingList actual = api.stockTrackList(limit, null, null, null, null, null,
-                offset, null, null, null, null, null);
-        assertTrue(expectedList.size() <= actual.getCount(),
-                "Incorrect total stock tracking count");
-        List<StockTracking> actualList = actual.getResults();
-
-        // deep equals on first value
-        StockTracking actualFirst;
-        JsonObject expectedFirst = null;
-        int firstFoundIndex = 0;
-        do {
-            actualFirst = actualList.get(firstFoundIndex);
-
-            List<JsonObject> expectedSearch =
-                    InventreeDemoDataset.getObjects(Model.STOCK_TRACKING, actualFirst.getPk());
-            if (!expectedSearch.isEmpty()) {
-                expectedFirst = expectedSearch.get(0);
-                break;
-            }
-            firstFoundIndex++;
-        } while (firstFoundIndex < actualList.size());
-
-        assertTrue(firstFoundIndex < actualList.size(),
-                "Failed to find any expected stock tracking");
-        assertStockTrackingEquals(expectedFirst, actualFirst);
-    }
-
-    @ParameterizedTest
-    @CsvSource({"285", "1356", "1357"})
-    void stockTrackRetrieve(int stockTrack) throws ApiException {
-        StockTracking actual = api.stockTrackRetrieve(stockTrack);
-        JsonObject expected =
-                InventreeDemoDataset.getObjects(Model.STOCK_TRACKING, stockTrack).get(0);
-        assertStockTrackingEquals(expected, actual);
-
-        // verify data not directly in demo dataset
-        Integer expectedUser;
-        String expectedLabel;
-        switch (stockTrack) {
-            case 285: // create, null user
-                expectedUser = null;
-                expectedLabel = "Stock item created";
-                break;
-            case 1357: // create, admin user
-                expectedUser = 1;
-                expectedLabel = "Stock item created";
-                break;
-            case 1356: // shipped (sale), admin user
-                expectedUser = 1;
-                expectedLabel = "Shipped against Sales Order";
-                break;
-            default:
-                expectedUser = null;
-                expectedLabel = null;
-        }
-        assertEquals(expectedLabel, actual.getLabel(), "Incorrect label");
-        assertEquals(expectedUser, actual.getUser(), "Incorrect user");
-    }
-
-    @Test
-    void stockTrackStatusRetrieve() throws ApiException {
-        GenericStateClass actual = api.stockTrackStatusRetrieve();
-        assertEquals("StockHistoryCode", actual.getStatusClass(), "Incorrect status class");
-
-        Map<String, GenericStateValue> actualValues = actual.getValues();
-        assertFalse(actualValues.isEmpty(), "Missing stock history values");
-
-        // values
-        String name = "CREATED";
-        assertTrue(actualValues.containsKey(name), "Missing " + name + " stock history");
-        GenericStateValue actualValue = actualValues.get(name);
-        assertEquals(1, actualValue.getKey(), "Incorrect history code key");
-        assertEquals(name, actualValue.getName(), "Incorrect history code name");
-        assertEquals("Stock item created", actualValue.getLabel(), "Incorrect history code label");
     }
 }
