@@ -203,7 +203,7 @@ public class TestUnitsApi extends TestApi {
 
         try {
             CustomUnit modifiedUnit =
-                    new CustomUnit().name(UPDATED_NAME).definition("dozen").symbol("dz");
+                    new CustomUnit().name(UPDATED_NAME).definition("dozen").symbol("madeup");
 
             CustomUnit updatedUnit = api.unitsUpdate(createdUnit.getPk(), modifiedUnit);
 

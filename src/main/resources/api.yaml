@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '568'
+  version: '569'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -55,7 +55,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -878,7 +878,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -900,7 +900,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -969,7 +969,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -1004,7 +1004,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -1028,7 +1028,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -1281,7 +1281,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -1343,7 +1343,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -1442,7 +1442,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -1476,7 +1476,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -1647,7 +1647,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -1685,7 +1685,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -1729,7 +1729,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -1770,7 +1770,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -1801,7 +1801,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -2327,7 +2327,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:change:bom
+        - r:change:build
       responses:
         '200':
           content:
@@ -2362,7 +2363,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:change:bom
+        - r:change:build
       responses:
         '200':
           content:
@@ -3012,7 +3014,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '201':
           content:
@@ -3052,7 +3054,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '200':
           content:
@@ -3088,7 +3090,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '201':
           content:
@@ -3126,7 +3128,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '200':
           content:
@@ -3166,7 +3168,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '200':
           content:
@@ -3203,7 +3205,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '201':
           content:
@@ -3243,7 +3245,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '200':
           content:
@@ -3279,7 +3281,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '201':
           content:
@@ -3304,7 +3306,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '201':
           description: No response body
@@ -3325,7 +3327,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '201':
           description: No response body
@@ -3358,7 +3360,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '200':
           content:
@@ -3399,7 +3401,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
       responses:
         '201':
           content:
@@ -5944,7 +5946,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           description: No response body
@@ -6022,7 +6024,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -6081,7 +6083,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -6178,7 +6180,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -6248,7 +6250,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -6284,7 +6286,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -6309,7 +6311,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -6381,7 +6383,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -6411,7 +6413,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -6806,7 +6808,19 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:pricing
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:bom
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -6841,7 +6855,19 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:pricing
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:bom
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -6947,7 +6973,19 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:pricing
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:bom
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+        - r:change:transfer_order
       responses:
         '204':
           description: No response body
@@ -7015,7 +7053,19 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:pricing
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:bom
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -7050,7 +7100,19 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:pricing
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:bom
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+        - r:change:transfer_order
       responses:
         '200':
           content:
@@ -7074,7 +7136,19 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:pricing
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:bom
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+        - r:change:transfer_order
       responses:
         '204':
           description: No response body
@@ -7403,7 +7477,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -7440,7 +7514,19 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
+        - r:change:admin
+        - r:change:part_category
+        - r:change:part
+        - r:change:pricing
+        - r:change:stock_location
+        - r:change:stock
+        - r:change:bom
+        - r:change:build
+        - r:change:purchase_order
+        - r:change:sales_order
+        - r:change:return_order
+        - r:change:transfer_order
       responses:
         '201':
           content:
@@ -7502,7 +7588,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -7790,7 +7876,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -8090,6 +8176,7 @@ paths:
       - cookieAuth: []
       - oauth2:
         - g:read
+        - r:view:admin
       responses:
         '200':
           content:
@@ -8922,7 +9009,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -8983,7 +9070,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -9018,7 +9105,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -9042,7 +9129,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -9130,7 +9217,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -9217,7 +9304,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -9294,7 +9381,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -9333,7 +9420,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -9361,7 +9448,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -9388,7 +9475,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -10437,7 +10524,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:view:purchase_order
       responses:
         '200':
           content:
@@ -10510,7 +10597,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:purchase_order
       responses:
         '201':
           content:
@@ -10616,7 +10703,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:purchase_order
       responses:
         '201':
           content:
@@ -11664,7 +11751,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:return_order
       responses:
         '201':
           description: No response body
@@ -11685,7 +11772,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:return_order
       responses:
         '201':
           description: No response body
@@ -11706,7 +11793,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:return_order
       responses:
         '201':
           description: No response body
@@ -11727,7 +11814,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:return_order
       responses:
         '201':
           description: No response body
@@ -11760,7 +11847,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:return_order
       responses:
         '201':
           content:
@@ -13116,7 +13203,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:sales_order
       responses:
         '201':
           content:
@@ -13154,7 +13241,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:sales_order
       responses:
         '201':
           content:
@@ -13191,7 +13278,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:sales_order
       responses:
         '200':
           content:
@@ -13216,7 +13303,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:sales_order
       responses:
         '201':
           description: No response body
@@ -13248,7 +13335,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:sales_order
       responses:
         '201':
           content:
@@ -13273,7 +13360,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:sales_order
       responses:
         '201':
           description: No response body
@@ -13294,7 +13381,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:sales_order
       responses:
         '201':
           description: No response body
@@ -14573,7 +14660,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:transfer_order
       responses:
         '201':
           content:
@@ -14611,7 +14698,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:transfer_order
       responses:
         '201':
           content:
@@ -14636,7 +14723,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:transfer_order
       responses:
         '201':
           description: No response body
@@ -14668,7 +14755,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:transfer_order
       responses:
         '201':
           content:
@@ -14693,7 +14780,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:transfer_order
       responses:
         '201':
           description: No response body
@@ -14714,7 +14801,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:transfer_order
       responses:
         '201':
           description: No response body
@@ -14820,7 +14907,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -14842,7 +14929,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -14911,7 +14998,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -14946,7 +15033,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -14970,7 +15057,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '204':
           description: No response body
@@ -15848,7 +15935,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
+        - r:add:part
       responses:
         '201':
           content:
@@ -15873,8 +15961,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:view:build
-        - r:view:part
+        - r:view:bom
       responses:
         '200':
           content:
@@ -15909,8 +15996,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:build
-        - r:change:part
+        - r:change:bom
       responses:
         '200':
           content:
@@ -15945,8 +16031,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:change:build
-        - r:change:part
+        - r:change:bom
       responses:
         '200':
           content:
@@ -17071,7 +17156,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:part
       responses:
         '201':
           content:
@@ -17343,7 +17428,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:view:build
+        - r:view:part
       responses:
         '200':
           content:
@@ -18008,7 +18094,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -18049,7 +18135,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -19123,7 +19209,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -19590,7 +19676,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -20314,7 +20400,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -20353,7 +20439,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -21109,7 +21195,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:change:stock
       responses:
         '201':
           content:
@@ -21150,7 +21236,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:change:stock
       responses:
         '201':
           content:
@@ -21194,7 +21280,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:change:stock
       responses:
         '201':
           content:
@@ -21261,7 +21347,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:change:stock
       responses:
         '201':
           content:
@@ -21300,7 +21386,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:change:stock
       responses:
         '201':
           content:
@@ -21331,7 +21417,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
+        - r:add:stock
       responses:
         '201':
           content:
@@ -21362,7 +21449,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
+        - r:add:stock
       responses:
         '201':
           content:
@@ -21393,7 +21481,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
+        - r:add:stock
       responses:
         '201':
           content:
@@ -21424,7 +21513,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
+        - r:add:stock
       responses:
         '201':
           content:
@@ -22100,7 +22190,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
+        - r:add:stock
       responses:
         '201':
           content:
@@ -22131,7 +22222,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
+        - r:add:stock
       responses:
         '201':
           content:
@@ -22167,7 +22259,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
+        - r:add:stock
       responses:
         '201':
           content:
@@ -22522,7 +22615,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - r:add:build
+        - r:add:stock
       responses:
         '201':
           content:
@@ -22553,7 +22647,8 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
+        - r:add:part
       responses:
         '200':
           content:
@@ -22573,6 +22668,7 @@ paths:
       - cookieAuth: []
       - oauth2:
         - g:read
+        - r:add:part
       responses:
         '200':
           content:
@@ -22613,6 +22709,7 @@ paths:
       - cookieAuth: []
       - oauth2:
         - g:read
+        - r:add:part
       responses:
         '200':
           content:
@@ -22645,7 +22742,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '201':
           content:
@@ -23692,7 +23789,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -23726,7 +23823,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -23784,7 +23881,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -23818,7 +23915,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -23898,7 +23995,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -23933,7 +24030,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - g:read
+        - g:write
       responses:
         '200':
           content:
@@ -23962,8 +24059,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '200':
           content:
@@ -24321,8 +24416,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '200':
           content:
@@ -24350,8 +24443,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '201':
           content:
@@ -24380,8 +24471,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '200':
           content:
@@ -24410,8 +24499,6 @@ paths:
       - tokenAuth: []
       - basicAuth: []
       - cookieAuth: []
-      - oauth2:
-        - g:read
       responses:
         '204':
           description: No response body
@@ -46862,6 +46949,7 @@ components:
           refreshUrl: /o/revoke_token/
           scopes:
             g:read: General Read scope
+            g:write: General Write scope
             openid: OpenID Connect scope
             a:staff: User Role Staff
             a:superuser: User Role Superuser
@@ -46918,6 +47006,7 @@ components:
           refreshUrl: /o/revoke_token/
           scopes:
             g:read: General Read scope
+            g:write: General Write scope
             openid: OpenID Connect scope
             a:staff: User Role Staff
             a:superuser: User Role Superuser
