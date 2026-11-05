@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '569'
+  version: '570'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27308,6 +27308,7 @@ components:
         last_seen:
           type: string
           format: date
+          readOnly: true
           nullable: true
           description: Last time the token was used
         name:
@@ -27328,6 +27329,7 @@ components:
           readOnly: true
         revoked:
           type: boolean
+          readOnly: true
           description: Token has been revoked
         user:
           type: integer
@@ -27341,6 +27343,7 @@ components:
           readOnly: true
         revoked_by:
           type: integer
+          readOnly: true
           nullable: true
           description: User who revoked the token
         revoked_by_detail:
@@ -27350,6 +27353,7 @@ components:
           nullable: true
         issued_by:
           type: integer
+          readOnly: true
           nullable: true
           description: User who issued the token
         issued_by_detail:
@@ -27359,12 +27363,11 @@ components:
           nullable: true
         token_version:
           type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
+          readOnly: true
           description: Version of the API token
         revocation_reason:
           type: string
+          readOnly: true
           nullable: true
           description: As entered by the user or action during revocation
       required:
@@ -27372,7 +27375,9 @@ components:
       - created
       - id
       - in_use
+      - revoked
       - token
+      - token_version
       - user_detail
     Attachment:
       type: object
