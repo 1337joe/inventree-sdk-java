@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '567'
+  version: '568'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -30345,10 +30345,14 @@ components:
           type: string
           format: date
           readOnly: true
+        warning:
+          type: string
+          readOnly: true
       required:
       - expiry
       - name
       - token
+      - warning
     GetSimpleLogin:
       type: object
       description: Serializer for the simple login view.
