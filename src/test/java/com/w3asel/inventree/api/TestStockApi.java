@@ -67,7 +67,7 @@ public class TestStockApi extends TestApi {
         api.stockLocationCreate(null);
         api.stockLocationDestroy(null);
         api.stockLocationList(null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null);
+                null, null, null, null, null);
         api.stockLocationPartialUpdate(null, null);
         api.stockLocationBulkPartialUpdate(null);
         api.stockLocationRetrieve(null, null);
@@ -104,7 +104,7 @@ public class TestStockApi extends TestApi {
         // TODO verify results
         int limit = 1000;
         api.stockLocationList(limit, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null);
+                null, null, null, null, null);
         api.stockTestList(limit, null, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null);
     }
@@ -178,7 +178,7 @@ public class TestStockApi extends TestApi {
                         null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                         null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                         null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null, null, null, null, null, null, null, null)
+                        null, null, null, null, null, null, null, null, null, null, null)
                 .getCount();
 
         List<StockItem> createResultList = new ArrayList<>();
@@ -192,7 +192,7 @@ public class TestStockApi extends TestApi {
                             null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                            null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+                            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
                     .getCount();
             assertEquals(2, createdCount - initialCount, "Expected two more items");
 
@@ -213,7 +213,7 @@ public class TestStockApi extends TestApi {
                         null, null, null, null, null, null, null, null, null, null, null, null,
                         null, null, null, null, null, null, null, null, null, null, null, null,
                         null, null, null, null, null, null, null, null, null, null, null,
-                        null, null, null)
+                        null, null, null, null)
                 .getCount();
 
         assertEquals(initialCount, finalCount, "Expected to return to initial count after destroy");
@@ -304,9 +304,9 @@ public class TestStockApi extends TestApi {
 
         PaginatedStockItemList actual = api.stockList(limit, null, null, null, null, null, null, null, null, null, null,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, offset,
                 null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null, null, null);
+                offset, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null);
         assertEquals(expectedList.size(), actual.getCount(), "Incorrect total stock item count");
         List<StockItem> actualList = actual.getResults();
 
