@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '571'
+  version: '572'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -31729,6 +31729,7 @@ components:
           title: ID
         username:
           type: string
+          readOnly: true
           description: Username
         first_name:
           type: string
@@ -31737,12 +31738,10 @@ components:
           type: string
           description: Last name of the user
         email:
+          type: string
+          format: email
+          readOnly: true
           description: Email address of the user
-          oneOf:
-          - type: string
-            format: email
-          - type: string
-            maxLength: 0
         groups:
           type: array
           items:
@@ -36982,6 +36981,7 @@ components:
           title: ID
         username:
           type: string
+          readOnly: true
           description: Username
         first_name:
           type: string
@@ -36990,12 +36990,10 @@ components:
           type: string
           description: Last name of the user
         email:
+          type: string
+          format: email
+          readOnly: true
           description: Email address of the user
-          oneOf:
-          - type: string
-            format: email
-          - type: string
-            maxLength: 0
         groups:
           type: array
           items:
