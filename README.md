@@ -15,13 +15,13 @@ This library is published to [Maven Central](https://central.sonatype.com/artifa
 <dependency>
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
-    <version>1.6.561</version>
+    <version>1.7.570</version>
 </dependency>
 ```
 
 Alternately, if you're just looking for a jar file you can find it attached to the corresponding [release](https://github.com/1337joe/inventree-sdk-java/releases) here on GitHub.
 
-The version number is a mix of the InvenTree release (1.6) and the schema version (561) with point releases after that when multiple client jars are released against the same schema.
+The version number is a mix of the InvenTree release (1.7) and the schema version (570) with point releases after that when multiple client jars are released against the same schema.
 
 The `main` branch of this repository tracks `InvenTree/master` and may not be compatible with the latest stable release. As it is not tied to an InvenTree release, it is published as `-SNAPSHOT` jars ([browsable here](https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/com/w3asel/inventree-sdk-java/)), which may be consumed by [adding the central snapshot repository to your pom](https://central.sonatype.org/publish/publish-portal-snapshots/#consuming-snapshot-releases-for-your-project):
 
