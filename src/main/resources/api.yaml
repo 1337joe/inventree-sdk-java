@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '572'
+  version: '573'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -27379,6 +27379,10 @@ components:
           readOnly: true
           nullable: true
           description: As entered by the user or action during revocation
+        warning:
+          type: string
+          readOnly: true
+          nullable: true
       required:
       - active
       - created
@@ -27618,6 +27622,7 @@ components:
           items:
             $ref: '#/components/schemas/AuditChangeDetail'
           readOnly: true
+          nullable: true
           title: Change Details
         cid:
           type: string
@@ -27640,7 +27645,6 @@ components:
       - action
       - action_label
       - changes
-      - changes_detail
       - model_label
       - model_type
       - object_pk

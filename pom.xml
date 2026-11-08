@@ -7,7 +7,7 @@
     <groupId>com.w3asel</groupId>
     <artifactId>inventree-sdk-java</artifactId>
     <packaging>jar</packaging>
-    <version>1.7.572-SNAPSHOT</version>
+    <version>1.7.573-SNAPSHOT</version>
 
     <name>InvenTree SDK (Java)</name>
     <description>A Java implementation of the OpenAPI spec published by InvenTree.</description>
@@ -169,16 +169,6 @@
                         <replacement>
                             <token>^(\s+)- type: string$\n\s+maxLength: 0$\n</token>
                             <value></value>
-                        </replacement>
-                        <!-- should be non-required fields -->
-                        <replacement>
-                            <token>^\s+- changes_detail$\n</token>
-                            <value></value>
-                        </replacement>
-                        <!-- field missing from schema -->
-                        <replacement>
-                            <token>^(\s+ApiToken:\n.*\n.*\n.*properties:$)(\n\s+)(created:$\n)</token>
-                            <value>$1$2warning:$2  type: string$2  nullable: true$2  readOnly: true$2$3</value>
                         </replacement>
                     </replacements>
                 </configuration>

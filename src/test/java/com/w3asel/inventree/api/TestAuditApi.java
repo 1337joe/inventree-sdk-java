@@ -176,7 +176,7 @@ public class TestAuditApi extends TestApi {
 
         // TODO implement further when testing a value that populates either of these
         assertEquals(0, fields.get("changes_text").getAsString().length(), "Expected empty changes_text");
-        assertEquals(0, actual.getChangesDetail().size(), "Expected empty changes_detail");
+        assertNull(actual.getChangesDetail(), "Expected empty changes_detail");
 
         assertNullableFieldEquals(String.class, "cid", fields, actual.getCid());
 
