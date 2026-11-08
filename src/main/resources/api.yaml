@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '570'
+  version: '572'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -20558,6 +20558,11 @@ paths:
           type: boolean
         description: Depleted
       - in: query
+        name: exclude_from_stock
+        schema:
+          type: boolean
+        description: Exclude from Stock
+      - in: query
         name: expired
         schema:
           type: boolean
@@ -21541,6 +21546,10 @@ paths:
         schema:
           type: number
         description: Filter by location depth
+      - in: query
+        name: exclude_from_stock
+        schema:
+          type: boolean
       - in: query
         name: external
         schema:
@@ -31133,6 +31142,10 @@ components:
         external:
           type: boolean
           description: This is an external stock location
+        exclude_from_stock:
+          type: boolean
+          description: If checked, stock items in this location will not be counted
+            in available stock
         location_type:
           type: integer
           nullable: true
@@ -31716,6 +31729,7 @@ components:
           title: ID
         username:
           type: string
+          readOnly: true
           description: Username
         first_name:
           type: string
@@ -31724,12 +31738,10 @@ components:
           type: string
           description: Last name of the user
         email:
+          type: string
+          format: email
+          readOnly: true
           description: Email address of the user
-          oneOf:
-          - type: string
-            format: email
-          - type: string
-            maxLength: 0
         groups:
           type: array
           items:
@@ -36742,6 +36754,10 @@ components:
         external:
           type: boolean
           description: This is an external stock location
+        exclude_from_stock:
+          type: boolean
+          description: If checked, stock items in this location will not be counted
+            in available stock
         location_type:
           type: integer
           nullable: true
@@ -36965,6 +36981,7 @@ components:
           title: ID
         username:
           type: string
+          readOnly: true
           description: Username
         first_name:
           type: string
@@ -36973,12 +36990,10 @@ components:
           type: string
           description: Last name of the user
         email:
+          type: string
+          format: email
+          readOnly: true
           description: Email address of the user
-          oneOf:
-          - type: string
-            format: email
-          - type: string
-            maxLength: 0
         groups:
           type: array
           items:
