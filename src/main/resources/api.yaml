@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '574'
+  version: '575'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -20537,6 +20537,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: consumed_by_detail
+        schema:
+          type: boolean
+          default: false
+      - in: query
         name: created_after
         schema:
           type: string
@@ -21028,6 +21033,11 @@ paths:
       operationId: stock_retrieve
       description: API detail endpoint for a single StockItem instance.
       parameters:
+      - in: query
+        name: consumed_by_detail
+        schema:
+          type: boolean
+          default: false
       - in: path
         name: id
         schema:
@@ -28292,7 +28302,7 @@ components:
           description: Scheduled start date for this build order
         status:
           allOf:
-          - $ref: '#/components/schemas/BuildStatusEnum'
+          - $ref: '#/components/schemas/StatusC2fEnum'
           readOnly: true
           title: Build Status
           description: |-
@@ -28488,6 +28498,56 @@ components:
             title: Build Lines
           description: Limit allocation to these build lines (leave blank to allocate
             all lines)
+    BuildBrief:
+      type: object
+      description: Serialize build identity and status for related-object detail fields.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        reference:
+          type: string
+          readOnly: true
+          description: Build Order Reference
+        title:
+          type: string
+          readOnly: true
+          title: Description
+          description: Brief description of the build (optional)
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusC2fEnum'
+          readOnly: true
+          title: Build Status
+          description: |-
+            Build status code
+
+            * `10` - Pending
+            * `20` - Production
+            * `25` - On Hold
+            * `30` - Cancelled
+            * `40` - Complete
+        status_custom_key:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Custom status key
+          description: |-
+            Additional status information for this item
+
+            * `10` - Pending
+            * `20` - Production
+            * `25` - On Hold
+            * `30` - Cancelled
+            * `40` - Complete
+
+            Additional custom status keys may be retrieved from the corresponding 'status_retrieve' call.
+      required:
+      - pk
+      - reference
+      - status
+      - title
     BuildCancel:
       type: object
       description: Cancel an active BuildOrder.
@@ -28946,20 +29006,6 @@ components:
       - location
       - notes
       - outputs
-    BuildStatusEnum:
-      enum:
-      - 10
-      - 20
-      - 25
-      - 30
-      - 40
-      type: integer
-      description: |-
-        * `10` - Pending
-        * `20` - Production
-        * `25` - On Hold
-        * `30` - Cancelled
-        * `40` - Complete
     BuildUnallocation:
       type: object
       description: |-
@@ -35718,7 +35764,7 @@ components:
           description: Scheduled start date for this build order
         status:
           allOf:
-          - $ref: '#/components/schemas/BuildStatusEnum'
+          - $ref: '#/components/schemas/StatusC2fEnum'
           readOnly: true
           title: Build Status
           description: |-
@@ -39972,6 +40018,12 @@ components:
           type: integer
           nullable: true
           description: Build order which consumed this stock item
+        consumed_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/BuildBrief'
+          readOnly: true
+          nullable: true
+          title: Consumed By
         customer:
           type: integer
           nullable: true
@@ -43964,6 +44016,20 @@ components:
         * `70` - Lost
         * `75` - Quarantined
         * `85` - Returned
+    StatusC2fEnum:
+      enum:
+      - 10
+      - 20
+      - 25
+      - 30
+      - 40
+      type: integer
+      description: |-
+        * `10` - Pending
+        * `20` - Production
+        * `25` - On Hold
+        * `30` - Cancelled
+        * `40` - Complete
     StatusCustomKeyEnum:
       enum:
       - 10
@@ -44226,6 +44292,12 @@ components:
           type: integer
           nullable: true
           description: Build order which consumed this stock item
+        consumed_by_detail:
+          allOf:
+          - $ref: '#/components/schemas/BuildBrief'
+          readOnly: true
+          nullable: true
+          title: Consumed By
         customer:
           type: integer
           nullable: true
