@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '575'
+  version: '576'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -22791,6 +22791,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthCheckStatus'
           description: InvenTree server health status
+  /api/system/messages/:
+    get:
+      operationId: system_messages_retrieve
+      description: Return system messages (most severe first).
+      tags:
+      - system
+      security:
+      - tokenAuth: []
+      - basicAuth: []
+      - cookieAuth: []
+      - oauth2:
+        - a:staff
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminMessageList'
+          description: System messages for staff users
   /api/tag/:
     get:
       operationId: tag_list
@@ -27249,6 +27268,50 @@ components:
           maxLength: 100
       required:
       - pk
+    AdminMessage:
+      type: object
+      description: |-
+        Serializer for a (read-only) staff-facing system message.
+
+        Instances are common.admin_messages.AdminMessage dataclass objects.
+      properties:
+        key:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        message:
+          type: string
+          readOnly: true
+        classifier:
+          allOf:
+          - $ref: '#/components/schemas/ClassifierEnum'
+          readOnly: true
+        code:
+          type: string
+          readOnly: true
+          nullable: true
+        plugin:
+          type: string
+          readOnly: true
+          nullable: true
+      required:
+      - classifier
+      - key
+      - message
+      - title
+    AdminMessageList:
+      type: object
+      description: Serializer for the staff-only system messages endpoint.
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminMessage'
+          readOnly: true
+      required:
+      - messages
     AlgorithmEnum:
       enum:
       - RS256
@@ -29197,6 +29260,18 @@ components:
       - pk
       - subcategories
       - tree_id
+    ClassifierEnum:
+      enum:
+      - error
+      - warning
+      - info
+      - success
+      type: string
+      description: |-
+        * `error` - error
+        * `warning` - warning
+        * `info` - info
+        * `success` - success
     ClientTypeEnum:
       enum:
       - confidential

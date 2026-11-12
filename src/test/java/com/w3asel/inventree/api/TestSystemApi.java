@@ -2,6 +2,7 @@ package com.w3asel.inventree.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.w3asel.inventree.invoker.ApiException;
+import com.w3asel.inventree.model.AdminMessageList;
 import com.w3asel.inventree.model.HealthCheckStatus;
 import com.w3asel.inventree.model.HealthCheckStatusStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,5 +21,11 @@ public class TestSystemApi extends TestApi {
         HealthCheckStatus actual = api.systemHealthRetrieve();
         assertEquals(HealthCheckStatusStatusEnum.OK, actual.getStatus(),
                 "Expected OK status when up for testing.");
+    }
+
+    @Test
+    void test() throws ApiException {
+        AdminMessageList actual = api.systemMessagesRetrieve();
+        // TODO verify results are consistent and check them
     }
 }
