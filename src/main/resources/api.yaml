@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '576'
+  version: '577'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -25231,7 +25231,9 @@ paths:
       parameters: []
       description: |
         Returns the WebAuthn credential request options, that can be
-        processed using `parseRequestOptionsFromJSON()` on the frontend.
+        processed using `parseRequestOptionsFromJSON()` on the frontend. The
+        user verification requirement is controlled by
+        `MFA_WEBAUTHN_USER_VERIFICATION`.
       responses:
         '200':
           $ref: '#/components/responses/allauth.WebAuthnRequestOptionsResponse'
@@ -25263,7 +25265,9 @@ paths:
       parameters: []
       description: |
         Returns the WebAuthn credential request options, that can be
-        processed using `parseRequestOptionsFromJSON()` on the frontend.
+        processed using `parseRequestOptionsFromJSON()` on the frontend. The
+        user verification requirement is controlled by
+        `MFA_WEBAUTHN_USER_VERIFICATION`.
       responses:
         '200':
           $ref: '#/components/responses/allauth.WebAuthnRequestOptionsResponse'
@@ -25296,6 +25300,7 @@ paths:
       description: |
         Returns the WebAuthn credential request options, that can be
         processed using `parseRequestOptionsFromJSON()` on the frontend.
+        Passkey login always requires user verification.
       responses:
         '200':
           $ref: '#/components/responses/allauth.WebAuthnRequestOptionsResponse'
@@ -26325,7 +26330,7 @@ components:
       allowEmptyValue: true
       description: |
         When present (regardless of its value), enables passwordless sign-in via a WebAuthn credential (Passkey),
-        but may enforce additional multi-factor authentication (MFA) requirements. Omit the parameter to disable.
+        which requires PIN, biometric, or equivalent user verification. Omit the parameter to disable.
     allauth.PasswordResetKey:
       in: header
       name: X-Password-Reset-Key
