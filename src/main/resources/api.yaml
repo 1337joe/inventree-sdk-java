@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '577'
+  version: '578'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -40091,6 +40091,7 @@ components:
           description: Is this item installed in another item?
         build:
           type: integer
+          readOnly: true
           nullable: true
           title: Source Build
           description: Build for this stock item
@@ -40122,6 +40123,7 @@ components:
           readOnly: true
         is_building:
           type: boolean
+          readOnly: true
         link:
           title: External Link
           description: Link to external URL
@@ -44365,6 +44367,7 @@ components:
           description: Is this item installed in another item?
         build:
           type: integer
+          readOnly: true
           nullable: true
           title: Source Build
           description: Build for this stock item
@@ -44396,6 +44399,7 @@ components:
           readOnly: true
         is_building:
           type: boolean
+          readOnly: true
         link:
           title: External Link
           description: Link to external URL
@@ -44596,6 +44600,7 @@ components:
       required:
       - barcode_hash
       - in_stock
+      - is_building
       - part
       - pk
       - quantity
