@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '578'
+  version: '579'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -28815,6 +28815,7 @@ components:
         consumed:
           type: number
           format: double
+          readOnly: true
         allocations:
           type: array
           items:
@@ -29236,9 +29237,9 @@ components:
           maxLength: 250
         pathstring:
           type: string
+          readOnly: true
           title: Path
           description: Path
-          maxLength: 250
         parent:
           type: integer
           nullable: true
@@ -29262,6 +29263,7 @@ components:
       required:
       - level
       - name
+      - pathstring
       - pk
       - subcategories
       - tree_id
@@ -30069,11 +30071,12 @@ components:
           maxLength: 100
         pathstring:
           type: string
+          readOnly: true
           title: Path
           description: Path
-          maxLength: 250
       required:
       - name
+      - pathstring
       - pk
     DirectionEnum:
       enum:
@@ -31318,11 +31321,12 @@ components:
           maxLength: 100
         pathstring:
           type: string
+          readOnly: true
           title: Path
           description: Path
-          maxLength: 250
       required:
       - name
+      - pathstring
       - pk
     LocationTree:
       type: object
@@ -31342,9 +31346,9 @@ components:
           maxLength: 250
         pathstring:
           type: string
+          readOnly: true
           title: Path
           description: Path
-          maxLength: 250
         parent:
           type: integer
           nullable: true
@@ -31372,6 +31376,7 @@ components:
       - icon
       - level
       - name
+      - pathstring
       - pk
       - sublocations
       - tree_id
@@ -31812,8 +31817,8 @@ components:
             maxLength: 0
         barcode_hash:
           type: string
+          readOnly: true
           description: Unique hash of barcode data
-          maxLength: 128
         tags:
           type: array
           items:
@@ -31825,6 +31830,7 @@ components:
           readOnly: true
           nullable: true
       required:
+      - barcode_hash
       - manufacturer
       - part
       - pk
@@ -36024,6 +36030,7 @@ components:
         consumed:
           type: number
           format: double
+          readOnly: true
         allocations:
           type: array
           items:
@@ -37089,8 +37096,8 @@ components:
             maxLength: 0
         barcode_hash:
           type: string
+          readOnly: true
           description: Unique hash of barcode data
-          maxLength: 128
         tags:
           type: array
           items:
@@ -38945,6 +38952,7 @@ components:
         issue_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           description: Date order was issued
         start_date:
@@ -39059,6 +39067,7 @@ components:
         complete_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           title: Completion Date
           description: Date order was completed
@@ -39261,6 +39270,7 @@ components:
         received_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           description: The date this return item was received
         outcome:
@@ -39381,6 +39391,7 @@ components:
         issue_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           description: Date order was issued
         start_date:
@@ -39897,8 +39908,8 @@ components:
           maxLength: 100
         barcode_hash:
           type: string
+          readOnly: true
           description: Unique hash of barcode data
-          maxLength: 128
         link:
           description: Link to external page
           oneOf:
@@ -40667,6 +40678,7 @@ components:
         issue_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           description: Date order was issued
         start_date:
@@ -40806,6 +40818,7 @@ components:
         complete_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           title: Completion Date
           description: Date order was completed
@@ -42348,6 +42361,7 @@ components:
         issue_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           description: Date order was issued
         start_date:
@@ -42462,6 +42476,7 @@ components:
         complete_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           title: Completion Date
           description: Date order was completed
@@ -42699,6 +42714,7 @@ components:
         received_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           description: The date this return item was received
         outcome:
@@ -42919,6 +42935,7 @@ components:
         issue_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           description: Date order was issued
         start_date:
@@ -43574,8 +43591,8 @@ components:
           maxLength: 100
         barcode_hash:
           type: string
+          readOnly: true
           description: Unique hash of barcode data
-          maxLength: 128
         link:
           description: Link to external page
           oneOf:
@@ -43620,6 +43637,7 @@ components:
           items:
             type: string
       required:
+      - barcode_hash
       - order
       - pk
     SalesOrderShipmentAllocation:
@@ -45299,6 +45317,7 @@ components:
         issue_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           description: Date order was issued
         start_date:
@@ -45438,6 +45457,7 @@ components:
         complete_date:
           type: string
           format: date
+          readOnly: true
           nullable: true
           title: Completion Date
           description: Date order was completed
