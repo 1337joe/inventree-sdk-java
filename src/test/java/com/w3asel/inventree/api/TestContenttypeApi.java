@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import com.w3asel.inventree.invoker.ApiException;
 import com.w3asel.inventree.model.ContentType;
 import com.w3asel.inventree.model.PaginatedContentTypeList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,7 +49,7 @@ public class TestContenttypeApi extends TestApi {
         switch (model) {
             case "stockitem":
                 expected = new ContentType(actual.getPk(), "stock", "stockitem",
-                        "Stock | Stock Item", false);
+                        "Stock | Stock Item", false, List.of());
                 break;
             default:
                 fail("Unspecified expected value");

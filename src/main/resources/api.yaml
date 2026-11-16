@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '579'
+  version: '580'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -29581,9 +29581,17 @@ components:
           type: boolean
           description: Return True if the model is a plugin model.
           readOnly: true
+        features:
+          type: array
+          items:
+            type: string
+          description: Return the list of generic features supported by this model
+            type.
+          readOnly: true
       required:
       - app_label
       - app_labeled_name
+      - features
       - is_plugin
       - model
       - pk
