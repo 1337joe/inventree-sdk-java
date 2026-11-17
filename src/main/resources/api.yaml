@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '580'
+  version: '581'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -15909,7 +15909,12 @@ paths:
   /api/part/{id}/bom-copy/:
     post:
       operationId: part_bom_copy_create
-      description: API endpoint for duplicating a BOM.
+      description: |-
+        API endpoint for duplicating a BOM.
+
+        Requires the 'bom.add' permission.
+        If existing BOM items are to be removed, 'bom.delete' is also required
+        (this is enforced by the serializer).
       parameters:
       - in: path
         name: id
@@ -15935,8 +15940,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - oauth2:
-        - r:add:build
-        - r:add:part
+        - r:add:bom
       responses:
         '201':
           content:
