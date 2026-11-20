@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '581'
+  version: '582'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -35020,6 +35020,7 @@ components:
           description: Override calculated value for minimum price
         override_min_currency:
           type: string
+          title: Minimum price currency
           description: |-
             Select currency from available options
 
@@ -35033,7 +35034,6 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-          title: Minimum price currency
         override_max:
           type: string
           format: decimal
@@ -35043,6 +35043,7 @@ components:
           description: Override calculated value for maximum price
         override_max_currency:
           type: string
+          title: Maximum price currency
           description: |-
             Select currency from available options
 
@@ -35056,7 +35057,6 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-          title: Maximum price currency
         overall_min:
           type: string
           format: decimal
@@ -37934,6 +37934,7 @@ components:
           description: Override calculated value for minimum price
         override_min_currency:
           type: string
+          title: Minimum price currency
           description: |-
             Select currency from available options
 
@@ -37947,7 +37948,6 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-          title: Minimum price currency
         override_max:
           type: string
           format: decimal
@@ -37957,6 +37957,7 @@ components:
           description: Override calculated value for maximum price
         override_max_currency:
           type: string
+          title: Maximum price currency
           description: |-
             Select currency from available options
 
@@ -37970,7 +37971,6 @@ components:
             * `USD` - USD - US Dollar
 
             Other valid currencies may be found in the 'CURRENCY_CODES' global setting.
-          title: Maximum price currency
         overall_min:
           type: string
           format: decimal
