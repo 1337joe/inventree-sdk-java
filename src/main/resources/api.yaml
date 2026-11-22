@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: InvenTree API
-  version: '582'
+  version: '583'
   description: API for InvenTree - the intuitive open source inventory management
     system
   license:
@@ -21798,6 +21798,12 @@ paths:
           - -location_count
           - icon
           - -icon
+      - in: query
+        name: parameters
+        schema:
+          type: boolean
+          default: false
+        description: Include parameters for each location type
       - name: search
         required: false
         in: query
@@ -21832,13 +21838,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StockLocationType'
+              $ref: '#/components/schemas/StockLocationTypeBrief'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/StockLocationType'
+              $ref: '#/components/schemas/StockLocationTypeBrief'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/StockLocationType'
+              $ref: '#/components/schemas/StockLocationTypeBrief'
         required: true
       security:
       - tokenAuth: []
@@ -21851,7 +21857,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockLocationType'
+                $ref: '#/components/schemas/StockLocationTypeBrief'
           description: ''
   /api/stock/location-type/{id}/:
     get:
@@ -21869,6 +21875,12 @@ paths:
         schema:
           type: integer
         required: true
+      - in: query
+        name: parameters
+        schema:
+          type: boolean
+          default: false
+        description: Include parameters for each location type
       tags:
       - stock
       security:
@@ -21905,13 +21917,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StockLocationType'
+              $ref: '#/components/schemas/StockLocationTypeBrief'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/StockLocationType'
+              $ref: '#/components/schemas/StockLocationTypeBrief'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/StockLocationType'
+              $ref: '#/components/schemas/StockLocationTypeBrief'
         required: true
       security:
       - tokenAuth: []
@@ -21924,7 +21936,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockLocationType'
+                $ref: '#/components/schemas/StockLocationTypeBrief'
           description: ''
     patch:
       operationId: stock_location_type_partial_update
@@ -21947,13 +21959,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedStockLocationType'
+              $ref: '#/components/schemas/PatchedStockLocationTypeBrief'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedStockLocationType'
+              $ref: '#/components/schemas/PatchedStockLocationTypeBrief'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedStockLocationType'
+              $ref: '#/components/schemas/PatchedStockLocationTypeBrief'
       security:
       - tokenAuth: []
       - basicAuth: []
@@ -21965,7 +21977,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockLocationType'
+                $ref: '#/components/schemas/StockLocationTypeBrief'
           description: ''
     delete:
       operationId: stock_location_type_destroy
@@ -31297,7 +31309,7 @@ components:
           description: Stock location type of this location
         location_type_detail:
           allOf:
-          - $ref: '#/components/schemas/StockLocationType'
+          - $ref: '#/components/schemas/StockLocationTypeBrief'
           readOnly: true
           nullable: true
         tags:
@@ -31953,7 +31965,7 @@ components:
         metadata: {}
       required:
       - metadata
-    ModelTypeD42Enum:
+    ModelType522Enum:
       enum:
       - build.build
       - company.company
@@ -31967,6 +31979,7 @@ components:
       - part.part
       - part.partcategory
       - stock.stocklocation
+      - stock.stocklocationtype
       type: string
       description: |-
         * `build.build` - Build Order
@@ -31981,6 +31994,7 @@ components:
         * `part.part` - Part
         * `part.partcategory` - Part Category
         * `stock.stocklocation` - Stock Location
+        * `stock.stocklocationtype` - Stock Location type
     NameEnum:
       enum:
       - admin
@@ -34257,7 +34271,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelTypeD42Enum'
+          - $ref: '#/components/schemas/ModelType522Enum'
           default: ''
         model_id:
           type: integer
@@ -34329,7 +34343,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelTypeD42Enum'
+          - $ref: '#/components/schemas/ModelType522Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
@@ -36913,7 +36927,7 @@ components:
           description: Stock location type of this location
         location_type_detail:
           allOf:
-          - $ref: '#/components/schemas/StockLocationType'
+          - $ref: '#/components/schemas/StockLocationTypeBrief'
           readOnly: true
           nullable: true
         tags:
@@ -37375,7 +37389,7 @@ components:
           description: Parameter template
         model_type:
           allOf:
-          - $ref: '#/components/schemas/ModelTypeD42Enum'
+          - $ref: '#/components/schemas/ModelType522Enum'
           default: ''
         model_id:
           type: integer
@@ -37441,7 +37455,7 @@ components:
           nullable: true
           default: ''
           oneOf:
-          - $ref: '#/components/schemas/ModelTypeD42Enum'
+          - $ref: '#/components/schemas/ModelType522Enum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         checkbox:
@@ -40409,9 +40423,10 @@ components:
           - $ref: '#/components/schemas/PartTestTemplate'
           readOnly: true
           nullable: true
-    PatchedStockLocationType:
+    PatchedStockLocationTypeBrief:
       type: object
-      description: Serializer for StockLocationType model.
+      description: Serializer for location type writes and embedded stock location
+        details.
       properties:
         pk:
           type: integer
@@ -44744,7 +44759,42 @@ components:
       - stock_item
     StockLocationType:
       type: object
-      description: Serializer for StockLocationType model.
+      description: Serializer for the location type endpoints, with optional parameter
+        data.
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+          title: ID
+        name:
+          type: string
+          description: Name
+          maxLength: 100
+        description:
+          type: string
+          description: Description (optional)
+          maxLength: 250
+        icon:
+          type: string
+          description: Default icon for all locations that have no icon set (optional)
+          maxLength: 100
+        location_count:
+          type: integer
+          readOnly: true
+          nullable: true
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+          readOnly: true
+          nullable: true
+      required:
+      - name
+      - pk
+    StockLocationTypeBrief:
+      type: object
+      description: Serializer for location type writes and embedded stock location
+        details.
       properties:
         pk:
           type: integer
